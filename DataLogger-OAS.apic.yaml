@@ -1,0 +1,830 @@
+swagger: '2.0'
+info:
+  title: DataLogger
+  description: 'Configurable structure, configurable storage, generic data-logger API.'
+  version: '0.01'
+  termsOfService: MIT
+host: 'localhost:7777'
+schemes:
+  - http
+securityDefinitions:
+  basic_auth:
+    type: basic
+    description: Basic Auth
+definitions:
+  input_user:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      is_admin:
+        type: boolean
+    required:
+      - username
+      - email
+      - password
+      - is_admin
+  output_user:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      email:
+        type: string
+      is_admin:
+        type: boolean
+    required:
+      - id
+      - username
+      - email
+      - is_admin
+  input_process:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      userId:
+        type: integer
+      configuration:
+        type: string
+    required:
+      - name
+      - description
+      - userId
+      - configuration
+  output_process:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      userId:
+        type: integer
+      configuration:
+        type: string
+  input_authorization:
+    type: object
+    properties:
+      userId:
+        type: integer
+      processId:
+        type: integer
+      tableName:
+        type: string
+      getList:
+        type: boolean
+      getOne:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      delete:
+        type: boolean
+    required:
+      - userId
+      - processId
+      - tableName
+      - getList
+      - getOne
+      - create
+      - update
+      - delete
+  output_authorization:
+    type: object
+    properties:
+      id:
+        type: integer
+      userId:
+        type: integer
+      processId:
+        type: integer
+      tableName:
+        type: string
+      getList:
+        type: boolean
+      getOne:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      delete:
+        type: boolean
+  input_log:
+    type: object
+    properties:
+      userId:
+        type: integer
+      processId:
+        type: integer
+      tableName:
+        type: string
+      route:
+        type: string
+      method:
+        type: string
+      parameters:
+        type: string
+    required:
+      - userId
+      - processId
+      - tableName
+      - route
+      - method
+      - parameters
+  output_log:
+    type: object
+    properties:
+      id:
+        type: integer
+      userId:
+        type: integer
+      processId:
+        type: integer
+      tableName:
+        type: string
+      route:
+        type: string
+      method:
+        type: string
+      parameters:
+        type: string
+    required:
+      - id
+      - userId
+      - processId
+      - tableName
+      - route
+      - method
+      - parameters
+responses:
+  'trait:error-response:400':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Bad Request.
+  'trait:error-response:401':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Unauthorized
+  'trait:error-response:403':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Forbidden
+  'trait:error-response:404':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Not Found
+parameters: {}
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: Create user
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns response 200 with the details of the newly created user
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_user'
+    get:
+      tags:
+        - user
+      summary: Get list of users
+      description: Get list of users
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_user'
+          description: Returns 200 with list/array of users
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/users/{userId}':
+    get:
+      tags:
+        - user
+      summary: Get detail of user by userId
+      description: Get detail of user by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns 200 with the detail of user for the specified userId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - user
+      summary: Update user details by userId
+      description: Update user details by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns 200 with the detail of updated user
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_user'
+    delete:
+      tags:
+        - user
+      summary: Delete user by userId
+      description: Delete user by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+  /process:
+    post:
+      tags:
+        - process
+      summary: Create process
+      description: Create process
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '201':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns response 201 with the details of the newly created process
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_process'
+    get:
+      tags:
+        - process
+      summary: Get list of process
+      description: Get list of processs
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_process'
+          description: Returns 200 with list/array of processs
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/process/{processId}':
+    get:
+      tags:
+        - process
+      summary: Get detail of process by processId
+      description: Get detail of process by processId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns 200 with the detail of process for the specified processId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - process
+      summary: Update process details by processId
+      description: Update process details by processId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns 200 with the detail of updated process
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_process'
+    delete:
+      tags:
+        - process
+      summary: Delete process by processId
+      description: Delete process by processId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+  /authorizations:
+    post:
+      tags:
+        - authorization
+      summary: Create authorization
+      description: Create authorization
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '201':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: >-
+            Returns response 201 with the details of the newly created
+            authorization
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_authorization'
+    get:
+      tags:
+        - authorization
+      summary: Get list of authorizations
+      description: Get list of authorizations
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_authorization'
+          description: Returns 200 with list/array of authorizations
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/authorizations/{authorizationId}':
+    get:
+      tags:
+        - authorization
+      summary: Get detail of authorization by authorizationId
+      description: Get detail of authorization by authorizationId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: >-
+            Returns 200 with the detail of authorization for the specified
+            authorizationId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorizationId
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - authorization
+      summary: Update authorization details by authorizationId
+      description: Update authorization details by authorizationId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: Returns 200 with the detail of updated authorization
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorizationId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_authorization'
+    delete:
+      tags:
+        - authorization
+      summary: Delete authorization by authorizationId
+      description: Delete authorization by authorizationId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorizationId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+  /logs:
+    post:
+      tags:
+        - log
+      summary: Create log
+      description: Create log
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns response 201 with the details of the newly created log
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_log'
+    get:
+      tags:
+        - log
+      summary: Get list of logs
+      description: Get list of logs
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_log'
+          description: Returns 200 with list/array of logs
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/logs/{logId}':
+    get:
+      tags:
+        - log
+      summary: Get detail of log by logId
+      description: Get detail of log by logId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns 200 with the detail of log for the specified logId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: logId
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - log
+      summary: Update log details by logId
+      description: Update log details by logId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns 200 with the detail of updated log
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: logId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_log'
+    delete:
+      tags:
+        - log
+      summary: Delete log by logId
+      description: Delete log by logId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: logId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
