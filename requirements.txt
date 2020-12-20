@@ -7,3 +7,4 @@ email_validator
 python-decouple
 gunicorn
 sqliteJson
+connexion
