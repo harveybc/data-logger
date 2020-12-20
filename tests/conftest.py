@@ -3,12 +3,12 @@ import tempfile
 
 import pytest
 
-from visualizer import create_app
-from visualizer.db import get_db
-from visualizer.db import init_db
+from data_logger import create_app
+from data_logger.db import get_db
+from data_logger.db import init_db
 
 # read in SQL for populating test data
-with open(os.path.join(os.path.dirname(__file__), "data/visualizer_test_data.sql"), "rb") as f:
+with open(os.path.join(os.path.dirname(__file__), "data/data_logger_test_data.sql"), "rb") as f:
     _data_sql = f.read().decode("utf8")
 
 

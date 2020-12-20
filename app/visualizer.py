@@ -7,9 +7,9 @@ import logging
 import numpy as np
 import csv
 import pkg_resources
-from app.visualizer_base import FeatureExtractorBase
+from app.data_logger_base import FeatureExtractorBase
 
-# from visualizer import __version__
+# from data_logger import __version__
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -45,7 +45,7 @@ class FeatureExtractor(FeatureExtractorBase):
                 _logger.debug("Printing plugins.")
                 self.print_plugins()
             else: 
-                _logger.debug("Error: No core plugin provided. for help, use visualizer --help")
+                _logger.debug("Error: No core plugin provided. for help, use data_logger --help")
         _logger.info("Script end.")
 
     def find_plugins(self):
@@ -56,17 +56,17 @@ class FeatureExtractor(FeatureExtractorBase):
         self.discovered_input_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('visualizer.plugins_input')
+            in pkg_resources.iter_entry_points('data_logger.plugins_input')
         }
         self.discovered_output_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('visualizer.plugins_output')
+            in pkg_resources.iter_entry_points('data_logger.plugins_output')
         }
         self.discovered_core_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('visualizer.plugins_core')
+            in pkg_resources.iter_entry_points('data_logger.plugins_core')
         }
 
     def load_plugins(self):
@@ -95,7 +95,7 @@ class FeatureExtractor(FeatureExtractorBase):
             self.ep_c = self.discovered_core_plugins[self.conf['core_plugin']]
             self.ep_core = self.ep_c(self.conf)
         else:
-            print("Warning: Core Plugin not found. Ignore this warning if using the visualizer(it only has input and output plugins). Use visualizer --list_plugins, to show the list of available plugins.")
+            print("Warning: Core Plugin not found. Ignore this warning if using the data_logger(it only has input and output plugins). Use data_logger --list_plugins, to show the list of available plugins.")
             self.ep_core = None
     
     def print_plugins(self):
@@ -111,8 +111,8 @@ class FeatureExtractor(FeatureExtractorBase):
         
 def run(args):
     """ Entry point for console_scripts """
-    visualizer = FeatureExtractor(None)
-    visualizer.main(args)
+    data_logger = FeatureExtractor(None)
+    data_logger.main(args)
 
 if __name__ == "__main__":
     run(sys.argv)

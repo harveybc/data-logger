@@ -1,12 +1,12 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = visualizer
+source = data_logger
 # omit = bad_file.py
 
 [paths]
 source =
-    visualizer/
+    data_logger/
     */site-packages/
 
 [report]

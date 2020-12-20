@@ -1,5 +1,5 @@
 
-# This file contains the visualizer plugin, th input plugin can load all the data or starting from
+# This file contains the data_logger plugin, th input plugin can load all the data or starting from
  # the last id.
 
 from flask import Blueprint
@@ -19,7 +19,7 @@ from flask import request
 
 def user_bp(plugin_folder):
 
-    # construct the visualizer blueprint using the plugin folder as template folder
+    # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
 
     @bp.route("/users")
@@ -68,8 +68,8 @@ def user_bp(plugin_folder):
                     "UPDATE post SET title = ?, body = ? WHERE id = ?", (title, body, id)
                 )
                 db.commit()
-                return redirect(url_for("visualizer.index"))
-        return render_template("visualizer/update.html", post=post)
+                return redirect(url_for("data_logger.index"))
+        return render_template("data_logger/update.html", post=post)
 
     @bp.route("/user/<int:id>/delete", methods=("POST",))
     @login_required
@@ -83,6 +83,6 @@ def user_bp(plugin_folder):
         db = get_db()
         db.execute("DELETE FROM post WHERE id = ?", (id,))
         db.commit()
-        return redirect(url_for("visualizer.index"))    
+        return redirect(url_for("data_logger.index"))    
  
     return bp

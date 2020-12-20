@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
-from app.visualizer import FeatureExtractor
+from app.data_logger import FeatureExtractor
 from app.blueprints.dashboard import dashboard_bp
 from app.blueprints.user import user_bp
 import json
@@ -19,7 +19,7 @@ def read_plugin_config(vis_config_file=None):
     if vis_config_file != None:
         file_path = vis_config_file
     else:
-        file_path = path.dirname(path.abspath(__file__)) + "//visualizer.json"
+        file_path = path.dirname(path.abspath(__file__)) + "//data_logger.json"
     with open(file_path) as f:
         data = json.load(f)
     return data
@@ -64,9 +64,9 @@ def create_app(config):
     fe = FeatureExtractor(p_config)
     # set flask app parameters
     app.config.from_object(config)
-    # plugin configuration from visualizer.json
+    # plugin configuration from data_logger.json
     app.config['P_CONFIG'] = p_config 
-    # visualizer instance with plugins already loaded
+    # data_logger instance with plugins already loaded
     app.config['FE'] = fe
     register_extensions(app)
     # get the output plugin template folder

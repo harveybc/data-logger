@@ -13,8 +13,8 @@ from pkg_resources import VersionConflict, require
 from setuptools import setup
 from setuptools import find_packages
 
-# sys.path.append('visualizer\\')
-# from visualizer.heuristic_ts.heuristic_ts import HeuristicTS
+# sys.path.append('data_logger\\')
+# from data_logger.heuristic_ts.heuristic_ts import HeuristicTS
 
 try:
     require("setuptools>=38.3")

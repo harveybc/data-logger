@@ -1,5 +1,5 @@
 
-# This file contains the visualizer plugin, th input plugin can load all the data or starting from
+# This file contains the data_logger plugin, th input plugin can load all the data or starting from
  # the last id.
 
 from flask import Blueprint
@@ -19,7 +19,7 @@ from flask import jsonify
 
 def dashboard_bp(plugin_folder):
 
-    # construct the visualizer blueprint using the plugin folder as template folder
+    # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("dashboard_bp", __name__,  template_folder=plugin_folder)
     
     @bp.route("/")

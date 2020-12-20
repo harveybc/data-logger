@@ -1,11 +1,11 @@
-# FeatureExtractor: Visualizer Component
+# FeatureExtractor: data_logger Component
 
 Uses a Web UI to visualize plots and statistics with the data generated during feaure-extractor training or evaluation.
 
-[![Build Status](https://travis-ci.org/harveybc/visualizer.svg?branch=master)](https://travis-ci.org/harveybc/visualizer)
-[![Documentation Status](https://readthedocs.org/projects/docs/badge/?version=latest)](https://harveybc-visualizer.readthedocs.io/en/latest/)
-[![BCH compliance](https://bettercodehub.com/edge/badge/harveybc/visualizer?branch=master)](https://bettercodehub.com/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/harveybc/visualizer/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/harveybc/data_logger.svg?branch=master)](https://travis-ci.org/harveybc/data_logger)
+[![Documentation Status](https://readthedocs.org/projects/docs/badge/?version=latest)](https://harveybc-data_logger.readthedocs.io/en/latest/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/harveybc/data_logger?branch=master)](https://bettercodehub.com/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/harveybc/data_logger/blob/master/LICENSE)
 
 ## Description
 
@@ -13,13 +13,13 @@ Visualize via Web, data obtained from an input plugin, the data obtained via the
 
 It uses multiple output visualization plugins, each of which generate a new element in the feature-extractor dashboard views of the feature-extractor processes.  By default uses output plugins for: real-time MSE plot during training and batch calculated MSE plot from the evaluation of a pre-trained feature-extractor on a validation dataset. 
 
-The visualizer uses a JSON configuration file for setting the Web service parameters and the configuration of the input and output plugins.
+The data_logger uses a JSON configuration file for setting the Web service parameters and the configuration of the input and output plugins.
 
 ## Installation
 
 To install the package via PIP, use the following command:
 
-> pip install -i https://test.pypi.org/simple/ visualizer
+> pip install -i https://test.pypi.org/simple/ data_logger
 
 Also, the installation can be made by clonning the github repo and manually installing it as in the following instructions.
 
@@ -27,9 +27,9 @@ Also, the installation can be made by clonning the github repo and manually inst
 On Linux use the .sh scripts, on windows use the .bat scripts.
 
 1. Clone the GithHub repo:   
-> git clone https://github.com/harveybc/visualizer
+> git clone https://github.com/harveybc/data_logger
 2. Change to the repo folder:
-> cd visualizer
+> cd data_logger
 3. Install requirements.
 > pip install -r requirements.txt
 4. Install python package (also installs the console command data-trimmer)
@@ -51,11 +51,11 @@ For ease of use, a script for setting the environment variables and executing th
 
 * For Linux and Mac:
 
-> visualizer.sh
+> data_logger.sh
 
 * For Windows:
 
-> visualizer.bat
+> data_logger.bat
 
 ## Usage
 
@@ -69,7 +69,7 @@ A default user us created with the username: "test", and password: "pass", pleas
 
 ### Configuration File
 
-The visualizer uses a configuration file located in the visualizer/visualizer directory that sets the Web service parameters and the configuration of the input and output plugins.
+The data_logger uses a configuration file located in the data_logger/data_logger directory that sets the Web service parameters and the configuration of the input and output plugins.
 
 The following is the default JSON configuration file:
 
