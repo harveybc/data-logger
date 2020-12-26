@@ -1,6 +1,6 @@
-# FeatureExtractor: data_logger Component
+# DataLogger: data_logger Component
 
-Uses a Web UI to visualize plots and statistics with the data generated during feaure-extractor training or evaluation.
+Configurable structure, configurable storage, generic data-logger API.
 
 [![Build Status](https://travis-ci.org/harveybc/data_logger.svg?branch=master)](https://travis-ci.org/harveybc/data_logger)
 [![Documentation Status](https://readthedocs.org/projects/docs/badge/?version=latest)](https://harveybc-data_logger.readthedocs.io/en/latest/)
@@ -9,11 +9,16 @@ Uses a Web UI to visualize plots and statistics with the data generated during f
 
 ## Description
 
-Visualize via Web, data obtained from an input plugin, the data obtained via the input plugin may contain batch or real-time results of multiple feature-extractor trainers or evaluators (from now on called processes).  By default uses a Sqlite input plugin.  
+El propósito de este subsistema es proveer conectividad con diferentes motores de bases de datos configurables via plugins, implementa un sistema de Autenticación, Autorización y Accounting (AAA), que permite asegurar, controlar y registrar el acceso a los datos de los usuarios para proveer trazabilidad de todas las operaciones realizadas, con lo que se dispone de un historial de datos y operaciones. Usa un sistema configurable de estructura de datos basado en procesos que captan información para almacenarla en tablas configurables de la base de datos.
+Los componentes de este subsistema son los siguientes:
 
-It uses multiple output visualization plugins, each of which generate a new element in the feature-extractor dashboard views of the feature-extractor processes.  By default uses output plugins for: real-time MSE plot during training and batch calculated MSE plot from the evaluation of a pre-trained feature-extractor on a validation dataset. 
+The purpose of this system is to implement a reusable REST API that provides Authentication, Authorization and Accounting (AAA), the API is scalable by using a processes table that stores configurable data structures and tables for the data to be used by an application.
 
-The data_logger uses a JSON configuration file for setting the Web service parameters and the configuration of the input and output plugins.
+The system has a database plugin architecture that allows loading of plugins that configure a custom database engine to save all the data from all processes.
+
+The data structures used can be divided in two groups: 
+a)	The fixed data structures that are the users and the processes tables.
+b)	The configurable data structures are a variable number of tables per process that are created on the database upon creation of a process, the created tables can be used by other processes and accessed via the process route endpoints.
 
 ## Installation
 
@@ -174,4 +179,3 @@ The following is the default JSON configuration file:
 
 
 
-.
