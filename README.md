@@ -20,7 +20,7 @@ The data structures used can be divided in two groups:
 a)	The fixed data structures that are the users and the processes tables.
 b)	The configurable data structures are a variable number of tables per process that are created on the database upon creation of a process, the created tables can be used by other processes and accessed via the process route endpoints.
 
-## Installation
+## Installation (Work In Progress, use github installation)
 
 To install the package via PIP, use the following command:
 
