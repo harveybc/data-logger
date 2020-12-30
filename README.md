@@ -9,9 +9,6 @@ Configurable structure, configurable storage, generic data-logger API.
 
 ## Description
 
-El propósito de este subsistema es proveer conectividad con diferentes motores de bases de datos configurables via plugins, implementa un sistema de Autenticación, Autorización y Accounting (AAA), que permite asegurar, controlar y registrar el acceso a los datos de los usuarios para proveer trazabilidad de todas las operaciones realizadas, con lo que se dispone de un historial de datos y operaciones. Usa un sistema configurable de estructura de datos basado en procesos que captan información para almacenarla en tablas configurables de la base de datos.
-Los componentes de este subsistema son los siguientes:
-
 The purpose of this system is to implement a reusable REST API that provides Authentication, Authorization and Accounting (AAA), the API is scalable by using a processes table that stores configurable data structures and tables for the data to be used by an application.
 
 The system has a database plugin architecture that allows loading of plugins that configure a custom database engine to save all the data from all processes.
