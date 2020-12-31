@@ -69,9 +69,9 @@ The default port can be modified by setting the FLASK_RUN_PORT environment varia
 
 A default user us created with the username: "test", and password: "pass", please delete this user once you have created another one.
 
-### Configuration File
+### Plugin Configuration File
 
-The data_logger uses a configuration file located in the data_logger/data_logger directory that sets the Web service parameters and the configuration of the input and output plugins.
+data_logger uses a configuration file located in the data_logger/data_logger directory that sets the Web service parameters and the configuration of the input and output plugins.
 
 The following is the default JSON configuration file:
 
@@ -106,69 +106,9 @@ The following is the default JSON configuration file:
                 ]
             }
         ]
-    },
-    "output_plugin": "vis_output",
-    "output_plugin_config": {
-        "dashboard": [
-            {
-                "table_name": "training_progress",
-                "online": true,
-                "delay": 3,
-                "points": 800,
-                "title": "Progress of Last Training Process",
-                "fields": [
-                    "mse"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "title": "Validation Data Plot"
-            },
-            {
-                "table_name": "validation_stats",
-                "title": "List of Feature Extractor Stats on Validation Data"
-            }
-        ],
-        "views": [
-            {
-                "table_name": "training_progress",
-                "title": "Progress of Training Process",
-                "online": true,
-                "delay": 3,
-                "points": 1600,
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "title": "Validation Data Plot",
-                "online":  false,
-                "fields": [
-                    "original",
-                    "predicted"
-                ]
-            },
-            {
-                "table_name": "validation_stats",
-                "title": "Feature Extractor Stats on Validation Data",
-                "online": false,
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            }
-        ]
-    }
+    } 
 }
 ```
-
-
-
-
 .
 
 
