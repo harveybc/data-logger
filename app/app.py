@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
-from app.data_logger import FeatureExtractor
 from app.blueprints.dashboard import dashboard_bp
 from app.blueprints.user import user_bp
 import json
