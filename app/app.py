@@ -9,6 +9,7 @@ from os import path
 from app.blueprints.dashboard import dashboard_bp
 from app.blueprints.user import user_bp
 import json
+import connexion
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -56,7 +57,11 @@ def create_db(app):
 
 
 def create_app(config):
-    app = Flask(__name__, static_folder='base/static')
+    # app = Flask(__name__, static_folder='base/static')
+    app = connexion.App(__name__, static_folder='base/static', specification_dir='./')
+    # Read the swagger.yml file to configure the endpoints
+    app.add_api('DataLogger-OAS.apic.yaml')
+
      # read plugin configuration JSON file
     p_config = read_plugin_config()
     # initialize FeatureExtractor

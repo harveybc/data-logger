@@ -335,6 +335,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "CreateUser",
                 "responses": {
                     "200": {
                         "schema": {
@@ -379,6 +380,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "ListUsers",
                 "responses": {
                     "200": {
                         "schema": {
@@ -420,6 +422,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "GetUser",
                 "responses": {
                     "200": {
                         "schema": {
@@ -464,6 +467,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "UpdateUser",
                 "responses": {
                     "200": {
                         "schema": {
@@ -515,6 +519,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "DeleteUser",
                 "responses": {
                     "200": {
                         "schema": {
@@ -568,6 +573,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "CreateProcess",
                 "responses": {
                     "201": {
                         "schema": {
@@ -612,6 +618,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "ListProcesses",
                 "responses": {
                     "200": {
                         "schema": {
@@ -653,6 +660,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "GetProcess",
                 "responses": {
                     "200": {
                         "schema": {
@@ -697,6 +705,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "UpdateProcess",
                 "responses": {
                     "200": {
                         "schema": {
@@ -748,6 +757,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "DeleteProcess",
                 "responses": {
                     "200": {
                         "schema": {
@@ -801,6 +811,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "CreateAuthorization",
                 "responses": {
                     "201": {
                         "schema": {
@@ -845,6 +856,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "ListAuthorizations",
                 "responses": {
                     "200": {
                         "schema": {
@@ -886,6 +898,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "GetAurthorization",
                 "responses": {
                     "200": {
                         "schema": {
@@ -930,6 +943,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "UpdateAuthorization",
                 "responses": {
                     "200": {
                         "schema": {
@@ -981,6 +995,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "DeleteAuthorization",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1034,6 +1049,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "CreateLog",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1078,6 +1094,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "ListLogs",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1119,6 +1136,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "GetLog",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1163,6 +1181,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "UpdateLog",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1214,6 +1233,7 @@
                         "basic_auth": []
                     }
                 ],
+                "operationId": "DeleteLog",
                 "responses": {
                     "200": {
                         "schema": {
