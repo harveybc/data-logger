@@ -59,7 +59,10 @@ def create_db(app):
 def create_app(config):
     # app = Flask(__name__, static_folder='base/static')
     app = connexion.App(__name__, specification_dir='./')
-    
+
+    # Read the swagger.yml file to configure the endpoints
+    app.add_api('DataLogger-OAS.apic.yaml')
+
     # set Flast static_folder  to be used with connexion
     app.static_url_path = '/base/static'
 
@@ -76,9 +79,6 @@ def create_app(config):
     app.add_url_rule(
         app.static_url_path + '/<path:filename>',
         endpoint='static', view_func=app.send_static_file)
-
-    # Read the swagger.yml file to configure the endpoints
-    app.add_api('DataLogger-OAS.apic.yaml')
 
      # read plugin configuration JSON file
     p_config = read_plugin_config()
