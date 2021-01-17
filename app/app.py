@@ -68,7 +68,7 @@ def create_app(config):
     try:
         for rule in url_map.iter_rules('static'):
             url_map._rules.remove(rule)
-    except ValueError;
+    except ValueError
         # no static view was created yet
         pass
 
