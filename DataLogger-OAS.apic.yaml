@@ -224,6 +224,7 @@ paths:
     post:
       tags:
         - user
+        - create
       summary: Create user
       description: Create user
       consumes: []
@@ -231,7 +232,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: CreateUser
+      operationId: user.create
       responses:
         '200':
           schema:
@@ -253,6 +254,7 @@ paths:
     get:
       tags:
         - user
+        - list
       summary: Get list of users
       description: Get list of users
       consumes: []
@@ -260,7 +262,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: ListUsers
+      operationId: user.list
       responses:
         '200':
           schema:
@@ -281,6 +283,7 @@ paths:
     get:
       tags:
         - user
+        - get
       summary: Get detail of user by userId
       description: Get detail of user by userId
       consumes: []
@@ -288,7 +291,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: GetUser
+      operationId: user.get
       responses:
         '200':
           schema:
@@ -311,6 +314,7 @@ paths:
     put:
       tags:
         - user
+        - update
       summary: Update user details by userId
       description: Update user details by userId
       consumes: []
@@ -318,7 +322,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: UpdateUser
+      operationId: user.update
       responses:
         '200':
           schema:
@@ -345,6 +349,7 @@ paths:
     delete:
       tags:
         - user
+        - delete
       summary: Delete user by userId
       description: Delete user by userId
       consumes: []
@@ -352,7 +357,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: DeleteUser
+      operationId: user.delete
       responses:
         '200':
           schema:
@@ -380,6 +385,7 @@ paths:
     post:
       tags:
         - process
+        - create
       summary: Create process
       description: Create process
       consumes: []
@@ -387,7 +393,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: CreateProcess
+      operationId: process.create
       responses:
         '201':
           schema:
@@ -409,14 +415,15 @@ paths:
     get:
       tags:
         - process
+        - list
       summary: Get list of process
-      description: Get list of processs
+      description: Get list of processes
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: ListProcesses
+      operationId: process.list
       responses:
         '200':
           schema:
@@ -437,6 +444,7 @@ paths:
     get:
       tags:
         - process
+        - get
       summary: Get detail of process by processId
       description: Get detail of process by processId
       consumes: []
@@ -444,7 +452,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: GetProcess
+      operationId: process.get
       responses:
         '200':
           schema:
@@ -467,6 +475,7 @@ paths:
     put:
       tags:
         - process
+        - update
       summary: Update process details by processId
       description: Update process details by processId
       consumes: []
@@ -474,7 +483,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: UpdateProcess
+      operationId: process.update
       responses:
         '200':
           schema:
@@ -501,6 +510,7 @@ paths:
     delete:
       tags:
         - process
+        - delete
       summary: Delete process by processId
       description: Delete process by processId
       consumes: []
@@ -508,7 +518,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: DeleteProcess
+      operationId: process.delete
       responses:
         '200':
           schema:
@@ -536,6 +546,7 @@ paths:
     post:
       tags:
         - authorization
+        - create
       summary: Create authorization
       description: Create authorization
       consumes: []
@@ -543,7 +554,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: CreateAuthorization
+      operationId: authorization.create
       responses:
         '201':
           schema:
@@ -567,6 +578,7 @@ paths:
     get:
       tags:
         - authorization
+        - list
       summary: Get list of authorizations
       description: Get list of authorizations
       consumes: []
@@ -574,7 +586,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: ListAuthorizations
+      operationId: authorization.list
       responses:
         '200':
           schema:
@@ -595,6 +607,7 @@ paths:
     get:
       tags:
         - authorization
+        - get
       summary: Get detail of authorization by authorizationId
       description: Get detail of authorization by authorizationId
       consumes: []
@@ -602,7 +615,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: GetAurthorization
+      operationId: authorization.get
       responses:
         '200':
           schema:
@@ -627,6 +640,7 @@ paths:
     put:
       tags:
         - authorization
+        - update
       summary: Update authorization details by authorizationId
       description: Update authorization details by authorizationId
       consumes: []
@@ -634,7 +648,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: UpdateAuthorization
+      operationId: authorization.update
       responses:
         '200':
           schema:
@@ -661,6 +675,7 @@ paths:
     delete:
       tags:
         - authorization
+        - delete
       summary: Delete authorization by authorizationId
       description: Delete authorization by authorizationId
       consumes: []
@@ -668,7 +683,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: DeleteAuthorization
+      operationId: authorization.delete
       responses:
         '200':
           schema:
@@ -696,6 +711,7 @@ paths:
     post:
       tags:
         - log
+        - create
       summary: Create log
       description: Create log
       consumes: []
@@ -703,7 +719,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: CreateLog
+      operationId: log.create
       responses:
         '200':
           schema:
@@ -725,6 +741,7 @@ paths:
     get:
       tags:
         - log
+        - list
       summary: Get list of logs
       description: Get list of logs
       consumes: []
@@ -732,7 +749,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: ListLogs
+      operationId: log.list
       responses:
         '200':
           schema:
@@ -753,6 +770,7 @@ paths:
     get:
       tags:
         - log
+        - get
       summary: Get detail of log by logId
       description: Get detail of log by logId
       consumes: []
@@ -760,7 +778,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: GetLog
+      operationId: log.get
       responses:
         '200':
           schema:
@@ -783,6 +801,7 @@ paths:
     put:
       tags:
         - log
+        - update
       summary: Update log details by logId
       description: Update log details by logId
       consumes: []
@@ -790,7 +809,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: UpdateLog
+      operationId: log.update
       responses:
         '200':
           schema:
@@ -817,6 +836,7 @@ paths:
     delete:
       tags:
         - log
+        - delete
       summary: Delete log by logId
       description: Delete log by logId
       consumes: []
@@ -824,7 +844,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: DeleteLog
+      operationId: log.delete
       responses:
         '200':
           schema:
