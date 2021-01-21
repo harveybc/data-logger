@@ -232,7 +232,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: user.create
+      operationId: controllers.user.create
       responses:
         '200':
           schema:
@@ -262,7 +262,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: user.list
+      operationId: controllers.user.get_list
       responses:
         '200':
           schema:
@@ -291,7 +291,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: user.get
+      operationId: controllers.user.get
       responses:
         '200':
           schema:
@@ -322,7 +322,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: user.update
+      operationId: controllers.user.update
       responses:
         '200':
           schema:
@@ -357,7 +357,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: user.delete
+      operationId: controllers.user.delete
       responses:
         '200':
           schema:
@@ -393,7 +393,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: process.create
+      operationId: controllers.process.create
       responses:
         '201':
           schema:
@@ -423,7 +423,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: process.list
+      operationId: controllers.process.get_list
       responses:
         '200':
           schema:
@@ -452,7 +452,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: process.get
+      operationId: controllers.process.get
       responses:
         '200':
           schema:
@@ -483,7 +483,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: process.update
+      operationId: controllers.process.update
       responses:
         '200':
           schema:
@@ -518,7 +518,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: process.delete
+      operationId: controllers.process.delete
       responses:
         '200':
           schema:
@@ -554,7 +554,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: authorization.create
+      operationId: controllers.authorization.create
       responses:
         '201':
           schema:
@@ -586,7 +586,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: authorization.list
+      operationId: controllers.authorization.get_list
       responses:
         '200':
           schema:
@@ -615,7 +615,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: authorization.get
+      operationId: controllers.authorization.get
       responses:
         '200':
           schema:
@@ -648,7 +648,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: authorization.update
+      operationId: controllers.authorization.update
       responses:
         '200':
           schema:
@@ -683,7 +683,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: authorization.delete
+      operationId: controllers.authorization.delete
       responses:
         '200':
           schema:
@@ -719,7 +719,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: log.create
+      operationId: controllers.log.create
       responses:
         '200':
           schema:
@@ -749,7 +749,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: log.list
+      operationId: controllers.log.get_list
       responses:
         '200':
           schema:
@@ -778,7 +778,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: log.get
+      operationId: controllers.log.get
       responses:
         '200':
           schema:
@@ -809,7 +809,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: log.update
+      operationId: controllers.log.update
       responses:
         '200':
           schema:
@@ -844,7 +844,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: log.delete
+      operationId: controllers.log.delete
       responses:
         '200':
           schema:

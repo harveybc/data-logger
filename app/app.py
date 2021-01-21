@@ -78,7 +78,7 @@ def create_app(config):
     # register new; the same view function is used
     app.add_url_rule(
         app.static_url_path + '/<path:filename>',
-        endpoint='static', view_func=app.send_static_file)
+        endpoint='static', view_func=app.send_static_file) 
 
      # read plugin configuration JSON file
     p_config = read_plugin_config()
@@ -93,12 +93,12 @@ def create_app(config):
     register_extensions(app)
     # get the output plugin template folder
     plugin_folder = fe.ep_output.template_path(p_config)
-    # construct the blueprint with configurable plugin_folder for the dashboard views
-    tmp = dashboard_bp(plugin_folder)
-    app.register_blueprint(tmp)
-    # construct the blueprint for the users views
-    tmp = user_bp(plugin_folder)
-    app.register_blueprint(tmp)
+    ## construct the blueprint with configurable plugin_folder for the dashboard views
+    #tmp = dashboard_bp(plugin_folder)
+    #app.register_blueprint(tmp)
+    ## construct the blueprint for the users views
+    #tmp = user_bp(plugin_folder)
+    #app.register_blueprint(tmp)
 
 
     # register the blueprints
