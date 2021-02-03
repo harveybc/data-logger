@@ -1,6 +1,6 @@
 """ Handlers for the user endpoint  """
 
-def create():
+def create(username,email,password,is_admin):
     """ Parse command line parameters.
 
         Args:
@@ -9,6 +9,8 @@ def create():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
+    return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+
 def get():
     """ Parse command line parameters.
 
