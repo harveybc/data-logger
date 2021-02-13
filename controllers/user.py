@@ -1,6 +1,6 @@
 """ Handlers for the user endpoint  """
 
-def create(username,email,password,is_admin):
+def create():
     """ Parse command line parameters.
 
         Args:
@@ -13,7 +13,7 @@ def create(username,email,password,is_admin):
 
 def get():
     """ Parse command line parameters.
-
+                  
         Args:
         args ([str]): command line parameters as list of strings
 
