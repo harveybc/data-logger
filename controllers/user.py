@@ -9,7 +9,7 @@ def create():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+    #return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
 
 def get():
     """ Parse command line parameters.
