@@ -262,7 +262,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.list
+      operationId: controllers.user.get_list
       responses:
         '200':
           schema:
