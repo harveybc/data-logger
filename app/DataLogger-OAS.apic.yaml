@@ -423,7 +423,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.list
+      operationId: controllers.process.get_list
       responses:
         '200':
           schema:
@@ -586,7 +586,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.list
+      operationId: controllers.authorization.get_list
       responses:
         '200':
           schema:
@@ -749,7 +749,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.list
+      operationId: controllers.log.get_list
       responses:
         '200':
           schema:
