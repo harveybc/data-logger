@@ -66,14 +66,14 @@ def create_app(config):
     # set Flast static_folder  to be used with connexion
     app.static_url_path = '/base/static'
 
-    # remove old static map
-    url_map = app.url_map
-    try:
-        for rule in url_map.iter_rules('static'):
-            url_map._rules.remove(rule)
-    except ValueError:
-        # no static view was created yet
-        pass
+    ## remove old static map
+    #url_map = app.url_map
+    #try:
+    #    for rule in url_map.iter_rules('static'):
+    #        url_map._rules.remove(rule)
+    #except ValueError:
+    #    # no static view was created yet
+    #    pass
 
     # register new; the same view function is used
     app.add_url_rule(
