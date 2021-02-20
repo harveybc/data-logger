@@ -78,7 +78,7 @@ def create_app(config):
     # register new; the same view function is used
     app.add_url_rule(
         app.static_url_path + '/<path:filename>',
-        endpoint='static', view_func=app.send_static_file) 
+        endpoint='static', view_func=app.send_static_file()) 
 
      # read plugin configuration JSON file
     p_config = read_plugin_config()
