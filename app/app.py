@@ -15,7 +15,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 def read_plugin_config(vis_config_file=None):
-    """ Read the pulgin configuration JSON file from a path, if its None, uses a default configuration """
+    """ Read the plugin configuration JSON file from a path, if its None, uses a default configuration """
     if vis_config_file != None:
         file_path = vis_config_file
     else:
