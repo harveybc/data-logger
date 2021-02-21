@@ -83,7 +83,7 @@ def create_app(config):
      # read plugin configuration JSON file
     p_config = read_plugin_config()
     # initialize FeatureExtractor
-    fe = FeatureExtractor(p_config)
+    #fe = FeatureExtractor(p_config)
     # set flask app parameters
     app.config.from_object(config)
     # plugin configuration from data_logger.json
