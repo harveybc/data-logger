@@ -68,7 +68,7 @@ def create_app(config):
     app.static_url_path = '/base/static'
 
     # remove old static map
-    url_map = current_app.url_map
+    url_map = app.app.url_map
     try:
         for rule in url_map.iter_rules('static'):
             url_map._rules.remove(rule)
@@ -77,21 +77,21 @@ def create_app(config):
         pass
 
     # register new; the same view function is used
-    current_app.add_url_rule(
-        current_app.static_url_path + '/<path:filename>',
-        endpoint='static', view_func=current_app.send_static_file()) 
+    app.app.add_url_rule(
+        app.app.static_url_path + '/<path:filename>',
+        endpoint='static', view_func=app.app.send_static_file()) 
 
      # read plugin configuration JSON file
     p_config = read_plugin_config()
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
     # set flask app parameters
-    current_app.config.from_object(config)
+    app.app.config.from_object(config)
     # plugin configuration from data_logger.json
-    current_app.config['P_CONFIG'] = p_config 
+    app.app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
     ### current_app.config['FE'] = fe
-    register_extensions(current_app)
+    register_extensions(app.app)
     # get the output plugin template folder
     ### plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
@@ -103,7 +103,7 @@ def create_app(config):
 
 
     # register the blueprints
-    register_blueprints(app)
-    configure_database(app)
+    register_blueprints(app.app)
+    configure_database(app.app)
     
     return app
