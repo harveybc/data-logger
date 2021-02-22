@@ -10,6 +10,7 @@ from app.blueprints.dashboard import dashboard_bp
 from app.blueprints.user import user_bp
 import json
 import connexion
+from flask import current_app
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -66,33 +67,33 @@ def create_app(config):
     # set Flast static_folder  to be used with connexion
     app.static_url_path = '/base/static'
 
-    ## remove old static map
-    #url_map = app.url_map
-    #try:
-    #    for rule in url_map.iter_rules('static'):
-    #        url_map._rules.remove(rule)
-    #except ValueError:
-    #    # no static view was created yet
-    #    pass
+    # remove old static map
+    url_map = current_app.url_map
+    try:
+        for rule in url_map.iter_rules('static'):
+            url_map._rules.remove(rule)
+    except ValueError:
+        # no static view was created yet
+        pass
 
-    ## register new; the same view function is used
-    #app.add_url_rule(
-    #    app.static_url_path + '/<path:filename>',
-    #    endpoint='static', view_func=app.send_static_file()) 
+    # register new; the same view function is used
+    current_app.add_url_rule(
+        current_app.static_url_path + '/<path:filename>',
+        endpoint='static', view_func=current_app.send_static_file()) 
 
      # read plugin configuration JSON file
     p_config = read_plugin_config()
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
     # set flask app parameters
-    ### app.config.from_object(config)
+    current_app.config.from_object(config)
     # plugin configuration from data_logger.json
-    app.config['P_CONFIG'] = p_config 
+    current_app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
-    app.config['FE'] = fe
-    register_extensions(app)
+    ### current_app.config['FE'] = fe
+    register_extensions(current_app)
     # get the output plugin template folder
-    plugin_folder = fe.ep_output.template_path(p_config)
+    ### plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
     #tmp = dashboard_bp(plugin_folder)
     #app.register_blueprint(tmp)
