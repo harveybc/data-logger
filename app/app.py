@@ -79,10 +79,10 @@ def create_app(config):
     # register new; the same view function is used
     app.app.add_url_rule(
         app.app.static_url_path + '/<path:filename>',
-        endpoint='static', view_func=app.app.send_static_file
+        endpoint='static', view_func=app.app.send_static_file)
 
      # read plugin configuration JSON file
-    p_config = read_plugin_config()
+    p_config = read_plugin_config())
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
     # set flask app parameters
