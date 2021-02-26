@@ -104,4 +104,4 @@ def create_app(config):
     register_blueprints(app.app)
     configure_database(app.app)
     
-    return app
+    return app.app
