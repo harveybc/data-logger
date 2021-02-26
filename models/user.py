@@ -8,6 +8,7 @@ from app.base.util import hash_pass
 from app.db_init import db
 from app.app import login_manager
 from sqlalchemy.orm import relationship
+from models.process import Process
 
 class User(db.Model, UserMixin):
     """ Map the user table columns and bidirectional one-to many relationship with process """
