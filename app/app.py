@@ -65,7 +65,7 @@ def create_app(config):
     app.add_api('DataLogger-OAS.apic.yaml')
 
     # set Flast static_folder  to be used with connexion
-    app.static_url_path = '/base/static'
+    app.app.static_url_path = '/base/static'
 
     # remove old static map
     url_map = app.app.url_map
