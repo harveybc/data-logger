@@ -2,7 +2,7 @@
 
 Configurable structure, configurable storage, generic data-logger API.
 
-[![Build Status](https://travis-ci.com/harveybc/data_logger.svg?branch=master)](https://travis-ci.org/harveybc/data_logger)
+[![Build Status](https://www.travis-ci.com/harveybc/data-logger.svg?branch=master)](https://travis-ci.org/harveybc/data_logger)
 [![Documentation Status](https://readthedocs.org/projects/docs/badge/?version=latest)](https://harveybc-data_logger.readthedocs.io/en/latest/)
 [![BCH compliance](https://bettercodehub.com/edge/badge/harveybc/data_logger?branch=master)](https://bettercodehub.com/)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/harveybc/data_logger/blob/master/LICENSE)
