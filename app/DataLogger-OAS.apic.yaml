@@ -4,13 +4,14 @@ info:
   description: 'Configurable structure, configurable storage, generic data-logger API.'
   version: '0.01'
   termsOfService: MIT
-host: 'localhost:7777'
+host: 'localhost:5000'
 schemes:
   - http
 securityDefinitions:
   basic_auth:
     type: basic
     description: Basic Auth
+    x-basicInfoFunc: controllers.basic_auth
 definitions:
   input_user:
     type: object
