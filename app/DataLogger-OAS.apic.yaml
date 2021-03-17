@@ -232,7 +232,7 @@ paths:
       produces: []
       schemes: []
       security:
-        - basic_auth: ['user.create']
+        - basic_auth: ['controllers.user.create']
       operationId: controllers.user.create
       responses:
         '200':

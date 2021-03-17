@@ -6,8 +6,17 @@ from connexion.exceptions import OAuthScopeProblem
 
 
 def basic_auth(username, password, required_scopes=None):
-    if username == 'admin' and password == 'secret':
-        info = {'sub': 'admin', 'scope': 'secret'}
+    """ Performs basic authentication from the user table in the database
+                  
+        Args:
+        username (str): username
+        password (str): password
+
+        Returns:
+        :obj:`argparse.Namespace`: command line parameters namespace
+    """
+    if username == 'test0' and password == 'test0':
+        info = {'sub': 'test0', 'scope': 'secret'}
     elif username == 'foo' and password == 'bar':
         info = {'sub': 'user1', 'scope': ''}
     else:
@@ -23,13 +32,3 @@ def basic_auth(username, password, required_scopes=None):
             )
 
     return info
-
-
-def get_secret(user) -> str:
-    return "You are {user} and the secret is 'wbevuec'".format(user=user)
-
-
-if __name__ == '__main__':
-    app = connexion.FlaskApp(__name__)
-    app.add_api('openapi.yaml')
-    app.run(port=8080)
