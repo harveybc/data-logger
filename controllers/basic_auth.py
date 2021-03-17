@@ -5,7 +5,7 @@ from connexion.decorators.security import validate_scope
 from connexion.exceptions import OAuthScopeProblem
 
 
-def basic_auth(username, password, required_scopes=None):
+def authenticate(username, password, required_scopes=None):
     """ Performs basic authentication from the user table in the database
                   
         Args:
