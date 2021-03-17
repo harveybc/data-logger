@@ -51,7 +51,7 @@ def get_list():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    return [{'id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin }]
+    return '[{id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin+' }]'
 
 
 
