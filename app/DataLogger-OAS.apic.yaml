@@ -11,7 +11,7 @@ securityDefinitions:
   basic_auth:
     type: basic
     description: Basic Auth
-    x-basicInfoFunc: controllers.basic_auth.authenticate
+    x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
     type: object
