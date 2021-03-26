@@ -3,6 +3,8 @@
 import connexion
 from connexion.decorators.security import validate_scope
 from connexion.exceptions import OAuthScopeProblem
+# the user model is used for authentication
+from models.user import User
 
 
 def authenticate(username, password, required_scopes=None):
@@ -15,6 +17,12 @@ def authenticate(username, password, required_scopes=None):
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
+    # query for the username and pass for the username
+
+
+
+    # compare the db pass with the request one
+
     if username == 'test0' and password == 'test0':
         info = {'sub': 'test0', 'scope': 'secret'}
     elif username == 'foo' and password == 'bar':
