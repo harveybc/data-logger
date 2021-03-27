@@ -22,7 +22,7 @@ def authenticate(username, password, required_scopes=None):
     session = Session()
 
     # perform query
-    user_model = session.query(User).filter(user_model.username == username).first()
+    user_model = session.query(User).filter(username == username).first()
 
     # compare the db pass with the request one
     if password == user_model.password and user_model.admin == True:
