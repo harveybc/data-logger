@@ -2,6 +2,7 @@
 
 from models.user import User
 from app.app import db
+import json
 
 def create():
     """ Parse command line parameters.
@@ -56,7 +57,7 @@ def get_list():
     """
     res = User.query.all()
 
-    return res
+    return json.dumps(res)
    
 
 
