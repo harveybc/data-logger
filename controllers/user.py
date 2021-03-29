@@ -56,7 +56,7 @@ def get_list():
         :obj:`argparse.Namespace`: command line parameters namespace
     """
     res = User.query.all()
-    print res
+    print(res)
     return json.dumps([dict(r) for r in res])
    
 
