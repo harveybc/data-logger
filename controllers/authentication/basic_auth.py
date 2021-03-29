@@ -5,7 +5,7 @@ from connexion.decorators.security import validate_scope
 from connexion.exceptions import OAuthScopeProblem
 # the user model is used for authentication
 from models.user import User
-from sqlalchemy.orm import sessionmaker
+from app.app import db
 
 def authenticate(username, password, required_scopes=None):
     """ Performs basic authentication from the user table in the database
@@ -17,12 +17,9 @@ def authenticate(username, password, required_scopes=None):
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    # create a session
-    Session = sessionmaker()
-    session = Session()
 
     # perform query
-    user_model = session.query(User).filter(username == username).first()
+    user_model = User.query.filter_by(username=username).first()
 
     # compare the db pass with the request one
     if password == user_model.password and user_model.admin == True:
