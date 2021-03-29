@@ -1,5 +1,8 @@
 """ Handlers for the user endpoint  """
 
+from models.user import User
+from app.app import db
+
 def create():
     """ Parse command line parameters.
 
@@ -51,9 +54,10 @@ def get_list():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    return "test response"
-    #return '[{id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin+' }]'
+    res = User.query.all()
 
+    return res
+   
 
 
 
