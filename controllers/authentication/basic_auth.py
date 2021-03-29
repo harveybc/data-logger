@@ -6,6 +6,7 @@ from connexion.exceptions import OAuthScopeProblem
 # the user model is used for authentication
 from models.user import User
 from app.app import db
+from app.base.util import verify_pass
 
 def authenticate(username, password, required_scopes=None):
     """ Performs basic authentication from the user table in the database
@@ -22,7 +23,7 @@ def authenticate(username, password, required_scopes=None):
     user_model = User.query.filter_by(username=username).first()
 
     # compare the db pass with the request one
-    if password == user_model.password and user_model.admin == True:
+    if verify_pass(password, user_model.password) and user_model.admin == True:
         info = {'sub': username, 'scope': 'admin'}
     elif password == user_model.password:
         info = {'sub': username, 'scope': ''}
