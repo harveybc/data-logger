@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import click
-from app.app import  create_db
+from app.app import  db
 from config import config_dict
 
 app = Flask(__name__)
@@ -14,8 +14,7 @@ app_config = config_dict['Debug']
 app.config.from_object(app_config)
 #print ("app.config = ",app_config)
 #db = SQLAlchemy()
-
-db = create_db(app)
+#db = create_db(app)
 
 
 @bp_init_db.cli.command('init')
