@@ -57,7 +57,9 @@ def get_list():
     """
     res = User.query.all()
     print(res)
-    r2 = [dict(r) for r in res]
+    r2 =[]
+    for r in res:
+        r2.append(dict(r))
     return json.dumps(r2)
    
 
