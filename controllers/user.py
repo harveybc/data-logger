@@ -59,7 +59,7 @@ def get_list():
     print(res)
     r2 =[]
     for r in res:
-        r2.append(r.as_dict())
+        r2.append(str(r))
     return json.dumps(r2)
    
 
