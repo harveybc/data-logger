@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
         return str(self.username)
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name).decode('utf-8') for c in self.__table__.columns}
+       return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 @login_manager.user_loader
 def user_loader(id):
