@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
         return str(self.username)
 
     def as_json(self):
-       return json.dumps(self)
+       return json.dumps(self.__dict__)
 
     def as_dict(self):   
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
