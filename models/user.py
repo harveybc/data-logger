@@ -8,7 +8,7 @@ from app.base.util import hash_pass
 from app.db_init import db
 from app.app import login_manager
 from sqlalchemy.orm import relationship
-
+import json
 
 class User(db.Model, UserMixin):
     """ Map the user table columns and bidirectional one-to many relationship with process """
@@ -42,7 +42,10 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return str(self.username)
 
-    def as_dict(self):
+    def as_json(self):
+       return json.dumps(self)
+
+    def as_dict(self):   
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 @login_manager.user_loader
