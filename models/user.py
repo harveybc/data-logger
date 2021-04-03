@@ -43,10 +43,24 @@ class User(db.Model, UserMixin):
         return str(self.username)
 
     def as_json(self):
-       return json.dumps(self.__dict__)
+       return json.dumps(self.as_dict())
 
     def as_dict(self):   
-       return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+        r2 = {}
+        for c in self.__table__.columns:
+            attr = getattr(self, c.name)
+            if is_num(attr):
+                r2[c.name]=attr
+            else:
+                r2[c.name]=str(attr)
+        return r2
+        
+def is_num(n):
+    if isinstance(n, int):
+        return True
+    if isinstance(n, float):
+        return n.is_integer()
+    return False
 
 @login_manager.user_loader
 def user_loader(id):

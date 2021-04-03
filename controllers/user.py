@@ -58,7 +58,7 @@ def get_list():
     res = User.query.all()
     r2 =[]
     for r in res:
-        r2.append(r.as_json())
+        r2.append(r.as_dict())
     return r2
    
 
