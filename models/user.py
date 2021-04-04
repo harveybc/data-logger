@@ -42,9 +42,6 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return str(self.username)
 
-    def as_json(self):
-       return json.dumps(self.as_dict())
-
     def as_dict(self):   
         r2 = {}
         for c in self.__table__.columns:
