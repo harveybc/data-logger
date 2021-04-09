@@ -15,16 +15,19 @@ def create():
     """
     #return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
 
-def get():
+@app.route('/users/<int:id>')
+def get(id):
     """ Parse command line parameters.
                   
         Args:
-        args ([str]): command line parameters as list of strings
+        args ([str]): command line parpameters as list of strings
 
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    return 'id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+	res = User.query.filter_by(id=id).first_or_404()
+    return res
+    
 
 def update():
     """ Parse command line parameters.
