@@ -1,6 +1,6 @@
 flask
 flask_login
-flask_migrate
+flask-migrate
 flask_wtf
 flask-sqlalchemy==2.*
 email_validator
