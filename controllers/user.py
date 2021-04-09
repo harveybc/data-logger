@@ -25,7 +25,7 @@ def get(id):
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-	res = User.query.filter_by(id=id).first_or_404()
+    res = User.query.filter_by(id=id).first_or_404()
     return res
     
 
