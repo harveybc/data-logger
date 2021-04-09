@@ -25,7 +25,7 @@ def get(userId):
         :obj:`argparse.Namespace`: command line parameters namespace
     """
     res = User.query.filter_by(id=int(userId)).first_or_404()
-    return res
+    return res.as_dict()
     
 
 def update():
