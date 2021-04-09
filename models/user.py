@@ -1,7 +1,7 @@
 """ Map this model's fields and relationships """
 
 from flask_login import UserMixin
-from sqlalchemy import Binary, Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.base.util import hash_pass
@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     username = Column(String, unique=True)
     email = Column(String, unique=True)
     admin = Column(Boolean)
-    password = Column(Binary)
+    password = Column(String)
 
     # realationships
     processes = relationship("Process", back_populates='user')
