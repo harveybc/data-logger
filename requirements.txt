@@ -7,4 +7,5 @@ email_validator
 python-decouple
 gunicorn
 sqliteJson
-connexion[swagger-ui]
+connexion
+swagger-ui-bundle
