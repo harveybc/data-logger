@@ -1,10 +1,10 @@
-""" Handlers for the users API endpoint  """
+""" Handlers for the user endpoint  """
 
 from models.user import User
 from app.app import db
 import json
 
-def create(body):
+def create(body): 
     """ Parse command line parameters.
 
         Args:

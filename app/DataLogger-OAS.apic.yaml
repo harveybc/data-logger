@@ -223,7 +223,7 @@ parameters: {}
 paths:
   /users:
     post:
-      tags:
+      tags: 
         - user
         - create
       summary: Create user
