@@ -1,4 +1,4 @@
-""" Handlers for the user endpoint  """
+""" Handlers for the users API endpoint  """
 
 from models.user import User
 from app.app import db
