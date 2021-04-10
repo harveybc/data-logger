@@ -22,13 +22,13 @@ definitions:
         type: string
       password:
         type: string
-      is_admin:
+      admin:
         type: boolean
     required:
       - username
       - email
       - password
-      - is_admin
+      - admin
   output_user:
     type: object
     properties:
@@ -38,13 +38,13 @@ definitions:
         type: string
       email:
         type: string
-      is_admin:
+      admin:
         type: boolean
     required:
       - id
       - username
       - email
-      - is_admin
+      - admin
   input_process:
     type: object
     properties:
