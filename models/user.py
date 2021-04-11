@@ -1,4 +1,6 @@
-""" Map this model's fields and relationships """
+""" Model for the user table. 
+    Description: Contains the model's class, atributes, initialization and representation.
+"""
 
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, Boolean
