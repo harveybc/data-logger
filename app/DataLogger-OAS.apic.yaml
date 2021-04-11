@@ -256,14 +256,14 @@ paths:
       tags:
         - user
         - list
-      summary: Get list of users
-      description: Get list of users
+      summary: Get list of all users
+      description: Get list of all users
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.get_list
+      operationId: controllers.user.read_all
       responses:
         '200':
           schema:
@@ -292,7 +292,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.get
+      operationId: controllers.user.read
       responses:
         '200':
           schema:

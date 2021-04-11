@@ -1,5 +1,5 @@
 """ Controller for the user endpoint. 
-    Description: Contains API endpoint handler functions for CRUD operations.  
+    Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
 from models.user import User
@@ -14,7 +14,7 @@ def create(body):
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        new_user (dict): the newly created user register with empty password field.
+        res (dict): the newly created user register with empty password field.
     """
     # instantiate user with the body dict as kwargs
     new_user = User(**body)
@@ -35,52 +35,100 @@ def create(body):
     res.password=""
     # return register as dict
     return res.as_dict()
-    
-def get(userId):
-    """ Parse command line parameters.
-                  
+
+def read(userId):
+    """ Query a register in db based on the id field of the user model, obtained from a request's userId url parameter.
+
         Args:
-        args ([str]): command line parpameters as list of strings
+        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
-    """
-    res = User.query.filter_by(id=int(userId)).first_or_404()
+        res (dict): the requested user register with empty password field.
+    """ 
+    try:
+        res = User.query.filter_by(id=int(userId)).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # empty pass
+    res.password=""
     return res.as_dict()
     
 
-def update():
-    """ Parse command line parameters.
+def update(userId, body):
+""" Update a register in db based on a json from a request's body parameter.
 
         Args:
-        args ([str]): command line parameters as list of strings
+        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
+        res (dict): the newly created user register with empty password field.
     """
+    # query the existing register
+    try:
+        res = User.query.filter_by(id=int(userId)).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # replace model with body fields
+    body['id']=res.id
+    res.__dict__ = body
+    # perform update 
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # test if the model was updated 
+    try:
+        res = User.query.filter_by(id=int(userId)).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # empty pass
+    res.password=""
+    # return register as dict
+    return res.as_dict()
 
-def delete():
-    """ Parse command line parameters.
+def delete(userId):
+    """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
 
         Args:
-        args ([str]): command line parameters as list of strings
+        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
-    """
+        res (int): the deleted register id field
+    """ 
+    try:
+        res = User.query.filter_by(id=int(userId)).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # perform delete 
+    db.session.delete(res)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    return res.id
 
-def get_list():
-    """ Parse command line parameters.
-
-        Args:
-        args ([str]): command line parameters as list of strings
+def read_all():
+    """ Query all registers of the user model.
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
-    """
-    res = User.query.all()
+        res (dict): the requested user registers with empty password field.
+    """ 
+    try:
+        res = User.query.all()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # convert to list of dicts and empty pass
     r2 =[]
     for r in res:
+        r.password = ""
         r2.append(r.as_dict())
     return r2
    
