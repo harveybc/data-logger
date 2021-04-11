@@ -13,7 +13,7 @@ def create(body):
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    new_user = User(body)
+    new_user = User(**body)
     db.session.add(new_user)
     db.session.commit()
     return 'User was succesfully created'
