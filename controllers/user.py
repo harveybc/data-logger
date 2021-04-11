@@ -56,7 +56,7 @@ def read(userId):
     
 
 def update(userId, body):
-""" Update a register in db based on a json from a request's body parameter.
+    """ Update a register in db based on a json from a request's body parameter.
 
         Args:
         userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
