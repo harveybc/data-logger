@@ -1,4 +1,6 @@
-""" Handlers for the user endpoint  """
+""" Controller for the user endpoint. 
+    Description: Contains API endpoint handler functions for CRUD operations.  
+"""
 
 from models.user import User
 from app.app import db
@@ -12,7 +14,7 @@ def create(body):
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        new_user (dict): the newly created user register
+        new_user (dict): the newly created user register with empty password field.
     """
     # instantiate user with the body dict as kwargs
     new_user = User(**body)
@@ -29,7 +31,7 @@ def create(body):
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
-    # remove pass
+    # empty pass
     res.password=""
     # return register as dict
     return res.as_dict()
