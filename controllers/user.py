@@ -126,11 +126,11 @@ def read_all():
         error = str(e.__dict__['orig'])
         return error
     # convert to list of dicts and empty pass
-    r2 =[]
+    res2 =[]
     for r in res:
         r.password = ""
-        r2.append(r.as_dict())
-    return r2
+        res2.append(r.as_dict())
+    return res2
    
 
 
