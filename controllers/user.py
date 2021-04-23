@@ -82,7 +82,7 @@ def update(userId, body):
         return error
     # test if the model was updated 
     try:
-        res = User.query.filter_by(id=int(userId)).first_or_404()
+        res = User.query.filter_by(username=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
