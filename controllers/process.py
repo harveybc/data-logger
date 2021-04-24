@@ -1,33 +1,34 @@
-""" Controller for the user endpoint. 
+""" Controller for the process endpoint. 
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from models.user import User
+from models.process import process
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
+		Also create the the process' tables based on the configuration field.
 
         Args:
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        res (dict): the newly created user register with empty password field.
+        res (dict): the newly created process register with empty password field.
     """
-    # instantiate user with the body dict as kwargs
-    new_user = User(**body)
+    # instantiate process with the body dict as kwargs
+    new_process = process(**body)
     # create new flask-sqlalchemy session
-    db.session.add(new_user)
+    db.session.add(new_process)
     try:
         db.session.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
-    # test if the new user was created 
+    # test if the new process was created 
     try:
-        res = User.query.filter_by(username=new_user.username).first_or_404()
+        res = process.query.filter_by(processname=new_process.processname).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -36,17 +37,17 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
-def read(userId):
-    """ Query a register in db based on the id field of the user model, obtained from a request's userId url parameter.
+def read(processId):
+    """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
 
         Returns:
-        res (dict): the requested user register with empty password field.
+        res (dict): the requested process register with empty password field.
     """ 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -55,19 +56,19 @@ def read(userId):
     return res.as_dict()
     
 
-def update(userId, body):
+def update(processId, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        res (dict): the newly created user register with empty password field.
+        res (dict): the newly created process register with empty password field.
     """
     # query the existing register
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -82,7 +83,7 @@ def update(userId, body):
         return error
     # test if the model was updated 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -91,17 +92,17 @@ def update(userId, body):
     # return register as dict
     return res.as_dict()
 
-def delete(userId):
-    """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
+def delete(processId):
+    """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
 
         Returns:
         res (int): the deleted register id field
     """ 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -115,13 +116,13 @@ def delete(userId):
     return res.id
 
 def read_all():
-    """ Query all registers of the user model.
+    """ Query all registers of the process model.
 
         Returns:
-        res (dict): the requested user registers with empty password field.
+        res (dict): the requested process registers with empty password field.
     """ 
     try:
-        res = User.query.all()
+        res = process.query.all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error

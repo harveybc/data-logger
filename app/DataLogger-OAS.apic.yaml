@@ -442,6 +442,37 @@ paths:
           $ref: '#/responses/trait:error-response:404'
       parameters: []
   '/process/{processId}':
+	post:
+      tags:
+        - process
+        - create
+        - table
+      summary: Create process table table register
+      description: Create process table table register
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.create_in_table
+      responses:
+        '201':
+          data: object
+          description: Returns response 201 with the data of the created register
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            tableId: string
+            data: object
     get:
       tags:
         - process
