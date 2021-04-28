@@ -61,6 +61,48 @@ definitions:
       - description
       - userId
       - configuration
+  input_process_register:
+    type: object
+    properties:
+      process:
+        type: string
+      table:
+        type: string
+      data:
+        type: object
+    required:
+      - process
+      - table
+      - data
+  table_column:
+    type: object
+    properties:
+      name:
+        type: string
+      col_type:
+        type: string
+      primary:
+        type: boolean
+      indexed:
+      type: boolean
+    required:
+      - name
+      - col_type
+  input_process_table:
+    type: object
+    properties:
+      process:
+        type: string
+      table:
+        type: string
+      columns:
+        type: array
+        items: 
+          $ref: '#/definitions/table_column'
+    required:
+      - process
+      - table
+      - columns
   output_process:
     type: object
     properties:
@@ -409,10 +451,24 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: body
+        - name: process
+          description: Parameters to be used when creating a new process 
           in: body
+          required: false
           schema:
             $ref: '#/definitions/input_process'
+        - name: register
+          description: Parameters to be used when creating a new register inside a table of a process
+          in: body
+          required: false
+          schema:
+            $ref: '#/definitions/input_process_register'
+        - name: table
+          description: Parameters to be used when creating a new table for a process (uses process name as prefix and table name as suffix of the created table).
+          in: body
+          required: false
+          schema:
+            $ref: '#/definitions/input_process_table'
     get:
       tags:
         - process
@@ -442,37 +498,6 @@ paths:
           $ref: '#/responses/trait:error-response:404'
       parameters: []
   '/process/{processId}':
-    post:
-      tags:
-        - process
-        - create
-        - table
-      summary: Create process table table register
-      description: Create process table table register
-      consumes: []
-      produces: []
-      schemes: []
-      security:
-        - basic_auth: []
-      operationId: controllers.process.create_in_table
-      responses:
-        '201':
-          data: object
-          description: Returns response 201 with the data of the created register
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
-      parameters:
-        - name: body
-          in: body
-          schema:
-            tableId: string
-            data: object
     get:
       tags:
         - process
