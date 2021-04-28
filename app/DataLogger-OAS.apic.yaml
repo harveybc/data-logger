@@ -442,7 +442,7 @@ paths:
           $ref: '#/responses/trait:error-response:404'
       parameters: []
   '/process/{processId}':
-	post:
+    post:
       tags:
         - process
         - create
