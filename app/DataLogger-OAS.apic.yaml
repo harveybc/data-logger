@@ -460,7 +460,7 @@ paths:
         '200':
           schema:
             $ref: '#/definitions/output_process_register'
-          description: Returns response 200 with the details of the newly created register in a process' table
+          description: Returns response 200 with the details of the newly created register in a process table
         '201':
           schema:
             $ref: '#/definitions/output_process'
@@ -481,19 +481,16 @@ paths:
         - name: process
           description: Parameters to be used when creating a new process 
           in: body
-          required: false
           schema:
             $ref: '#/definitions/input_process'
         - name: register
           description: Parameters to be used when creating a new register inside a table of a process
           in: body
-          required: false
           schema:
             $ref: '#/definitions/input_process_register'
         - name: table
           description: Parameters to be used when creating a new table for a process (uses process name as prefix and table name as suffix of the created table).
           in: body
-          required: false
           schema:
             $ref: '#/definitions/input_process_table'
     get:
