@@ -56,8 +56,7 @@ definitions:
           $ref: '#/definitions/input_process_table'
       register:
         schema: 
-          $ref: '#/definitions/input_process_register'
-    required: []     
+          $ref: '#/definitions/input_process_register'   
   input_process:
     type: object
     properties:
