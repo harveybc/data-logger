@@ -49,15 +49,12 @@ definitions:
     type: object
     properties:
       process: 
-        description: Parameters to be used when creating a new process
         schema:
           $ref: '#/definitions/input_process'
       table:
-        description: Parameters to be used when creating a new table for a process (uses process name as prefix and table name as suffix of the created table).
         schema: 
           $ref: '#/definitions/input_process_table'
       register:
-        description: Parameters to be used when creating a new register inside a table of a process
         schema: 
           $ref: '#/definitions/input_process_register'
     required: []     
