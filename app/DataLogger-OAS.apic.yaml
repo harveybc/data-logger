@@ -495,7 +495,6 @@ paths:
           $ref: '#/responses/trait:error-response:404'
       parameters:
         - name: body
-          description: Parameters to be used when creating a new process , table or register for a process.
           in: body
           schema:
             $ref: '#/definitions/process_operation'
