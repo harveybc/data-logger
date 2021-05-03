@@ -491,7 +491,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: process
+        - name: body
           in: body
           schema:
             $ref: '#/definitions/process_operation'
