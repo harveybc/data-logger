@@ -478,11 +478,6 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: process
-          description: Parameters to be used when creating a new process 
-          in: body
-          schema:
-            $ref: '#/definitions/input_process'
         - name: table
           description: Parameters to be used when creating a new table for a process (uses process name as prefix and table name as suffix of the created table).
           in: body
