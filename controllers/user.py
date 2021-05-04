@@ -46,7 +46,7 @@ def read(userId):
         res (dict): the requested user register with empty password field.
     """ 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -67,7 +67,7 @@ def update(userId, body):
     """
     # query the existing register
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -82,7 +82,7 @@ def update(userId, body):
         return error
     # test if the model was updated 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -101,7 +101,7 @@ def delete(userId):
         res (int): the deleted register id field
     """ 
     try:
-        res = User.query.filter_by(username=userId).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
