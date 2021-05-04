@@ -2,7 +2,7 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from models.process import process
+from models.process import Process as process
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
