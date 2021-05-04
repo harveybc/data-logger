@@ -11,7 +11,7 @@ def create():
     """
     #return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
 
-def get():
+def read():
     """ Parse command line parameters.
                   
         Args:
@@ -42,7 +42,7 @@ def delete():
         :obj:`argparse.Namespace`: command line parameters namespace
     """
 
-def get_list():
+def read_all():
     """ Parse command line parameters.
 
         Args:
