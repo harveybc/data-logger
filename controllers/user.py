@@ -80,12 +80,12 @@ def update(userId, body):
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
-    # test if the model was updated 
-    try:
-        res = User.query.filter_by(id=userId).first_or_404()
-    except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        return error
+    ## test if the model was updated 
+    #try:
+    #    res = User.query.filter_by(id=userId).first_or_404()
+    #except SQLAlchemyError as e:
+    #    error = str(e.__dict__['orig'])
+    #    return error
     # empty pass
     res.password=""
     # return register as dict
