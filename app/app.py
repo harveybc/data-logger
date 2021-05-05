@@ -40,8 +40,10 @@ def configure_database(app):
     print("Configuring database")
     @app.before_first_request
     def initialize_database():
-        print("Creating database")
         from models.user import User
+        print("Dropping database")
+        db.drop_all()
+        print("Creating database")
         db.create_all()
         print("Seeding database")
         from models.seeds.user import seed
