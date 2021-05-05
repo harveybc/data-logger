@@ -82,14 +82,14 @@ def update(userId, body):
         return error
     # test if the model was updated 
     try:
-        res = User.query.filter_by(id=userId).first_or_404()
+        res2 = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
     # empty pass
-    res.password=""
+    res2.password=""
     # return register as dict
-    return res.as_dict()
+    return res2.as_dict()
 
 def delete(userId):
     """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
