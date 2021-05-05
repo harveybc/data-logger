@@ -45,7 +45,7 @@ def configure_database(app):
         db.drop_all()
         print("Creating database")
         db.create_all()
-        print("Seeding database")
+        print("Seeding database with test user")
         from models.seeds.user import seed
         seed(app, db)
 
