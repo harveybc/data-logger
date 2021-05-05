@@ -87,7 +87,7 @@ def update(userId, body):
     #    error = str(e.__dict__['orig'])
     #    return error
     ## empty pass
-    res['password']=""
+    res.__dict__['password']=""
     # return register as dict
     return res.as_dict()
 
