@@ -38,14 +38,14 @@ def register_blueprints(app):
 # If it is the first time the app is run, create the database and perform data seeding
 def configure_database(app):
     print("Configuring database")
-    #@app.before_first_request
-    #def initialize_database():
-    print("Creating database")
-    from models.user import User
-    db.create_all()
-    print("Seeding database")
-    from models.seeds.user import seed
-    seed(app, db)
+    @app.before_first_request
+    def initialize_database():
+        print("Creating database")
+        from models.user import User
+        db.create_all()
+        print("Seeding database")
+        from models.seeds.user import seed
+        seed(app, db)
 
 
     @app.teardown_request
