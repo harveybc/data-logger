@@ -1,1494 +1,1522 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "DataLogger",
-    "description": "Configurable structure, configurable storage, generic data-logger API.",
-    "version": "0.01",
-    "termsOfService": "MIT"
-  },
-  "host": "localhost:5000",
-  "schemes": [
-    "http"
-  ],
-  "securityDefinitions": {
-    "basic_auth": {
-      "type": "basic",
-      "description": "Basic Auth",
-      "x-basicInfoFunc": "controllers.authentication.basic_auth.authenticate"
-    }
-  },
-  "definitions": {
-    "input_user": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "admin": {
-          "type": "boolean"
+    "swagger": "2.0",
+    "info": {
+        "title": "DataLogger",
+        "description": "Configurable structure, configurable storage, generic data-logger API.",
+        "version": "0.01",
+        "termsOfService": "MIT"
+    },
+    "host": "localhost:5000",
+    "schemes": [
+        "http"
+    ],
+    "securityDefinitions": {
+        "basic_auth": {
+            "type": "basic",
+            "description": "Basic auth, please add the following line to the yaml: x-basicInfoFunc: controllers.authentication.basic_auth.authenticate"
         }
-      },
-      "required": [
-        "username",
-        "email",
-        "password",
-        "admin"
-      ]
     },
-    "output_user": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "admin": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "id",
-        "username",
-        "email",
-        "admin"
-      ]
-    },
-    "process_operation": {
-      "type": "object",
-      "properties": {
-        "process": {
-          "schema": {
-            "$ref": "#/definitions/input_process"
-          }
-        },
-        "table": {
-          "schema": {
-            "$ref": "#/definitions/input_process_table"
-          }
-        },
-        "register": {
-          "schema": {
-            "$ref": "#/definitions/input_process_register"
-          }
-        }
-      },
-      "required": []
-    },
-    "input_process": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "integer"
-        },
-        "configuration": {
-          "type": "object"
-        }
-      },
-      "required": [
-        "name",
-        "description",
-        "userId",
-        "configuration"
-      ]
-    },
-    "input_process_register": {
-      "type": "object",
-      "properties": {
-        "process": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        },
-        "filter_column": {
-          "type": "string",
-          "required": false
-        },
-        "filter_value": {
-          "type": "string",
-          "required": false
-        },
-        "data": {
-          "type": "object"
-        }
-      },
-      "required": [
-        "process",
-        "table",
-        "data"
-      ]
-    },
-    "table_column": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "col_type": {
-          "type": "string"
-        },
-        "primary": {
-          "type": "boolean"
-        },
-        "indexed": null,
-        "type": "boolean"
-      },
-      "required": [
-        "name",
-        "col_type"
-      ]
-    },
-    "input_process_table": {
-      "type": "object",
-      "properties": {
-        "process": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        },
-        "columns": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/table_column"
-          }
-        }
-      },
-      "required": [
-        "process",
-        "table",
-        "columns"
-      ]
-    },
-    "output_process": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "integer"
-        },
-        "configuration": {
-          "type": "object"
-        }
-      }
-    },
-    "output_process_register": {
-      "type": "object"
-    },
-    "output_process_table": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "real_name": {
-          "type": "string"
-        },
-        "columns": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/table_column"
-          }
-        }
-      }
-    },
-    "input_authorization": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "integer"
-        },
-        "processId": {
-          "type": "integer"
-        },
-        "tableName": {
-          "type": "string"
-        },
-        "getList": {
-          "type": "boolean"
-        },
-        "getOne": {
-          "type": "boolean"
-        },
-        "create": {
-          "type": "boolean"
-        },
-        "update": {
-          "type": "boolean"
-        },
-        "delete": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "userId",
-        "processId",
-        "tableName",
-        "getList",
-        "getOne",
-        "create",
-        "update",
-        "delete"
-      ]
-    },
-    "output_authorization": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        },
-        "processId": {
-          "type": "integer"
-        },
-        "tableName": {
-          "type": "string"
-        },
-        "getList": {
-          "type": "boolean"
-        },
-        "getOne": {
-          "type": "boolean"
-        },
-        "create": {
-          "type": "boolean"
-        },
-        "update": {
-          "type": "boolean"
-        },
-        "delete": {
-          "type": "boolean"
-        }
-      }
-    },
-    "input_log": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "integer"
-        },
-        "processId": {
-          "type": "integer"
-        },
-        "tableName": {
-          "type": "string"
-        },
-        "route": {
-          "type": "string"
-        },
-        "method": {
-          "type": "string"
-        },
-        "parameters": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "userId",
-        "processId",
-        "tableName",
-        "route",
-        "method",
-        "parameters"
-      ]
-    },
-    "output_log": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "userId": {
-          "type": "integer"
-        },
-        "processId": {
-          "type": "integer"
-        },
-        "tableName": {
-          "type": "string"
-        },
-        "route": {
-          "type": "string"
-        },
-        "method": {
-          "type": "string"
-        },
-        "parameters": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "userId",
-        "processId",
-        "tableName",
-        "route",
-        "method",
-        "parameters"
-      ]
-    }
-  },
-  "responses": {
-    "trait:error-response:400": {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "errCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "errCode",
-          "message"
-        ]
-      },
-      "description": "Bad Request."
-    },
-    "trait:error-response:401": {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "errCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "errCode",
-          "message"
-        ]
-      },
-      "description": "Unauthorized"
-    },
-    "trait:error-response:403": {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "errCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "errCode",
-          "message"
-        ]
-      },
-      "description": "Forbidden"
-    },
-    "trait:error-response:404": {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "errCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "errCode",
-          "message"
-        ]
-      },
-      "description": "Not Found"
-    }
-  },
-  "parameters": {},
-  "paths": {
-    "/users": {
-      "post": {
-        "tags": [
-          "user",
-          "create"
-        ],
-        "summary": "Create user",
-        "description": "Create user",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": [
-              "controllers.user.create"
+    "definitions": {
+        "input_user": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "admin": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "username",
+                "email",
+                "password",
+                "admin"
             ]
-          }
-        ],
-        "operationId": "controllers.user.create",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_user"
-            },
-            "description": "Returns response 200 with the details of the newly created user"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/input_user"
+        "output_user": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "is_admin": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "id",
+                "username",
+                "email",
+                "is_admin"
+            ]
+        },
+        "table": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "real_name": {
+                    "type": "string"
+                },
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/table_column",
+                        "type": [
+                            null
+                        ]
+                    }
+                }
             }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "user",
-          "list"
-        ],
-        "summary": "Get list of all users",
-        "description": "Get list of all users",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.user.read_all",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/output_user"
-              }
-            },
-            "description": "Returns 200 with list/array of users"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": []
-      }
+        "output_process": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "tables": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/table",
+                        "type": [
+                            null
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "userId"
+            ]
+        },
+        "input_authorization": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "integer"
+                },
+                "processId": {
+                    "type": "integer"
+                },
+                "tableName": {
+                    "type": "string"
+                },
+                "getList": {
+                    "type": "boolean"
+                },
+                "getOne": {
+                    "type": "boolean"
+                },
+                "create": {
+                    "type": "boolean"
+                },
+                "update": {
+                    "type": "boolean"
+                },
+                "delete": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "userId",
+                "processId",
+                "tableName",
+                "getList",
+                "getOne",
+                "create",
+                "update",
+                "delete"
+            ]
+        },
+        "output_authorization": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "processId": {
+                    "type": "integer"
+                },
+                "tableName": {
+                    "type": "string"
+                },
+                "getList": {
+                    "type": "boolean"
+                },
+                "getOne": {
+                    "type": "boolean"
+                },
+                "create": {
+                    "type": "boolean"
+                },
+                "update": {
+                    "type": "boolean"
+                },
+                "delete": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "input_log": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "integer"
+                },
+                "processId": {
+                    "type": "integer"
+                },
+                "tableName": {
+                    "type": "string"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userId",
+                "processId",
+                "tableName",
+                "route",
+                "method",
+                "parameters"
+            ]
+        },
+        "output_log": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "processId": {
+                    "type": "integer"
+                },
+                "tableName": {
+                    "type": "string"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "userId",
+                "processId",
+                "tableName",
+                "route",
+                "method",
+                "parameters"
+            ]
+        },
+        "input_process_register": {
+            "type": "object",
+            "properties": {
+                "process": {
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "filter_column": {
+                    "type": "string"
+                },
+                "filter_value": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "process",
+                "table",
+                "data"
+            ]
+        },
+        "table_column": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "col_type": {
+                    "type": "string"
+                },
+                "primary": {
+                    "type": "boolean"
+                },
+                "indexed": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "name",
+                "col_type"
+            ]
+        },
+        "input_process_table": {
+            "type": "object",
+            "properties": {
+                "processId": {
+                    "type": "integer"
+                },
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/table_column",
+                        "type": [
+                            null
+                        ]
+                    }
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "processId",
+                "columns",
+                "name"
+            ]
+        },
+        "process_operation": {
+            "type": "object",
+            "properties": {
+                "process": {
+                    "$ref": "#/definitions/input_process"
+                },
+                "table": {
+                    "$ref": "#/definitions/input_process_table"
+                },
+                "register": {
+                    "$ref": "#/definitions/input_process_register"
+                }
+            }
+        },
+        "output_process_register": {
+            "type": "object"
+        },
+        "output_process_table": {
+            "type": "object",
+            "properties": {
+                "processId": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "table": {
+                    "$ref": "#/definitions/table"
+                }
+            },
+            "required": [
+                "processId",
+                "name",
+                "table"
+            ]
+        },
+        "input_process": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                },
+                "tables": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/table",
+                        "type": [
+                            null
+                        ]
+                    }
+                }
+            }
+        }
     },
-    "/users/{userId}": {
-      "get": {
-        "tags": [
-          "user",
-          "get"
-        ],
-        "summary": "Get detail of user by userId",
-        "description": "Get detail of user by userId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.user.read",
-        "responses": {
-          "200": {
+    "responses": {
+        "trait:error-response:400": {
             "schema": {
-              "$ref": "#/definitions/output_user"
+                "type": "object",
+                "properties": {
+                    "errCode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "errCode",
+                    "message"
+                ]
             },
-            "description": "Returns 200 with the detail of user for the specified userId"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
+            "description": "Bad Request."
         },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "user",
-          "update"
-        ],
-        "summary": "Update user details by userId",
-        "description": "Update user details by userId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.user.update",
-        "responses": {
-          "200": {
+        "trait:error-response:401": {
             "schema": {
-              "$ref": "#/definitions/output_user"
+                "type": "object",
+                "properties": {
+                    "errCode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "errCode",
+                    "message"
+                ]
             },
-            "description": "Returns 200 with the detail of updated user"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
+            "description": "Unauthorized"
         },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
+        "trait:error-response:403": {
             "schema": {
-              "$ref": "#/definitions/input_user"
-            }
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "user",
-          "delete"
-        ],
-        "summary": "Delete user by userId",
-        "description": "Delete user by userId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.user.delete",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "object"
+                "type": "object",
+                "properties": {
+                    "errCode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "errCode",
+                    "message"
+                ]
             },
-            "description": "Returns 200"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
+            "description": "Forbidden"
         },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
+        "trait:error-response:404": {
             "schema": {
-              "type": "object"
-            }
-          }
-        ]
-      }
+                "type": "object",
+                "properties": {
+                    "errCode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "errCode",
+                    "message"
+                ]
+            },
+            "description": "Not Found"
+        }
     },
-    "/process": {
-      "post": {
-        "tags": [
-          "process",
-          "create"
-        ],
-        "summary": "Create process, a table for a process or a register inside a table of a process",
-        "description": "Create process, a table for a process or a register inside a table of a process, depending on the body parameters. (process, table or register)",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.process.create",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_process_register"
+    "parameters": {},
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "user",
+                    "create"
+                ],
+                "summary": "Create user",
+                "description": "Create user",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.user.create",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_user"
+                        },
+                        "description": "Returns response 200 with the details of the newly created user"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_user"
+                        }
+                    }
+                ]
             },
-            "description": "Returns response 200 with the details of the newly created register in a process table"
-          },
-          "201": {
-            "schema": {
-              "$ref": "#/definitions/output_process"
-            },
-            "description": "Returns response 201 with the details of the newly created process"
-          },
-          "202": {
-            "schema": {
-              "$ref": "#/definitions/output_process_table"
-            },
-            "description": "Returns response 201 with the details of the newly created table for a process"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/process_operation"
+            "get": {
+                "tags": [
+                    "user",
+                    "list"
+                ],
+                "summary": "Get list of users",
+                "description": "Get list of users",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.user.read_all",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output_user"
+                            }
+                        },
+                        "description": "Returns 200 with list/array of users"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": []
             }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "process",
-          "list"
-        ],
-        "summary": "Get a list of processes, or a list of registers of a table of a process",
-        "description": "Get list of processes, or a list of registers of a table of a process, depending on the existence of the table query parameter.",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.process.get_list",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/output_process"
-              }
-            },
-            "description": "Returns 200 with list/array of processs"
-          },
-          "203": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/output_process_register"
-              }
-            },
-            "description": "Returns 203 with list/array of registers of the selected table"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "table",
-            "in": "query",
-            "description": "Name of the table of a process (suffix) to be queried instead of the processes table.",
-            "required": false,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/process/{processId}": {
-      "get": {
-        "tags": [
-          "process",
-          "get"
-        ],
-        "summary": "Get detail of process by processId, or a register from a table of a process",
-        "description": "Get detail of process by processId, or a register from a table of a process, depending on the existence of query parameters.",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.process.get",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_process"
+        "/users/{userId}": {
+            "get": {
+                "tags": [
+                    "user",
+                    "get"
+                ],
+                "summary": "Get detail of user by userId",
+                "description": "Get detail of user by userId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.user.read",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_user"
+                        },
+                        "description": "Returns 200 with the detail of user for the specified userId"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
             },
-            "description": "Returns 200 with the detail of process for the specified processId"
-          },
-          "203": {
-            "schema": {
-              "$ref": "#/definitions/output_process_register"
-            },
-            "description": "Returns 203 with the detail of a register of a table in the process for the specified processId"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "processId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "table",
-            "in": "query",
-            "description": "If present indicate the table of the process (suffix) to perform the query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "column",
-            "in": "query",
-            "description": "If present indicate the column to filter the query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "value",
-            "in": "query",
-            "description": "If present indicate the value used with the column to filter the query (returns only the first one)",
-            "required": false,
-            "type": "string"
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "process",
-          "update"
-        ],
-        "summary": "Update process register by processId, or a register in a table of a process",
-        "description": "Update process details by processId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.process.update",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_process"
-            },
-            "description": "Returns 200 with the detail of updated process"
-          },
-          "203": {
-            "schema": {
-              "$ref": "#/definitions/output_process_register"
-            },
-            "description": "Returns 203 with the detail of updated process"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "processId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "process",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/input_process"
+            "delete": {
+                "tags": [
+                    "user",
+                    "delete"
+                ],
+                "summary": "Delete user by userId",
+                "description": "Delete user by userId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.user.delete",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "description": "Returns 200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ]
             }
-          },
-          {
-            "name": "register",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/input_process_register"
+        },
+        "/users/{newUserId}": {
+            "put": {
+                "tags": [
+                    "user",
+                    "update"
+                ],
+                "summary": "Update user details by userId",
+                "description": "Update user details by userId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.user.update",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_user"
+                        },
+                        "description": "Returns 200 with the detail of updated user"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "newUserId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_user"
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "process",
-          "delete"
-        ],
-        "summary": "Delete process by processId or a register in a table of the process by a filter_columnand filter_value fields",
-        "description": "Delete process by processId  or a register in a table of the process by a column and value fields",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.process.delete",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "object"
-            },
-            "description": "Returns 200"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "processId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "table",
-            "in": "query",
-            "description": "If present indicate the table of the process (suffix) to perform the query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "column",
-            "in": "query",
-            "description": "If present indicate the column to filter the query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "value",
-            "in": "query",
-            "description": "If present indicate the value used with the column to filter the query (returns only the first one)",
-            "required": false,
-            "type": "string"
-          }
-        ]
-      }
-    },
-    "/authorizations": {
-      "post": {
-        "tags": [
-          "authorization",
-          "create"
-        ],
-        "summary": "Create authorization",
-        "description": "Create authorization",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.authorization.create",
-        "responses": {
-          "201": {
-            "schema": {
-              "$ref": "#/definitions/output_authorization"
+        "/process": {
+            "post": {
+                "tags": [
+                    "process",
+                    "create"
+                ],
+                "summary": "Create process",
+                "description": "Create process, a table for a process or a register inside a table of a process, depending on the body parameters. (process, table or register)",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.process.create",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process_register"
+                        },
+                        "description": "Returns response 200 with the details of the newly created register in a process table"
+                    },
+                    "201": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process"
+                        },
+                        "description": "Returns response 201 with the details of the newly created process"
+                    },
+                    "202": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process_table"
+                        },
+                        "description": "Returns response 201 with the details of the newly created table for a process"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/process_operation"
+                        }
+                    }
+                ]
             },
-            "description": "Returns response 201 with the details of the newly created authorization"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/input_authorization"
+            "get": {
+                "tags": [
+                    "process",
+                    "list"
+                ],
+                "summary": "Get list of process",
+                "description": "Get list of processes, or a list of registers of a table of a process, depending on the existence of the table query parameter.",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.process.read_all",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output_process"
+                            }
+                        },
+                        "description": "Returns 200 with list/array of processs"
+                    },
+                    "203": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output_process_register"
+                            }
+                        },
+                        "description": "Returns 203 with list/array of registers of the selected table"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "table",
+                        "in": "query",
+                        "description": "Name of the table of a process (suffix) to be queried instead of the processes table.",
+                        "required": false,
+                        "type": "string"
+                    }
+                ]
             }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "authorization",
-          "list"
-        ],
-        "summary": "Get list of authorizations",
-        "description": "Get list of authorizations",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.authorization.get_list",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/output_authorization"
-              }
-            },
-            "description": "Returns 200 with list/array of authorizations"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": []
-      }
-    },
-    "/authorizations/{authorizationId}": {
-      "get": {
-        "tags": [
-          "authorization",
-          "get"
-        ],
-        "summary": "Get detail of authorization by authorizationId",
-        "description": "Get detail of authorization by authorizationId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.authorization.get",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_authorization"
+        "/process/{processId}": {
+            "get": {
+                "tags": [
+                    "process",
+                    "get"
+                ],
+                "summary": "Get detail of process",
+                "description": "Get detail of process by processId, or a register from a table of a process, depending on the existence of query parameters.",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.process.read",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process"
+                        },
+                        "description": "Returns 200 with the detail of process for the specified processId"
+                    },
+                    "203": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process_register"
+                        },
+                        "description": "Returns 203 with the detail of a register of a table in the process for the specified processId"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "table",
+                        "in": "query",
+                        "description": "If present indicate the table of the process (suffix) to perform the query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "column",
+                        "in": "query",
+                        "description": "If present indicate the column to filter the query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "If present indicate the value used with the column to filter the query (returns only the first one)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "processId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ]
             },
-            "description": "Returns 200 with the detail of authorization for the specified authorizationId"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "authorizationId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "authorization",
-          "update"
-        ],
-        "summary": "Update authorization details by authorizationId",
-        "description": "Update authorization details by authorizationId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.authorization.update",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_authorization"
+            "put": {
+                "tags": [
+                    "process",
+                    "update"
+                ],
+                "summary": "Update process",
+                "description": "Update process register by processId, or a register in a table of a process",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.process.update",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process"
+                        },
+                        "description": "Returns 200 with the detail of updated process"
+                    },
+                    "203": {
+                        "schema": {
+                            "$ref": "#/definitions/output_process_register"
+                        },
+                        "description": "Returns 203 with the detail of updated process register"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "processId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/process_operation"
+                        }
+                    }
+                ]
             },
-            "description": "Returns 200 with the detail of updated authorization"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "authorizationId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/input_authorization"
+            "delete": {
+                "tags": [
+                    "process",
+                    "delete"
+                ],
+                "summary": "Delete process",
+                "description": "Delete process by processId  or a register in a table of the process by a column and value filter",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.process.delete",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "description": "Returns 200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "table",
+                        "in": "query",
+                        "description": "If present indicate the table of the process (suffix) to perform the query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "column",
+                        "in": "query",
+                        "description": "If present indicate the column to filter the query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "If present indicate the value used with the column to filter the query (returns only the first one)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "processId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "authorization",
-          "delete"
-        ],
-        "summary": "Delete authorization by authorizationId",
-        "description": "Delete authorization by authorizationId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.authorization.delete",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "object"
-            },
-            "description": "Returns 200"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "authorizationId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object"
+        "/authorizations": {
+            "post": {
+                "tags": [
+                    "authorization",
+                    "create"
+                ],
+                "summary": "Create authorization",
+                "description": "Create authorization",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.authoriz.create",
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "$ref": "#/definitions/output_authorization"
+                        },
+                        "description": "Returns response 201 with the details of the newly created authorization"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_authorization"
+                        }
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "authorization",
+                    "list"
+                ],
+                "summary": "Get list of authorizations",
+                "description": "Get list of authorizations",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.authoriz.read_all",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output_authorization"
+                            }
+                        },
+                        "description": "Returns 200 with list/array of authorizations"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": []
             }
-          }
-        ]
-      }
-    },
-    "/logs": {
-      "post": {
-        "tags": [
-          "log",
-          "create"
-        ],
-        "summary": "Create log",
-        "description": "Create log",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.log.create",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_log"
-            },
-            "description": "Returns response 201 with the details of the newly created log"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/input_log"
+        "/authorizations/{authorizationId}": {
+            "get": {
+                "tags": [
+                    "authorization",
+                    "get"
+                ],
+                "summary": "Get detail of authorization by authorizationId",
+                "description": "Get detail of authorization by authorizationId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.authorization.read",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_authorization"
+                        },
+                        "description": "Returns 200 with the detail of authorization for the specified authorizationId"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "authorizationId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "authorization",
+                    "update"
+                ],
+                "summary": "Update authorization details by authorizationId",
+                "description": "Update authorization details by authorizationId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.authoriz.update",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_authorization"
+                        },
+                        "description": "Returns 200 with the detail of updated authorization"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "authorizationId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_authorization"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "authorization",
+                    "delete"
+                ],
+                "summary": "Delete authorization by authorizationId",
+                "description": "Delete authorization by authorizationId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.authoriz.delete",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "description": "Returns 200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "authorizationId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "log",
-          "list"
-        ],
-        "summary": "Get list of logs",
-        "description": "Get list of logs",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.log.get_list",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/output_log"
-              }
-            },
-            "description": "Returns 200 with list/array of logs"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": []
-      }
-    },
-    "/logs/{logId}": {
-      "get": {
-        "tags": [
-          "log",
-          "get"
-        ],
-        "summary": "Get detail of log by logId",
-        "description": "Get detail of log by logId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.log.get",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_log"
+        "/logs": {
+            "post": {
+                "tags": [
+                    "log",
+                    "create"
+                ],
+                "summary": "Create log",
+                "description": "Create log",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.log.create",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_log"
+                        },
+                        "description": "Returns response 201 with the details of the newly created log"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_log"
+                        }
+                    }
+                ]
             },
-            "description": "Returns 200 with the detail of log for the specified logId"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "logId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "log",
-          "update"
-        ],
-        "summary": "Update log details by logId",
-        "description": "Update log details by logId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.log.update",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/output_log"
-            },
-            "description": "Returns 200 with the detail of updated log"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
-        },
-        "parameters": [
-          {
-            "name": "logId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/input_log"
+            "get": {
+                "tags": [
+                    "log",
+                    "list"
+                ],
+                "summary": "Get list of logs",
+                "description": "Get list of logs",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.log.read_all",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output_log"
+                            }
+                        },
+                        "description": "Returns 200 with list/array of logs"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": []
             }
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "log",
-          "delete"
-        ],
-        "summary": "Delete log by logId",
-        "description": "Delete log by logId",
-        "consumes": [],
-        "produces": [],
-        "schemes": [],
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "operationId": "controllers.log.delete",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "object"
-            },
-            "description": "Returns 200"
-          },
-          "400": {
-            "$ref": "#/responses/trait:error-response:400"
-          },
-          "401": {
-            "$ref": "#/responses/trait:error-response:401"
-          },
-          "403": {
-            "$ref": "#/responses/trait:error-response:403"
-          },
-          "404": {
-            "$ref": "#/responses/trait:error-response:404"
-          }
         },
-        "parameters": [
-          {
-            "name": "logId",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object"
+        "/logs/{logId}": {
+            "get": {
+                "tags": [
+                    "log",
+                    "get"
+                ],
+                "summary": "Get detail of log by logId",
+                "description": "Get detail of log by logId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.log.read",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_log"
+                        },
+                        "description": "Returns 200 with the detail of log for the specified logId"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "logId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "log",
+                    "update"
+                ],
+                "summary": "Update log details by logId",
+                "description": "Update log details by logId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.log.update",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/output_log"
+                        },
+                        "description": "Returns 200 with the detail of updated log"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "logId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/input_log"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "log",
+                    "delete"
+                ],
+                "summary": "Delete log by logId",
+                "description": "Delete log by logId",
+                "consumes": [],
+                "produces": [],
+                "schemes": [],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "operationId": "controllers.log.delete",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object"
+                        },
+                        "description": "Returns 200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/trait:error-response:400"
+                    },
+                    "401": {
+                        "$ref": "#/responses/trait:error-response:401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/trait:error-response:403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/trait:error-response:404"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "logId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      }
+        }
     }
-  }
 }
