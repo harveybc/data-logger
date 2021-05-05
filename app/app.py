@@ -46,6 +46,7 @@ def configure_database(app):
     print("Seeding database")
     from models.user_seed import user_seed
     user_seed(app, db)
+    
 
     @app.teardown_request
     def shutdown_session(exception=None):
