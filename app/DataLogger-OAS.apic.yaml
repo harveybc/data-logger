@@ -11,8 +11,8 @@ securityDefinitions:
   basic_auth:
     type: basic
     description: >-
-      Basic auth, please add the following line to the yaml: x-basicInfoFunc:
-      controllers.authentication.basic_auth.authenticate
+      Basic auth, please add the following line to the yaml: x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
+    x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
     type: object
