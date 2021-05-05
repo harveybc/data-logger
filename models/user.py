@@ -7,7 +7,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.base.util import hash_pass
-from app.db_init import db
+from app.app import db
 from app.app import login_manager
 from sqlalchemy.orm import relationship
 import json
