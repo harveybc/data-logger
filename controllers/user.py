@@ -75,8 +75,8 @@ def update(body, userId):
         error = str(e.__dict__['orig'])
         return error
     # replace model with body fields
-    body['id']=res.id
-    res.__dict__ = body
+    #body['id']=res.id
+    #res.__dict__ = body
     # perform update 
     try:
         db.session.commit()
