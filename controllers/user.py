@@ -65,9 +65,12 @@ def update(body, userId):
         Returns:
         res (dict): the newly created user register with empty password field.
     """
+    # instantiate user with the body dict as kwargs
+    new_user = User(**body)
+    new_user.__dict__['id'] = userId    
     # query the existing register
     try:
-        res = User.query.filter_by(id=userId).first_or_404()
+        res = User.query.filter_by(id=new_user.id).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
