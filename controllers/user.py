@@ -6,7 +6,7 @@ from models.user import User
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm.attributes import flag_modified
+from sqlalchemy.orm.attributes import flag_dirty
 
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
@@ -78,8 +78,8 @@ def update(body, userId):
     res = User(**body)
     #res.__dict__['id'] = userId    
     res.id =  userId
-    # set the updated model as modified for update.
-    flag_modified(res, "values")
+    # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
+    flag_dirty(res)
     # perform update 
     try:
         db.session.commit()
