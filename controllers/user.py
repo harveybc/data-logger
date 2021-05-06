@@ -65,35 +65,34 @@ def update(body, userId):
         Returns:
         res (dict): the newly created user register with empty password field.
     """
-    # instantiate user with the body dict as kwargs
-    new_user = User(**body)
-    new_user.__dict__['id'] = userId    
     # query the existing register
     try:
-        res = User.query.filter_by(id=new_user.id).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
     # replace model with body fields
     #body['id']=res.id
     #res.__dict__ = body
-    res = new_user
+    res = User(**body)
+    #res.__dict__['id'] = userId    
+    res.id =  userId
     # perform update 
     try:
         db.session.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
-    ## test if the model was updated 
-    #try:
-    #    res2 = User.query.filter_by(id=int(userId)).first_or_404()
-    #except SQLAlchemyError as e:
-    #    error = str(e.__dict__['orig'])
-    #    return error
-    ## empty pass
-    res.__dict__['password']=""
+    # test if the model was updated 
+    try:
+        res2 = User.query.filter_by(id=int(userId)).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+    #   return error
+    # empty pass
+    res2.__dict__['password']=""
     # return register as dict
-    return res.as_dict()
+    return res2.as_dict()
 
 def delete(userId):
     """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
