@@ -55,7 +55,7 @@ def read(userId):
     return res.as_dict()
     
 
-def update(userId, body):
+def update(body, userId):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
