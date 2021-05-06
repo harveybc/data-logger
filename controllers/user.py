@@ -77,6 +77,7 @@ def update(body, userId):
     # replace model with body fields
     #body['id']=res.id
     #res.__dict__ = body
+    res = new_user
     # perform update 
     try:
         db.session.commit()
