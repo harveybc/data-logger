@@ -80,8 +80,9 @@ def update(body, userId):
     res.id =  userId
     # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
     #flag_dirty(res)
-    flag_modified(res, "email")
-    print ("new_email = ", res.email)
+    #flag_modified(res, "email")
+    db.session.merge(res)
+    #print ("new_email = ", res.email)
     # perform update 
     try:
         db.session.commit()
