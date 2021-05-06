@@ -66,11 +66,11 @@ def update(body, userId):
         res (dict): the newly created user register with empty password field.
     """
     # query the existing register
-    #try:
-    #    res = User.query.filter_by(id=userId).first_or_404()
-    #except SQLAlchemyError as e:
-    #    error = str(e.__dict__['orig'])
-    #    return error
+    try:
+        res = User.query.filter_by(id=userId).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
     # replace model with body fields
     #body['id']=res.id
     #res.__dict__ = body
