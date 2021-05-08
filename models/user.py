@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
             # will be a 1-element list)
             if hasattr(value, '__iter__') and not isinstance(value, str):
                 # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
+                print("value=", value)
                 value = value[0]
 
             if property == 'password':
