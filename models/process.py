@@ -18,14 +18,12 @@ class Process(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     description = Column(String)
-    model_link = Column(String)
-    training_data_link=Column(String)
-    validation_data_link=Column(String)
+    tables=Column(String)
     created=Column(DateTime, default=datetime.datetime.utcnow)
     user_id=Column(Integer, ForeignKey('user.id'))
 
     # relationships
-    user = relationship("User", back_populates='processes')
+    user = relationship("User", back_populates='process')
 
 
     def __init__(self, **kwargs):
