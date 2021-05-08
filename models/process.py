@@ -23,7 +23,7 @@ class Process(db.Model):
     user_id=Column(Integer, ForeignKey('user.id'))
 
     # relationships
-    user = relationship("User", back_populates='process')
+    user = relationship("User", back_populates='processes')
 
 
     def __init__(self, **kwargs):
