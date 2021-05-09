@@ -25,7 +25,7 @@ def verify_pass_ascii(provided_password, stored_password):
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
 
-def verify_pass_str(provided_password, stored_password):
+def verify_pass(provided_password, stored_password):
     """Verify a stored password against one provided by user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
