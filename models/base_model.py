@@ -1,33 +1,19 @@
 """ Base Model. 
     Description: Contains common methods for all models.
 """ 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 import datetime
-from sqlalchemy.orm import relationship
+from app.base.util import hash_pass
 
 class BaseModel(db.Model):
-    """ Map the user table columns and bidirectional one-to many relationship with process """
-    __tablename__ = 'user'
-    
-    # columns
-    id = Column(Integer, primary_key=True)
-    username = Column(String, unique=True)
-    email = Column(String, unique=True)
-    admin = Column(Boolean)
-    password = Column(String)
-
-    # realationships
-    processes = relationship("Process", back_populates='user')
-
-
+       
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             # depending on whether value is an iterable or not, we must
             # unpack it's value (when **kwargs is request.form, some values
             # will be a 1-element list)
-            if hasattr(value, '__iter__') and not isinstance(value, str):
+            if hasattr(value, '__iter__') and not isinstance(value, str) and not isinstance(value, dict):
                 # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
                 value = value[0]
 
@@ -35,9 +21,6 @@ class BaseModel(db.Model):
                 value = hash_pass( value ) # we need bytes here (not plain str)
                 
             setattr(self, property, value)
-
-    def __repr__(self):
-        return str(self.username)
 
     def as_dict(self):   
         r2 = {}
