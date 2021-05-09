@@ -4,6 +4,7 @@
 import datetime
 from app.base.util import hash_pass
 from app.app import login_manager
+import base64
 
 class BaseModel():
        
@@ -46,7 +47,19 @@ def user_loader(id):
     return User.query.filter_by(id=id).first()
 
 @login_manager.request_loader
-def request_loader(request):
-    username = request.form.get('username')
-    user = User.query.filter_by(username=username).first()
-    return user if user else None
+def load_user_from_request(request):
+
+    # try to login using Basic Auth
+    api_key = request.headers.get('Authorization')
+    if api_key:
+        api_key = api_key.replace('Basic ', '', 1)
+        try:
+            api_key = base64.b64decode(api_key)
+        except TypeError:
+            pass
+        user = User.query.filter_by(api_key=api_key).first()
+        if user:
+            return user
+
+    # finally, return None if did not login the user
+    return None
