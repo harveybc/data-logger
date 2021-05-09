@@ -16,7 +16,7 @@ class Process(db.Model, BaseModel):
     name = Column(String, unique=True)
     description = Column(String)
     tables=Column(String)
-    created=Column(DateTime, default=datetime.datetime.now)
+    created=Column(DateTime, default=datetime.strptime(str(datetime.now()), '%Y-%m-%d %H:%M:%S.%f'))
     user_id=Column(Integer, ForeignKey('user.id'))
 
     # relationships
