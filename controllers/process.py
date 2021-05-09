@@ -24,7 +24,8 @@ def create(body):
         # create new flask-sqlalchemy session
         
         # TODO: verify if the user is admin or the userid is the same as the requesting user
-
+        # transform the tables json into string
+        new_process.tables = json.dumps(new_process.tables)
         db.session.add(new_process)
         try:
             db.session.commit()
