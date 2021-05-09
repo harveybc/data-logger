@@ -8,8 +8,8 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from datetime import datetime
+from app.app import login_manager
 
-@login_required
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
 		Also create the the process' tables based on the configuration field.
