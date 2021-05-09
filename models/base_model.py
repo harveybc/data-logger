@@ -1,7 +1,6 @@
 """ Base Model. 
     Description: Contains common methods for all models.
 """ 
-from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 import datetime
 from app.base.util import hash_pass
