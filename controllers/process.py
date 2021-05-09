@@ -28,7 +28,7 @@ def create(body):
         
         # set user_id same as the requesting user
         #new_process.user_id = current_user
-        new_process.user_id = current_user.id
+        new_process.user_id = int(current_user.get_id())
         # transform the tables json into string
         new_process.tables = json.dumps(new_process.tables)
         # set the string date into datetime
