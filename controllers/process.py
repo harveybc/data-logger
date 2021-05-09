@@ -20,7 +20,7 @@ def create(body):
     # use kwargs to check if the process, table or register parameters are present
     if hasattr(body, 'process'):
         # instantiate process with the body dict as kwargs
-        new_process = Process(**body.process)
+        new_process = Process(body.process)
         # create new flask-sqlalchemy session
         
         # TODO: verify if the user is admin or the userid is the same as the requesting user
