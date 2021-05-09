@@ -44,5 +44,15 @@ class Process(db.Model):
     def __repr__(self):
         return str(self.name)
 
+    def as_dict(self):   
+        r2 = {}
+        for c in self.__table__.columns:
+            attr = getattr(self, c.name)
+            if is_num(attr):
+                r2[c.name]=attr
+            else:
+                r2[c.name]=str(attr)
+        return r2
+
 
 
