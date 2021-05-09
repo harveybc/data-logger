@@ -7,7 +7,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from flask_login import LoginManager
 from app.app import login_manager
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel}
+from models.base_model import BaseModel
 from app.app import db
 
 class User(db.Model, BaseModel, UserMixin):
