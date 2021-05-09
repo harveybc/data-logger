@@ -6,7 +6,7 @@ from connexion.exceptions import OAuthScopeProblem
 # the user model is used for authentication
 from models.user import User
 from app.app import db
-from app.base.util import verify_pass
+from app.base.util import verify_pass_str
 
 def authenticate(username, password, required_scopes=None):
     """ Performs basic authentication from the user table in the database
