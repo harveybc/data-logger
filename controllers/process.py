@@ -52,7 +52,7 @@ def read(processId):
     try:
         res = Process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # empty pass
     res.password=""
@@ -73,7 +73,7 @@ def update(processId, body):
     try:
         res = Process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # replace model with body fields
     body['id']=res.id
@@ -82,13 +82,13 @@ def update(processId, body):
     try:
         db.session.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # test if the model was updated 
     try:
         res = Process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # empty pass
     res.password=""
@@ -107,14 +107,14 @@ def delete(processId):
     try:
         res = Process.query.filter_by(processname=processId).first_or_404()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # perform delete 
     db.session.delete(res)
     try:
         db.session.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     return res.id
 
@@ -127,7 +127,7 @@ def read_all():
     try:
         res = Process.query.all()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # convert to list of dicts and empty pass
     res2 =[]
