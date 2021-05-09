@@ -17,28 +17,31 @@ def create(body):
         Returns:
         res (dict): the newly created process register with empty password field.
     """
-    # instantiate process with the body dict as kwargs
-    new_process = Process(**body)
-    # create new flask-sqlalchemy session
-    
-    # TODO: verify if the user is admin or the userid is the same as the requesting user
+    # use kwargs to check if the process, table or register parameters are present
+    body_params = **body
+    if hasattr(body_params, 'process'):
+        # instantiate process with the body dict as kwargs
+        new_process = Process(body_params.process)
+        # create new flask-sqlalchemy session
+        
+        # TODO: verify if the user is admin or the userid is the same as the requesting user
 
-    db.session.add(new_process)
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # test if the new process was created 
-    try:
-        res = Process.query.filter_by(name=new_process.name).first_or_404()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # empty pass
-    res.password=""
-    # return register as dict
-    return res.as_dict()
+        db.session.add(new_process)
+        try:
+            db.session.commit()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # test if the new process was created 
+        try:
+            res = Process.query.filter_by(name=new_process.name).first_or_404()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # empty pass
+        res.password=""
+        # return register as dict
+        return res.as_dict()
 
 def read(processId):
     """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
