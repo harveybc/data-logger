@@ -7,7 +7,7 @@ from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import current_user
-from datetime import strptime
+from datetime import datetime
 
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
@@ -30,7 +30,7 @@ def create(body):
         # transform the tables json into string
         new_process.tables = json.dumps(new_process.tables)
         # set the string date into datetime
-        new_process.created = strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
+        new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
         # add the modified process to the session
         db.session.add(new_process)
         try:
