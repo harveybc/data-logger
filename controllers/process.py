@@ -18,10 +18,9 @@ def create(body):
         res (dict): the newly created process register with empty password field.
     """
     # use kwargs to check if the process, table or register parameters are present
-    print("body=", body)
     if hasattr(body, 'process'):
         # instantiate process with the body dict as kwargs
-        new_process = Process(body.process)
+        new_process = Process(body['process'])
         # create new flask-sqlalchemy session
         
         # TODO: verify if the user is admin or the userid is the same as the requesting user
@@ -42,7 +41,7 @@ def create(body):
         res.password=""
         # return register as dict
         return res.as_dict()
-
+    
 def read(processId):
     """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
