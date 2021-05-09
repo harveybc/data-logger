@@ -1,11 +1,10 @@
 """ Base Model. 
     Description: Contains common methods for all models.
 """ 
-from app.app import db
 import datetime
 from app.base.util import hash_pass
 
-class BaseModel(db.Model):
+class BaseModel():
        
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

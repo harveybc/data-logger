@@ -7,9 +7,10 @@ from sqlalchemy import Column, Integer, String, Boolean
 from flask_login import LoginManager
 from app.app import login_manager
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from models.base_model import BaseModel}
+from app.app import db
 
-class User(BaseModel, UserMixin):
+class User(db.Model, BaseModel, UserMixin):
     """ Map the user table columns and bidirectional one-to many relationship with process """
     __tablename__ = 'user'
     
