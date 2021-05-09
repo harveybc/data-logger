@@ -27,13 +27,13 @@ def create(body):
     try:
         db.session.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # test if the new process was created 
     try:
         res = Process.query.filter_by(processname=new_process.name).first_or_404()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(e)
         return error
     # empty pass
     res.password=""
