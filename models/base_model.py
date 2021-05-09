@@ -57,7 +57,7 @@ def load_user_from_request(request):
             api_key = base64.b64decode(api_key)
         except TypeError:
             pass
-        user = User.query.filter_by(api_key=api_key).first()
+        user = User.query.filter_by(username=api_key).first()
         if user:
             return user
 
