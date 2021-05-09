@@ -18,7 +18,7 @@ def create(body):
         res (dict): the newly created process register with empty password field.
     """
     # use kwargs to check if the process, table or register parameters are present
-    body_params = **body
+    body_params = body.__dict__
     if hasattr(body_params, 'process'):
         # instantiate process with the body dict as kwargs
         new_process = Process(body_params.process)
