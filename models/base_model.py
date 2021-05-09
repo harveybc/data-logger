@@ -57,10 +57,10 @@ def load_user_from_request(request):
             credentials = base64.b64decode(credentials)
         except TypeError:
             pass
-        cred_list = credentials.split(':')
+        cred_list = credentials.decode().split(':')
         username = cred_list[0]
         password = cred_list[1]
-        user = User.query.filter_by(username=api_key).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             return user
 
