@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
-import datetime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
