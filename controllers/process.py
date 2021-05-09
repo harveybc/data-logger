@@ -6,6 +6,7 @@ from models.process import Process
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
+from flask_login import current_user
 
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
@@ -23,7 +24,8 @@ def create(body):
         new_process = Process(**body['process'])
         # create new flask-sqlalchemy session
         
-        # TODO: verify if the user is admin or the userid is the same as the requesting user
+        # set user_id same as the requesting user
+        new_process.user_id = current_user
         # transform the tables json into string
         new_process.tables = json.dumps(new_process.tables)
         db.session.add(new_process)
