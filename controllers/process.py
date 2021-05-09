@@ -6,9 +6,10 @@ from models.process import Process
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
-from flask_login import current_user
+from flask_login import login_required, current_user
 from datetime import datetime
 
+@login_required
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
 		Also create the the process' tables based on the configuration field.
