@@ -23,7 +23,7 @@ def authenticate(username, password, required_scopes=None):
     user_model = User.query.filter_by(username=username).first()
 
     # compare the db pass with the request one
-    if verify_pass(password, user_model.password) and user_model.admin == True:
+    if verify_pass_str(password, user_model.password) and user_model.admin == True:
         info = {'sub': username, 'scope': 'admin'}
     elif password == user_model.password:
         info = {'sub': username, 'scope': ''}
