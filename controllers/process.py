@@ -31,7 +31,7 @@ def create(body):
         return error
     # test if the new process was created 
     try:
-        res = Process.query.filter_by(processname=new_process.name).first_or_404()
+        res = Process.query.filter_by(name=new_process.name).first_or_404()
     except SQLAlchemyError as e:
         error = str(e)
         return error
@@ -50,7 +50,7 @@ def read(processId):
         res (dict): the requested process register with empty password field.
     """ 
     try:
-        res = Process.query.filter_by(processname=processId).first_or_404()
+        res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e)
         return error
@@ -71,7 +71,7 @@ def update(processId, body):
     """
     # query the existing register
     try:
-        res = Process.query.filter_by(processname=processId).first_or_404()
+        res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e)
         return error
@@ -86,7 +86,7 @@ def update(processId, body):
         return error
     # test if the model was updated 
     try:
-        res = Process.query.filter_by(processname=processId).first_or_404()
+        res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e)
         return error
@@ -105,7 +105,7 @@ def delete(processId):
         res (int): the deleted register id field
     """ 
     try:
-        res = Process.query.filter_by(processname=processId).first_or_404()
+        res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e)
         return error
