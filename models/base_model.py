@@ -3,8 +3,8 @@
 """ 
 import datetime
 from app.base.util import hash_pass
-from models.user import User
 from app.app import login_manager
+
 class BaseModel():
        
     def __init__(self, **kwargs):
@@ -38,6 +38,8 @@ def is_num(n):
     if isinstance(n, float):
         return n.is_integer()
     return False
+
+from models.user import User
 
 @login_manager.user_loader
 def user_loader(id):
