@@ -58,6 +58,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table_column'
+          type: []
   output_process:
     type: object
     properties:
@@ -187,7 +188,10 @@ definitions:
       filter_value:
         type: string
       data:
-        type: object
+        type: array
+        items:
+          type:
+            - object
     required:
       - process_id
       - table
@@ -228,7 +232,9 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
   output_process_register:
-    type: object
+    type: array
+    items:
+      type: object
   output_process_table:
     type: object
     properties:
