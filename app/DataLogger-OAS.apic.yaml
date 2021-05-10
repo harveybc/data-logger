@@ -748,7 +748,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorizationcreate
+      operationId: controllers.authorization.create
       responses:
         '201':
           schema:
@@ -780,7 +780,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorizationread_all
+      operationId: controllers.authorization.read_all
       responses:
         '200':
           schema:
@@ -842,7 +842,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorizationupdate
+      operationId: controllers.authorization.update
       responses:
         '200':
           schema:
@@ -877,7 +877,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorizationdelete
+      operationId: controllers.authorization.delete
       responses:
         '200':
           schema:
