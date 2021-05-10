@@ -13,7 +13,6 @@ securityDefinitions:
     description: >-
       Basic auth, please add the following line to the yaml: x-basicInfoFunc:
       controllers.authentication.basic_auth.authenticate
-    x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
     type: object
@@ -230,10 +229,13 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
+        type: null
       table:
         $ref: '#/definitions/input_process_table'
+        type: null
       register:
         $ref: '#/definitions/input_process_register'
+        type: null
   output_process_register:
     type: object
   output_process_table:
@@ -266,6 +268,18 @@ definitions:
           $ref: '#/definitions/table'
           type:
             - null
+  process_operation_output:
+    type: object
+    properties:
+      process:
+        $ref: '#/definitions/input_process'
+        type: null
+      table:
+        $ref: '#/definitions/input_process_table'
+        type: null
+      register:
+        $ref: '#/definitions/input_process_register'
+        type: null
 responses:
   'trait:error-response:400':
     schema:
@@ -502,7 +516,7 @@ paths:
             in a process table
         '201':
           schema:
-            $ref: '#/definitions/output_process'
+            $ref: '#/definitions/process_operation_output'
           description: Returns response 201 with the details of the newly created process
         '202':
           schema:
@@ -734,7 +748,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.create
+      operationId: controllers.authoriz.create
       responses:
         '201':
           schema:
@@ -766,7 +780,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.read_all
+      operationId: controllers.authoriz.read_all
       responses:
         '200':
           schema:
@@ -828,7 +842,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.update
+      operationId: controllers.authoriz.update
       responses:
         '200':
           schema:
@@ -863,7 +877,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.delete
+      operationId: controllers.authoriz.delete
       responses:
         '200':
           schema:
