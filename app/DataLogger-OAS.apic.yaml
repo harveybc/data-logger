@@ -58,8 +58,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table_column'
-          type:
-            - null
   output_process:
     type: object
     properties:
@@ -180,8 +178,8 @@ definitions:
   input_process_register:
     type: object
     properties:
-      process:
-        type: string
+      process_id:
+        type: integer
       table:
         type: string
       filter_column:
@@ -191,9 +189,8 @@ definitions:
       data:
         type: object
     required:
-      - process
+      - process_id
       - table
-      - data
   table_column:
     type: object
     properties:
@@ -201,8 +198,6 @@ definitions:
         type: string
       col_type:
         type: string
-      primary:
-        type: boolean
       indexed:
         type: boolean
     required:
@@ -217,8 +212,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table_column'
-          type:
-            - null
+          type: []
       name:
         type: string
     required:
@@ -230,13 +224,10 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
-        type: null
       table:
         $ref: '#/definitions/input_process_table'
-        type: null
       register:
         $ref: '#/definitions/input_process_register'
-        type: null
   output_process_register:
     type: object
   output_process_table:

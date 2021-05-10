@@ -1,5 +1,5 @@
 """ Map this model's fields and relationships """
-    
+
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
@@ -24,7 +24,3 @@ class Process(db.Model, BaseModel):
 
     def __repr__(self):
         return str(self.name)
-
-
-
-
