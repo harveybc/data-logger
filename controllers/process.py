@@ -21,6 +21,8 @@ def create(body):
         Returns:
         res (dict): the newly created process register with empty password field.
     """
+    #initialize void response
+    res = {}
     # use kwargs to check if the process, table or register parameters are present
     if 'process' in body:
         # instantiate process with the body dict as kwargs
@@ -42,17 +44,16 @@ def create(body):
         except SQLAlchemyError as e:
             error = str(e)
             return error
+        # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
-            res = Process.query.filter_by(name=new_process.name).first_or_404()
+            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             return error
-        # empty pass
-        res.password=""
         # return register as dict
         #TODO: inicializar respuesta process_operation_output
-        return res.as_dict()
+        return res['process'].as_dict()
     
 def read(processId):
     """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
