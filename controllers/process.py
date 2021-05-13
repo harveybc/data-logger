@@ -51,6 +51,7 @@ def create(body):
         # empty pass
         res.password=""
         # return register as dict
+        #TODO: inicializar respuesta process_operation_output
         return res.as_dict()
     
 def read(processId):
