@@ -53,7 +53,7 @@ def create(body):
             return error
         # return register as dict
         #TODO: inicializar respuesta process_operation_output
-        return res['process'].as_dict()
+        return res.as_dict()
     
 def read(processId):
     """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
