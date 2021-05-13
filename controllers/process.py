@@ -47,7 +47,7 @@ def create(body):
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404()
+            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error
