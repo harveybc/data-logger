@@ -55,7 +55,7 @@ def create(body):
 #TODO: CCREAR TABLA
     if 'table' in body:
         # instantiate process with the body dict as kwargs
-        new_process = Process(**body['process'])
+        new_table = Table(**body['table'])
         # create new flask-sqlalchemy session
         
         # set user_id same as the requesting user

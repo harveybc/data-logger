@@ -7,8 +7,8 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
-class Process(db.Model, BaseModel):
-    """ Map the process table columns and bidirectional one-to-many relationship with user """
+class Table(db.Model, BaseModel, table):
+    """ Map the table columns and bidirectional one-to-many relationship with user """
     __tablename__ = 'process'
 
     # columns
