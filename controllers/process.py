@@ -58,25 +58,7 @@ def create(body):
         new_table = Table(**body['table'])
         new_table.__table__.create(db.engine)
         # TODO: update process with the new table
-
-        # create new flask-sqlalchemy session
         
-        # set user_id same as the requesting user
-        #new_process.user_id = current_user
-        new_process.user_id = current_user.get_id()
-        # transform the tables json into string
-        new_process.tables = json.dumps(new_process.tables)
-        # set the string date into datetime
-        # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
-        new_process.created = str(datetime.now())
-        # add the modified process to the session
-        db.session.add(new_process)
-        try:
-            db.session.commit()
-        except SQLAlchemyError as e:
-            error = str(e)
-            return error
-        # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
