@@ -2,13 +2,15 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from models.process import Process
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from datetime import datetime
 from app.app import login_manager
+from models.process import Process
+from models.table import Table
+
 
 @login_required
 def create(body): 
@@ -23,7 +25,7 @@ def create(body):
     """
     #initialize void response
     res = {}
-    # use kwargs to check if the process, table or register parameters are present
+    # use kwargs to check if the process parameter is present
     if 'process' in body:
         # instantiate process with the body dict as kwargs
         new_process = Process(**body['process'])
@@ -52,7 +54,7 @@ def create(body):
             error = str(e)
             return error
         # return register as dict
-#TODO: CCREAR TABLA
+    # use kwargs to check if the process parameter is present    
     if 'table' in body:
         # instantiate process with the body dict as kwargs
         new_table = Table(**body['table'])
