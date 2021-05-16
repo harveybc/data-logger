@@ -33,14 +33,8 @@ class Table(db.Model, BaseModel):
                 setattr(self, c.name, Column(locate(c.col_type), ForeignKey(c.foreign_key), unique=c.unique, index=c.index), default=c.default)
             else:
                 setattr(self, c.name, Column(locate(c.col_type), unique=c.unique, index=c.index, default=c.default))
-        id = Column(Integer, primary_key=True)
-        process_id = Column(String, unique=True, index=True)
-        description = Column(String)
-        tables=Column(String)
-        created=Column(String, default=str(datetime.now()))
-        user_id=Column(Integer, ForeignKey('user.id'))
 
-        # relationships
+        # TODO: relationships
         #user = relationship("User", back_populates='processes')
 
     def __repr__(self):
