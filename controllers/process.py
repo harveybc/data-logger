@@ -27,10 +27,8 @@ def create(body):
     res = {}
     # use kwargs to check if the process parameter is present
     if 'process' in body:
-        # instantiate process with the body dict as kwargs
+        # create new table
         new_process = Process(**body['process'])
-        # create new flask-sqlalchemy session
-        
         # set user_id same as the requesting user
         #new_process.user_id = current_user
         new_process.user_id = current_user.get_id()
@@ -58,6 +56,9 @@ def create(body):
     if 'table' in body:
         # instantiate process with the body dict as kwargs
         new_table = Table(**body['table'])
+        Table.__table__.create(db.engine)
+        # TODO: update process with the new table
+
         # create new flask-sqlalchemy session
         
         # set user_id same as the requesting user
