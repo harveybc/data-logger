@@ -8,19 +8,11 @@ from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from pydoc import locate 
 
-class Table(db.Model, BaseModel):
-    """ Map the table columns and bidirectional one-to-many relationship with user """
+class ProcessTable(db.Model, BaseModel):
+    """ Map the table columns  """
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
-            # depending on whether value is an iterable or not, we must
-            # unpack it's value (when **kwargs is request.form, some values
-            # will be a 1-element list)
-            if isinstance(value, list) or isinstance(value, tuple):
-                if len(value) == 1:
-                    if  not isinstance(value, str) and not isinstance(value, dict):
-                        value = value[0]
             setattr(self, property, value)
-    
         # table name
         self.__tablename__ = self.name
         
@@ -39,3 +31,12 @@ class Table(db.Model, BaseModel):
 
     def __repr__(self):
         return str(self.name)
+
+class TableFactory:
+    
+    def __init__(self, **kwargs):
+        self.new_table =  ProcessTable(kwargs)
+    
+    def factory(self):
+        return(self.new_table)
+

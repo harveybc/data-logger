@@ -9,7 +9,7 @@ from flask_login import login_required, current_user
 from datetime import datetime
 from app.app import login_manager
 from models.process import Process
-from models.table import TableFactory
+from models.table_factory import TableFactory
 
 
 @login_required
@@ -55,7 +55,7 @@ def create(body):
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
         # instantiate process with the body dict as kwargs
-        new_table = Table(**body['table'])
+        new_table = TableFactory(**body['table'])
         new_table.__table__.create(db.engine)
         # TODO: update process with the new table
         
