@@ -8,7 +8,10 @@ from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from pydoc import locate 
 
-class ProcessTable(db.Model, BaseModel):
+
+
+class TableFactory:
+    class ProcessTable(db.Model, BaseModel):
     """ Map the table columns  """
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
@@ -29,13 +32,10 @@ class ProcessTable(db.Model, BaseModel):
         # TODO: relationships
         #user = relationship("User", back_populates='processes')
 
-    def __repr__(self):
-        return str(self.name)
-
-class TableFactory:
-    
-    def __init__(self, **kwargs):
-        self.new_table =  ProcessTable(kwargs)
+        def __repr__(self):
+            return str(self.name)
+        def __init__(self, **kwargs):
+            self.new_table =  self.ProcessTable(kwargs)
     
     def factory(self):
         return(self.new_table)

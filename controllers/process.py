@@ -11,7 +11,6 @@ from app.app import login_manager
 from models.process import Process
 from models.table_factory import TableFactory
 
-
 @login_required
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
