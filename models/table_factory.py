@@ -11,7 +11,7 @@ from pydoc import locate
 
 
 class TableFactory:
-    class ProcessTable(db.Model, BaseModel):
+    class Process(db.Model, BaseModel):
         """ Map the table columns  """
         def __init__(self, **kwargs):
             for property, value in kwargs.items():
@@ -36,6 +36,6 @@ class TableFactory:
         
 
     def factory(self, **kwargs):
-        self.new_table =  self.ProcessTable(kwargs)
+        self.new_table =  self.Process(kwargs)
         return(self.new_table)
 
