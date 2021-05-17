@@ -18,6 +18,8 @@ class TableFactory:
                 setattr(self, property, value)
             # table name
             self.__tablename__ = self.name
+            self.__name__ = self.name
+            self.__qualname__ = self.name
             # set each column name, indexes and types from this list:
             # https://docs.sqlalchemy.org/en/14/core/type_basics.html#generic-types 
             for c in self.columns:
@@ -31,9 +33,9 @@ class TableFactory:
             #user = relationship("User", back_populates='processes')
         def __repr__(self):
             return str(self.name)
-        def __init__(self, **kwargs):
-            self.new_table =  self.ProcessTable(kwargs)
+        
 
-    def factory(self):
+    def factory(self, **kwargs):
+        self.new_table =  self.ProcessTable(kwargs)
         return(self.new_table)
 
