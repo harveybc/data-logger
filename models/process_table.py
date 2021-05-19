@@ -1,6 +1,6 @@
 """ Map this model's fields and relationships """
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData, Table
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
@@ -18,7 +18,7 @@ class ProcessTable():
         t_args = []
         # add the name
         t_args.append(self.name)
-        # add metadata
+        # add metadata 
         t_args.append(MetaData())
         # add columns 
         for c in self.columns:
@@ -28,6 +28,14 @@ class ProcessTable():
                 t_args.append(Column(c.name, locate(c.col_type), ForeignKey(c.foreign_key), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
             else:
                 t_args.append(Column(c.name, locate(c.col_type), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
+        # instance the Table class with the t_args
+        self.table = Table(*t_args)
+
     def __repr__(self):
         return str(self.name)
     
+
+    def factory(self, **kwargs):
+        self.new_table =  self.Process(kwargs)
+        return(self.new_table)
+
