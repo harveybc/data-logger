@@ -58,7 +58,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table_column'
-          type: []
+          type:
+            - null
   output_process:
     type: object
     properties:
@@ -203,18 +204,17 @@ definitions:
         type: string
       index:
         type: boolean
-        default: false
       unique:
         type: boolean
-        default: false
       primary_key:
         type: boolean
-        default: false
       foreign_key:
         type: string
         default: none
       default:
         type: object
+      nullable:
+        type: boolean
     required:
       - name
       - col_type
