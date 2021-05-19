@@ -9,7 +9,7 @@ from models.base_model import BaseModel
 from pydoc import locate 
 
 class ProcessTable():
-    """ Map the table columns  """
+    """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
         for property, value in kwargs.items():
