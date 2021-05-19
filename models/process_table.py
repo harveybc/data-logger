@@ -28,13 +28,6 @@ class ProcessTable():
                 t_args.append(Column(c.name, locate(c.col_type), ForeignKey(c.foreign_key), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
             else:
                 t_args.append(Column(c.name, locate(c.col_type), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
-        # TODO: relationships
-        #user = relationship("User", back_populates='processes')
     def __repr__(self):
         return str(self.name)
     
-
-    def factory(self, **kwargs):
-        self.new_table =  self.Process(kwargs)
-        return(self.new_table)
-
