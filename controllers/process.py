@@ -57,6 +57,7 @@ def create(body):
         new_table = TableFactory(**body['table'])
         new_table.__table__.create(db.engine)
         # TODO: update process with the new table
+        https://book.pythontips.com/en/latest/args_and_kwargs.html
         
         # test if the new process was created 
         try:
