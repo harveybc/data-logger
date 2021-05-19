@@ -21,15 +21,16 @@ class ProcessTable():
         # add metadata 
         t_args.append(MetaData())
         # add columns 
+        #TODO: PARSE COL_TYPE, BECAUSE EVAL IS USED
         for c in self.columns:
             if "primary_key" in c:
                 if c["primary_key"]:
-                    t_args.append(Column(c["name"], c["col_type"], primary_key=c["primary_key"]))
+                    t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=c["primary_key"]))
             elif "foreign_key" in c:
                 if c["foreign_key"] == "none":
-                    t_args.append(Column(c["name"], c["col_type"], ForeignKey(c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                    t_args.append(Column(c["name"], eval(c["col_type"]), ForeignKey(c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             else:
-                t_args.append(Column(c["name"], c["col_type"], unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                t_args.append(Column(c["name"], eval(c["col_type"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
         # instance the Table class with the t_args
         self.table = Table(*t_args)
 
