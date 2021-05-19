@@ -22,10 +22,12 @@ class ProcessTable():
         t_args.append(MetaData())
         # add columns 
         for c in self.columns:
-            if c.primary_key:
-                t_args.append(Column(c.name, locate(c.col_type), primary_key=c.primary_key))
-            elif c.foreign_key == "none":
-                t_args.append(Column(c.name, locate(c.col_type), ForeignKey(c.foreign_key), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
+            if "primary_key" in c:
+                if c["primary_key"]:
+                    t_args.append(Column(c.name, locate(c.col_type), primary_key=c.primary_key))
+            elif "foreign_key" in c:
+                if c["foreign_key"] == "none":
+                    t_args.append(Column(c.name, locate(c.col_type), ForeignKey(c.foreign_key), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
             else:
                 t_args.append(Column(c.name, locate(c.col_type), unique=c.unique, index=c.index, default=c.default, nullable=c.nullable))
         # instance the Table class with the t_args
