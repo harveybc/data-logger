@@ -10,7 +10,8 @@ from datetime import datetime
 from app.app import login_manager
 from models.process import Process
 from models.process_table import ProcessTable
-from sqlalchemy.engine.default import DefaultDialect
+
+
 
 @login_required
 def create(body): 
@@ -56,8 +57,7 @@ def create(body):
     if 'table' in body:
         # instantiate process with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
-        dialect = DefaultDialect()
-        if not dialect.has_table(dialect, db, new_table.name):
+        if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         # test if the new process was created 
         try:
