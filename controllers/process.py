@@ -56,7 +56,8 @@ def create(body):
     if 'table' in body:
         # instantiate process with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
-        if not DefaultDialect.has_table(DefaultDialect(), db, new_table.name):
+        dialect = DefaultDialect()
+        if not dialect.has_table(dialect, db, new_table.name):
             new_table.table.create(db.engine)
         # test if the new process was created 
         try:
