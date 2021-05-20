@@ -63,8 +63,7 @@ def create(body):
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
                 t = Table(new_table.name, db.metadata, autoload_with=db.engine)
-                res['table'] = 
-                res['table'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
+                res['table'] = t.columns
         except SQLAlchemyError as e:
             error = str(e)
             return error
