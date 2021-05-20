@@ -55,7 +55,8 @@ def create(body):
     if 'table' in body:
         # instantiate process with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
-        new_table.table.create(db.engine)
+        if not db.dialect.has_table(db, new_table.name):
+            new_table.table.create(db.engine)
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
