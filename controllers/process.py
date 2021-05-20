@@ -10,7 +10,7 @@ from datetime import datetime
 from app.app import login_manager
 from models.process import Process
 from models.process_table import ProcessTable
-
+from sqlalchemy import Table
 
 
 @login_required
@@ -59,9 +59,12 @@ def create(body):
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
-        # test if the new process was created 
+        # test if the new process table  was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
+            if db.engine.dialect.has_table(db.engine, new_table.name):
+                t = Table(new_table.name, db.metadata, autoload_with=db.engine)
+                res['table'] = 
+                res['table'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error

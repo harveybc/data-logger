@@ -19,7 +19,7 @@ class ProcessTable():
         # add the name
         t_args.append(self.name)
         # add metadata 
-        t_args.append(MetaData())
+        t_args.append(db.metadata)
         # add columns 
         #TODO: PARSE COL_TYPE, BECAUSE EVAL IS USED
         for c in self.columns:
