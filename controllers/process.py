@@ -2,7 +2,7 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from app.app import db
+from app.app import db, engine
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
@@ -10,7 +10,8 @@ from datetime import datetime
 from app.app import login_manager
 from models.process import Process
 from models.process_table import ProcessTable
-from sqlalchemy import Table
+from models.process_register import ProcessRegister
+from sqlalchemy import Table, insert
 
 
 @login_required
@@ -76,14 +77,13 @@ def create(body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
-        # create 
+        # create the register
         try:
+            # verify if table exists
             if db.engine.dialect.has_table(db.engine, new_table.name):
-                cols = db.metadata.tables[new_table.name].c
-                r_table={}
-                r_table['name'] = new_table.name
-                r_table['columns'] = [column.key for column in cols]               
-                res['table'] = r_table
+                # execute new_register statement in engine
+                result_proxy = engine.execute(new_register.stmt)
+                res['register'] = result_proxy
         except SQLAlchemyError as e:
             error = str(e)
             return error

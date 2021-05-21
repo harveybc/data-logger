@@ -10,6 +10,8 @@ from pydoc import locate
 
 class ProcessRegister():
     """ Map the columns to a list of register constructor arguments """
+    #TODO: https://docs.sqlalchemy.org/en/14/core/3.html
+    
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
         for property, value in kwargs.items():
