@@ -68,6 +68,8 @@ def create(body):
                 r_table['name'] = new_table.name
                 r_table['columns'] = [column.key for column in cols]               
                 res['table'] = r_table
+            else:
+                res['table'] = {}
         except SQLAlchemyError as e:
             error = str(e)
             return error
@@ -79,11 +81,13 @@ def create(body):
         new_register = ProcessRegister(**body['register'])
         # create the register
         try:
-            # verify if table exists
+            # verify if register exists
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
                 res['register'] = result_proxy
+            else:
+                res['register'] ={}
         except SQLAlchemyError as e:
             error = str(e)
             return error
