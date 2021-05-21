@@ -16,7 +16,7 @@ class ProcessRegister():
             setattr(self, property, value)
         # set the table
         table = db.metadata.tables[self.table]
-        print(table.c)
+        print(db.metadata.tables)
         # create the statement
         self.stmt = insert(table).values(self.values)
 
