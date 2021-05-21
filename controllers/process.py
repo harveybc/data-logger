@@ -80,7 +80,7 @@ def create(body):
         # create the register
         try:
             # verify if table exists
-            if db.engine.dialect.has_table(db.engine, new_table.name):
+            if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
                 result_proxy = engine.execute(new_register.stmt)
                 res['register'] = result_proxy

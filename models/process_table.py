@@ -36,9 +36,4 @@ class ProcessTable():
 
     def __repr__(self):
         return str(self.name)
-    
-
-    def factory(self, **kwargs):
-        self.new_table =  self.Process(kwargs)
-        return(self.new_table)
 
