@@ -83,7 +83,7 @@ def create(body):
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
-                res['register'] = result_proxy
+                res['register'] = result_proxy.__as_dict__
             else:
                 res['register'] ={}
         except SQLAlchemyError as e:
