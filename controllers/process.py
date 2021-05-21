@@ -2,7 +2,7 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from app.app import db, engine
+from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
@@ -82,7 +82,7 @@ def create(body):
             # verify if table exists
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
-                result_proxy = engine.execute(new_register.stmt)
+                result_proxy = db.engine.execute(new_register.stmt)
                 res['register'] = result_proxy
         except SQLAlchemyError as e:
             error = str(e)
