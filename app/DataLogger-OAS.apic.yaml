@@ -11,8 +11,7 @@ securityDefinitions:
   basic_auth:
     type: basic
     description: >-
-      Basic auth, please add the following line to the yaml: x-basicInfoFunc:
-      controllers.authentication.basic_auth.authenticate
+      Basic auth, please add the following line to the yaml: 
     x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
@@ -191,7 +190,8 @@ definitions:
       values:
         type: array
         items:
-          type: object
+          type:
+            - object
     required:
       - process_id
       - table
@@ -204,10 +204,13 @@ definitions:
         type: string
       index:
         type: boolean
+        default: false
       unique:
         type: boolean
+        default: false
       primary_key:
         type: boolean
+        default: false
       foreign_key:
         type: string
         default: none
@@ -215,6 +218,7 @@ definitions:
         type: object
       nullable:
         type: boolean
+        default: false
     required:
       - name
       - col_type
