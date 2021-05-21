@@ -222,6 +222,11 @@ definitions:
     required:
       - name
       - col_type
+      - index
+      - unique
+      - primary_key
+      - default
+      - nullable
   input_process_table:
     type: object
     properties:
