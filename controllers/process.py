@@ -63,7 +63,7 @@ def create(body):
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
                 t = Table(new_table.name, db.metadata)
-                res['table'] = t.__table__.c
+                res['table'] = t.c
         except SQLAlchemyError as e:
             error = str(e)
             return error
