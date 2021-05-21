@@ -33,7 +33,7 @@ class ProcessTable():
                 t_args.append(Column(c["name"], eval(c["col_type"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
         # instance the Table class with the t_args
         metadata=MetaData()
-        self.table = Table(autoload_with=db, *t_args)
+        self.table = Table(autoload_with=db.engine, *t_args)
 
     def __repr__(self):
         return str(self.name)
