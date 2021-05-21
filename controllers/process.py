@@ -45,14 +45,14 @@ def create(body):
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e)
-            return error
+            res['process'] ={ 'error' : error}
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
-            return error
+            res['process'] ={ 'error' : error}
         # return register as dict
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
@@ -72,7 +72,7 @@ def create(body):
                 res['table'] = {}
         except SQLAlchemyError as e:
             error = str(e)
-            return error
+            res['table'] ={ 'error' : error}
     # use kwargs to check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
@@ -88,7 +88,7 @@ def create(body):
                 res['register'] ={}
         except SQLAlchemyError as e:
             error = str(e)
-            return error
+            res['register'] ={ 'error' : error}
         # return register as dict
         return res
     
