@@ -62,8 +62,8 @@ def create(body):
         # test if the new process table  was created 
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
-                t = Table(new_table.name, db.metadata, autoload_with=db.engine)
-                res['table'] = t.c.__dict__
+                t = Table(new_table.name, db.metadata)
+                res['table'] = t.__table__.c
         except SQLAlchemyError as e:
             error = str(e)
             return error
