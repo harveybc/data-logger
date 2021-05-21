@@ -188,7 +188,7 @@ definitions:
         type: string
       filter_value:
         type: string
-      data:
+      values:
         type: array
         items:
           type: object
