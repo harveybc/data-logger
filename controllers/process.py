@@ -55,11 +55,28 @@ def create(body):
         # return register as dict
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
-        # instantiate process with the body dict as kwargs
+        # instantiate process table with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         # test if the new process table  was created 
+        try:
+            if db.engine.dialect.has_table(db.engine, new_table.name):
+                cols = db.metadata.tables[new_table.name].c
+                r_table={}
+                r_table['name'] = new_table.name
+                r_table['columns'] = [column.key for column in cols]               
+                res['table'] = r_table
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # return register as dict
+        return res
+    # use kwargs to check if the process parameter is present    
+    if 'register' in body:
+        # instantiate process register with the body dict as kwargs
+        new_register = ProcessRegister(**body['register'])
+        # create 
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
                 cols = db.metadata.tables[new_table.name].c
