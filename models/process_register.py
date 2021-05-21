@@ -9,7 +9,7 @@ from models.base_model import BaseModel
 from pydoc import locate 
 
 class ProcessRegister():
-    """ Map the columns to a list of register constructor arguments """
+    """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
         for property, value in kwargs.items():
@@ -17,7 +17,7 @@ class ProcessRegister():
         # set the table
         table = db.metadata.tables[self.table]
         # create the statement
-        stmt = insert(table).values(self.values)
+        self.stmt = insert(table).values(self.values)
 
     def __repr__(self):
         return str(self.table)
