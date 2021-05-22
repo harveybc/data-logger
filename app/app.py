@@ -48,7 +48,7 @@ def configure_database(app):
         print("Seeding database with test user")
         from models.seeds.user import seed
         seed(app, db)
-        print("tables=", db.engine.tables)
+        print("tables=", db.metadata.tables)
         
 
     @app.teardown_request
