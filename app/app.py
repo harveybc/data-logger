@@ -89,7 +89,7 @@ def create_app(config):
         print("Configuring database2")
         #from models.user import User
         print("Dropping database")
-        db.metadata=MetaData(reflect=True)
+        db.metadata=MetaData(bind=db.engine, reflect=True)
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
         db.drop_all()
