@@ -23,6 +23,12 @@ class ProcessTable():
         # add columns 
         #TODO: PARSE COL_TYPE, BECAUSE EVAL IS USED
         for c in self.columns:
+            # assign default values to each column parameter if it does not exist 
+            if "unique" not in c: c["unique"] = False
+            if "index" not in c: c["index"] = False
+            if "default" not in c: c["default"] = {}
+            if "nullable" not in c: c["nullable"] = False
+            # generate the arguments for this column
             if "primary_key" in c:
                 if c["primary_key"]:
                     t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=c["primary_key"]))
