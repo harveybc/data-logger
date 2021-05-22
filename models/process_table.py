@@ -37,7 +37,7 @@ class ProcessTable():
                 if c["foreign_key"] != "none":
                     t_args.append(Column(c["name"], eval(c["col_type"]), ForeignKey(c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             else:
-                t_args.append(Column(c["name"], eval(c["col_type"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                t_args.append(Column(c["name"], eval(c["col_type"])))
         # instance the Table class with the t_args
         metadata=MetaData()
         self.table = Table(autoload_with=db.engine, *t_args)
