@@ -85,7 +85,7 @@ def create(body):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
                 
-                res['register'] = result_proxy.__as_dict__
+                res['register'] = "result_proxy"
             else:
                 res['register'] ={}
         except SQLAlchemyError as e:
