@@ -39,7 +39,6 @@ class ProcessTable():
             else:
                 t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
         # instance the Table class with the t_args
-        metadata=MetaData()
         print("t_args=",t_args)
         self.table = Table(autoload_with=db.engine, *t_args)
         print("self.table=",self.table)
