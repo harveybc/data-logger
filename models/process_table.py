@@ -40,7 +40,7 @@ class ProcessTable():
                 t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
         # instance the Table class with the t_args
         print("t_args=",t_args)
-        self.table = Table(*t_args)
+        self.table = Table(*t_args, extend_existing=True)
         print("self.table=",self.table)
 
     def __repr__(self):
