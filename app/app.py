@@ -86,19 +86,17 @@ def create_app(config):
     # If it is the first time the app is run, create the database and perform data seeding
     @app.app.before_first_request
     def ini_db():
-        print("Configuring database2")
-        #from models.user import User
         print("Dropping database")
         db.Model.metadata.reflect(bind=db.engine)
-        #Base = automap_base()
-        #Base.prepare(db.engine, reflect=True)
         db.drop_all()
         print("done.")
-        #print("Creating database")
-        #db.create_all()
-        #print("Seeding database with test user")
-        #from models.seeds.user import seed
-        #seed(app, db)
+        from models.user import User
+        from models.process import Process
+        print("Creating database")
+        db.create_all()
+        print("Seeding database with test user")
+        from models.seeds.user import seed
+        seed(app, db)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
