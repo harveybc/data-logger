@@ -104,6 +104,7 @@ def create_app(config):
 
     # register the blueprints
     register_blueprints(app.app)
+    print("\n#1\n")
     configure_database(app.app)
     
     return app.app
