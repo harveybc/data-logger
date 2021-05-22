@@ -29,6 +29,7 @@ class ProcessTable():
             if "default" not in c: c["default"] = {}
             if "nullable" not in c: c["nullable"] = False
             # generate the arguments for this column
+            print("\nc=",c)
             if "primary_key" in c:
                 if c["primary_key"]:
                     t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=c["primary_key"]))
