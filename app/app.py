@@ -46,20 +46,19 @@ def configure_database(app):
     Base = automap_base()
     Base.prepare(db.engine, reflect=True)
     db.drop_all()
-    print("Creating database")
-    db.create_all()
-    print("Seeding database with test user")
-    from models.seeds.user import seed
-    seed(app, db)
-    print("tables=", db.metadata.tables)
-    @app.before_first_request
-    def initialize_database():
-        pass
-        
-
-    @app.teardown_request
-    def shutdown_session(exception=None):
-        db.session.remove()
+    print("done.")
+    #print("Creating database")
+    #db.create_all()
+    #print("Seeding database with test user")
+    #from models.seeds.user import seed
+    #seed(app, db)
+    #print("tables=", db.metadata.tables)
+#    @app.before_first_request
+#    def initialize_database():
+#        pass
+#    @app.teardown_request
+#    def shutdown_session(exception=None):
+#        db.session.remove()
 
 def create_app(config):
     # app = Flask(__name__, static_folder='base/static')
