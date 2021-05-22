@@ -12,6 +12,7 @@ import json
 import connexion
 from flask import current_app
 from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import MetaData
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -41,6 +42,7 @@ def configure_database(app):
     print("Configuring database2")
     #from models.user import User
     print("Dropping database")
+    db.metadata=MetaData(reflect=True)
     Base = automap_base()
     Base.prepare(db.engine, reflect=True)
     db.drop_all()
