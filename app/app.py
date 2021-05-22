@@ -11,6 +11,7 @@ from app.blueprints.user import user_bp
 import json
 import connexion
 from flask import current_app
+from sqlalchemy.ext.automap import automap_base
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -41,8 +42,9 @@ def configure_database(app):
     @app.before_first_request
     def initialize_database():
         from models.user import User
-        db.metadata.schema = "p_schema"
         print("Dropping database")
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
         db.drop_all()
         print("Creating database")
         db.create_all()
