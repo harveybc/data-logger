@@ -96,7 +96,7 @@ def create_app(config):
         db.create_all()
         print("Seeding database with test user")
         from models.seeds.user import seed
-        seed(app, db)
+        seed(app.app, db)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
