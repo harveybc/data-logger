@@ -42,7 +42,7 @@ class ProcessTable():
         metadata=MetaData()
         print("t_args=",t_args)
         self.table = Table(autoload_with=db.engine, *t_args)
-        print("self.table"=self.table)
+        print("self.table=",self.table)
 
     def __repr__(self):
         return str(self.name)
