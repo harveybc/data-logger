@@ -36,31 +36,6 @@ def register_blueprints(app):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
         
-
-# If it is the first time the app is run, create the database and perform data seeding
-@app.app.before_first_request
-def ini_db():
-    print("Configuring database2")
-    #from models.user import User
-    print("Dropping database")
-    db.metadata=MetaData(reflect=True)
-    Base = automap_base()
-    Base.prepare(db.engine, reflect=True)
-    db.drop_all()
-    print("done.")
-    #print("Creating database")
-    #db.create_all()
-    #print("Seeding database with test user")
-    #from models.seeds.user import seed
-    #seed(app, db)
-    #print("tables=", db.metadata.tables)
-#    @app.before_first_request
-#    def initialize_database():
-#        pass
-#    @app.teardown_request
-#    def shutdown_session(exception=None):
-#        db.session.remove()
-
 def create_app(config):
     # app = Flask(__name__, static_folder='base/static')
     app = connexion.App(__name__, specification_dir='./')
@@ -108,5 +83,29 @@ def create_app(config):
     register_blueprints(app.app)
     print("\n#1\n")
     #init_db(app.app)
+    # If it is the first time the app is run, create the database and perform data seeding
+    @app.before_first_request
+    def ini_db():
+        print("Configuring database2")
+        #from models.user import User
+        print("Dropping database")
+        db.metadata=MetaData(reflect=True)
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
+        db.drop_all()
+        print("done.")
+        #print("Creating database")
+        #db.create_all()
+        #print("Seeding database with test user")
+        #from models.seeds.user import seed
+        #seed(app, db)
+        #print("tables=", db.metadata.tables)
+    #    @app.before_first_request
+    #    def initialize_database():
+    #        pass
+    #    @app.teardown_request
+    #    def shutdown_session(exception=None):
+    #        db.session.remove()
+
     
     return app.app
