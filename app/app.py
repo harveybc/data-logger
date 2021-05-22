@@ -38,6 +38,7 @@ def register_blueprints(app):
         
 
 # If it is the first time the app is run, create the database and perform data seeding
+@app.before_first_request
 def ini_db(app):
     print("Configuring database2")
     #from models.user import User
@@ -106,6 +107,6 @@ def create_app(config):
     # register the blueprints
     register_blueprints(app.app)
     print("\n#1\n")
-    ini_db(app.app)
+    #init_db(app.app)
     
     return app.app
