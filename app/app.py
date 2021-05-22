@@ -41,6 +41,7 @@ def configure_database(app):
     @app.before_first_request
     def initialize_database():
         from models.user import User
+        db.metadata.schema = "p_schema"
         print("Dropping database")
         db.drop_all()
         print("Creating database")
