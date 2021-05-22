@@ -60,8 +60,6 @@ def create(body):
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
-            # reflect new table into metadata 
-            db.metadata.reflect(bind=db)
         
         # test if the new process table  was created 
         try:
