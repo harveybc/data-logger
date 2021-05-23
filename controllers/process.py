@@ -89,9 +89,9 @@ def create(body):
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
-                res['register'] = {"ok"}
+                res['register'] = {"result" : "ok"}
             else:
-                res['register'] = {"table does not exists"}
+                res['register'] = {"result": "table does not exists"}
         except SQLAlchemyError as e:
             error = str(e)
             res['register'] ={ 'error' : error}
