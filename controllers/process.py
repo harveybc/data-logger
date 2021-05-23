@@ -12,6 +12,7 @@ from models.process import Process
 from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy import Table, insert
+from sqlalchemy.ext.automap import automap_base
 
 
 @login_required
@@ -60,7 +61,11 @@ def create(body):
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
-        
+        #update metadata and tables
+        db.Model.metadata.reflect(bind=db.engine)
+        # reflect the tables
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
         # test if the new process table  was created 
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
@@ -84,10 +89,9 @@ def create(body):
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
-                
-                res['register'] = row2dict(result_proxy)
+                res['register'] = {"ok"}
             else:
-                res['register'] ={}
+                res['register'] = {"table does not exists"}
         except SQLAlchemyError as e:
             error = str(e)
             res['register'] ={ 'error' : error}
