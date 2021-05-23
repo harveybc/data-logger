@@ -85,7 +85,7 @@ def create(body):
                 # execute new_register statement in engine
                 result_proxy = db.engine.execute(new_register.stmt)
                 
-                res['register'] = "result_proxy"
+                res['register'] = row2dict(result_proxy)
             else:
                 res['register'] ={}
         except SQLAlchemyError as e:
@@ -94,6 +94,17 @@ def create(body):
         # return register as dict
         return res
     
+
+def row2dict(resultproxy):
+    d, a = {}, []
+    for rowproxy in resultproxy:
+        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
+        for column, value in rowproxy.items():
+            # build up the dictionary
+            d = {**d, **{column: value}}
+        a.append(d)
+    return a
+
 def read(processId):
     """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
