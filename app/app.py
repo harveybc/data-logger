@@ -81,15 +81,13 @@ def create_app(config):
 
     # register the blueprints
     register_blueprints(app.app)
-    db.Model.metadata.reflect(bind=db.engine)
-    # reflect the tables
-    Base = automap_base()
-    Base.prepare(db.engine, reflect=True)
+    
     print("\n#1\n")
     #init_db(app.app)
     # If it is the first time the app is run, create the database and perform data seeding
     @app.app.before_first_request
     def ini_db():
+        # TODO: AFTER TESTING, REMOVE FROM HERE
         print("Dropping database")
         db.drop_all()
         print("done.")
@@ -100,6 +98,11 @@ def create_app(config):
         print("Seeding database with test user")
         from models.seeds.user import seed
         seed(app.app, db)
+        # TODO: REMOVE UP TO HERE
+        # reflect the tables
+        db.Model.metadata.reflect(bind=db.engine)
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
