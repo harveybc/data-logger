@@ -13,7 +13,8 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy import Table, insert
 from sqlalchemy.ext.automap import automap_base
-
+from flask import request
+import controllers.process_table
 
 @login_required
 def create(body): 
@@ -188,22 +189,36 @@ def delete(processId):
     return res.id
 
 def read_all():
-    """ Query all registers of the process model.
+    """ Query all registers of the process, process table or process register.
 
         Returns:
         res (dict): the requested process registers with empty password field.
     """ 
-    try:
-        res = Process.query.all()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # convert to list of dicts and empty pass
-    res2 =[]
-    for r in res:
-        r.password = ""
-        res2.append(r.as_dict())
-    return res2
+    # check if the "process" url param is set (either generate the list of tables or registers in a table) else, generate a list of processes
+    process_param = request.args.get("process")
+    # generate the list of processes 
+    # TODO: filter by userid and column,value
+    if process_param is None:
+        try:
+            res = Process.query.all()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # convert to list of dicts and empty pass
+        res2 =[]
+        for r in res:
+            r.password = ""
+            res2.append(r.as_dict())
+        return res2
+    # if the process url param is present, either generat
+    else:
+        table_param = request.args.get("table")
+        # generate the list of tables 
+        # TODO: filter by userid and column,value
+        if table_param is None:
+            try:
+                table
+    
    
 
 
