@@ -14,7 +14,7 @@ from models.process_register import ProcessRegister
 from sqlalchemy import Table, insert
 from sqlalchemy.ext.automap import automap_base
 from flask import request
-import controllers.process_table
+import controllers.process_table as ptable
 
 @login_required
 def create(body): 
@@ -210,14 +210,14 @@ def read_all():
             r.password = ""
             res2.append(r.as_dict())
         return res2
-    # if the process url param is present, either generat
+    # if the process url param is present, either generate a list of tables or a list of registers of a table
     else:
         table_param = request.args.get("table")
         # generate the list of tables 
         # TODO: filter by userid and column,value
         if table_param is None:
             try:
-                table
+                ptable.read_all()
     
    
 
