@@ -3,4 +3,14 @@
 """
 
 def read_all():
-    pass
+    try:
+        res = Process.query.all()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return error
+    # convert to list of dicts and empty pass
+    res2 =[]
+    for r in res:
+        r.password = ""
+        res2.append(r.as_dict())
+    return res2
