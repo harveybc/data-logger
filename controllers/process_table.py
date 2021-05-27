@@ -2,6 +2,14 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 from sqlalchemy.ext.automap import automap_base
+from app.app import db
+
+Base = automap_base()
+#update metadata and tables
+db.Model.metadata.reflect(bind=db.engine)
+# reflect the tables
+Base = automap_base()
+Base.prepare(db.engine, reflect=True)
 
 def read_all():
     try:
