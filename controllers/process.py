@@ -67,6 +67,10 @@ def create(body):
         # reflect the tables
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
+        
+        #TODO: add the table to the tables array in the process
+
+
         # test if the new process table  was created 
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
@@ -217,7 +221,8 @@ def read_all():
         # TODO: filter by userid and column,value
         if table_param is None:
             try:
-                ptable.read_all()
+                # TODO: get tables array from the process
+                #ptable.read_all(int(process_param))
     
    
 
