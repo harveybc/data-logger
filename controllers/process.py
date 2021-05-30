@@ -223,4 +223,8 @@ def read_all():
             try:
                 # TODO: get tables array from the process
                 #ptable.read_all(int(process_param))
-                res = 
+                proc = Process.query.filter_by(id=int(process_param)).first_or_404()
+                res = proc.tables
+            except SQLAlchemyError as e:
+                error = str(e)
+                return error
