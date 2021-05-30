@@ -47,14 +47,14 @@ def create(body):
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'error' : error}
+            res['process'] = { 'error' : error}
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'error' : error}
+            res['process'] = { 'error' : error}
         # return register as dict
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
@@ -68,8 +68,19 @@ def create(body):
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
         
-        #TODO: add the table to the tables array in the process
-
+        # add the table to the tables array in the process (convert to string for compatibility)
+        p_table = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
+        p_table.tables = eval()
+        # add the modified process to the session
+        db.session.add(p_table)
+        try:
+            db.session.commit()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res['process'] ={ 'error' : error}
+        # update  the output in case the table was created in the same request as the process
+        if "process" in res:
+            res['process'].tables = str(
 
         # test if the new process table  was created 
         try:
@@ -103,7 +114,6 @@ def create(body):
         # return register as dict
         return res
     
-
 def row2dict(resultproxy):
     d, a = {}, []
     for rowproxy in resultproxy:

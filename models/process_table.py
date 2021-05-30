@@ -7,6 +7,7 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from pydoc import locate 
+from ast import literal_eval
 
 class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
@@ -32,12 +33,12 @@ class ProcessTable():
             print("\nc=",c)
             if "primary_key" in c:
                 if c["primary_key"]:
-                    t_args.append(Column(c["name"], eval(c["col_type"]), autoincrement=True, primary_key=c["primary_key"], nullable=False))
+                    t_args.append(Column(c["name"], literal_eval(c["col_type"]), autoincrement=True, primary_key=c["primary_key"], nullable=False))
             if "foreign_key" in c:
                 if c["foreign_key"] != "none":
-                    t_args.append(Column(c["name"], eval(c["col_type"]), ForeignKey("p_schema." + c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                    t_args.append(Column(c["name"], literal_eval(c["col_type"]), ForeignKey("p_schema." + c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             if "primary_key" not in c and "foreign_key" not in c:
-                t_args.append(Column(c["name"], eval(c["col_type"]), primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                t_args.append(Column(c["name"], literal_eval(c["col_type"]), primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
         # instance the Table class with the t_args
         print("t_args=",t_args)
         self.table = Table(*t_args, extend_existing=True)
