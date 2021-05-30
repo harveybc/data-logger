@@ -223,9 +223,4 @@ def read_all():
             try:
                 # TODO: get tables array from the process
                 #ptable.read_all(int(process_param))
-    
-   
-
-
-
-
+                res = 
