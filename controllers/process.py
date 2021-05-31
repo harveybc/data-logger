@@ -2,7 +2,7 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from app.app import db, parse_word
+from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
@@ -80,7 +80,16 @@ def create(body):
             res['process'] ={ 'error' : error}
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
-            res['process'].tables = str(
+            
+            # TODO: construct a table model (see swagger yaml) with table_column models
+            # TODO: insert the new table model in the tables array
+                # TODO: convert the process.tables array to a json
+                # TODO: add the table model to the process.tables array
+                # TODO: convert the process.tables json to string
+                # TODO: replace the process.tables by the updated one
+                # TODO: add the process model to the session
+                # TODO: commit the session. 
+                res['process'].tables = str(translate(input_str)
 
         # test if the new process table  was created 
         try:
