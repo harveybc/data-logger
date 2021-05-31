@@ -2,7 +2,7 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from app.app import db
+from app.app import db, parse_word
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
@@ -54,7 +54,7 @@ def create(body):
             res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] = { 'error' : error}
+            res['process'] ={ 'error' : error}
         # return register as dict
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
