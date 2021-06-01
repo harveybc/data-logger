@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from pydoc import locate 
-from string import translate
+from string import rstrip
 
 class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
@@ -44,7 +44,7 @@ class ProcessTable():
 
     # ensures the type is a single word representing the sqlalchemy type of the columns
     def parse_sqlalchemy_column_type(self, input_str):
-        translated_input = translate(input_str)
+        translated_input = rstrip(input_str, chars="\"',\\*.!:-+/")
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
             translated_input == "Float", translated_input == "Integer", translated_input == "Interval", translated_input == "LargeBinary", translated_input == "MatchType", 
