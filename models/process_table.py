@@ -1,6 +1,6 @@
 """ Map this model's fields and relationships """
 
-from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, MatchType, Numeric, PickleType, SchemaType, SmallInteger, String, Text, Time, Unicode, UnicodeText
+from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, Numeric, PickleType, SchemaType, SmallInteger, String, Text, Time, Unicode, UnicodeText
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
