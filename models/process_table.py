@@ -46,7 +46,7 @@ class ProcessTable():
     def parse_sqlalchemy_column_type(self, input_str):
         # TODO: limit the length of the input_str 
         # remove dangerous characters
-        translated_input = input_str.strip(chars="\"',\\*.!:-+/ #\{\}[]")
+        translated_input = input_str.strip("\"',\\*.!:-+/ #\{\}[]")
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
             translated_input == "Float", translated_input == "Integer", translated_input == "Interval", translated_input == "LargeBinary", translated_input == "MatchType", 
