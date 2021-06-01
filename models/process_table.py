@@ -44,6 +44,8 @@ class ProcessTable():
 
     # ensures the type is a single word representing the sqlalchemy type of the columns
     def parse_sqlalchemy_column_type(self, input_str):
+        # TODO: limit the length of the input_str 
+        # remove dangerous characters
         translated_input = input_str.strip(chars="\"',\\*.!:-+/ #\{\}[]")
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
@@ -55,9 +57,6 @@ class ProcessTable():
             return eval(translated_input)
         else:
             return Integer
-            
-
-
 
     def __repr__(self):
         return str(self.name)
