@@ -69,9 +69,19 @@ def create(body):
         Base.prepare(db.engine, reflect=True)
         
         # add the table to the tables array in the process (convert to string for compatibility)
-        p_table = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
-        p_table.tables = eval()
-        # add the modified process to the session
+        p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
+        # construct a table model (see swagger yaml) with table_column models
+        table_m = {}
+        table_m["name"] = new_table.name
+        # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
+        table_m["real_name"] = new_table.name
+        table_m["columns"] = new_table.columns
+        # convert the tables string to an array
+        t_array = json.loads(p_table.tables)
+        #insert the new table model in the tables array
+        t_array.append(table_m)
+        # save the table_m array in a json string in process.tables 
+        p_table.tables = json.dumps(t_array)
         db.session.add(p_table)
         try:
             db.session.commit()
@@ -80,17 +90,8 @@ def create(body):
             res['process'] ={ 'error' : error}
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
+            res['process'].tables = p_table.tables
             
-            # TODO: construct a table model (see swagger yaml) with table_column models
-            # TODO: insert the new table model in the tables array
-                # TODO: convert the process.tables array to a json
-                # TODO: add the table model to the process.tables array
-                # TODO: convert the process.tables json to string
-                # TODO: replace the process.tables by the updated one
-                # TODO: add the process model to the session
-                # TODO: commit the session. 
-                res['process'].tables = str(translate(input_str)
-
         # test if the new process table  was created 
         try:
             if db.engine.dialect.has_table(db.engine, new_table.name):
@@ -247,3 +248,4 @@ def read_all():
             except SQLAlchemyError as e:
                 error = str(e)
                 return error
+            return res
