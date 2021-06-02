@@ -6,6 +6,7 @@ from models.user import User
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm.attributes import flag_dirty, flag_modified
 
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
@@ -46,7 +47,7 @@ def read(userId):
         res (dict): the requested user register with empty password field.
     """ 
     try:
-        res = User.query.filter_by(id=int(userId)).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -55,7 +56,7 @@ def read(userId):
     return res.as_dict()
     
 
-def update(userId, body):
+def update(body, userId):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
@@ -67,13 +68,21 @@ def update(userId, body):
     """
     # query the existing register
     try:
-        res = User.query.filter_by(id=int(userId)).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
     # replace model with body fields
-    body['id']=res.id
-    res.__dict__ = body
+    #body['id']=res.id
+    #res.__dict__ = body
+    res = User(**body)
+    #res.__dict__['id'] = userId    
+    res.id =  userId
+    # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
+    #flag_dirty(res)
+    #flag_modified(res, "email")
+    db.session.merge(res)
+    #print ("new_email = ", res.email)
     # perform update 
     try:
         db.session.commit()
@@ -82,14 +91,14 @@ def update(userId, body):
         return error
     # test if the model was updated 
     try:
-        res = User.query.filter_by(id=int(userId)).first_or_404()
+        res2 = User.query.filter_by(id=int(userId)).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
-        return error
+    #   return error
     # empty pass
-    res.password=""
+    res2.__dict__['password']=""
     # return register as dict
-    return res.as_dict()
+    return res2.as_dict()
 
 def delete(userId):
     """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
@@ -101,7 +110,7 @@ def delete(userId):
         res (int): the deleted register id field
     """ 
     try:
-        res = User.query.filter_by(id=int(userId)).first_or_404()
+        res = User.query.filter_by(id=userId).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -126,11 +135,11 @@ def read_all():
         error = str(e.__dict__['orig'])
         return error
     # convert to list of dicts and empty pass
-    r2 =[]
+    res2 =[]
     for r in res:
         r.password = ""
-        r2.append(r.as_dict())
-    return r2
+        res2.append(r.as_dict())
+    return res2
    
 
 

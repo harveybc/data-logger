@@ -11,6 +11,8 @@ from app.blueprints.user import user_bp
 import json
 import connexion
 from flask import current_app
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import MetaData
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -33,23 +35,6 @@ def register_blueprints(app):
     for module_name in ('base', 'home'):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
-        
-
-# If it is the first time the app is run, create the database and perform data seeding
-def configure_database(app):
-    print("Configuring database")
-#    #@app.before_first_request
-#    def initialize_database():
-#        print("Creating database")
-#        from models.user import User
-#        db.create_all()
-#        print("Seeding database")
-#        from models.user_seed import user_seed
-#        user_seed(app, db)
-
-    @app.teardown_request
-    def shutdown_session(exception=None):
-        db.session.remove()
 
 def create_app(config):
     # app = Flask(__name__, static_folder='base/static')
@@ -96,6 +81,35 @@ def create_app(config):
 
     # register the blueprints
     register_blueprints(app.app)
-    configure_database(app.app)
+    
+    print("\n#1\n")
+    #init_db(app.app)
+    # If it is the first time the app is run, create the database and perform data seeding
+    @app.app.before_first_request
+    def ini_db():
+        # TODO: AFTER TESTING, REMOVE FROM HERE
+        print("Dropping database")
+        db.drop_all()
+        print("done.")
+        from models.user import User
+        from models.process import Process
+        print("Creating database")
+        db.create_all()
+        print("Seeding database with test user")
+        from models.seeds.user import seed
+        seed(app.app, db)
+        # TODO: REMOVE UP TO HERE
+        # reflect the tables
+        db.Model.metadata.reflect(bind=db.engine)
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
+        #print("tables=", db.metadata.tables)
+    #    @app.before_first_request
+    #    def initialize_database():
+    #        pass
+    #    @app.teardown_request
+    #    def shutdown_session(exception=None):
+    #        db.session.remove()
+
     
     return app.app

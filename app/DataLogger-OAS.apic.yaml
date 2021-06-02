@@ -10,7 +10,8 @@ schemes:
 securityDefinitions:
   basic_auth:
     type: basic
-    description: Basic Auth
+    description: >-
+      Basic auth, please add the following line to the yaml: 
     x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
@@ -38,29 +39,26 @@ definitions:
         type: string
       email:
         type: string
-      admin:
+      is_admin:
         type: boolean
     required:
       - id
       - username
       - email
-      - admin
-  input_process:
+      - is_admin
+  table:
     type: object
     properties:
       name:
         type: string
-      description:
+      real_name:
         type: string
-      userId:
-        type: integer
-      configuration:
-        type: string
-    required:
-      - name
-      - description
-      - userId
-      - configuration
+      columns:
+        type: array
+        items:
+          $ref: '#/definitions/table_column'
+          type:
+            - null
   output_process:
     type: object
     properties:
@@ -72,8 +70,16 @@ definitions:
         type: string
       userId:
         type: integer
-      configuration:
-        type: string
+      tables:
+        type: array
+        items:
+          $ref: '#/definitions/table'
+          type:
+            - null
+    required:
+      - id
+      - name
+      - userId
   input_authorization:
     type: object
     properties:
@@ -170,6 +176,125 @@ definitions:
       - route
       - method
       - parameters
+  input_process_register:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      table:
+        type: string
+      filter_column:
+        type: string
+      filter_value:
+        type: string
+      values:
+        type: array
+        items:
+          type:
+            - object
+    required:
+      - process_id
+      - table
+  table_column:
+    type: object
+    properties:
+      name:
+        type: string
+      col_type:
+        type: string
+      index:
+        type: boolean
+        default: false
+      unique:
+        type: boolean
+        default: false
+      primary_key:
+        type: boolean
+        default: false
+      foreign_key:
+        type: string
+        default: none
+      default:
+        type: object
+      nullable:
+        type: boolean
+        default: false
+    required:
+      - name
+      - col_type
+  input_process_table:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      columns:
+        type: array
+        items:
+          $ref: '#/definitions/table_column'
+          type:
+            - null
+      name:
+        type: string
+    required:
+      - process_id
+      - columns
+      - name
+  process_operation:
+    type: object
+    properties:
+      process:
+        $ref: '#/definitions/input_process'
+      table:
+        $ref: '#/definitions/input_process_table'
+      register:
+        $ref: '#/definitions/input_process_register'
+  output_process_register:
+    type: array
+    items:
+      type: object
+  output_process_table:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      name:
+        type: string
+      table:
+        $ref: '#/definitions/table'
+        type: null
+    required:
+      - process_id
+      - name
+      - table
+  input_process:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      userId:
+        type: integer
+      tables:
+        type: array
+        items:
+          $ref: '#/definitions/table'
+          type:
+            - null
+  process_operation_output:
+    type: object
+    properties:
+      process:
+        $ref: '#/definitions/input_process'
+        type: null
+      table:
+        $ref: '#/definitions/input_process_table'
+        type: null
+      register:
+        $ref: '#/definitions/input_process_register'
+        type: null
 responses:
   'trait:error-response:400':
     schema:
@@ -223,7 +348,7 @@ parameters: {}
 paths:
   /users:
     post:
-      tags: 
+      tags:
         - user
         - create
       summary: Create user
@@ -232,7 +357,7 @@ paths:
       produces: []
       schemes: []
       security:
-        - basic_auth: ['controllers.user.create']
+        - basic_auth: []
       operationId: controllers.user.create
       responses:
         '200':
@@ -256,8 +381,8 @@ paths:
       tags:
         - user
         - list
-      summary: Get list of all users
-      description: Get list of all users
+      summary: Get list of users
+      description: Get list of users
       consumes: []
       produces: []
       schemes: []
@@ -311,7 +436,7 @@ paths:
           in: path
           description: ''
           required: true
-          type: string
+          type: integer
     put:
       tags:
         - user
@@ -377,7 +502,7 @@ paths:
           in: path
           description: ''
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
@@ -388,7 +513,9 @@ paths:
         - process
         - create
       summary: Create process
-      description: Create process
+      description: >-
+        Create process, a table for a process or a register inside a table of a
+        process, depending on the body parameters. (process, table or register)
       consumes: []
       produces: []
       schemes: []
@@ -396,10 +523,22 @@ paths:
         - basic_auth: []
       operationId: controllers.process.create
       responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: >-
+            Returns response 200 with the details of the newly created register
+            in a process table
         '201':
           schema:
-            $ref: '#/definitions/output_process'
+            $ref: '#/definitions/process_operation_output'
           description: Returns response 201 with the details of the newly created process
+        '202':
+          schema:
+            $ref: '#/definitions/output_process_table'
+          description: >-
+            Returns response 201 with the details of the newly created table for
+            a process
         '400':
           $ref: '#/responses/trait:error-response:400'
         '401':
@@ -412,19 +551,21 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_process'
+            $ref: '#/definitions/process_operation'
     get:
       tags:
         - process
         - list
       summary: Get list of process
-      description: Get list of processes
+      description: >-
+        Get list of processes, or a list of registers of a table of a process,
+        depending on the existence of the table query parameter.
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.get_list
+      operationId: controllers.process.read_all
       responses:
         '200':
           schema:
@@ -432,33 +573,12 @@ paths:
             items:
               $ref: '#/definitions/output_process'
           description: Returns 200 with list/array of processs
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
-      parameters: []
-  '/process/{processId}':
-    get:
-      tags:
-        - process
-        - get
-      summary: Get detail of process by processId
-      description: Get detail of process by processId
-      consumes: []
-      produces: []
-      schemes: []
-      security:
-        - basic_auth: []
-      operationId: controllers.process.get
-      responses:
-        '200':
+        '203':
           schema:
-            $ref: '#/definitions/output_process'
-          description: Returns 200 with the detail of process for the specified processId
+            type: array
+            items:
+              $ref: '#/definitions/output_process_register'
+          description: Returns 203 with list/array of registers of the selected table
         '400':
           $ref: '#/responses/trait:error-response:400'
         '401':
@@ -468,17 +588,80 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
+        - name: table
+          in: query
+          description: >-
+            Name of the table of a process (suffix) to be queried instead of the
+            processes table.
+          required: false
+          type: string
+  '/process/{processId}':
+    get:
+      tags:
+        - process
+        - get
+      summary: Get detail of process
+      description: >-
+        Get detail of process by processId, or a register from a table of a
+        process, depending on the existence of query parameters.
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.read
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns 200 with the detail of process for the specified processId
+        '203':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: >-
+            Returns 203 with the detail of a register of a table in the process
+            for the specified processId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: table
+          in: query
+          description: >-
+            If present indicate the table of the process (suffix) to perform the
+            query
+          required: false
+          type: string
+        - name: column
+          in: query
+          description: If present indicate the column to filter the query
+          required: false
+          type: string
+        - name: value
+          in: query
+          description: >-
+            If present indicate the value used with the column to filter the
+            query (returns only the first one)
+          required: false
+          type: string
         - name: processId
           in: path
           description: ''
           required: true
-          type: string
+          type: integer
     put:
       tags:
         - process
         - update
-      summary: Update process details by processId
-      description: Update process details by processId
+      summary: Update process
+      description: >-
+        Update process register by processId, or a register in a table of a
+        process
       consumes: []
       produces: []
       schemes: []
@@ -490,6 +673,10 @@ paths:
           schema:
             $ref: '#/definitions/output_process'
           description: Returns 200 with the detail of updated process
+        '203':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: Returns 203 with the detail of updated process register
         '400':
           $ref: '#/responses/trait:error-response:400'
         '401':
@@ -503,17 +690,19 @@ paths:
           in: path
           description: ''
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_process'
+            $ref: '#/definitions/process_operation'
     delete:
       tags:
         - process
         - delete
-      summary: Delete process by processId
-      description: Delete process by processId
+      summary: Delete process
+      description: >-
+        Delete process by processId  or a register in a table of the process by
+        a column and value filter
       consumes: []
       produces: []
       schemes: []
@@ -534,11 +723,30 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
+        - name: table
+          in: query
+          description: >-
+            If present indicate the table of the process (suffix) to perform the
+            query
+          required: false
+          type: string
+        - name: column
+          in: query
+          description: If present indicate the column to filter the query
+          required: false
+          type: string
+        - name: value
+          in: query
+          description: >-
+            If present indicate the value used with the column to filter the
+            query (returns only the first one)
+          required: false
+          type: string
         - name: processId
           in: path
           description: ''
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
@@ -587,7 +795,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.get_list
+      operationId: controllers.authorization.read_all
       responses:
         '200':
           schema:
@@ -616,7 +824,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.get
+      operationId: controllers.authorization.read
       responses:
         '200':
           schema:
@@ -750,7 +958,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.get_list
+      operationId: controllers.log.read_all
       responses:
         '200':
           schema:
@@ -779,7 +987,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.get
+      operationId: controllers.log.read
       responses:
         '200':
           schema:

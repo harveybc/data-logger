@@ -4,20 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 import click
 from app.app import  db
 from config import config_dict
-
-app = Flask(__name__)
-
-bp_init_db = Blueprint('db_init', __name__)
-# TODO: make DEBUG/PRODUCTION MODE  parametrizable
-app_config = config_dict['Debug']
-#conf = Config()
-app.config.from_object(app_config)
-#print ("app.config = ",app_config)
-#db = SQLAlchemy()
-#db = create_db(app)
+from flask.cli import with_appcontext
 
 
-@bp_init_db.cli.command('init')
+@with_appcontext
 def init():
     """
     Initialize the database.
@@ -36,9 +26,6 @@ def init():
         # import all the models
         from models.user import User
         from models.process import Process
-        from models.training_progress import TrainingProgress
-        from models.validation_plots import ValidationPlots
-        from models.validation_stats import ValidationStats
         print("Dropping database")
         db.drop_all()
         print("Creating database")
