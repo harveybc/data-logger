@@ -88,8 +88,8 @@ def create(body):
         p_table["tables"] = json.dumps(t_array)
         db.session.add(Process(**p_table))
         try:
-            db.session.commit()
-            db.session.close()
+            #db.session.commit()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'error' : error}
