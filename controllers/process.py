@@ -86,9 +86,12 @@ def create(body):
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
         p_table["tables"] = json.dumps(t_array)
+        #remove the id key from patables
+        del p_table["id"]
+        # add p_table to the session
         db.session.add(Process(**p_table))
         try:
-            #db.session.commit()
+            db.session.commit()
             db.session.close()
             pass
         except SQLAlchemyError as e:
