@@ -92,12 +92,8 @@ def create(body):
         #remove the unique column keys from p_tables
         #del p_table["id"]
         #del p_table["name"]
-        
         # add p_table to the session
-        db.session.add(Process(**p_table))
-
-
-
+        #db.session.add(Process(**p_table))
         try:
             db.session.commit()
             db.session.close()
