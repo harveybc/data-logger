@@ -89,7 +89,7 @@ def create(body):
         db.session.add(Process(**p_table))
         try:
             #db.session.commit()
-            #db.session.close()
+            db.session.close()
             pass
         except SQLAlchemyError as e:
             error = str(e)
