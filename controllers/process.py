@@ -90,6 +90,7 @@ def create(body):
         try:
             #db.session.commit()
             #db.session.close()
+            pass
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'error' : error}
