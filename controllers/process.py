@@ -61,7 +61,7 @@ def create(body):
         # instantiate process table with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.e   ngine)
+            new_table.table.create(db.e  ngine)
         #update metadata and tables
         db.Model.metadata.reflect(bind=db.engine)
         # reflect the tables
