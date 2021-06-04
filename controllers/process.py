@@ -85,7 +85,7 @@ def create(body):
         #insert the new table model in the tables array
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
-        p_table.tables = json.dumps(t_array)
+        p_table["tables"] = json.dumps(t_array)
         db.session.add(p_table)
         try:
             db.session.commit()
