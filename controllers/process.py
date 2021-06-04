@@ -70,7 +70,8 @@ def create(body):
         
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
+            p_model = db.session.query(Process).filter_by(id=new_table.process_id).first_or_404()
+            p_table = p_model.as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error
@@ -86,12 +87,17 @@ def create(body):
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
         p_table["tables"] = json.dumps(t_array)
+        # update the tables attribute in the process model
+        p_model.tables = p_table["tables"] 
         #remove the unique column keys from p_tables
-        del p_table["id"]
-        del p_table["name"]
+        #del p_table["id"]
+        #del p_table["name"]
         
         # add p_table to the session
         db.session.add(Process(**p_table))
+
+
+
         try:
             db.session.commit()
             db.session.close()
