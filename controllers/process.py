@@ -61,7 +61,7 @@ def create(body):
         # instantiate process table with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
         if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.engine)
+            new_table.table.create(db.e   ngine)
         #update metadata and tables
         db.Model.metadata.reflect(bind=db.engine)
         # reflect the tables
@@ -69,7 +69,11 @@ def create(body):
         Base.prepare(db.engine, reflect=True)
         
         # add the table to the tables array in the process (convert to string for compatibility)
-        p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
+        try:
+            p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
         # construct a table model (see swagger yaml) with table_column models
         table_m = {}
         table_m["name"] = new_table.name
