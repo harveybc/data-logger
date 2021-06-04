@@ -70,7 +70,7 @@ def create(body):
         
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
+            p_table = Process.query.filter_by(id=new_table.process_id).first().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error
