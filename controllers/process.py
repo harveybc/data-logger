@@ -94,7 +94,7 @@ def create(body):
             res['process'] ={ 'error' : error}
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
-            res['process'].tables = p_table["tables"]
+            res['process']["tables"] = p_table["tables"]
             
         # test if the new process table  was created 
         try:
