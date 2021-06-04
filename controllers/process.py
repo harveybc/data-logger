@@ -70,7 +70,7 @@ def create(body):
         
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_table = Process.query.filter_by(id=new_table.process_id).first().as_dict()
+            p_table = Process.query.filter_by(id=new_table.process_id).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error
@@ -81,7 +81,7 @@ def create(body):
         table_m["real_name"] = new_table.name
         table_m["columns"] = new_table.columns
         # convert the tables string to an array
-        t_array = json.loads(p_table.tables)
+        t_array = json.loads(p_table["tables"])
         #insert the new table model in the tables array
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
