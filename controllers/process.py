@@ -86,7 +86,7 @@ def create(body):
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
         p_table["tables"] = json.dumps(t_array)
-        db.session.add(p_table)
+        db.session.add(Process(**p_table))
         try:
             db.session.commit()
         except SQLAlchemyError as e:
