@@ -45,6 +45,7 @@ def create(body):
         db.session.add(new_process)
         try:
             db.session.commit()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error' : error}
