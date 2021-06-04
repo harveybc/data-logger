@@ -86,8 +86,10 @@ def create(body):
         t_array.append(table_m)
         # save the table_m array in a json string in process.tables 
         p_table["tables"] = json.dumps(t_array)
-        #remove the primary id key from p_tables
+        #remove the unique column keys from p_tables
         del p_table["id"]
+        del p_table["name"]
+        
         # add p_table to the session
         db.session.add(Process(**p_table))
         try:
