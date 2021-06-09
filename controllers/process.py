@@ -74,36 +74,25 @@ def create(body):
         try:
             p_model = db.session.query(Process).filter_by(id=new_table.process_id).first_or_404()
             p_table = p_model.as_dict()
-        except SQLAlchemyError as e:
-            error = str(e)
-            return error
-        # construct a table model (see swagger yaml) with table_column models
-        table_m = {}
-        table_m["name"] = new_table.name
-        # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
-        table_m["real_name"] = new_table.name
-        table_m["columns"] = new_table.columns
-        # convert the tables string to an array
-        t_array = json.loads(p_table["tables"])
-        #insert the new table model in the tables array
-        t_array.append(table_m)
-        # save the table_m array in a json string in process.tables 
-        p_table["tables"] = json.dumps(t_array)
-        # update the tables attribute in the process model
-        p_model.tables = p_table["tables"] 
-        #remove the unique column keys from p_tables
-        #del p_table["id"]
-        #del p_table["name"]
-        # add p_table to the session
-        #db.session.add(Process(**p_table))
-        try:
+            # construct a table model (see swagger yaml) with table_column models
+            table_m = {}
+            table_m["name"] = new_table.name
+            # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
+            table_m["real_name"] = new_table.name
+            table_m["columns"] = new_table.columns
+            # convert the tables string to an array
+            t_array = json.loads(p_table["tables"])
+            #insert the new table model in the tables array
+            t_array.append(table_m)
+            # save the table_m array in a json string in process.tables 
+            p_table["tables"] = json.dumps(t_array)
+            # update the tables attribute in the process model
+            p_model.tables = p_table["tables"] 
             db.session.commit()
-            db.session.expunge_all()
             db.session.close()
-            pass
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'error' : error}
+            res['process'] ={ 'errorz' : error}
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
             res['process']["tables"] = p_table["tables"]
