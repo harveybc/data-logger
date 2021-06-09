@@ -49,7 +49,7 @@ def create(body):
             
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] = { 'error' : error}
+            res['process'] = { 'errorb' : error}
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
@@ -57,7 +57,7 @@ def create(body):
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'error' : error}
+            res['process'] ={ 'errorc' : error}
     # use kwargs to check if the process parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
