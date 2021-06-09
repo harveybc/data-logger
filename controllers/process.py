@@ -52,7 +52,7 @@ def create(body):
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
+            res['process'] = db.session.query(Process).filter_by(name=new_process.name).first_or_404().as_dict()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
@@ -118,7 +118,7 @@ def create(body):
                 res['table'] = {}
         except SQLAlchemyError as e:
             error = str(e)
-            res['table'] ={ 'error' : error}
+            res['table'] ={ 'errore' : error}
     # use kwargs to check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
