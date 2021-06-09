@@ -233,7 +233,7 @@ def read_all():
         res (dict): the requested process registers with empty password field.
     """ 
     # check if the "process" url param is set (either generate the list of tables or registers in a table) else, generate a list of processes
-    process_param = request.args.get("process")
+    process_param = request.args.get("process_id")
     # generate the list of processes 
     # TODO: filter by userid and column,value
     if process_param is None:
