@@ -44,6 +44,7 @@ def create(body):
         # add the modified process to the session
         db.session.add(new_process)
         try:
+            db.session.expire_on_commit = False
             db.session.commit()
             db.session.close()
             
@@ -53,8 +54,7 @@ def create(body):
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
-            with db.get_db_session() as se:      
-                res['process'] = se.query(Process).filter_by(name=new_process.name).first_or_404().as_dict()
+            res['process'] = db.session.query(Process).filter_by(name=new_process.name).first_or_404().as_dict()
 #            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
