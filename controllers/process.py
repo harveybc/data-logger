@@ -70,7 +70,7 @@ def create(body):
         
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_model = db.session.query(Process).filter_by(id=new_table.process_id).first_or_404()
+            p_model = Process.query.filter_by(id=new_table.process_id).first_or_404()
             p_table = p_model.as_dict()
             # construct a table model (see swagger yaml) with table_column models
             table_m = {}
