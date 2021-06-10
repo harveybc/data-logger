@@ -46,13 +46,14 @@ def create(body):
         try:
             db.session.commit()
             db.session.close()
-            db.session.expunge_all()
+            
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
+            db.session.expunge_all()
             res['process'] = db.session.query(Process).filter_by(name=new_process.name).first_or_404().as_dict()
 #            db.session.close()
         except SQLAlchemyError as e:
