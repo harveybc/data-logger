@@ -258,6 +258,10 @@ def read_all():
             # TODO: validate if the table name is valid 
             # TODO: validate if the table is in the process tables array
             # TODO: declare automap base class
+            Base = automap_base()
+            #update metadata and tables
+            db.Model.metadata.reflect(bind=db.engine)
+            
             register_model = eval("Base.classses." + table_param)
             # perform query
             db.session.query(register_model).all()
