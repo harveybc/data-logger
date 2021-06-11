@@ -262,7 +262,7 @@ def read_all():
             #update metadata and tables
             db.Model.metadata.reflect(bind=db.engine)
             
-            register_model = eval("Base.classses." + table_param)
+            register_model = eval("Base.classes." + table_param)
             # perform query
             db.session.query(register_model).all()
 
