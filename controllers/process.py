@@ -252,3 +252,14 @@ def read_all():
                 error = str(e)
                 return error
             return res
+        else:
+            # generate list of registers
+            # TODO: filter by column,value
+            # TODO: validate if the table name is valid 
+            # TODO: validate if the table is in the process tables array
+            # TODO: declare automap base class
+            register_model = eval("Base.classses." + table_param)
+            # perform query
+            db.session.query(register_model).all()
+
+            
