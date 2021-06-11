@@ -264,5 +264,5 @@ def read_all():
             register_model = eval("Base.classes." + table_param)
             # perform query
             res=db.session.query(register_model).all()
-            return res
+            return res.__dict__
             
