@@ -260,9 +260,8 @@ def read_all():
             # TODO: declare automap base class
             Base = automap_base()
             #update metadata and tables
-            db.Model.metadata.reflect(bind=db.engine)
-            
-            register_model = eval("Base.classes." + table_param)
+            Base.prepare(db.engine, reflect=True)
+            register_model = eval("Base.classses." + table_param)
             # perform query
             db.session.query(register_model).all()
 
