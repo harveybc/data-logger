@@ -146,6 +146,7 @@ def read(processId):
         Returns:
         res (dict): the requested process register with empty password field.
     """ 
+    # if the 
     try:
         res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
