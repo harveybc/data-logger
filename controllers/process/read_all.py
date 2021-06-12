@@ -67,3 +67,21 @@ def read_all():
             # perform query
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
+
+def as_dict(model):   
+        r2 = {}
+        for c in model.__table__.columns:
+            attr = getattr(model, c.name)
+            if is_num(attr):
+                r2[c.name]=attr
+            else:
+                r2[c.name]=str(attr)
+        return r2
+
+def is_num(n):
+    if isinstance(n, int):
+        return True
+    if isinstance(n, float):
+        return n.is_integer()
+    return False
+            
