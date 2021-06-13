@@ -5,18 +5,14 @@
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
-from flask_login import login_required, current_user
-from datetime import datetime
+from flask_login import login_required
 from app.app import login_manager
 from models.process import Process
-from models.process_table import ProcessTable
-from models.process_register import ProcessRegister
-from sqlalchemy import Table, insert
 from sqlalchemy.ext.automap import automap_base
 from flask import request
-import controllers.process_table as ptable
+from controllers.common import as_dict, is_num
 
-
+@login_required
 def read_all():
     """ Query all registers of the process, process table or process register.
 
@@ -67,21 +63,3 @@ def read_all():
             # perform query
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
-
-def as_dict(model):   
-        r2 = {}
-        for c in model.__table__.columns:
-            attr = getattr(model, c.name)
-            if is_num(attr):
-                r2[c.name]=attr
-            else:
-                r2[c.name]=str(attr)
-        return r2
-
-def is_num(n):
-    if isinstance(n, int):
-        return True
-    if isinstance(n, float):
-        return n.is_integer()
-    return False
-            

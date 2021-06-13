@@ -11,10 +11,7 @@ from app.app import login_manager
 from models.process import Process
 from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
-from sqlalchemy import Table, insert
 from sqlalchemy.ext.automap import automap_base
-from flask import request
-import controllers.process_table as ptable
 
 @login_required
 def create(body): 
@@ -126,14 +123,3 @@ def create(body):
             res['register'] ={ 'error' : error}
         # return register as dict
         return res
-    
-def row2dict(resultproxy):
-    d, a = {}, []
-    for rowproxy in resultproxy:
-        # rowproxy.items() returns an array like [(key0, value0), (key1, value1)]
-        for column, value in rowproxy.items():
-            # build up the dictionary
-            d = {**d, **{column: value}}
-        a.append(d)
-    return a
-

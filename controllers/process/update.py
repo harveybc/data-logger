@@ -11,10 +11,8 @@ from app.app import login_manager
 from models.process import Process
 from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
-from sqlalchemy import Table, insert
 from sqlalchemy.ext.automap import automap_base
-from flask import request
-import controllers.process_table as ptable
+from controllers.common import as_dict, is_num
 
 @login_required
 def update(processId, body):
