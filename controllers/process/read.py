@@ -1,32 +1,29 @@
-""" Controller for the process endpoint. 
-    Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
+""" Controller for the process/read endpoint.
+    Description: Contains API endpoint handler functions for for reading individual process, process table or process table register.
 """
 
-from app.app import db
-import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
-from datetime import datetime
-from app.app import login_manager
+from controllers.common import as_dict, is_num
 from models.process import Process
-from models.process_table import ProcessTable
-from models.process_register import ProcessRegister
-from sqlalchemy import Table, insert
-from sqlalchemy.ext.automap import automap_base
 from flask import request
-import controllers.process_table as ptable
 
 @login_required
 def read(processId):
-    """ Query a register in db based on the id field of the process model, obtained from a request's processId url parameter.
+    """ Performs a query to a process, process table or process table register based on the existence and value of GET parameters.
 
         Args:
         processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
 
         Returns:
-        res (dict): the requested process register with empty password field.
+        res (dict): the requested process register, process table or process table register.
     """ 
-    # if the 
+    process_param = request.args.get("process_id")
+    # generate the list of processes 
+    # TODO: filter by userid and column,value
+    if process_param is None:
+        try:
+            res = Process.query.all()
     try:
         res = Process.query.filter_by(name=processId).first_or_404()
     except SQLAlchemyError as e:
