@@ -23,7 +23,7 @@ def read(processId):
     # TODO: filter by userid and column,value
     if process_param is None:
         try:
-            res = Process.query.filter_by(name=processId).first_or_404()
+            res = Process.query.filter_by(id=processId).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             return error
