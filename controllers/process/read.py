@@ -59,5 +59,5 @@ def read(processId):
             # perform query
             res=db.session.query(register_model).filter_by(id=reg_id).first_or_404()
             return as_dict(res) 
-    return res.as_dict()
+    #return res.as_dict()
     
