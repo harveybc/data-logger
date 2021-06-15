@@ -22,7 +22,6 @@ def read(processId):
         res (dict): the requested process register, process table or process table register.
     """ 
     table_param = request.args.get("table")
-    reg_id = request.args.get("reg_id")
     # query a process model 
     # TODO: filter by userid and column,value
     if table_param is None:
@@ -34,24 +33,31 @@ def read(processId):
         return res
     else:
         # query a table
+        reg_id = request.args.get("reg_id")
         if reg_id is None:
-
+            try:
+                # TODO: query table by name from process tables array 
+                #ptable.read_all(int(process_param))
+                proc = Process.query.filter_by(id=int(reg_id)).first_or_404()
+                res_list = json.loads(proc.tables)
+            except SQLAlchemyError as e:
+                error = str(e)
+                return error
+            # search for the name in the keys of elements of an the tables array.       
+            try:
+                return next(x for x in res_list if table_param in x["name"])
+            except StopIteration:
+                raise ValueError("No matching record found")     
+            return res
         # query a table register
         else:
-
-
-        # generate list of registers
-        # TODO: filter by column,value
-        # TODO: validate if the table name is valid 
-        # TODO: validate if the table is in the process tables array
-        # TODO: declare automap base class
-        Base = automap_base()
-        #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        register_model = eval("Base.classes." + table_param)
-        # perform query
-        res=db.session.query(register_model).all()
-        return [as_dict(c) for c in res]
-
+            # query a table register
+            Base = automap_base()
+            #update metadata and tables
+            Base.prepare(db.engine, reflect=True)
+            register_model = eval("Base.classes." + table_param)
+            # perform query
+            res=db.session.query(register_model).filter_by(id=reg_id).first_or_404()
+            return as_dict(res) 
     return res.as_dict()
     
