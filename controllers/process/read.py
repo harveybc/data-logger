@@ -38,7 +38,7 @@ def read(processId):
             try:
                 # TODO: query table by name from process tables array 
                 #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=int(reg_id)).first_or_404()
+                proc = Process.query.filter_by(id=int(reg_id)).first_or_404().as_dict()
                 res_list = json.loads(proc.tables)
             except SQLAlchemyError as e:
                 error = str(e)
@@ -57,7 +57,7 @@ def read(processId):
             Base.prepare(db.engine, reflect=True)
             register_model = eval("Base.classes." + table_param)
             # perform query
-            res=db.session.query(register_model).filter_by(id=reg_id).first_or_404()
-            return as_dict(res) 
+            res=db.session.query(register_model).filter_by(id=reg_id).first_or_404().as_dict()
+            return res
     #return res.as_dict()
     
