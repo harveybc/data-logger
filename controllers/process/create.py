@@ -26,7 +26,7 @@ def create(body):
     """
     #initialize void response
     res = {}
-    # use kwargs to check if the process parameter is present
+    # check if the process parameter is present
     if 'process' in body:
         # create new process
         new_process = Process(**body['process'])
@@ -53,7 +53,7 @@ def create(body):
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'error_b' : error}
-    # use kwargs to check if the process parameter is present    
+    # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
@@ -105,7 +105,7 @@ def create(body):
         except SQLAlchemyError as e:
             error = str(e)
             res['table'] ={ 'error' : error}
-    # use kwargs to check if the process parameter is present    
+    # check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
