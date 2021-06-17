@@ -1,5 +1,5 @@
-""" Controller for the process endpoint. 
-    Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
+""" Controller for the process/create endpoint. 
+    Description: Contains API endpoint handler functions for create proces, process table or process table registers.  
 """
 
 from app.app import db
@@ -28,7 +28,7 @@ def create(body):
     res = {}
     # use kwargs to check if the process parameter is present
     if 'process' in body:
-        # create new table
+        # create new process
         new_process = Process(**body['process'])
         # set user_id same as the requesting user
         #new_process.user_id = current_user
