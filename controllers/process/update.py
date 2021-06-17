@@ -30,56 +30,28 @@ def update(processId, body):
     # use kwargs to check if the process parameter is present
     if 'process' in body:
         # query the existing register
-    try:
-        res = Process.query.filter_by(name=processId).first_or_404()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # replace model with body fields
-    body['id']=res.id
-    res.__dict__ = body
-    # perform update 
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # test if the model was updated 
-    try:
-        res = Process.query.filter_by(name=processId).first_or_404()
-    except SQLAlchemyError as e:
-        error = str(e)
-        return error
-    # empty pass
-    res.password=""
-    # return register as dict
-    return res.as_dict() 
-        # create new process
-        new_process = Process(**body['process'])
-        # set user_id same as the requesting user
-        #new_process.user_id = current_user
-        new_process.user_id = current_user.get_id()
-        # transform the tables json into string
-        new_process.tables = json.dumps(new_process.tables)
-        # set the string date into datetime
-        # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
-        new_process.created = str(datetime.now())
-        # add the modified process to the session
-        db.session.add(new_process)
+        try:
+            res = Process.query.filter_by(name=processId).first_or_404()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res['process'] = { 'error_a' : error}
+        # replace model with body fields
+        body['id']=res.id
+        res.__dict__ = body
+        # perform update 
         try:
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] = { 'error_a' : error}
-        # TODO: Remove the following and return the same input instead of confirming (nah)?
-        # test if the new process was created 
+            res['process'] = { 'error_b' : error}
+        # test if the model was updated 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
-#            db.session.close()
+            res['process'] = Process.query.filter_by(name=processId).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'error_b' : error}
-    # use kwargs to check if the process parameter is present    
+            res['process'] = { 'error_a' : error}
+        
+    # use kwargs to check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
         new_table = ProcessTable(**body['table'])
