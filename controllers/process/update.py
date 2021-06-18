@@ -25,7 +25,7 @@ def update(processId, body):
         Returns:
         res (dict): the newly created process register with empty password field.
     """    
-    #initialize void response
+    # initialize void response
     res = {}
     # check if the process parameter is present
     if 'process' in body:
@@ -50,24 +50,8 @@ def update(processId, body):
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
-        
-    if "process" in res:
-            res['process']["tables"] = p_table["tables"]
-            
-        # test if the new process table  was created 
-        try:
-            if db.engine.dialect.has_table(db.engine, new_table.name):
-                cols = db.metadata.tables[new_table.name].c
-                r_table={}
-                r_table['name'] = new_table.name
-                r_table['columns'] = [column.key for column in cols]               
-                res['table'] = r_table
-            else:
-                res['table'] = {}
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['table'] ={ 'error' : error}
-    # use kwargs to check if the process parameter is present    
+    
+    # check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
