@@ -114,7 +114,8 @@ def create(body):
             # verify if table exists
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
-                result_proxy = db.engine.execute(new_register.stmt)
+                create_stmt = new_register.create_stmt()
+                result_proxy = db.engine.execute(create_stmt)
                 res['register'] = {"result" : "ok"}
             else:
                 res['register'] = {"result": "table does not exists"}

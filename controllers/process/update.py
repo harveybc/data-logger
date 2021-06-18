@@ -55,12 +55,13 @@ def update(processId, body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
-        # create the register
+        # update the register
         try:
             # verify if table exists
             if db.engine.dialect.has_table(db.engine, new_register.table):
                 # execute new_register statement in engine
-                result_proxy = db.engine.execute(new_register.stmt)
+                update_stmt = new_register.update_stmt()
+                result_proxy = db.engine.execute()
                 res['register'] = {"result" : "ok"}
             else:
                 res['register'] = {"result": "table does not exists"}

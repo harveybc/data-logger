@@ -1,6 +1,6 @@
 """ Create the statements required by the process controller for CRUD in a table from a process """
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData, Table, insert
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData, Table, insert, update
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
@@ -16,9 +16,13 @@ class ProcessRegister():
             setattr(self, property, value)
         # set the table
         table = db.metadata.tables[self.table]
-        print(db.metadata.tables)
-        # create the statement
-        self.stmt = insert(table).values(self.values)
+        #print(db.metadata.tables)
+
+    def create_stmt(self):
+        return self.stmt = insert(table).values(self.values)
+
+    def update_stmt(self):
+        return update(self.table).where(id=self.reg_id).values(self.values)
 
     def __repr__(self):
         return str(self.table)
