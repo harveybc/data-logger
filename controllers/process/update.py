@@ -31,13 +31,13 @@ def update(processId, body):
     if 'process' in body:
         # query the existing register
         try:
-            res = Process.query.filter_by(name=processId).one()
+            res = Process.query.filter_by(id=processId).one()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
         # replace model with body fields
-        body['id']=res.id
-        res.__dict__ = body
+        body['process']['id']=processId
+        res.__dict__ = body['process']
         # perform update 
         try:
             db.session.commit()
