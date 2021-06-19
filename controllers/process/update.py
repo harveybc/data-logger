@@ -46,7 +46,7 @@ def update(processId, body):
             res['process'] = { 'error_b' : error}
         # test if the model was updated 
         try:
-            res['process'] = Process.query.filter_by(name=processId).one().as_dict()
+            res['process'] = Process.query.filter_by(id=processId).one().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_c' : error}
