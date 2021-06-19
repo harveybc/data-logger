@@ -48,7 +48,7 @@ def create(body):
         # TODO: Remove the following and return the same input instead of confirming (nah)?
         # test if the new process was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).first_or_404().as_dict()
+            res['process'] = Process.query.filter_by(name=new_process.name).one().as_dict()
 #            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
@@ -67,7 +67,7 @@ def create(body):
         
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_model = Process.query.filter_by(id=new_table.process_id).first_or_404()
+            p_model = Process.query.filter_by(id=new_table.process_id).one()
             p_table = p_model.as_dict()
             # construct a table model (see swagger yaml) with table_column models
             table_m = {}

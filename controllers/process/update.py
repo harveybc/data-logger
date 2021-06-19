@@ -31,7 +31,7 @@ def update(processId, body):
     if 'process' in body:
         # query the existing register
         try:
-            res = Process.query.filter_by(name=processId).first_or_404()
+            res = Process.query.filter_by(name=processId).one()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
@@ -46,10 +46,10 @@ def update(processId, body):
             res['process'] = { 'error_b' : error}
         # test if the model was updated 
         try:
-            res['process'] = Process.query.filter_by(name=processId).first_or_404().as_dict()
+            res['process'] = Process.query.filter_by(name=processId).one().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] = { 'error_a' : error}
+            res['process'] = { 'error_c' : error}
     
     # check if the process parameter is present    
     if 'register' in body:
