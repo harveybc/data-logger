@@ -22,7 +22,7 @@ class ProcessRegister():
         return insert(self.meta_table).values(self.values)
 
     def update_stmt(self):
-        return update(self.meta_table).where(id=self.reg_id).values(self.values)
+        return update(self.meta_table).where("id="+self.reg_id).values(self.values)
 
     def __repr__(self):
         return str(self.table)
