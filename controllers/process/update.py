@@ -36,7 +36,7 @@ def update(processId, body):
             error = str(e)
             res['process'] = { 'error_a' : error}
         # replace model with body fields
-        for property, value in body['register'].items():
+        for property, value in body['process'].items():
             setattr(process_model, property, value)
         # perform update 
         try:
