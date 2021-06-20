@@ -12,6 +12,7 @@ from models.process import Process
 from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
+from controllers.common import as_dict, is_num
 
 @login_required
 def create(body): 
@@ -109,18 +110,28 @@ def create(body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
-        # create the register
+        # query a table register
+        Base = automap_base()
+        #update metadata and tables
+        Base.prepare(db.engine, reflect=True)
+        register_model = eval("Base.classes." + new_register.table)
+        # set the new values from the values array
+        for property, value in new_register.values.items():
+            setattr(register_model, property, value)
+        # update the register
         try:
-            # verify if table exists
-            if db.engine.dialect.has_table(db.engine, new_register.table):
-                # execute new_register statement in engine
-                create_stmt = new_register.create_stmt()
-                result_proxy = db.engine.execute(create_stmt)
-                res['register'] = {"result" : "ok"}
-            else:
-                res['register'] = {"result": "table does not exists"}
+            db.session.add(register_model)
+            db.session.commit()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
-            res['register'] ={ 'error' : error}
+            res['register'] ={ 'error_d' : error}
+        # verify if the register was created
+        try:
+            res['register'] = as_dict(db.session.query(register_model).filter_by(id=new_register.values.id).one())
+            db.session.close()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res['register'] ={ 'error_e' : error}
         # return register as dict
-        return res
+    return res
