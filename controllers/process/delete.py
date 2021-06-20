@@ -41,14 +41,13 @@ def delete(processId):
     else:
         # parse the table_param string because eval is used
         table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
+        Base = automap_base()
+        #update metadata and tables
+        Base.prepare(db.engine, reflect=True)
+        register_model = eval("Base.classes." + table_param)
         # verify if the reg_id param is set
         reg_id = request.args.get("reg_id")
         if reg_id is None:
-            # delete the table
-            Base = automap_base()
-            #update metadata and tables
-            Base.prepare(db.engine, reflect=True)
-            register_model = eval("Base.classes." + table_param)
             # TODO: verify that the table is in the tables array of the current process
             # delete the table
             try:
