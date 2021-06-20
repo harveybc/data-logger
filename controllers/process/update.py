@@ -67,7 +67,7 @@ def update(processId, body):
         model = db.session.query(register_model).filter_by(id=new_register.reg_id).one()
         # set the new values from the values array
         print("new_register.values = ", new_register.values)
-        for property, value in new_register.values:
+        for  in new_register.values:
             setattr(model, property, value)
         # update the register
         try:

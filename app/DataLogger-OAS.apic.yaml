@@ -522,7 +522,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.create.cre
+      operationId: controllers.process.create.create
       responses:
         '200':
           schema:
@@ -566,7 +566,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read_all.r
+      operationId: controllers.process.read_all.read_all
       responses:
         '200':
           schema:
@@ -668,7 +668,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.update.u
+      operationId: controllers.process.update.update
       responses:
         '200':
           schema:
@@ -709,7 +709,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.delete.del
+      operationId: controllers.process.delete.delete
       responses:
         '200':
           schema:
