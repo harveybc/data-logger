@@ -41,14 +41,22 @@ def delete(processId):
     else:
         # parse the table_param string because eval is used
         table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
-        # query a table
+        # query a table register    
+        Base = automap_base()
+        #update metadata and tables
+        Base.prepare(db.engine, reflect=True)
+        register_model = eval("Base.classes." + table_param)
+        # TODO: verify that the table is in the tables array of the current process
+        # delete the table
+        try:
+            register_model.__table__.drop()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # verify if the reg_id param is set
         reg_id = request.args.get("reg_id")
         if reg_id is not None:
-            # query a table register
-            Base = automap_base()
-            #update metadata and tables
-            Base.prepare(db.engine, reflect=True)
-            register_model = eval("Base.classes." + table_param)
+            
             # perform query
             try:
                 res=db.session.query(register_model).filter_by(id=reg_id).one()

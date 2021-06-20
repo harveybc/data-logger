@@ -64,7 +64,7 @@ def update(processId, body):
         Base.prepare(db.engine, reflect=True)
         register_model = eval("Base.classes." + new_register.table)
         # perform query
-        model = db.session.query(register_model).filter_by(id=new_register.reg_id).one()
+        model = db.session.query(register_model).filter_by(id=new_register.reg_id).first()
         # set the new values from the values array
         for property, value in new_register.values.items():
             setattr(model, property, value)
