@@ -189,10 +189,7 @@ definitions:
       filter_value:
         type: string
       values:
-        type: array
-        items:
-          type:
-            - object
+        type: object
     required:
       - process_id
       - table
@@ -245,10 +242,13 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
+        type: null
       table:
         $ref: '#/definitions/input_process_table'
+        type: null
       register:
         $ref: '#/definitions/input_process_register'
+        type: null
   output_process_register:
     type: array
     items:
@@ -522,7 +522,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.create.create
+      operationId: controllers.process.create.cre
       responses:
         '200':
           schema:
@@ -566,7 +566,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read_all.read_all
+      operationId: controllers.process.read_all.r
       responses:
         '200':
           schema:
@@ -668,7 +668,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.update.update
+      operationId: controllers.process.update.u
       responses:
         '200':
           schema:
@@ -709,7 +709,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.delete.delete
+      operationId: controllers.process.delete.del
       responses:
         '200':
           schema:
@@ -764,7 +764,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.create
+      operationId: controllers.authoriz.create
       responses:
         '201':
           schema:
@@ -796,7 +796,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.read_all
+      operationId: controllers.authoriz.read_all
       responses:
         '200':
           schema:
@@ -858,7 +858,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.update
+      operationId: controllers.authoriz.update
       responses:
         '200':
           schema:
@@ -893,7 +893,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.delete
+      operationId: controllers.authoriz.delete
       responses:
         '200':
           schema:
