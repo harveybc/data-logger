@@ -36,8 +36,8 @@ def update(processId, body):
             error = str(e)
             res['process'] = { 'error_a' : error}
         # replace model with body fields
-        body['process']['id']=processId
-        process.__dict__ = body['process']
+        for property, value in body['register'].items():
+            setattr(model, property, value)
         # perform update 
         try:
             db.session.commit()
