@@ -11,7 +11,8 @@ securityDefinitions:
   basic_auth:
     type: basic
     description: >-
-      Basic auth, please add the following line to the yaml: 
+      Basic auth, please add the following line to the yaml: x-basicInfoFunc:
+      controllers.authentication.basic_auth.authenticate
     x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
@@ -188,10 +189,7 @@ definitions:
       filter_value:
         type: string
       values:
-        type: array
-        items:
-          type:
-            - object
+        type: object
     required:
       - process_id
       - table
@@ -244,10 +242,13 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
+        type: null
       table:
         $ref: '#/definitions/input_process_table'
+        type: null
       register:
         $ref: '#/definitions/input_process_register'
+        type: null
   output_process_register:
     type: array
     items:
@@ -521,7 +522,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.create
+      operationId: controllers.process.create.create
       responses:
         '200':
           schema:
@@ -565,7 +566,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read_all
+      operationId: controllers.process.read_all.read_all
       responses:
         '200':
           schema:
@@ -609,7 +610,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read
+      operationId: controllers.process.read.read
       responses:
         '200':
           schema:
@@ -667,7 +668,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.update
+      operationId: controllers.process.update.update
       responses:
         '200':
           schema:
@@ -708,7 +709,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.delete
+      operationId: controllers.process.delete.delete
       responses:
         '200':
           schema:
@@ -730,18 +731,11 @@ paths:
             query
           required: false
           type: string
-        - name: column
+        - name: reg_id
           in: query
-          description: If present indicate the column to filter the query
+          description: ''
           required: false
-          type: string
-        - name: value
-          in: query
-          description: >-
-            If present indicate the value used with the column to filter the
-            query (returns only the first one)
-          required: false
-          type: string
+          type: integer
         - name: processId
           in: path
           description: ''
