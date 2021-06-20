@@ -44,12 +44,14 @@ def create(body):
     db.session.add(new)
     try:
         db.session.commit()
+        new_id =  new.id
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
     # test if the new user was created 
     try:
-        res = Authorization.query.filter_by(username=new.id).one()
+        res = Authorization.query.filter_by(id=new_id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -65,7 +67,7 @@ def read():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    return 'id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+    #return 'id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
 
 def update():
     """ Parse command line parameters.
