@@ -128,7 +128,7 @@ def create(body):
             res['register'] ={ 'error_d' : error}
         # verify if the register was created
         try:
-            res['register'] = as_dict(db.session.query(register_model).filter_by(id=new_register.values["id"]).one())
+            res['register'] = as_dict(db.session.query(register_model).filter_by(id=new_register.values["id"]).first())
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
