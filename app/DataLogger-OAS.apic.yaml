@@ -69,18 +69,16 @@ definitions:
         type: string
       description:
         type: string
-      userId:
+      user_id:
         type: integer
       tables:
         type: array
         items:
           $ref: '#/definitions/table'
-          type:
-            - null
     required:
       - id
       - name
-      - userId
+      - user_id
   input_authorization:
     type: object
     properties:
@@ -276,14 +274,13 @@ definitions:
         type: string
       description:
         type: string
-      userId:
+      user_id:
         type: integer
       tables:
         type: array
         items:
           $ref: '#/definitions/table'
-          type:
-            - null
+          type: []
   process_operation_output:
     type: object
     properties:
