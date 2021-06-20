@@ -111,15 +111,14 @@ def create(body):
     # check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
-        new_register = ProcessRegister(**body['register'])
+        #new_register = ProcessRegister(**body['register'])
         # query a table register
         Base = automap_base()
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
-        register_model = eval("Base.classes." + new_register.table)
+        register_base = eval("Base.classes." + body['register']['table'])
         # set the new values from the values array
-        for property, value in new_register.values.items():
-            setattr(register_model, property, value)
+        register_model = register_base(**body['register']['values'])
         # update the register
         try:
             db.session.add(register_model)
