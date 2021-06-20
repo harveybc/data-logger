@@ -89,6 +89,7 @@ def create(body):
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'errorz' : error}
+            return res
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
             res['process']["tables"] = p_table["tables"]
