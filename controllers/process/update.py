@@ -68,6 +68,6 @@ def update(processId, body):
                 res['register'] = {"result" : "table does not exists"}
         except SQLAlchemyError as e:
             error = str(e)
-            res['register'] ={ 'error' : error}
+            res['register'] ={ 'error_d' : error}
         # return register as dict
         return res
