@@ -26,7 +26,7 @@ def delete(processId):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(name=processId).first_or_404()
+            res = Process.query.filter_by(id=processId).one()
         except SQLAlchemyError as e:
             error = str(e)
             return error
@@ -51,7 +51,7 @@ def delete(processId):
             register_model = eval("Base.classes." + table_param)
             # perform query
             try:
-                res=db.session.query(register_model).filter_by(id=reg_id).first_or_404()
+                res=db.session.query(register_model).filter_by(id=reg_id).one()
             except SQLAlchemyError as e:
                 error = str(e)
                 return error
