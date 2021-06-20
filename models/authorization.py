@@ -11,7 +11,7 @@ from models.base_model import BaseModel
 # TODO: use indexes in all searchable non numeric columns.
 class Authorization(db.Model, BaseModel):
     """ Map the process table columns and bidirectional one-to-many relationship with user """
-    __tablename__ = 'process'
+    __tablename__ = 'authorization'
 
     # columns
     id = Column(Integer, primary_key=True)

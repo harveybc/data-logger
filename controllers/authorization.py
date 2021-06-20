@@ -29,7 +29,7 @@ from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 
 @login_required
-def create():
+def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
         Args:
@@ -39,9 +39,9 @@ def create():
         res (dict): the newly created register.
     """
     # instantiate user with the body dict as kwargs
-    new_user = Authorization(**body)
+    new = Authorization(**body)
     # create new flask-sqlalchemy session
-    db.session.add(new_user)
+    db.session.add(new)
     try:
         db.session.commit()
     except SQLAlchemyError as e:
@@ -49,12 +49,10 @@ def create():
         return error
     # test if the new user was created 
     try:
-        res = User.query.filter_by(username=new_user.username).first_or_404()
+        res = Authorization.query.filter_by(username=new.id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
-    # empty pass
-    res.password=""
     # return register as dict
     return res.as_dict()
 
