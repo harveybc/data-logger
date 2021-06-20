@@ -9,24 +9,54 @@
     but can't create processes or tables, and can't update/delete registers.
 
     When authorizations are created for an user, process or a table
-    the user is denied all access but the indicated.
+    the user, process or table is denied all access but the indicated.
 
-    The list of authorizations for an user, proess or table is ordered by the 
-    priority column in ascending order and the highest priority rules override 
-    the lowest priority ones.
+    The list of authorizations for an user, process or table is ordered by the 
+    priority column and the highest priority rules override the lowest priority ones.
 
 """
 
+from app.app import db
+import json
+from sqlalchemy.exc import SQLAlchemyError
+from flask_login import login_required, current_user
+from datetime import datetime
+from app.app import login_manager
+from models.authorization import Authorization
+from models.process_table import ProcessTable
+from models.process_register import ProcessRegister
+from sqlalchemy.ext.automap import automap_base
+from controllers.common import as_dict, is_num
+
+@login_required
 def create():
-    """ Parse command line parameters.
+    """ Create a register in db based on a json from a request's body parameter.
 
         Args:
-        args ([str]): command line parameters as list of strings
+        body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
+        res (dict): the newly created register.
     """
-    #return 'You created the user id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+    # instantiate user with the body dict as kwargs
+    new_user = Authorization(**body)
+    # create new flask-sqlalchemy session
+    db.session.add(new_user)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # test if the new user was created 
+    try:
+        res = User.query.filter_by(username=new_user.username).first_or_404()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        return error
+    # empty pass
+    res.password=""
+    # return register as dict
+    return res.as_dict()
 
 def read():
     """ Parse command line parameters.
