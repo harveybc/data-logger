@@ -731,18 +731,11 @@ paths:
             query
           required: false
           type: string
-        - name: column
+        - name: reg_id
           in: query
-          description: If present indicate the column to filter the query
+          description: ''
           required: false
-          type: string
-        - name: value
-          in: query
-          description: >-
-            If present indicate the value used with the column to filter the
-            query (returns only the first one)
-          required: false
-          type: string
+          type: integer
         - name: processId
           in: path
           description: ''
