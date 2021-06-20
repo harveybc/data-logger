@@ -52,7 +52,7 @@ def delete(processId):
             # TODO: verify that the table is in the tables array of the current process
             # delete the table
             try:
-                register_model.__table__.drop()
+                register_model.__table__.drop(db.engine)
             except SQLAlchemyError as e:
                 error = str(e)
                 return error
