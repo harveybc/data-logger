@@ -41,6 +41,7 @@ def update(processId, body):
         # perform update 
         try:
             db.session.commit()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_b' : error}
