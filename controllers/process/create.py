@@ -88,7 +88,7 @@ def create(body):
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] ={ 'errorz' : error}
+            res['table'] ={ 'error_c' : error}
             return res
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
@@ -106,7 +106,8 @@ def create(body):
                 res['table'] = {}
         except SQLAlchemyError as e:
             error = str(e)
-            res['table'] ={ 'error' : error}
+            res['table'] ={ 'error_d' : error}
+            return res
     # check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
