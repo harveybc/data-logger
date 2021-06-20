@@ -53,6 +53,7 @@ def delete(processId):
             # delete the table
             try:
                 register_model.__table__.drop(db.engine)
+                return table_param + "table deleted"
             except SQLAlchemyError as e:
                 error = str(e)
                 return error
