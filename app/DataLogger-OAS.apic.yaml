@@ -75,6 +75,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table'
+          type: []
     required:
       - id
       - name
@@ -82,52 +83,31 @@ definitions:
   input_authorization:
     type: object
     properties:
-      userId:
+      user_id:
         type: integer
-      processId:
+      process_id:
         type: integer
-      tableName:
+      table:
         type: string
-      getList:
+      read_all:
         type: boolean
-      getOne:
+      read:
         type: boolean
       create:
         type: boolean
       update:
         type: boolean
-      delete:
+      table_crud:
         type: boolean
-    required:
-      - userId
-      - processId
-      - tableName
-      - getList
-      - getOne
-      - create
-      - update
-      - delete
-  output_authorization:
-    type: object
-    properties:
-      id:
-        type: integer
-      userId:
-        type: integer
-      processId:
-        type: integer
-      tableName:
-        type: string
-      getList:
-        type: boolean
-      getOne:
-        type: boolean
-      create:
-        type: boolean
-      update:
+      process_crud:
         type: boolean
       delete:
         type: boolean
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
   input_log:
     type: object
     properties:
@@ -293,6 +273,38 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
         type: null
+  output_authorization:
+    type: object
+    properties:
+      user_id:
+        type: integer
+      process_id:
+        type: integer
+      table:
+        type: string
+      read_all:
+        type: boolean
+      read:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      table_crud:
+        type: boolean
+      process_crud:
+        type: boolean
+      delete:
+        type: boolean
+      id:
+        type: integer
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
+    required:
+      - id
 responses:
   'trait:error-response:400':
     schema:
