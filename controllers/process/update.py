@@ -48,6 +48,7 @@ def update(processId, body):
         # test if the model was updated 
         try:
             res['process'] = Process.query.filter_by(id=int(processId)).one().as_dict()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_c' : error}
@@ -56,18 +57,31 @@ def update(processId, body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         new_register = ProcessRegister(**body['register'])
+        
+        # query a table register
+        Base = automap_base()
+        #update metadata and tables
+        Base.prepare(db.engine, reflect=True)
+        register_model = eval("Base.classes." + new_register.table)
+        # perform query
+        model = db.session.query(register_model).filter_by(id=new_register.reg_id).one()
+        # set the new values from the values array
+        for property, value in new_register.values:
+            setattr(model, property, value)
         # update the register
         try:
-            # verify if table exists
-            if db.engine.dialect.has_table(db.engine, new_register.table):
-                # execute new_register statement in engine
-                update_stmt = new_register.update_stmt()
-                result_proxy = db.engine.execute()
-                res['register'] = {"result" : "ok"}
-            else:
-                res['register'] = {"result" : "table does not exists"}
+            db.session.commit()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['register'] ={ 'error_d' : error}
-        # return register as dict
-        return res
+        # verify if the register was updated
+        try:
+            res['register'] = as_dict(db.session.query(register_model).filter_by(id=new_register.reg_id).one())
+            db.session.close()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res['register'] ={ 'error_e' : error}
+        
+    # return register as dict
+    return res
