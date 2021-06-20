@@ -22,7 +22,8 @@ class User(db.Model, BaseModel, UserMixin):
     password = Column(String)
 
     # relationships
-    processes = relationship("Process", back_populates='user')
+    processes = relationship("Process", back_populates='users')
+    authorizations = relationship("Authorization", back_populates='users')    
 
     # representation
     def __repr__(self):

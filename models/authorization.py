@@ -1,6 +1,6 @@
 """ Map this model's fields and relationships """
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
@@ -17,13 +17,19 @@ class Authorization(db.Model, BaseModel):
     id = Column(Integer, primary_key=True)
     user_id=Column(Integer, ForeignKey('user.id'))
     process_id=Column(Integer, ForeignKey('process.id'))
-    name = Column(String, unique=True)
     table=Column(String)
-    created=Column(String, default=str(datetime.now()))
-    description = Column(String)
+    read_all = Column(Boolean)
+    read = Column(Boolean)
+    create = Column(Boolean)
+    update = Column(Boolean)
+    delete = Column(Boolean)
+    table_crud = Column(Boolean)
+    process_crud = Column(Boolean)
+    priority=Column(Integer, default=0)
     
     # relationships
-    user = relationship("User", back_populates='processes')
+    users = relationship("User", back_populates='authorizations')
+    processes = relationship("Process", back_populates='authorizations')
 
     def __repr__(self):
         return str(self.name)

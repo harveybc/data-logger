@@ -20,7 +20,8 @@ class Process(db.Model, BaseModel):
     user_id=Column(Integer, ForeignKey('user.id'))
 
     # relationships
-    user = relationship("User", back_populates='processes')
+    users = relationship("User", back_populates='processes')
+    authorizations = relationship("Authorization", back_populates='processes')
 
     def __repr__(self):
         return str(self.name)
