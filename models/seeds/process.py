@@ -1,7 +1,7 @@
-from models.user import User
-
+from models.process import Process
+# add the default process with id = 0
 def seed(app, db):
     with app.app_context():
-        tmp =  User(id=0, name='default', description="default table", tables="[]", user_id=0)
+        tmp =  Process(id=0, name='default', description="default process", tables="[]", user_id=0)
         db.session.add(tmp)
         db.session.commit()
