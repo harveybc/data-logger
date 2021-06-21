@@ -75,7 +75,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table'
-          type: []
+          type:
+            - null
     required:
       - id
       - name
@@ -85,8 +86,10 @@ definitions:
     properties:
       user_id:
         type: integer
+        default: 'null'
       process_id:
         type: integer
+        default: 'null'
       table:
         type: string
       read_all:
@@ -260,7 +263,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/table'
-          type: []
+          type:
+            - null
   process_operation_output:
     type: object
     properties:
