@@ -285,7 +285,7 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
         type: null
-  Output_authorization:
+  output_authorization:
     type: object
     properties:
       user_id:
