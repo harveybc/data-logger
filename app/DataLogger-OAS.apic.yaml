@@ -86,26 +86,34 @@ definitions:
     properties:
       user_id:
         type: integer
-        default: 'null'
+        default: '0'
       process_id:
         type: integer
-        default: 'null'
+        default: '0'
       table:
         type: string
+        default: 'null'
       read_all:
         type: boolean
+        default: false
       read:
         type: boolean
+        default: false
       create:
         type: boolean
+        default: false
       update:
         type: boolean
+        default: false
       table_crud:
         type: boolean
+        default: false
       process_crud:
         type: boolean
+        default: false
       delete:
         type: boolean
+        default: false
       priority:
         type: integer
         default: '0'
@@ -277,15 +285,18 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
         type: null
-  output_authorization:
+  Output_authorization:
     type: object
     properties:
       user_id:
         type: integer
+        default: '0'
       process_id:
         type: integer
+        default: '0'
       table:
         type: string
+        default: 'null'
       read_all:
         type: boolean
       read:
@@ -300,13 +311,13 @@ definitions:
         type: boolean
       delete:
         type: boolean
-      id:
-        type: integer
       priority:
         type: integer
         default: '0'
         minimum: 0
         maximum: 1000
+      id:
+        type: integer
     required:
       - id
 responses:
