@@ -95,30 +95,35 @@ definitions:
         default: 'null'
       read_all:
         type: boolean
-        default: false
       read:
         type: boolean
-        default: false
       create:
         type: boolean
-        default: false
       update:
         type: boolean
-        default: false
       table_crud:
         type: boolean
-        default: false
       process_crud:
         type: boolean
-        default: false
       delete:
         type: boolean
-        default: false
       priority:
         type: integer
         default: '0'
         minimum: 0
         maximum: 1000
+    required:
+      - user_id
+      - process_id
+      - table
+      - read_all
+      - read
+      - create
+      - update
+      - table_crud
+      - process_crud
+      - delete
+      - priority
   input_log:
     type: object
     properties:
