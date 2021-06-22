@@ -92,7 +92,7 @@ definitions:
         default: '0'
       table:
         type: string
-        default: 'null'
+        default: '""'
       read_all:
         type: boolean
       read:
@@ -290,7 +290,7 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
         type: null
-  output_authorization:
+  output_authorization 1:
     type: object
     properties:
       user_id:
@@ -301,7 +301,7 @@ definitions:
         default: '0'
       table:
         type: string
-        default: 'null'
+        default: '""'
       read_all:
         type: boolean
       read:
@@ -324,6 +324,17 @@ definitions:
       id:
         type: integer
     required:
+      - user_id
+      - process_id
+      - table
+      - read_all
+      - read
+      - create
+      - update
+      - table_crud
+      - process_crud
+      - delete
+      - priority
       - id
 responses:
   'trait:error-response:400':
