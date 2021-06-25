@@ -112,18 +112,6 @@ definitions:
         default: '0'
         minimum: 0
         maximum: 1000
-    required:
-      - user_id
-      - process_id
-      - table
-      - read_all
-      - read
-      - create
-      - update
-      - table_crud
-      - process_crud
-      - delete
-      - priority
   input_log:
     type: object
     properties:
@@ -324,17 +312,6 @@ definitions:
       id:
         type: integer
     required:
-      - user_id
-      - process_id
-      - table
-      - read_all
-      - read
-      - create
-      - update
-      - table_crud
-      - process_crud
-      - delete
-      - priority
       - id
 responses:
   'trait:error-response:400':
