@@ -88,7 +88,7 @@ def delete():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    
+
 @login_required
 def read_all():
     """ Query all registers of the process, process table or process register.
@@ -104,7 +104,6 @@ def read_all():
     # convert to list of dicts and empty pass
     res2 =[]
     for r in res:
-        r.password = ""
         res2.append(r.as_dict())
     return res2
 
