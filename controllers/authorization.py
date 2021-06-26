@@ -58,7 +58,7 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
-def read():
+def read(authorization_id):
     """ Parse command line parameters.
                   
         Args:
@@ -67,7 +67,12 @@ def read():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-    #return 'id='+id+', username='+username+', email='+email+', password='+password+', is_admin='+is_admin 
+    try:
+        res = Authorization.query.filter_by(id=authorization_id).one()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return error 
+    return res
 
 def update():
     """ Parse command line parameters.
