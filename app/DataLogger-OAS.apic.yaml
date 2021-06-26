@@ -823,12 +823,12 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters: []
-  '/authorizations/{authorizationId}':
+  '/authorizations/{authorization_id}':
     get:
       tags:
         - authorization
         - get
-      summary: Get detail of authorization by authorizationId
+      summary: Get detail of authorization by authorization_id
       description: Get detail of authorization by authorizationId
       consumes: []
       produces: []
@@ -852,11 +852,12 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: authorizationId
+        - name: authorization_id
           in: path
           description: ''
           required: true
           type: string
+  '/authorizations/{authorizationId}':
     put:
       tags:
         - authorization
