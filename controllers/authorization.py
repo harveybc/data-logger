@@ -88,9 +88,9 @@ def update(authorization_id, body):
         process_model = Authorization.query.filter_by(id=authorization_id).one()
     except SQLAlchemyError as e:
         error = str(e)
-        res['process'] = { 'error_a' : error}
+        res = { 'error_a' : error}
     # replace model with body fields
-    for property, value in body['process'].items():
+    for property, value in body.items():
         setattr(process_model, property, value)
     # perform update 
     try:
@@ -98,14 +98,14 @@ def update(authorization_id, body):
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
-        res['process'] = { 'error_b' : error}
+        res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res['process'] = Authorization.query.filter_by(id=int(authorization_id)).one().as_dict()
+        res = Authorization.query.filter_by(id=int(authorization_id)).one().as_dict()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
-        res['process'] = { 'error_c' : error}
+        res = { 'error_c' : error}
 
 def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
