@@ -123,13 +123,14 @@ def create(body):
         try:
             db.session.add(register_model)
             db.session.commit()
+            new_id = register_model.id
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['register'] ={ 'error_d' : error}
         # verify if the register was created
         try:
-            res['register'] = as_dict(db.session.query(register_base).filter_by(id=body['register']['values']["id"]).one())
+            res['register'] = as_dict(db.session.query(register_base).filter_by(id=new_id).one())
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)

@@ -8,6 +8,8 @@ from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from app.app import db
 
+# TODO: Activate cache for the user table select queries in database since they are made in every other request
+# TODO: use indexes in all searchable non numeric columns.
 class User(db.Model, BaseModel, UserMixin):
     """ Map the user table columns and bidirectional one-to many relationship with process """
     __tablename__ = 'user'
@@ -20,7 +22,8 @@ class User(db.Model, BaseModel, UserMixin):
     password = Column(String)
 
     # relationships
-    processes = relationship("Process", back_populates='user')
+    processes = relationship("Process", back_populates='users')
+    authorizations = relationship("Authorization", back_populates='users')    
 
     # representation
     def __repr__(self):

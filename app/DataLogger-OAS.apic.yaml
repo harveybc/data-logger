@@ -69,7 +69,7 @@ definitions:
         type: string
       description:
         type: string
-      userId:
+      user_id:
         type: integer
       tables:
         type: array
@@ -80,56 +80,38 @@ definitions:
     required:
       - id
       - name
-      - userId
+      - user_id
   input_authorization:
     type: object
     properties:
-      userId:
+      user_id:
         type: integer
-      processId:
+        default: '0'
+      process_id:
         type: integer
-      tableName:
+        default: '0'
+      table:
         type: string
-      getList:
+        default: '""'
+      read_all:
         type: boolean
-      getOne:
+      read:
         type: boolean
       create:
         type: boolean
       update:
         type: boolean
-      delete:
+      table_crud:
         type: boolean
-    required:
-      - userId
-      - processId
-      - tableName
-      - getList
-      - getOne
-      - create
-      - update
-      - delete
-  output_authorization:
-    type: object
-    properties:
-      id:
-        type: integer
-      userId:
-        type: integer
-      processId:
-        type: integer
-      tableName:
-        type: string
-      getList:
-        type: boolean
-      getOne:
-        type: boolean
-      create:
-        type: boolean
-      update:
+      process_crud:
         type: boolean
       delete:
         type: boolean
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
   input_log:
     type: object
     properties:
@@ -276,7 +258,7 @@ definitions:
         type: string
       description:
         type: string
-      userId:
+      user_id:
         type: integer
       tables:
         type: array
@@ -296,6 +278,41 @@ definitions:
       register:
         $ref: '#/definitions/input_process_register'
         type: null
+  output_authorization:
+    type: object
+    properties:
+      user_id:
+        type: integer
+        default: '0'
+      process_id:
+        type: integer
+        default: '0'
+      table:
+        type: string
+        default: '""'
+      read_all:
+        type: boolean
+      read:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      table_crud:
+        type: boolean
+      process_crud:
+        type: boolean
+      delete:
+        type: boolean
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
+      id:
+        type: integer
+    required:
+      - id
 responses:
   'trait:error-response:400':
     schema:
@@ -806,12 +823,12 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters: []
-  '/authorizations/{authorizationId}':
+  '/authorizations/{authorization_id}':
     get:
       tags:
         - authorization
         - get
-      summary: Get detail of authorization by authorizationId
+      summary: Get detail of authorization by authorization_id
       description: Get detail of authorization by authorizationId
       consumes: []
       produces: []
@@ -835,7 +852,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: authorizationId
+        - name: authorization_id
           in: path
           description: ''
           required: true
@@ -844,8 +861,8 @@ paths:
       tags:
         - authorization
         - update
-      summary: Update authorization details by authorizationId
-      description: Update authorization details by authorizationId
+      summary: Update authorization details by authorization_id
+      description: Update authorization details by authorization_id
       consumes: []
       produces: []
       schemes: []
@@ -866,7 +883,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: authorizationId
+        - name: authorization_id
           in: path
           description: ''
           required: true
@@ -879,8 +896,8 @@ paths:
       tags:
         - authorization
         - delete
-      summary: Delete authorization by authorizationId
-      description: Delete authorization by authorizationId
+      summary: Delete authorization by authorization_id
+      description: Delete authorization by authorization_id
       consumes: []
       produces: []
       schemes: []
@@ -901,7 +918,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: authorizationId
+        - name: authorization_id
           in: path
           description: ''
           required: true
@@ -969,13 +986,13 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters: []
-  '/logs/{logId}':
+  '/logs/{log_id}':
     get:
       tags:
         - log
         - get
-      summary: Get detail of log by logId
-      description: Get detail of log by logId
+      summary: Get detail of log by log_id
+      description: Get detail of log by log_id
       consumes: []
       produces: []
       schemes: []
@@ -996,7 +1013,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
@@ -1005,8 +1022,8 @@ paths:
       tags:
         - log
         - update
-      summary: Update log details by logId
-      description: Update log details by logId
+      summary: Update log details by log_id
+      description: Update log details by log_id
       consumes: []
       produces: []
       schemes: []
@@ -1027,7 +1044,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
@@ -1040,8 +1057,8 @@ paths:
       tags:
         - log
         - delete
-      summary: Delete log by logId
-      description: Delete log by logId
+      summary: Delete log by log_id
+      description: Delete log by log_id
       consumes: []
       produces: []
       schemes: []
@@ -1062,7 +1079,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
