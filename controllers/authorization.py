@@ -88,16 +88,25 @@ def delete():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
-
+    
+@login_required
 def read_all():
-    """ Parse command line parameters.
-
-        Args:
-        args ([str]): command line parameters as list of strings
+    """ Query all registers of the process, process table or process register.
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
-    """
+        res (dict): the requested list.
+    """ 
+    try:
+        res = Authorization.query.all()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return error
+    # convert to list of dicts and empty pass
+    res2 =[]
+    for r in res:
+        r.password = ""
+        res2.append(r.as_dict())
+    return res2
 
 
 
