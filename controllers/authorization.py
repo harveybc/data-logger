@@ -62,10 +62,11 @@ def read(authorization_id):
     """ Performs a query authorization register.
 
         Args:
-        processId (str): authorization_id (processs/<authorization_id>).
+        processId (str): authorization_id (authorization/<authorization_id>).
 
         Returns:
-        res (dict): the requested process register, process table or process table register.
+        res (dict): the requested  register.
+    """
     try:
         res = Authorization.query.filter_by(id=authorization_id).one()
     except SQLAlchemyError as e:
