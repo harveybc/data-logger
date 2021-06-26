@@ -24,6 +24,7 @@ class User(db.Model, BaseModel, UserMixin):
     # relationships
     processes = relationship("Process", back_populates='users')
     authorizations = relationship("Authorization", back_populates='users')    
+    logs = relationship("Log", back_populates='users')
 
     # representation
     def __repr__(self):
