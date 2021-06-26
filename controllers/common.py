@@ -1,6 +1,8 @@
 """ Common Controller Functions 
     Description: Contains functions used by most controllers
 """
+from functools import wraps
+from flask import (current_app)
 
 def as_dict(model):   
     """ Transform a sqlalchemy result into a dict
@@ -33,4 +35,27 @@ def is_num(n):
     if isinstance(n, float):
         return n.is_integer()
     return False
-      
+
+
+def is_authorized():
+    return True
+
+def log_request():
+    pass
+    
+def authorization_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if is_authorized():
+            return func(*args, **kwargs)
+        else:
+            return current_app.login_manager.unauthorized()
+    return decorated_view
+
+def log_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        # perform  request logging before actually calling the function
+        log_request()
+        return func(*args, **kwargs)
+    return decorated_view

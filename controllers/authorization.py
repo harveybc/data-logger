@@ -27,8 +27,7 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
-from flask import (current_app)
-from functools import wraps
+
 
 @login_required
 def create(body):
@@ -152,19 +151,6 @@ def read_all():
     for r in res:
         res2.append(r.as_dict())
     return res2
-
-def is_authorized():
-    return True
-    
-
-def authorization_required(func):
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        if is_authorized():
-            return func(*args, **kwargs)
-        else:
-            return current_app.login_manager.unauthorized()
-    return decorated_view
 
 
 
