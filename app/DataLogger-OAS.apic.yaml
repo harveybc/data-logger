@@ -115,50 +115,28 @@ definitions:
   input_log:
     type: object
     properties:
-      userId:
+      user_id:
         type: integer
-      processId:
+      process_id:
         type: integer
-      tableName:
+      table:
         type: string
       route:
         type: string
       method:
         type: string
       parameters:
-        type: string
+        type: object
+      result:
+        type: object
+      body:
+        type: object
+      result_code:
+        type: integer
     required:
-      - userId
-      - processId
-      - tableName
+      - user_id
       - route
       - method
-      - parameters
-  output_log:
-    type: object
-    properties:
-      id:
-        type: integer
-      userId:
-        type: integer
-      processId:
-        type: integer
-      tableName:
-        type: string
-      route:
-        type: string
-      method:
-        type: string
-      parameters:
-        type: string
-    required:
-      - id
-      - userId
-      - processId
-      - tableName
-      - route
-      - method
-      - parameters
   input_process_register:
     type: object
     properties:
@@ -224,17 +202,15 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
-        type: null
       table:
         $ref: '#/definitions/input_process_table'
-        type: null
       register:
         $ref: '#/definitions/input_process_register'
-        type: null
   output_process_register:
     type: array
     items:
-      type: object
+      type:
+        - object
   output_process_table:
     type: object
     properties:
@@ -312,6 +288,34 @@ definitions:
       id:
         type: integer
     required:
+      - id
+  output_log:
+    type: object
+    properties:
+      user_id:
+        type: integer
+      process_id:
+        type: integer
+      table:
+        type: string
+      route:
+        type: string
+      method:
+        type: string
+      parameters:
+        type: string
+      result:
+        type: object
+      body:
+        type: object
+      id:
+        type: integer
+      result_code:
+        type: integer
+    required:
+      - user_id
+      - route
+      - method
       - id
 responses:
   'trait:error-response:400':

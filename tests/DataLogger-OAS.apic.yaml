@@ -1,1 +1,1094 @@
-{"TYPE":"APICSuite","value":{"reqs":[{"_id":"1624167808291-6e734fdc4ba17","_time":1624167808291,"_modified":1624167808291,"url":"{{scheme}}{{host}}/users","name":"Create user","method":"POST","Req":{"url_params":[{"key":"","val":"","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"Basic dGVzdDpwYXNz","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.username should be equal to \"test1\"', function(){\n\texpect($response.data.username).to.be.eql(\"test1\");\n})\n\napic.test('$response.data.email should be equal to \"test1@test.com\"', function(){\n\texpect($response.data.email).to.be.eql(\"test1@test.com\");\n})\n\napic.test('$response.data.admin should be equal to true', function(){\n\texpect($response.data.admin).to.be.eql(true);\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object","properties":{"id":{"type":"integer"},"username":{"type":"string"},"email":{"type":"string"},"is_admin":{"type":"boolean"}},"required":["id","username","email","is_admin"]}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"username\": \"test1\",\n\t\"email\": \"test1@test.com\",\n\t\"password\": \"pass1\",\n\t\"admin\": true\n}"},"data":"{\n\t\"username\": \"test1\",\n\t\"email\": \"test1@test.com\",\n\t\"password\": \"pass1\",\n\t\"admin\": true\n}"},{"_id":"1620203974142-826cd419c6c35","_time":1620203974142,"_modified":1620203974142,"url":"{{scheme}}{{host}}/users","name":"Get list of users","method":"GET","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data[0].id should be equal to 0', function(){\n\texpect($response.data[0].id).to.be.eql(0);\n})\n\napic.test('$response.data[0].username should be equal to \"test\"', function(){\n\texpect($response.data[0].username).to.be.eql(\"test\");\n})\n\napic.test('$response.data[0].email should be equal to \"test@test.com\"', function(){\n\texpect($response.data[0].email).to.be.eql(\"test@test.com\");\n})\n\napic.test('$response.data[0].admin should be equal to true', function(){\n\texpect($response.data[0].admin).to.be.eql(true);\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":["array"],"items":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]}}},{"code":"400","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"401","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"403","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"404","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1623649137997-3a1ac9426bc16","_time":1623649137997,"_modified":1623649137997,"url":"{{scheme}}{{host}}/users/{{newUserId}}","name":"Get detail of user by newUserId","method":"GET","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.id should be equal to 1', function(){\n\texpect($response.data.id).to.be.eql(1);\n})\n\napic.test('$response.data.username should be equal to \"test1\"', function(){\n\texpect($response.data.username).to.be.eql(\"test1\");\n})\n\napic.test('$response.data.email should be equal to \"test1@test.com\"', function(){\n\texpect($response.data.email).to.be.eql(\"test1@test.com\");\n})\n\napic.test('$response.data.admin should be equal to true', function(){\n\texpect($response.data.admin).to.be.eql(true);\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]}},{"code":"400","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"401","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"403","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"404","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1624164512523-71cb644d952a4","_time":1624164512523,"_modified":1624164512523,"url":"{{scheme}}{{host}}/users/{{newUserId}}","name":"Update user details by userId","method":"PUT","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.id should be equal to 1', function(){\n\texpect($response.data.id).to.be.eql(1);\n})\n\napic.test('$response.data.username should be equal to \"test2\"', function(){\n\texpect($response.data.username).to.be.eql(\"test2\");\n})\n\napic.test('$response.data.admin should be equal to true', function(){\n\texpect($response.data.admin).to.be.eql(true);\n})\n\napic.test('$response.data.email should be equal to \"test2@test.com\"', function(){\n\texpect($response.data.email).to.be.eql(\"test2@test.com\");\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object","properties":{"id":{"type":"integer"},"username":{"type":"string"},"email":{"type":"string"},"is_admin":{"type":"boolean"}},"required":["id","username","email","is_admin"]}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"id\": 1,\n\t\"username\": \"test2\",\n\t\"email\": \"test2@test.com\",\n\t\"password\": \"pass2\",\n\t\"admin\": true\n}"},"data":"{\n\t\"id\": 1,\n\t\"username\": \"test2\",\n\t\"email\": \"test2@test.com\",\n\t\"password\": \"pass2\",\n\t\"admin\": true\n}"},{"_id":"1622403862880-c79fd1da121cc","_time":1622403862880,"_modified":1622403862879,"url":"{{scheme}}{{host}}/users/{{newUserId}}","name":"Delete user by userId","method":"DELETE","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"apic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":["object"]}},{"code":"400","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"401","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"403","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"404","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{}"},"data":"{}"},{"_id":"1624169526951-2b3c614b1dc7c","_time":1624169526951,"_modified":1624169526951,"url":"{{scheme}}{{host}}/process","name":"Create process","method":"POST","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"Basic dGVzdDpwYXNz","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.process.id should be equal to 1', function(){\n\texpect($response.data.process.id).to.be.eql(1);\n})\n\napic.test('$response.data.process.name should be equal to \"test\"', function(){\n\texpect($response.data.process.name).to.be.eql(\"test\");\n})\n\napic.test('$response.data.process.description should be equal to \"test\"', function(){\n\texpect($response.data.process.description).to.be.eql(\"test\");\n})\n\napic.test('$response.data.process.user_id should be equal to \"0\"', function(){\n\texpect($response.data.process.user_id).to.be.eql(0);\n})\n\napic.test('$response.data.process.tables should  exist in response', function(){\n\t expect($response.data.process.tables).not.to.be.undefined;\n})\n\napic.test('$response.data.process.tables[0] should  exist in response', function(){\n\t expect($response.data.process.tables[0]).not.to.be.undefined;\n})\n\napic.test('$response.data.table.name should should be equal to \"test_table\"', function(){\n\t expect($response.data.table.name).to.be.eql(\"test_table\");\n})\n\napic.test('$response.data.table.columns[1] should should be equal to \"test_column\"', function(){\n\t expect($response.data.table.columns[1]).to.be.eql(\"test_column\");\n})\n\napic.test('$response.data.register.result should should be equal to \"ok\"', function(){\n\t expect($response.data.register.result).to.be.eql(\"ok\");\n})\n","savedResp":[],"respCodes":[{"code":"201","data":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"description":{"type":"string"},"userId":{"type":"integer"},"configuration":{"type":"string"}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n    \"process\": {\n        \"name\": \"test\",\n        \"description\": \"test\",\n        \"tables\": []\n    },\n    \"table\": {\n        \"name\": \"test_table\",\n        \"process_id\": 1,\n        \"columns\": [\n            {\n                \"name\": \"id\",\n                \"col_type\": \"Integer\",\n                \"primary_key\": true\n                \n            },\n            {\n                \"name\": \"test_column\",\n                \"col_type\": \"Integer\"\n            }\n        ]\n    },\n    \"register\": {\n        \"process_id\": 1,\n        \"table\": \"test_table\",\n        \"values\": {\n            \"test_column\" : 1 \n        }\n    }\n}"},"data":"{\n    \"process\": {\n        \"name\": \"test\",\n        \"description\": \"test\",\n        \"tables\": []\n    },\n    \"table\": {\n        \"name\": \"test_table\",\n        \"process_id\": 1,\n        \"columns\": [\n            {\n                \"name\": \"id\",\n                \"col_type\": \"Integer\",\n                \"primary_key\": true\n                \n            },\n            {\n                \"name\": \"test_column\",\n                \"col_type\": \"Integer\"\n            }\n        ]\n    },\n    \"register\": {\n        \"process_id\": 1,\n        \"table\": \"test_table\",\n        \"values\": {\n            \"test_column\" : 1 \n        }\n    }\n}"},{"_id":"1624169602845-71042aa843a9e","_time":1624169602845,"_modified":1624169602845,"url":"{{scheme}}{{host}}/process","name":"Get list of process","method":"GET","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"apic.test('$response.data[0].name should be equal to \"test\"', function(){\n\texpect($response.data[0].name).to.be.eql(\"test\");\n})\n\napic.test('$response.data[0].description should be equal to \"test\"', function(){\n\texpect($response.data[0].description).to.be.eql(\"test\");\n})\n\n\n","savedResp":[],"respCodes":[{"code":"200","data":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"description":{"type":"string"},"userId":{"type":"integer"},"configuration":{"type":"string"}}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1624169514685-1ff93536f81af","_time":1624169514685,"_modified":1624169514685,"url":"{{scheme}}{{host}}/process","name":"Get list of process tables","method":"GET","Req":{"url_params":[{"key":"process_id","val":"1","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"Basic dGVzdDpwYXNz","active":true},{"key":"","val":"","active":false}]},"prescript":"","postscript":"\n\napic.test('$response.data[0].columns[0].col_type should be equal to \"Integer\"', function(){\n\texpect($response.data[0].columns[0].col_type).to.be.eql(\"Integer\");\n})\n\napic.test('$response.data[0].columns should  exist in response', function(){\n\t expect($response.data[0].columns).not.to.be.undefined;\n})\n","savedResp":[{"status":"200","data":"[\n  {\n    \"columns\": [\n      {\n        \"col_type\": \"Integer\",\n        \"default\": {},\n        \"index\": false,\n        \"name\": \"id\",\n        \"nullable\": false,\n        \"primary_key\": true,\n        \"unique\": false\n      },\n      {\n        \"col_type\": \"Integer\",\n        \"default\": {},\n        \"index\": false,\n        \"name\": \"test_column\",\n        \"nullable\": false,\n        \"unique\": false\n      }\n    ],\n    \"name\": \"test_table\",\n    \"real_name\": \"test_table\"\n  }\n]\n","time":"168 ms","size":"465 B","headers":{"content-length":"465","content-type":"application/json","date":"Fri, 11 Jun 2021 08:17:02 GMT","server":"Werkzeug/1.0.1 Python/3.6.8"}}],"respCodes":[],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1623909058139-05815f7adc652","_time":1623909058139,"_modified":1623909058139,"url":"{{scheme}}{{host}}/process","name":"Get list of process table registers","method":"GET","Req":{"url_params":[{"key":"process_id","val":"1","active":true},{"key":"table","val":"test_table","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"Basic dGVzdDpwYXNz","active":true},{"key":"","val":"","active":false}]},"prescript":"","postscript":"\napic.test('$response.data[0].id should be equal to 1', function(){\n\texpect($response.data[0].id).to.be.eql(1);\n})\n\napic.test('$response.data[0].test_column should be equal to 1', function(){\n\texpect($response.data[0].test_column).to.be.eql(1);\n})\n","savedResp":[],"respCodes":[],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1623908940974-2a7443838857b","_time":1623908940974,"_modified":1623908940974,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Get detail of process by processId","method":"GET","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.id should be equal to 1', function(){\n\texpect($response.data.id).to.be.eql(1);\n})\n\napic.test('$response.data.name should be equal to \"test\"', function(){\n\texpect($response.data.name).to.be.eql(\"test\");\n})\n\napic.test('$response.data.description should be equal to \"test\"', function(){\n\texpect($response.data.description).to.be.eql(\"test\");\n})\n\napic.test('$response.data.user_id should be equal to 0', function(){\n\texpect($response.data.user_id).to.be.eql(0);\n})\n\napic.test('$response.data.tables should  exist in response', function(){\n\t expect($response.data.tables).not.to.be.undefined;\n})\n","savedResp":[],"respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}}},{"code":"400","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"401","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"403","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}},{"code":"404","data":{"type":["object"],"properties":{"errCode":{"type":["integer"]},"message":{"type":["string"]}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1624169492010-9f376266d48ff","_time":1624169492010,"_modified":1624169492010,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Get detail of process table by table name","method":"GET","Req":{"url_params":[{"key":"table","val":"test_table","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"apic.test('$response.data.name should be equal to \"test_table\"', function(){\n\texpect($response.data.name).to.be.eql(\"test_table\");\n})\n\napic.test('$response.data.columns[0] should  exist in response', function(){\n\t expect($response.data.columns[0]).not.to.be.undefined;\n})\n\napic.test('$response.data.columns[0].col_type should be equal to \"Integer\"', function(){\n\t expect($response.data.columns[0].col_type).to.be.eql(\"Integer\");\n})\n","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"description":{"type":"string"},"userId":{"type":"integer"},"configuration":{"type":"string"}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1623909138182-0bf3b30ef40cf","_time":1623909138182,"_modified":1623909138182,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Get detail of process table register by id","method":"GET","Req":{"url_params":[{"key":"table","val":"test_table","active":true},{"key":"reg_id","val":"1","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.id should be equal to 1', function(){\n\texpect($response.data.id).to.be.eql(1);\n})\n\napic.test('$response.data.test_column should be equal to 1', function(){\n\texpect($response.data.test_column).to.be.eql(1);\n})\n","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"description":{"type":"string"},"userId":{"type":"integer"},"configuration":{"type":"string"}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"}}},{"_id":"1624169112392-08d2d5c5293a7","_time":1624169112392,"_modified":1624169112391,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Update process details by processId","method":"PUT","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.process.id should be equal to 1', function(){\n\texpect($response.data.process.id).to.be.eql(1);\n})\n\napic.test('$response.data.process.name should be equal to \"test2\"', function(){\n\texpect($response.data.process.name).to.be.eql(\"test2\");\n})\n\napic.test('$response.data.process.description should be equal to \"test2\"', function(){\n\texpect($response.data.process.description).to.be.eql(\"test2\");\n})\n\napic.test('$response.data.process.user_id should be equal to \"0\"', function(){\n\texpect($response.data.process.user_id).to.be.eql(0);\n})\n\napic.test('$response.data.register.test_column should should be equal to 2', function(){\n\t expect($response.data.register.test_column).to.be.eql(2);\n})\n\n\n","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"},"description":{"type":"string"},"userId":{"type":"integer"},"configuration":{"type":"string"}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n    \"process\": {\n        \"name\": \"test2\",\n        \"description\": \"test2\"\n    },\n    \"register\": {\n        \"reg_id\": 1,\n        \"process_id\": 1,\n        \"table\": \"test_table\",\n        \"values\": {\n            \"test_column\" : 2\n        }\n    }\n}"},"data":"{\n    \"process\": {\n        \"name\": \"test2\",\n        \"description\": \"test2\"\n    },\n    \"register\": {\n        \"reg_id\": 1,\n        \"process_id\": 1,\n        \"table\": \"test_table\",\n        \"values\": {\n            \"test_column\" : 2\n        }\n    }\n}"},{"_id":"1624169556137-6679a54afd2a9","_time":1624169556137,"_modified":1624169556137,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Delete process table register  by id","method":"DELETE","Req":{"url_params":[{"key":"table","val":"test_table","active":true},{"key":"reg_id","val":"1","active":true},{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"apic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object"}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{}"},"data":"{}"},{"_id":"1624169530414-544092dd1ed4e","_time":1624169530414,"_modified":1624169530414,"url":"{{scheme}}{{host}}/process/{{processId}}","name":"Delete process by processId","method":"DELETE","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"apic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","savedResp":[],"respCodes":[{"code":"200","data":{"type":"object"}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{}"},"data":"{}"},{"_id":"1624167453054-d4062cf88f60b","_time":1624167453054,"_modified":1624167453053,"url":"{{scheme}}{{host}}/authorizations","name":"Create authorization","method":"POST","Req":{"url_params":[{"key":"","val":"","active":true}],"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}","active":true},{"key":"","val":"","active":true}]},"prescript":"","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.getList should be equal to true', function(){\n\texpect($response.data.getList).to.be.eql(true);\n})\n\napic.test('$response.data.getOne should be equal to true', function(){\n\texpect($response.data.getOne).to.be.eql(true);\n})\n\napic.test('$response.data.create should be equal to true', function(){\n\texpect($response.data.create).to.be.eql(true);\n})\n\napic.test('$response.data.update should be equal to true', function(){\n\texpect($response.data.update).to.be.eql(true);\n})\n\napic.test('$response.data.delete should be equal to true', function(){\n\texpect($response.data.delete).to.be.eql(true);\n})\n","savedResp":[],"respCodes":[{"code":"201","data":{"type":"object","properties":{"id":{"type":"integer"},"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"getList":{"type":"boolean"},"getOne":{"type":"boolean"},"create":{"type":"boolean"},"update":{"type":"boolean"},"delete":{"type":"boolean"}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"]}}],"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"userId\": -79275257,\n\t\"processId\": -56045782,\n\t\"tableName\": \"veniam eiusmod Duis consequat\",\n\t\"getList\": true,\n\t\"getOne\": true,\n\t\"create\": true,\n\t\"update\": false,\n\t\"delete\": true\n}"},"data":"{\n\t\"userId\": -79275257,\n\t\"processId\": -56045782,\n\t\"tableName\": \"veniam eiusmod Duis consequat\",\n\t\"getList\": true,\n\t\"getOne\": true,\n\t\"create\": true,\n\t\"update\": false,\n\t\"delete\": true\n}"},{"method":"GET","_id":"1607237974767-deda39820658-16078878653497b108eb6","description":"Get list of authorizations","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Get list of authorizations","postscript":"\napic.test('$response.data[0].id should be equal to 0', function(){\n\texpect($response.data[0].id).to.be.eql(0);\n})\n\napic.test('$response.data[0].userId should be equal to 0', function(){\n\texpect($response.data[0].userId).to.be.eql(0);\n})\n\napic.test('$response.data[0].processId should be equal to 0', function(){\n\texpect($response.data[0].processId).to.be.eql(0);\n})\n\napic.test('$response.data[0].tableName should be equal to \"process\"', function(){\n\texpect($response.data[0].tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data[0].getList should be equal to true', function(){\n\texpect($response.data[0].getList).to.be.eql(true);\n})\n\napic.test('$response.data[0].getOne should be equal to true', function(){\n\texpect($response.data[0].getOne).to.be.eql(true);\n})\n\napic.test('$response.data[0].create should be equal to true', function(){\n\texpect($response.data[0].create).to.be.eql(true);\n})\n\napic.test('$response.data[0].update should be equal to true', function(){\n\texpect($response.data[0].update).to.be.eql(true);\n})\n\napic.test('$response.data[0].delete should be equal to true', function(){\n\texpect($response.data[0].delete).to.be.eql(true);\n})\n","prescript":"","respCodes":[{"code":"200","data":{"type":"array","items":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"url":"{{scheme}}{{host}}/authorizations"},{"method":"GET","_id":"1607237974767-deda39820658-1607887865349a8427f9e","description":"Get detail of authorization by authorizationId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Get detail of authorization by authorizationId","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.getList should be equal to true', function(){\n\texpect($response.data.getList).to.be.eql(true);\n})\n\napic.test('$response.data.getOne should be equal to true', function(){\n\texpect($response.data.getOne).to.be.eql(true);\n})\n\napic.test('$response.data.create should be equal to true', function(){\n\texpect($response.data.create).to.be.eql(true);\n})\n\napic.test('$response.data.update should be equal to true', function(){\n\texpect($response.data.update).to.be.eql(true);\n})\n\napic.test('$response.data.delete should be equal to true', function(){\n\texpect($response.data.delete).to.be.eql(true);\n})\n","prescript":"","respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"url":"{{scheme}}{{host}}/authorizations/{{authorizationId}}"},{"method":"PUT","_id":"1607237974767-deda39820658-16078878653503ea00a18","description":"Update authorization details by authorizationId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Update authorization details by authorizationId","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.getList should be equal to true', function(){\n\texpect($response.data.getList).to.be.eql(true);\n})\n\napic.test('$response.data.getOne should be equal to true', function(){\n\texpect($response.data.getOne).to.be.eql(true);\n})\n\napic.test('$response.data.create should be equal to true', function(){\n\texpect($response.data.create).to.be.eql(true);\n})\n\napic.test('$response.data.update should be equal to true', function(){\n\texpect($response.data.update).to.be.eql(true);\n})\n\napic.test('$response.data.delete should be equal to true', function(){\n\texpect($response.data.delete).to.be.eql(true);\n})\n","prescript":"","respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"userId\": 35949354,\n\t\"processId\": 81599699,\n\t\"tableName\": \"quis dolor cillum commodo amet\",\n\t\"getList\": true,\n\t\"getOne\": true,\n\t\"create\": false,\n\t\"update\": true,\n\t\"delete\": true\n}"},"url":"{{scheme}}{{host}}/authorizations/{{authorizationId}}","data":"{\n\t\"userId\": 35949354,\n\t\"processId\": 81599699,\n\t\"tableName\": \"quis dolor cillum commodo amet\",\n\t\"getList\": true,\n\t\"getOne\": true,\n\t\"create\": false,\n\t\"update\": true,\n\t\"delete\": true\n}"},{"method":"DELETE","_id":"1607237974767-deda39820658-1607887865350b9b1947c","description":"Delete authorization by authorizationId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Delete authorization by authorizationId","postscript":"apic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":"object","definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{}"},"url":"{{scheme}}{{host}}/authorizations/{{authorizationId}}","data":"{}"},{"method":"POST","_id":"1607237974767-deda39820658-1607888381408ca50ed6b","description":"Create log","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Create log","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.route should be equal to \"process\"', function(){\n\texpect($response.data.route).to.be.eql(\"process\");\n})\n\napic.test('$response.data.method should be equal to \"POST\"', function(){\n\texpect($response.data.method).to.be.eql(\"POST\");\n})\n\napic.test('$response.data.parameters should  exist in response', function(){\n\t expect($response.data.parameters).not.to.be.undefined;\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"userId\": 15808319,\n\t\"processId\": -14499904,\n\t\"tableName\": \"cupidatat eiusmod se\",\n\t\"route\": \"commodo ut dolor veniam quis\",\n\t\"method\": \"quis anim in ea nisi\",\n\t\"parameters\": \"esse ad do aute\"\n}"},"url":"{{scheme}}{{host}}/logs","data":"{\n\t\"userId\": 15808319,\n\t\"processId\": -14499904,\n\t\"tableName\": \"cupidatat eiusmod se\",\n\t\"route\": \"commodo ut dolor veniam quis\",\n\t\"method\": \"quis anim in ea nisi\",\n\t\"parameters\": \"esse ad do aute\"\n}"},{"method":"GET","_id":"1607237974767-deda39820658-1607888381409a6973bcb","description":"Get list of logs","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Get list of logs","postscript":"\napic.test('$response.data[0].id should be equal to 0', function(){\n\texpect($response.data[0].id).to.be.eql(0);\n})\n\napic.test('$response.data[0].userId should be equal to 0', function(){\n\texpect($response.data[0].userId).to.be.eql(0);\n})\n\napic.test('$response.data[0].processId should be equal to 0', function(){\n\texpect($response.data[0].processId).to.be.eql(0);\n})\n\napic.test('$response.data[0].tableName should be equal to \"process\"', function(){\n\texpect($response.data[0].tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data[0].route should be equal to \"process\"', function(){\n\texpect($response.data[0].route).to.be.eql(\"process\");\n})\n\napic.test('$response.data[0].method should be equal to \"POST\"', function(){\n\texpect($response.data[0].method).to.be.eql(\"POST\");\n})\n\napic.test('$response.data[0].parameters should  exist in response', function(){\n\t expect($response.data[0].parameters).not.to.be.undefined;\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":"array","items":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]},"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"url":"{{scheme}}{{host}}/logs"},{"method":"GET","_id":"1607237974767-deda39820658-16078883814097c506cf8","description":"Get detail of log by logId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Get detail of log by logId","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.route should be equal to \"process\"', function(){\n\texpect($response.data.route).to.be.eql(\"process\");\n})\n\napic.test('$response.data.method should be equal to \"POST\"', function(){\n\texpect($response.data.method).to.be.eql(\"POST\");\n})\n\napic.test('$response.data.parameters should  exist in response', function(){\n\t expect($response.data.parameters).not.to.be.undefined;\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"url":"{{scheme}}{{host}}/logs/{{logId}}"},{"method":"PUT","_id":"1607237974767-deda39820658-160788838140998977ec9","description":"Update log details by logId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Update log details by logId","postscript":"\napic.test('$response.data.id should be equal to 0', function(){\n\texpect($response.data.id).to.be.eql(0);\n})\n\napic.test('$response.data.userId should be equal to 0', function(){\n\texpect($response.data.userId).to.be.eql(0);\n})\n\napic.test('$response.data.processId should be equal to 0', function(){\n\texpect($response.data.processId).to.be.eql(0);\n})\n\napic.test('$response.data.tableName should be equal to \"process\"', function(){\n\texpect($response.data.tableName).to.be.eql(\"process\");\n})\n\napic.test('$response.data.route should be equal to \"process\"', function(){\n\texpect($response.data.route).to.be.eql(\"process\");\n})\n\napic.test('$response.data.method should be equal to \"POST\"', function(){\n\texpect($response.data.method).to.be.eql(\"POST\");\n})\n\napic.test('$response.data.parameters should  exist in response', function(){\n\t expect($response.data.parameters).not.to.be.undefined;\n})\n\napic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{\n\t\"userId\": -85151786,\n\t\"processId\": -82767512,\n\t\"tableName\": \"laborum qui occaecat\",\n\t\"route\": \"nulla cillum incididunt id anim\",\n\t\"method\": \"cillum\",\n\t\"parameters\": \"Duis cillum veniam\"\n}"},"url":"{{scheme}}{{host}}/logs/{{logId}}","data":"{\n\t\"userId\": -85151786,\n\t\"processId\": -82767512,\n\t\"tableName\": \"laborum qui occaecat\",\n\t\"route\": \"nulla cillum incididunt id anim\",\n\t\"method\": \"cillum\",\n\t\"parameters\": \"Duis cillum veniam\"\n}"},{"method":"DELETE","_id":"1607237974767-deda39820658-1607888381410354ed029","description":"Delete log by logId","env":{"_id":"1607816946948-93d9bdca5d8e5","name":"DataLogger-env"},"name":"Delete log by logId","postscript":"apic.test(\"Check that Status code is 200\", function(){\n\texpect($response.status).to.be.eql(200);\n})","prescript":"","respCodes":[{"code":"200","data":{"type":"object","definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"400","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"401","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"403","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}},{"code":"404","data":{"type":"object","properties":{"errCode":{"type":"integer"},"message":{"type":"string"}},"required":["errCode","message"],"definitions":{"input_user":{"type":["object"],"properties":{"username":{"type":["string"]},"email":{"type":["string"]},"password":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["username","email","password","is_admin"]},"output_user":{"type":["object"],"properties":{"id":{"type":["integer"]},"username":{"type":["string"]},"email":{"type":["string"]},"is_admin":{"type":["boolean"]}},"required":["id","username","email","is_admin"]},"input_process":{"type":["object"],"properties":{"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}},"required":["name","description","userId","configuration"]},"output_process":{"type":["object"],"properties":{"id":{"type":["integer"]},"name":{"type":["string"]},"description":{"type":["string"]},"userId":{"type":["integer"]},"configuration":{"type":["string"]}}},"input_authorization":{"type":["object"],"properties":{"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}},"required":["userId","processId","tableName","getList","getOne","create","update","delete"]},"output_authorization":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"getList":{"type":["boolean"]},"getOne":{"type":["boolean"]},"create":{"type":["boolean"]},"update":{"type":["boolean"]},"delete":{"type":["boolean"]}}},"input_log":{"type":"object","properties":{"userId":{"type":"integer"},"processId":{"type":"integer"},"tableName":{"type":"string"},"route":{"type":"string"},"method":{"type":"string"},"parameters":{"type":"string"}},"required":["userId","processId","tableName","route","method","parameters"]},"output_log":{"type":["object"],"properties":{"id":{"type":["integer"]},"userId":{"type":["integer"]},"processId":{"type":["integer"]},"tableName":{"type":["string"]},"route":{"type":["string"]},"method":{"type":["string"]},"parameters":{"type":["string"]}},"required":["id","userId","processId","tableName","route","method","parameters"]}}}}],"Req":{"headers":[{"key":"Authorization","val":"{{apic.basicAuth(basicAuthUser, basicAuthPassword)}}"},{"key":"","val":""}],"url_params":[{"key":"","val":""}]},"Body":{"type":"raw","selectedRaw":{"name":"JSON","val":"application/json"},"rawData":"{}"},"url":"{{scheme}}{{host}}/logs/{{logId}}","data":"{}"}],"_id":"1610344007105-92fc65f1c333","_created":1610344007105,"_modified":1624169602845,"name":"DataLogger","projId":"1607889686288-5a0cd47de21a","id":"1610344007105-92fc65f1c333","expanded":"opened","reqIdToOpen":"1624133020099-5845205950cfc###6"}}
+swagger: '2.0'
+info:
+  title: DataLogger
+  description: 'Configurable structure, configurable storage, generic data-logger API.'
+  version: '0.01'
+  termsOfService: MIT
+host: 'localhost:5000'
+schemes:
+  - http
+securityDefinitions:
+  basic_auth:
+    type: basic
+    description: >-
+      Basic auth, please add the following line to the yaml: x-basicInfoFunc:
+      controllers.authentication.basic_auth.authenticate
+    x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
+definitions:
+  input_user:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      admin:
+        type: boolean
+    required:
+      - username
+      - email
+      - password
+      - admin
+  output_user:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      email:
+        type: string
+      is_admin:
+        type: boolean
+    required:
+      - id
+      - username
+      - email
+      - is_admin
+  table:
+    type: object
+    properties:
+      name:
+        type: string
+      real_name:
+        type: string
+      columns:
+        type: array
+        items:
+          $ref: '#/definitions/table_column'
+          type:
+            - null
+  output_process:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      user_id:
+        type: integer
+      tables:
+        type: array
+        items:
+          $ref: '#/definitions/table'
+          type:
+            - null
+    required:
+      - id
+      - name
+      - user_id
+  input_authorization:
+    type: object
+    properties:
+      user_id:
+        type: integer
+        default: '0'
+      process_id:
+        type: integer
+        default: '0'
+      table:
+        type: string
+        default: '""'
+      read_all:
+        type: boolean
+      read:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      table_crud:
+        type: boolean
+      process_crud:
+        type: boolean
+      delete:
+        type: boolean
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
+  input_log:
+    type: object
+    properties:
+      user_id:
+        type: integer
+      process_id:
+        type: integer
+      table:
+        type: string
+      route:
+        type: string
+      method:
+        type: string
+      parameters:
+        type: object
+      result:
+        type: object
+      body:
+        type: object
+      result_code:
+        type: integer
+    required:
+      - user_id
+      - route
+      - method
+  input_process_register:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      table:
+        type: string
+      filter_column:
+        type: string
+      filter_value:
+        type: string
+      values:
+        type: object
+    required:
+      - process_id
+      - table
+  table_column:
+    type: object
+    properties:
+      name:
+        type: string
+      col_type:
+        type: string
+      index:
+        type: boolean
+        default: false
+      unique:
+        type: boolean
+        default: false
+      primary_key:
+        type: boolean
+        default: false
+      foreign_key:
+        type: string
+        default: none
+      default:
+        type: object
+      nullable:
+        type: boolean
+        default: false
+    required:
+      - name
+      - col_type
+  input_process_table:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      columns:
+        type: array
+        items:
+          $ref: '#/definitions/table_column'
+          type:
+            - null
+      name:
+        type: string
+    required:
+      - process_id
+      - columns
+      - name
+  process_operation:
+    type: object
+    properties:
+      process:
+        $ref: '#/definitions/input_process'
+      table:
+        $ref: '#/definitions/input_process_table'
+      register:
+        $ref: '#/definitions/input_process_register'
+  output_process_register:
+    type: array
+    items:
+      type:
+        - object
+  output_process_table:
+    type: object
+    properties:
+      process_id:
+        type: integer
+      name:
+        type: string
+      table:
+        $ref: '#/definitions/table'
+        type: null
+    required:
+      - process_id
+      - name
+      - table
+  input_process:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      user_id:
+        type: integer
+      tables:
+        type: array
+        items:
+          $ref: '#/definitions/table'
+          type:
+            - null
+  process_operation_output:
+    type: object
+    properties:
+      process:
+        $ref: '#/definitions/input_process'
+        type: null
+      table:
+        $ref: '#/definitions/input_process_table'
+        type: null
+      register:
+        $ref: '#/definitions/input_process_register'
+        type: null
+  output_authorization:
+    type: object
+    properties:
+      user_id:
+        type: integer
+        default: '0'
+      process_id:
+        type: integer
+        default: '0'
+      table:
+        type: string
+        default: '""'
+      read_all:
+        type: boolean
+      read:
+        type: boolean
+      create:
+        type: boolean
+      update:
+        type: boolean
+      table_crud:
+        type: boolean
+      process_crud:
+        type: boolean
+      delete:
+        type: boolean
+      priority:
+        type: integer
+        default: '0'
+        minimum: 0
+        maximum: 1000
+      id:
+        type: integer
+    required:
+      - id
+  output_log:
+    type: object
+    properties:
+      user_id:
+        type: integer
+      process_id:
+        type: integer
+      table:
+        type: string
+      route:
+        type: string
+      method:
+        type: string
+      parameters:
+        type: string
+      result:
+        type: object
+      body:
+        type: object
+      id:
+        type: integer
+      result_code:
+        type: integer
+    required:
+      - user_id
+      - route
+      - method
+      - id
+responses:
+  'trait:error-response:400':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Bad Request.
+  'trait:error-response:401':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Unauthorized
+  'trait:error-response:403':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Forbidden
+  'trait:error-response:404':
+    schema:
+      type: object
+      properties:
+        errCode:
+          type: integer
+        message:
+          type: string
+      required:
+        - errCode
+        - message
+    description: Not Found
+parameters: {}
+paths:
+  /users:
+    post:
+      tags:
+        - user
+        - create
+      summary: Create user
+      description: Create user
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.user.create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns response 200 with the details of the newly created user
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_user'
+    get:
+      tags:
+        - user
+        - list
+      summary: Get list of users
+      description: Get list of users
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.user.read_all
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_user'
+          description: Returns 200 with list/array of users
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/users/{userId}':
+    get:
+      tags:
+        - user
+        - get
+      summary: Get detail of user by userId
+      description: Get detail of user by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.user.read
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns 200 with the detail of user for the specified userId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: integer
+    put:
+      tags:
+        - user
+        - update
+      summary: Update user details by userId
+      description: Update user details by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.user.update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_user'
+          description: Returns 200 with the detail of updated user
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_user'
+    delete:
+      tags:
+        - user
+        - delete
+      summary: Delete user by userId
+      description: Delete user by userId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.user.delete
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: userId
+          in: path
+          description: ''
+          required: true
+          type: integer
+        - name: body
+          in: body
+          schema:
+            type: object
+  /process:
+    post:
+      tags:
+        - process
+        - create
+      summary: Create process
+      description: >-
+        Create process, a table for a process or a register inside a table of a
+        process, depending on the body parameters. (process, table or register)
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.create.create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: >-
+            Returns response 200 with the details of the newly created register
+            in a process table
+        '201':
+          schema:
+            $ref: '#/definitions/process_operation_output'
+          description: Returns response 201 with the details of the newly created process
+        '202':
+          schema:
+            $ref: '#/definitions/output_process_table'
+          description: >-
+            Returns response 201 with the details of the newly created table for
+            a process
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/process_operation'
+    get:
+      tags:
+        - process
+        - list
+      summary: Get list of process
+      description: >-
+        Get list of processes, or a list of registers of a table of a process,
+        depending on the existence of the table query parameter.
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.read_all.read_all
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_process'
+          description: Returns 200 with list/array of processs
+        '203':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_process_register'
+          description: Returns 203 with list/array of registers of the selected table
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: table
+          in: query
+          description: >-
+            Name of the table of a process (suffix) to be queried instead of the
+            processes table.
+          required: false
+          type: string
+  '/process/{processId}':
+    get:
+      tags:
+        - process
+        - get
+      summary: Get detail of process
+      description: >-
+        Get detail of process by processId, or a register from a table of a
+        process, depending on the existence of query parameters.
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.read.read
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns 200 with the detail of process for the specified processId
+        '203':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: >-
+            Returns 203 with the detail of a register of a table in the process
+            for the specified processId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: table
+          in: query
+          description: >-
+            If present indicate the table of the process (suffix) to perform the
+            query
+          required: false
+          type: string
+        - name: column
+          in: query
+          description: If present indicate the column to filter the query
+          required: false
+          type: string
+        - name: value
+          in: query
+          description: >-
+            If present indicate the value used with the column to filter the
+            query (returns only the first one)
+          required: false
+          type: string
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: integer
+    put:
+      tags:
+        - process
+        - update
+      summary: Update process
+      description: >-
+        Update process register by processId, or a register in a table of a
+        process
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.update.update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_process'
+          description: Returns 200 with the detail of updated process
+        '203':
+          schema:
+            $ref: '#/definitions/output_process_register'
+          description: Returns 203 with the detail of updated process register
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: integer
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/process_operation'
+    delete:
+      tags:
+        - process
+        - delete
+      summary: Delete process
+      description: >-
+        Delete process by processId  or a register in a table of the process by
+        a column and value filter
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.process.delete.delete
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: table
+          in: query
+          description: >-
+            If present indicate the table of the process (suffix) to perform the
+            query
+          required: false
+          type: string
+        - name: reg_id
+          in: query
+          description: ''
+          required: false
+          type: integer
+        - name: processId
+          in: path
+          description: ''
+          required: true
+          type: integer
+        - name: body
+          in: body
+          schema:
+            type: object
+  /authorizations:
+    post:
+      tags:
+        - authorization
+        - create
+      summary: Create authorization
+      description: Create authorization
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.create
+      responses:
+        '201':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: >-
+            Returns response 201 with the details of the newly created
+            authorization
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_authorization'
+    get:
+      tags:
+        - authorization
+        - list
+      summary: Get list of authorizations
+      description: Get list of authorizations
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.read_all
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_authorization'
+          description: Returns 200 with list/array of authorizations
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/authorizations/{authorization_id}':
+    get:
+      tags:
+        - authorization
+        - get
+      summary: Get detail of authorization by authorization_id
+      description: Get detail of authorization by authorizationId
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.read
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: >-
+            Returns 200 with the detail of authorization for the specified
+            authorizationId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorization_id
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - authorization
+        - update
+      summary: Update authorization details by authorization_id
+      description: Update authorization details by authorization_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_authorization'
+          description: Returns 200 with the detail of updated authorization
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorization_id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_authorization'
+    delete:
+      tags:
+        - authorization
+        - delete
+      summary: Delete authorization by authorization_id
+      description: Delete authorization by authorization_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.delete
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorization_id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
+  /logs:
+    post:
+      tags:
+        - log
+        - create
+      summary: Create log
+      description: Create log
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.log.create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns response 201 with the details of the newly created log
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_log'
+    get:
+      tags:
+        - log
+        - list
+      summary: Get list of logs
+      description: Get list of logs
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.log.read_all
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/output_log'
+          description: Returns 200 with list/array of logs
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters: []
+  '/logs/{log_id}':
+    get:
+      tags:
+        - log
+        - get
+      summary: Get detail of log by log_id
+      description: Get detail of log by log_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.log.read
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns 200 with the detail of log for the specified logId
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: log_id
+          in: path
+          description: ''
+          required: true
+          type: string
+    put:
+      tags:
+        - log
+        - update
+      summary: Update log details by log_id
+      description: Update log details by log_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.log.update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/output_log'
+          description: Returns 200 with the detail of updated log
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: log_id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/input_log'
+    delete:
+      tags:
+        - log
+        - delete
+      summary: Delete log by log_id
+      description: Delete log by log_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.log.delete
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: log_id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object

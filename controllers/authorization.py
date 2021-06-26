@@ -1,6 +1,6 @@
-""" Controller for the authorization endpoints. 
+""" Controller for the log endpoints. 
     Description: Contains API endpoint handler functions for CRUD operations 
-    on the authorizations table whose registers are an ordered set of rules
+    on the logs table whose registers are an ordered set of rules
     that a request must approve to perform its intended action.
     
     By default, admin users can CRUD processes, tables and table registers.
@@ -8,10 +8,10 @@
     Also by default, all users can read/create registers on their processes' tables, 
     but can't create processes or tables, and can't update/delete registers.
 
-    When authorizations are created for an user, process or a table
+    When logs are created for an user, process or a table
     the user, process or table is denied all access but the indicated.
 
-    The list of authorizations for an user, process or table is ordered by the 
+    The list of logs for an user, process or table is ordered by the 
     priority column and the highest priority rules override the lowest priority ones.
 
 """
@@ -59,10 +59,10 @@ def create(body):
     return res.as_dict()
 
 def read(authorization_id):
-    """ Performs a query authorization register.
+    """ Performs a query log register.
 
         Args:
-        processId (str): authorization_id (authorization/<authorization_id>).
+        processId (str): authorization_id (log/<authorization_id>).
 
         Returns:
         res (dict): the requested  register.
@@ -75,13 +75,14 @@ def read(authorization_id):
     return res
 
 def update(authorization_id, body):
-    """ Parse command line parameters.
+    """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        args ([str]): command line parameters as list of strings
+        userId (str): id field of the model, obtained from url parameter (log/<authorization_id>).
+        body (dict): dict containing the fields of the register, obtained from json in the body of the request.
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
+        res (dict): the updated register
     """
      # query the existing register
     try:
@@ -113,7 +114,7 @@ def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
         Args:
-        processId (str): id field , obtained from a request's url parameter (authorization/<authorization_id>).
+        processId (str): id field , obtained from a request's url parameter (log/<authorization_id>).
 
         Returns:
         res (int): the deleted register id field
@@ -134,7 +135,7 @@ def delete(authorization_id):
 
 @login_required
 def read_all():
-    """ Query all registers of the authorizations table.
+    """ Query all registers of the logs table.
 
         Returns:
         res (dict): the requested list.
