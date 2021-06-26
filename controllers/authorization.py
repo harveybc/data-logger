@@ -154,7 +154,8 @@ def read_all():
     return res2
 
 def is_authorized():
-    pass
+    return True
+    
 
 def authorization_required(func):
     @wraps(func)
@@ -163,7 +164,6 @@ def authorization_required(func):
             return func(*args, **kwargs)
         else:
             return current_app.login_manager.unauthorized()
-        return func(*args, **kwargs)
     return decorated_view
 
 
