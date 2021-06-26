@@ -59,14 +59,13 @@ def create(body):
     return res.as_dict()
 
 def read(authorization_id):
-    """ Parse command line parameters.
-                  
+    """ Performs a query authorization register.
+
         Args:
-        args ([str]): command line parameters as list of strings
+        processId (str): authorization_id (processs/<authorization_id>).
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
-    """
+        res (dict): the requested process register, process table or process table register.
     try:
         res = Authorization.query.filter_by(id=authorization_id).one()
     except SQLAlchemyError as e:
@@ -96,7 +95,7 @@ def delete():
 
 @login_required
 def read_all():
-    """ Query all registers of the process, process table or process register.
+    """ Query all registers of the authorizations table.
 
         Returns:
         res (dict): the requested list.
