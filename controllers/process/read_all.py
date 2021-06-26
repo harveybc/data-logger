@@ -17,7 +17,7 @@ def read_all():
     """ Query all registers of the process, process table or process register.
 
         Returns:
-        res (dict): the requested process registers with empty password field.
+        res (dict): the requested list.
     """ 
     # check if the "process" url param is set (either generate the list of tables or registers in a table) else, generate a list of processes
     process_param = request.args.get("process_id")
