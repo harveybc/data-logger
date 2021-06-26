@@ -28,6 +28,7 @@ from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 from flask import (current_app)
+from functools import wraps
 
 @login_required
 def create(body):
