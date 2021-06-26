@@ -106,6 +106,7 @@ def update(authorization_id, body):
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_c' : error}
+    return res
 
 def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
