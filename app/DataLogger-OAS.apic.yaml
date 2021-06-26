@@ -137,7 +137,6 @@ definitions:
       - user_id
       - route
       - method
-      - parameters
   input_process_register:
     type: object
     properties:
@@ -203,17 +202,15 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
-        type: null
       table:
         $ref: '#/definitions/input_process_table'
-        type: null
       register:
         $ref: '#/definitions/input_process_register'
-        type: null
   output_process_register:
     type: array
     items:
-      type: object
+      type:
+        - object
   output_process_table:
     type: object
     properties:
@@ -319,7 +316,6 @@ definitions:
       - user_id
       - route
       - method
-      - parameters
       - id
 responses:
   'trait:error-response:400':
