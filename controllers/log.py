@@ -11,6 +11,7 @@ from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
+from controllers.authorization import authorization_required
 from datetime import datetime
 from app.app import login_manager
 from models.log import Log
@@ -19,6 +20,7 @@ from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 
+@authorization_required
 @login_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
