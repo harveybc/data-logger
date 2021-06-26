@@ -857,6 +857,41 @@ paths:
           description: ''
           required: true
           type: string
+    delete:
+      tags:
+        - authorization
+        - delete
+      summary: Delete authorization by authorization_id
+      description: Delete authorization by authorization_id
+      consumes: []
+      produces: []
+      schemes: []
+      security:
+        - basic_auth: []
+      operationId: controllers.authorization.delete
+      responses:
+        '200':
+          schema:
+            type: object
+          description: Returns 200
+        '400':
+          $ref: '#/responses/trait:error-response:400'
+        '401':
+          $ref: '#/responses/trait:error-response:401'
+        '403':
+          $ref: '#/responses/trait:error-response:403'
+        '404':
+          $ref: '#/responses/trait:error-response:404'
+      parameters:
+        - name: authorization_id
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            type: object
   '/authorizations/{authorizationId}':
     put:
       tags:
@@ -893,41 +928,6 @@ paths:
           in: body
           schema:
             $ref: '#/definitions/input_authorization'
-    delete:
-      tags:
-        - authorization
-        - delete
-      summary: Delete authorization by authorizationId
-      description: Delete authorization by authorizationId
-      consumes: []
-      produces: []
-      schemes: []
-      security:
-        - basic_auth: []
-      operationId: controllers.authorization.delete
-      responses:
-        '200':
-          schema:
-            type: object
-          description: Returns 200
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
-      parameters:
-        - name: authorizationId
-          in: path
-          description: ''
-          required: true
-          type: string
-        - name: body
-          in: body
-          schema:
-            type: object
   /logs:
     post:
       tags:
@@ -987,13 +987,13 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters: []
-  '/logs/{logId}':
+  '/logs/{log_id}':
     get:
       tags:
         - log
         - get
-      summary: Get detail of log by logId
-      description: Get detail of log by logId
+      summary: Get detail of log by log_id
+      description: Get detail of log by log_id
       consumes: []
       produces: []
       schemes: []
@@ -1014,7 +1014,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
@@ -1023,8 +1023,8 @@ paths:
       tags:
         - log
         - update
-      summary: Update log details by logId
-      description: Update log details by logId
+      summary: Update log details by log_id
+      description: Update log details by log_id
       consumes: []
       produces: []
       schemes: []
@@ -1045,7 +1045,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
@@ -1058,8 +1058,8 @@ paths:
       tags:
         - log
         - delete
-      summary: Delete log by logId
-      description: Delete log by logId
+      summary: Delete log by log_id
+      description: Delete log by log_id
       consumes: []
       produces: []
       schemes: []
@@ -1080,7 +1080,7 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: logId
+        - name: log_id
           in: path
           description: ''
           required: true
