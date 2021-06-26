@@ -84,7 +84,7 @@ def update():
         :obj:`argparse.Namespace`: command line parameters namespace
     """
 
-def delete():
+def delete(authorization_id):
     """ Parse command line parameters.
 
         Args:
@@ -93,6 +93,19 @@ def delete():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
+    try:
+        res = Authorization.query.filter_by(id=authorization_id).one()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return error
+    # perform delete 
+    db.session.delete(res)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return error
+    return res.id
 
 @login_required
 def read_all():
