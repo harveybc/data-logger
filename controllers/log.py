@@ -13,7 +13,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from datetime import datetime
 from app.app import login_manager
-from models.authorization import Log
+from models.log import Log
 from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
@@ -49,27 +49,27 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
-def read(authorization_id):
-    """ Performs a query authorization register.
+def read(log_id):
+    """ Performs a query log register.
 
         Args:
-        processId (str): authorization_id (authorization/<authorization_id>).
+        processId (str): log_id (log/<log_id>).
 
         Returns:
         res (dict): the requested  register.
     """
     try:
-        res = Log.query.filter_by(id=authorization_id).one().as_dict()
+        res = Log.query.filter_by(id=log_id).one().as_dict()
     except SQLAlchemyError as e:
         error = str(e)
         return error 
     return res
 
-def update(authorization_id, body):
+def update(log_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the model, obtained from url parameter (authorization/<authorization_id>).
+        userId (str): id field of the model, obtained from url parameter (log/<log_id>).
         body (dict): dict containing the fields of the register, obtained from json in the body of the request.
 
         Returns:
@@ -77,7 +77,7 @@ def update(authorization_id, body):
     """
      # query the existing register
     try:
-        process_model = Log.query.filter_by(id=authorization_id).one()
+        process_model = Log.query.filter_by(id=log_id).one()
         for property, value in body.items():
             setattr(process_model, property, value)
     except SQLAlchemyError as e:
@@ -94,24 +94,24 @@ def update(authorization_id, body):
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res = Log.query.filter_by(id=int(authorization_id)).one().as_dict()
+        res = Log.query.filter_by(id=int(log_id)).one().as_dict()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_c' : error}
     return res
 
-def delete(authorization_id):
-    """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
+def delete(log_id):
+    """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's log_id url parameter.
 
         Args:
-        processId (str): id field , obtained from a request's url parameter (authorization/<authorization_id>).
+        processId (str): id field , obtained from a request's url parameter (log/<log_id>).
 
         Returns:
         res (int): the deleted register id field
     """
     try:
-        res = Log.query.filter_by(id=authorization_id).one()
+        res = Log.query.filter_by(id=log_id).one()
     except SQLAlchemyError as e:
         error = str(e)
         return error
@@ -126,7 +126,7 @@ def delete(authorization_id):
 
 @login_required
 def read_all():
-    """ Query all registers of the authorizations table.
+    """ Query all registers of the logs table.
 
         Returns:
         res (dict): the requested list.

@@ -18,14 +18,13 @@ class Log(db.Model, BaseModel):
     user_id=Column(Integer, ForeignKey('user.id'))
     process_id=Column(Integer, ForeignKey('process.id'))
     table=Column(String)
-    read_all = Column(Boolean)
-    read = Column(Boolean)
-    create = Column(Boolean)
-    update = Column(Boolean)
-    delete = Column(Boolean)
-    table_crud = Column(Boolean)
-    process_crud = Column(Boolean)
-    priority=Column(Integer, default=0)
+    route = Column(String)
+    method = Column(String)
+    parameters = Column(String)
+    body = Column(String)
+    result_code = Column(Integer)
+    result = Column(String)
+    
     
     # relationships
     users = relationship("User", back_populates='authorizations')
