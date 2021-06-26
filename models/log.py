@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
-# TODO: activate cache for read authorization table select queries, since they are made in every other request
+# TODO: activate cache for read log table select queries, since they are made in every other request
 # TODO: use indexes in all searchable non numeric columns.
 class Log(db.Model, BaseModel):
     """ Map the process table columns and bidirectional one-to-many relationship with user """
@@ -27,8 +27,8 @@ class Log(db.Model, BaseModel):
     
     
     # relationships
-    users = relationship("User", back_populates='authorizations')
-    processes = relationship("Process", back_populates='authorizations')
+    users = relationship("User", back_populates='logs')
+    processes = relationship("Process", back_populates='logs')
 
     def __repr__(self):
         return str(self.name)
