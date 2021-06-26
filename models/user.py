@@ -6,6 +6,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
+from models.authorization import Authorization
 from app.app import db
 
 # TODO: Activate cache for the user table select queries in database since they are made in every other request
@@ -24,7 +25,7 @@ class User(db.Model, BaseModel, UserMixin):
     # relationships
     processes = relationship("Process", back_populates='users')
     authorizations = relationship("Authorization", back_populates='users')    
-    #logs = relationship("Log", back_populates='users')
+    logs = relationship("Log", back_populates='users')
 
     # representation
     def __repr__(self):
