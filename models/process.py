@@ -21,8 +21,8 @@ class Process(db.Model, BaseModel):
 
     # relationships
     users = relationship("User", back_populates='processes')
-    authorizations = relationship("Authorization", back_populates='users')
-    logs = relationship("Log", back_populates='users')
+    authorizations = relationship("Authorization", back_populates='processes')
+    logs = relationship("Log", back_populates='processes')
 
     def __repr__(self):
         return str(self.name)
