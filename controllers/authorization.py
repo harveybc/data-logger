@@ -74,7 +74,7 @@ def read(authorization_id):
         return error 
     return res
 
-def update():
+def update(authorization_id, body):
     """ Parse command line parameters.
 
         Args:
@@ -83,15 +83,38 @@ def update():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
     """
+     # query the existing register
+    try:
+        process_model = Authorization.query.filter_by(id=authorization_id).one()
+    except SQLAlchemyError as e:
+        error = str(e)
+        res['process'] = { 'error_a' : error}
+    # replace model with body fields
+    for property, value in body['process'].items():
+        setattr(process_model, property, value)
+    # perform update 
+    try:
+        db.session.commit()
+        db.session.close()
+    except SQLAlchemyError as e:
+        error = str(e)
+        res['process'] = { 'error_b' : error}
+    # test if the model was updated 
+    try:
+        res['process'] = Authorization.query.filter_by(id=int(authorization_id)).one().as_dict()
+        db.session.close()
+    except SQLAlchemyError as e:
+        error = str(e)
+        res['process'] = { 'error_c' : error}
 
 def delete(authorization_id):
-    """ Parse command line parameters.
+    """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
         Args:
-        args ([str]): command line parameters as list of strings
+        processId (str): id field , obtained from a request's url parameter (authorization/<authorization_id>).
 
         Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
+        res (int): the deleted register id field
     """
     try:
         res = Authorization.query.filter_by(id=authorization_id).one()
