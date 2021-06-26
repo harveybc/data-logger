@@ -86,12 +86,13 @@ def update(authorization_id, body):
      # query the existing register
     try:
         process_model = Authorization.query.filter_by(id=authorization_id).one()
+        for property, value in body.items():
+            setattr(process_model, property, value)
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_a' : error}
     # replace model with body fields
-    for property, value in body.items():
-        setattr(process_model, property, value)
+    
     # perform update 
     try:
         db.session.commit()
