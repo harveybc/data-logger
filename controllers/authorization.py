@@ -68,7 +68,7 @@ def read(authorization_id):
         res (dict): the requested  register.
     """
     try:
-        res = Authorization.query.filter_by(id=authorization_id).one()
+        res = Authorization.query.filter_by(id=authorization_id).one().as_dict()
     except SQLAlchemyError as e:
         error = str(e)
         return error 
