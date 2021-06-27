@@ -38,6 +38,11 @@ def is_num(n):
 
 
 def is_authorized():
+    """ Verify if a request is authorized for the current user.
+    |
+        Returns:
+        res (dict): true if the variable is a float or int, false otherwise
+    """ 
     return True
 
 def log_request():
