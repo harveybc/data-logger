@@ -47,6 +47,11 @@ def is_authorized():
     return True
 
 def log_request():
+    """ Create a register in the log table.
+        TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
+        Returns:
+        res (dict): true if the request was succesfully loaded. 
+    """ 
     pass
     
 def authorization_required(func):
