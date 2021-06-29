@@ -38,23 +38,27 @@ def is_num(n):
 
 
 def is_authorized():
+    #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
     """ Verify if a request is authorized for the current user.
-    |
+        
         Returns:
         res (dict): true if the user is authorized for the request 
     """ 
-    
-    return True
+    method = route = route_params = get_params = body_params = None
+    return False
 
 def log_request():
+    #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
     """ Create a register in the log table.
-        TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
+        
         Returns:
         res (dict): true if the request was succesfully loaded. 
     """ 
-    pass
+    method = route = route_params = get_params = body_params = None
+    return True
     
 def authorization_required(func):
+    # this decoration indicates that the decorated function should verify if the current user authorization in the current request
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if is_authorized():
@@ -64,6 +68,16 @@ def authorization_required(func):
     return decorated_view
 
 def log_required(func):
+    # this decoration indicates that the decorated function should log the current request
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        # perform  request logging before actually calling the function
+        log_request()
+        return func(*args, **kwargs)
+    return decorated_view
+
+def result_log_required(func):
+    # this decoration indicates that the decorated function should log the current request result
     @wraps(func)
     def decorated_view(*args, **kwargs):
         # perform  request logging before actually calling the function
