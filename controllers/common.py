@@ -41,8 +41,9 @@ def is_authorized():
     """ Verify if a request is authorized for the current user.
     |
         Returns:
-        res (dict): true if the variable is a float or int, false otherwise
+        res (dict): true if the user is authorized for the request 
     """ 
+    
     return True
 
 def log_request():
