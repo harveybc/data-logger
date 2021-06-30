@@ -3,6 +3,7 @@
 """
 from functools import wraps
 from flask import (current_app)
+from flask import request
 
 def as_dict(model):   
     """ Transform a sqlalchemy result into a dict
@@ -37,14 +38,20 @@ def is_num(n):
     return False
 
 
-def is_authorized():
+def is_authorized(process_id):
     #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
     """ Verify if a request is authorized for the current user.
         
         Returns:
         res (dict): true if the user is authorized for the request 
     """ 
-    method = route = route_params = get_params = body_params = None    return False
+    method = request.method
+    route = request.path
+    get_params = request.args
+    body_params = request.json
+
+
+    return False
 
 def log_request():
     #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
