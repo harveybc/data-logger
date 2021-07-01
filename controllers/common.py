@@ -4,6 +4,9 @@
 from functools import wraps
 from flask import (current_app)
 from flask import request
+from string import split
+from models.authorization import Authorization
+from flask_login import current_user
 
 def as_dict(model):   
     """ Transform a sqlalchemy result into a dict
@@ -39,9 +42,11 @@ def is_num(n):
 
 
 def is_authorized(process_id):
-    #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
     """ Verify if a request is authorized for the current user.
         
+        Args:
+        n (variable): The variable to be verified as number
+
         Returns:
         res (dict): true if the user is authorized for the request 
     """ 
@@ -49,8 +54,24 @@ def is_authorized(process_id):
     route = request.path
     get_params = request.args
     body_params = request.json
-
-
+    # split the process_id from the end of the route 
+    if process_id is not None:
+        # TODO: remove only the last one, currently removes any /<process_id> from the route
+        route = route.replace('/'+str(process_id), '')
+    # set tables if the get_params or the body_params contain a "table" key
+    if "table" in body_params:
+        table = body_params.table.name
+    elif "table" in get_params:
+        table = get_params.table
+    else: 
+        table = None
+    # perform a query to the authorizations table
+    if table is None:
+        Authorization.query.filter_by(user_id = current_user.id, process_id = process_id ).all()
+    else:
+        Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).all()
+    
+    
     return False
 
 def log_request():
