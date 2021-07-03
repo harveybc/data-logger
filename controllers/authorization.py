@@ -64,6 +64,8 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
+@log_required
+@authorization_required
 def read(authorization_id):
     """ Performs a query log register.
 
@@ -80,6 +82,8 @@ def read(authorization_id):
         return error 
     return res
 
+@log_required
+@authorization_required
 def update(authorization_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -116,6 +120,8 @@ def update(authorization_id, body):
         res = { 'error_c' : error}
     return res
 
+@log_required
+@authorization_required
 def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
@@ -156,7 +162,6 @@ def read_all():
     for r in res:
         res2.append(r.as_dict())
     return res2
-
 
 def is_authorized(process_id):
     """ Verify if a request is authorized for the current user.
@@ -218,6 +223,7 @@ def is_authorized(process_id):
                     if method == 'DEL' and process_id is not None and r.delete: auth = True
     return auth
 
+@login_required
 def authorization_required(func):
     """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
 

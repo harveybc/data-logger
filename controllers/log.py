@@ -21,7 +21,6 @@ from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
 
 @authorization_required
-@authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
