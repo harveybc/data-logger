@@ -27,6 +27,10 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num, log_required
+from functools import wraps
+from flask import (current_app)
+from flask import request
+from string import split
 
 @log_required
 @login_required
@@ -153,4 +157,79 @@ def read_all():
     return res2
 
 
+def is_authorized(process_id):
+    """ Verify if a request is authorized for the current user.
+        
+        Args:
+        n (variable): The variable to be verified as number
 
+        Returns:
+        res (dict): true if the user is authorized for the request 
+    """ 
+    method = request.method
+    route = request.path
+    get_params = request.args
+    body_params = request.json
+    # split the process_id from the end of the route 
+    if process_id is not None:
+        # TODO: remove only the last one, currently removes any /<process_id> from the route
+        route = route.replace('/'+str(process_id), '')
+    # set tables if the get_params or the body_params contain a "table" key
+    if "table" in body_params:
+        table = body_params.table.name
+    elif "table" in get_params:
+        table = get_params.table
+    else: 
+        table = None
+    # perform a query to the authorizations table
+    if table is None:
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = None ).order_by(Authorization.priority.asc()).all()
+    else:
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
+    # grants permissions to admin
+    if current_user.is_admin:
+        auth = True
+    else:
+        # set the auth default value to false
+        auth = False
+        # if there is no table set, verify if process_crud is true
+        if table is None:
+            for r in rules:
+                # process_crud permission
+                if r.process_crud: auth = True    
+        else:
+            for r in rules:
+                # table_crud permission
+                if r.table_crud: auth = True
+            # if table_crud was false, check other authorization fields
+            if auth == False:
+                # check each of the authorization fields that are True and set auth to True only if all conditions are met
+                for r in rules:
+                    # create permission
+                    if method == 'POST' and process_id is None and r.create: auth = True
+                    # read permission
+                    if method == 'GET' and process_id is not None and r.read: auth = True
+                    # read_all permission
+                    if method == 'GET' and process_id is None and r.read_all: auth = True
+                    # update permission
+                    if method == 'PUT' and process_id is not None and r.update: auth = True
+                    # delete permission
+                    if method == 'DEL' and process_id is not None and r.delete: auth = True
+    return auth
+
+def authorization_required(func):
+    """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
+
+        Args:
+        func (function): The function to be decorated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if is_authorized():
+            return func(*args, **kwargs)
+        else:
+            return current_app.login_manager.unauthorized()
+    return decorated_view

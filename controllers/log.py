@@ -143,6 +143,45 @@ def read_all():
         res2.append(r.as_dict())
     return res2
 
+def log_request():
+    #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
+    """ Create a register in the log table.
+
+        Returns:
+        res (dict): true if the request was succesfully loaded. 
+    """ 
+    method = route = route_params = get_params = body_params = None
+    return True
+
+def log_required(func):
+    """ This decoration indicates that a new log has to be created before executing the decorated function.
+
+        Args:
+        func (function): The function to be decorated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        # perform  request logging before actually calling the function
+        log_request()
+        return func(*args, **kwargs)
+    return decorated_view
+
+def result_log_required(id, val):
+    """ This function updates a request log with the result of the request before the function returns.
+
+        Args:
+        id (integer): The id field of the log register to be updated
+        val (string): The result of the result to be updated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    pass
+
+
 
 
 
