@@ -33,8 +33,8 @@ from flask import (current_app)
 from flask import request
 from string import split
 
-@log_required
 @authorization_required
+@log_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -64,8 +64,8 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
-@log_required
 @authorization_required
+@log_required
 def read(authorization_id):
     """ Performs a query log register.
 
@@ -82,8 +82,8 @@ def read(authorization_id):
         return error 
     return res
 
-@log_required
 @authorization_required
+@log_required
 def update(authorization_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -120,8 +120,8 @@ def update(authorization_id, body):
         res = { 'error_c' : error}
     return res
 
-@log_required
 @authorization_required
+@log_required
 def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 

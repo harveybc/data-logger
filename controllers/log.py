@@ -67,8 +67,8 @@ def read(log_id):
         return error 
     return res
 
-@log_required
 @authorization_required
+@log_required
 def update(log_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -105,8 +105,8 @@ def update(log_id, body):
         res = { 'error_c' : error}
     return res
 
-@log_required
 @authorization_required
+@log_required
 def delete(log_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's log_id url parameter.
 
@@ -147,7 +147,7 @@ def read_all():
     for r in res:
         res2.append(r.as_dict())
     return res2
-    
+
 @authorization_required
 def log_request():
     #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
