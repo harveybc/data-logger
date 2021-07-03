@@ -67,16 +67,39 @@ def is_authorized(process_id):
         table = None
     # perform a query to the authorizations table
     if table is None:
-        Authorization.query.filter_by(user_id = current_user.id, process_id = process_id ).all()
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = None ).order_by(Authorization.priority.asc()).all()
     else:
-        Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).all()
-    
-    # set the auth default value to false
-    auth = False
-    # check each of the autorization fields that are True and set auth to True only if all conditions are met
-    
-    
-    return False
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
+    # grants permissions to admin
+    if current_user.is_admin:
+        auth = True
+    else:
+        # set the auth default value to false
+        auth = False
+        # if there is no table set, verify if process_crud is true
+        if table is None:
+            for r in rules:
+                # process_crud permission
+                if r.process_crud: auth = True    
+        else:
+            for r in rules:
+                # table_crud permission
+                if r.table_crud: auth = True
+            # if table_crud was false, check other authorization fields
+            if auth == False:
+                # check each of the authorization fields that are True and set auth to True only if all conditions are met
+                for r in rules:
+                    # create permission
+                    if method == 'POST' and process_id is None and r.create: auth = True
+                    # read permission
+                    if method == 'GET' and process_id is not None and r.read: auth = True
+                    # read_all permission
+                    if method == 'GET' and process_id is None and r.read_all: auth = True
+                    # update permission
+                    if method == 'PUT' and process_id is not None and r.update: auth = True
+                    # delete permission
+                    if method == 'DEL' and process_id is not None and r.delete: auth = True
+    return auth
 
 def log_request():
     #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
