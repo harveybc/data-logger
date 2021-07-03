@@ -21,7 +21,7 @@ from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
 
 @authorization_required
-@login_required
+@authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -126,7 +126,7 @@ def delete(log_id):
         return error
     return res.id
 
-@login_required
+@authorization_required
 def read_all():
     """ Query all registers of the logs table.
 

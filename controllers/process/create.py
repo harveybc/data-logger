@@ -14,7 +14,7 @@ from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 
-@login_required
+@authorization_required
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
 		Also create the the process' tables based on the configuration field.

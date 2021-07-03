@@ -11,7 +11,7 @@ from models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 
-@login_required
+@authorization_required
 def read(processId):
     """ Performs a query to a process, process table or process table register based on the existence and value of GET parameters.
 

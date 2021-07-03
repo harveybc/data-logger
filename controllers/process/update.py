@@ -14,7 +14,7 @@ from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 
-@login_required
+@authorization_required
 def update(processId, body):
     """ Update a register in db based on a json from a request's body parameter.
 

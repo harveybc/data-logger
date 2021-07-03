@@ -34,7 +34,7 @@ from flask import request
 from string import split
 
 @log_required
-@login_required
+@authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -139,7 +139,7 @@ def delete(authorization_id):
         return error
     return res.id
 
-@login_required
+@authorization_required
 def read_all():
     """ Query all registers of the logs table.
 

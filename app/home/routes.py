@@ -8,13 +8,13 @@ from app.app import login_manager
 from jinja2 import TemplateNotFound
 
 @blueprint.route('/index')
-@login_required
+@authorization_required
 def index():
 
     return render_template('index.html')
 
 @blueprint.route('/<template>')
-@login_required
+@authorization_required
 def route_template(template):
 
     try:
