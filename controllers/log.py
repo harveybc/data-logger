@@ -154,7 +154,7 @@ def log_request(process_id):
     """ Log the current request.
         
         Args:
-        n (variable): The variable to be verified as number
+        process_id (int): The id of the process of the request to be logged (may be None)
 
         Returns:
         res (dict): true if the user is authorized for the request 
