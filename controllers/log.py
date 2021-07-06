@@ -19,6 +19,8 @@ from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
+from flask import request
+from string import split
 
 @authorization_required
 def create(body):
@@ -148,16 +150,66 @@ def read_all():
         res2.append(r.as_dict())
     return res2
 
-@authorization_required
-def log_request():
-    #TODO: Verify if the function requires parameters or the request parameters can be obtained from this function (First Option)
-    """ Create a register in the log table.
+def log_request(process_id):
+    """ Log the current request.
+        
+        Args:
+        n (variable): The variable to be verified as number
 
         Returns:
-        res (dict): true if the request was succesfully loaded. 
+        res (dict): true if the user is authorized for the request 
     """ 
-    method = route = route_params = get_params = body_params = None
-    return True
+    method = request.method
+    route = request.path
+    get_params = request.args
+    body_params = request.json
+    # split the process_id from the end of the route 
+    if process_id is not None:
+        # TODO: remove only the last one, currently removes any /<process_id> from the route
+        route = route.replace('/'+str(process_id), '')
+    # set tables if the get_params or the body_params contain a "table" key
+    if "table" in body_params:
+        table = body_params.table.name
+    elif "table" in get_params:
+        table = get_params.table
+    else: 
+        table = None
+    # perform a query to the authorizations table
+    if table is None:
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = None ).order_by(Authorization.priority.asc()).all()
+    else:
+        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
+    # grants permissions to admin
+    if current_user.is_admin:
+        auth = True
+    else:
+        # set the auth default value to false
+        auth = False
+        # if there is no table set, verify if process_crud is true
+        if table is None:
+            for r in rules:
+                # process_crud permission
+                if r.process_crud: auth = True    
+        else:
+            for r in rules:
+                # table_crud permission
+                if r.table_crud: auth = True
+            # if table_crud was false, check other authorization fields
+            if auth == False:
+                # check each of the authorization fields that are True and set auth to True only if all conditions are met
+                for r in rules:
+                    # create permission
+                    if method == 'POST' and process_id is None and r.create: auth = True
+                    # read permission
+                    if method == 'GET' and process_id is not None and r.read: auth = True
+                    # read_all permission
+                    if method == 'GET' and process_id is None and r.read_all: auth = True
+                    # update permission
+                    if method == 'PUT' and process_id is not None and r.update: auth = True
+                    # delete permission
+                    if method == 'DEL' and process_id is not None and r.delete: auth = True
+    return auth
+
 
 def log_required(func):
     """ This decoration indicates that a new log has to be created before executing the decorated function.

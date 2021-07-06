@@ -167,7 +167,7 @@ def is_authorized(process_id):
     """ Verify if a request is authorized for the current user.
         
         Args:
-        n (variable): The variable to be verified as number
+        process_id (int): the id of the process for authorization
 
         Returns:
         res (dict): true if the user is authorized for the request 
