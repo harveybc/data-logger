@@ -207,10 +207,10 @@ def log_request(*args, **kwargs):
         # TODO: remove only the last one, currently removes any /<process_id> from the route
         log_params['route'] = log_params['route'].replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
-    if "table" in log_params['body_params']:
-        table = log_params['body_params']['table']['name']
-    elif "table" in log_params['get_params']:
-        log_params['table'] = log_params['get_params']['table']
+    if "table" in log_params['body']:
+        table = log_params['body']['table']['name']
+    elif "table" in log_params['parameters']:
+        log_params['table'] = log_params['parameters']['table']
     else: 
         log_params['table'] = None
     # create a new log table register
