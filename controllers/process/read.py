@@ -13,7 +13,7 @@ from sqlalchemy.ext.automap import automap_base
 from controllers.authorization import authorization_required
 
 @authorization_required
-def read(*args):
+def read(processId):
     """ Performs a query to a process, process table or process table register based on the existence and value of GET parameters.
 
         Args:
@@ -22,7 +22,6 @@ def read(*args):
         Returns:
         res (dict): the requested process register, process table or process table register.
     """ 
-    processId = args[0]
     table_param = request.args.get("table")
     # query a process model 
     # TODO: filter by userid and column,value
