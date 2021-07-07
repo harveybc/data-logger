@@ -157,59 +157,36 @@ def log_request(process_id):
         process_id (int): The id of the process of the request to be logged (may be None)
 
         Returns:
-        res (dict): true if the user is authorized for the request 
+        res (dict): true if the request was correctly logged
     """ 
-    method = request.method
-    route = request.path
-    get_params = request.args
-    body_params = request.json
+    log_params = {}
+    log_params['method'] = request.method
+    
+    log_params['route'] = request.path
+    log_params['get_params'] = request.args
+    log_params['body_params'] = request.json
     # split the process_id from the end of the route 
     if process_id is not None:
         # TODO: remove only the last one, currently removes any /<process_id> from the route
-        route = route.replace('/'+str(process_id), '')
+        log_params['route'] = log_params['route'].replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
-    if "table" in body_params:
-        table = body_params.table.name
-    elif "table" in get_params:
-        table = get_params.table
+    if "table" in log_params['body_params']:
+        table = log_params['body_params']['table']['name']
+    elif "table" in log_params['get_params']:
+        log_params['table'] = log_params['get_params']['table']
     else: 
-        table = None
-    # perform a query to the authorizations table
-    if table is None:
-        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = None ).order_by(Authorization.priority.asc()).all()
-    else:
-        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
-    # grants permissions to admin
-    if current_user.is_admin:
-        auth = True
-    else:
-        # set the auth default value to false
-        auth = False
-        # if there is no table set, verify if process_crud is true
-        if table is None:
-            for r in rules:
-                # process_crud permission
-                if r.process_crud: auth = True    
-        else:
-            for r in rules:
-                # table_crud permission
-                if r.table_crud: auth = True
-            # if table_crud was false, check other authorization fields
-            if auth == False:
-                # check each of the authorization fields that are True and set auth to True only if all conditions are met
-                for r in rules:
-                    # create permission
-                    if method == 'POST' and process_id is None and r.create: auth = True
-                    # read permission
-                    if method == 'GET' and process_id is not None and r.read: auth = True
-                    # read_all permission
-                    if method == 'GET' and process_id is None and r.read_all: auth = True
-                    # update permission
-                    if method == 'PUT' and process_id is not None and r.update: auth = True
-                    # delete permission
-                    if method == 'DEL' and process_id is not None and r.delete: auth = True
-    return auth
-
+        log_params['table'] = None
+    # create a new log table register
+    new_log = Log(**log_params)
+    # add the new_log to the session
+    db.session.add(new_log)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        error = str(e)
+        res['process'] = { 'error_l' : error}
+        return False
+    return True
 
 def log_required(func):
     """ This decoration indicates that a new log has to be created before executing the decorated function.
