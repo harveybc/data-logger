@@ -9,9 +9,11 @@ from app.app import login_manager
 from models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
+from controllers.authorization import authorization_required
+from controllers.log import log_required
 
-@log_required
 @authorization_required
+@log_required
 def delete(processId):
     """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
