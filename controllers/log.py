@@ -221,12 +221,14 @@ def log_request(*args, **kwargs):
     # add the new_log to the session
     db.session.add(new_log)
     try:
+        db.session.flush()
+        new_id = new_log.id
         db.session.commit()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return -1
-    return new_log.id
+    return new_id
 
 def result_log_required(id, code, result):
     """ This function updates a request log with the result of the request before the function returns.
