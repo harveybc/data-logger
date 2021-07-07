@@ -221,7 +221,8 @@ def log_request(*args, **kwargs):
     # add the new_log to the session
     db.session.add(new_log)
     try:
-        db.session.flush()
+        db.session.commit()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return -1
@@ -249,7 +250,7 @@ def result_log_required(id, code, result):
     setattr(log_model, 'result', result)
     # perform update 
     try:
-        db.session.flush()
+        db.session.commit()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
