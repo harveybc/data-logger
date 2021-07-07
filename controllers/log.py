@@ -157,7 +157,7 @@ def log_request(process_id):
         process_id (int): The id of the process of the request to be logged (may be None)
 
         Returns:
-        res (dict): true if the request was correctly logged
+        res (dict): the id in the log table of the new log register, -1 if error
     """ 
     log_params = {}
     log_params['method'] = request.method
@@ -181,12 +181,12 @@ def log_request(process_id):
     # add the new_log to the session
     db.session.add(new_log)
     try:
-        db.session.commit()
+        db.session.flush()
     except SQLAlchemyError as e:
         error = str(e)
         res['process'] = { 'error_l' : error}
-        return False
-    return True
+        return -1
+    return new_log.id
 
 def log_required(func):
     """ This decoration indicates that a new log has to be created before executing the decorated function.
@@ -204,17 +204,34 @@ def log_required(func):
         return func(*args, **kwargs)
     return decorated_view
 
-def result_log_required(id, val):
+def result_log_required(id, code, result):
     """ This function updates a request log with the result of the request before the function returns.
 
         Args:
         id (integer): The id field of the log register to be updated
-        val (string): The result of the result to be updated
+        code (integer): HTTP result code
+        result (string): The result of the result of the request to be updated on the log
 
         Returns:
-        res (dict): func if the user is authorized, login_manager.unauthorized() 
+        res (dict): True if the log was updated, False on error
     """
-    pass
+    # query the existing register
+    try:
+        log_model = Log.query.filter_by(id=id).one()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return False
+    # replace code and result on the model 
+    setattr(log_model, 'code', code)
+    setattr(log_model, 'result', result)
+    # perform update 
+    try:
+        db.session.flush()
+        db.session.close()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return False
+    return True
 
 
 
