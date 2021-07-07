@@ -218,6 +218,7 @@ def is_authorized(*args, **kwargs):
         # TODO: remove only the last one, currently removes any /<process_id> from the route
         route = route.replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
+    print("process_id = ", process_id)
     print("route = ", route)
     if route == "/logs": 
         table = "log"
