@@ -230,7 +230,7 @@ def is_authorized(*args, **kwargs):
     else:
         rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
     # grants permissions to admin
-    if current_user.is_admin:
+    if current_user.admin:
         auth = True
     else:
         # set the auth default value to false
