@@ -32,6 +32,24 @@ from functools import wraps
 from flask import (current_app)
 from flask import request
 
+def authorization_required(func):
+    """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
+
+        Args:
+        func (function): The function to be decorated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    @wraps(func)
+    @login_required
+    def decorated_view(*args, **kwargs):
+        if is_authorized(*args, **kwargs):
+            return func(*args, **kwargs)
+        else:
+            return current_app.login_manager.unauthorized()
+    return decorated_view
+
 @authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
@@ -236,20 +254,3 @@ def is_authorized(*args, **kwargs):
                     if method == 'DEL' and process_id is not None and r.delete: auth = True
     return auth
 
-def authorization_required(func):
-    """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
-
-        Args:
-        func (function): The function to be decorated
-
-        Returns:
-        res (dict): func if the user is authorized, login_manager.unauthorized() 
-    """
-    @wraps(func)
-    @login_required
-    def decorated_view(*args, **kwargs):
-        if is_authorized(*args, **kwargs):
-            return func(*args, **kwargs)
-        else:
-            return current_app.login_manager.unauthorized()
-    return decorated_view
