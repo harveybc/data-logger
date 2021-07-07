@@ -21,6 +21,22 @@ from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
 from flask import request
 
+def log_required(func):
+    """ This decoration indicates that a new log has to be created before executing the decorated function.
+
+        Args:
+        func (function): The function to be decorated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        # perform  request logging before actually calling the function
+        log_request(*args, **kwargs)
+        return func(*args, **kwargs)
+    return decorated_view
+
 @authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
@@ -203,22 +219,6 @@ def log_request(*args, **kwargs):
         res['process'] = { 'error_l' : error}
         return -1
     return new_log.id
-
-def log_required(func):
-    """ This decoration indicates that a new log has to be created before executing the decorated function.
-
-        Args:
-        func (function): The function to be decorated
-
-        Returns:
-        res (dict): func if the user is authorized, login_manager.unauthorized() 
-    """
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        # perform  request logging before actually calling the function
-        log_request(*args, **kwargs)
-        return func(*args, **kwargs)
-    return decorated_view
 
 def result_log_required(id, code, result):
     """ This function updates a request log with the result of the request before the function returns.
