@@ -222,7 +222,7 @@ def is_authorized(*args, **kwargs):
         if "table" in body_params:
             table = body_params['table']['name']
         elif "table" in get_params:
-            table = get_params.table
+            table = get_params['table']
         else: 
             table = None
     else:
