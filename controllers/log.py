@@ -20,6 +20,7 @@ from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
 from flask import request
+from functools import wraps
 
 def log_required(func):
     """ This decoration indicates that a new log has to be created before executing the decorated function.
