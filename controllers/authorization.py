@@ -31,7 +31,6 @@ from controllers.common import as_dict, is_num
 from functools import wraps
 from flask import (current_app)
 from flask import request
-from string import split
 
 @authorization_required
 def create(body):
