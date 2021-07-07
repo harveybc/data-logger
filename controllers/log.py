@@ -20,7 +20,6 @@ from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
 from controllers.authorization import authorization_required
 from flask import request
-from string import split
 
 @authorization_required
 def create(body):
