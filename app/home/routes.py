@@ -6,6 +6,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required, current_user
 from app.app import login_manager
 from jinja2 import TemplateNotFound
+from controllers.authorization import authorization_required
 
 @blueprint.route('/index')
 @authorization_required
