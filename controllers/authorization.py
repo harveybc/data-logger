@@ -218,11 +218,14 @@ def is_authorized(*args, **kwargs):
         # TODO: remove only the last one, currently removes any /<process_id> from the route
         route = route.replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
-    if "table" in body_params:
-        table = body_params['table']['name']
-    elif "table" in get_params:
-        table = get_params.table
-    else: 
+    if body_params is not None:
+        if "table" in body_params:
+            table = body_params['table']['name']
+        elif "table" in get_params:
+            table = get_params.table
+        else: 
+            table = None
+    else:
         table = None
     # perform a query to the authorizations table
     if table is None:
