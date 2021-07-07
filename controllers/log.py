@@ -150,7 +150,7 @@ def read_all():
         res2.append(r.as_dict())
     return res2
 
-def log_request(process_id):
+def log_request(*args, **kwargs):
     """ Log the current request.
         
         Args:
@@ -165,6 +165,23 @@ def log_request(process_id):
     log_params['route'] = request.path
     log_params['get_params'] = request.args
     log_params['body_params'] = request.json
+    # find process_id from args
+    # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
+    if args[0] is None:
+        process_id = request.args.get("process_id")
+    # if args[0] is of type int , use it as process_id, since is the first parameter of controllers: read, update and delete
+    elif is_num(args[0]):
+        process_id = args[0]
+    # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
+    elif isinstance(args[0], dict):
+        if 'table' in args[0]:
+            process_id = args[0]['table']['process_id']
+        elif 'register' in args[0]:
+            process_id =  args[0]['register']['process_id']
+        else:
+            process_id = None
+    else:
+        process_id = None
     # split the process_id from the end of the route 
     if process_id is not None:
         # TODO: remove only the last one, currently removes any /<process_id> from the route
@@ -200,7 +217,7 @@ def log_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):
         # perform  request logging before actually calling the function
-        log_request()
+        log_request(*args, **kwargs)
         return func(*args, **kwargs)
     return decorated_view
 
