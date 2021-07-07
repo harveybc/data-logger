@@ -195,8 +195,9 @@ def is_authorized(*args, **kwargs):
     body_params = request.json
     # find process_id from args
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
+    print("args" , args)
     if len(args) > 0:
-        print("args[0] = args[0]")
+       
         if args[0] is None:
             process_id = request.args.get("process_id")
         # if args[0] is of type int , use it as process_id, since is the first parameter of controllers: read, update and delete
