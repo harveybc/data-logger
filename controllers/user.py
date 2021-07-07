@@ -7,7 +7,11 @@ from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.attributes import flag_dirty, flag_modified
+from controllers.authorization import authorization_required
+from controllers.log import log_required
 
+@authorization_required
+@log_required
 def create(body): 
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -37,6 +41,8 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
+@authorization_required
+@log_required
 def read(userId):
     """ Query a register in db based on the id field of the user model, obtained from a request's userId url parameter.
 
@@ -55,7 +61,8 @@ def read(userId):
     res.password=""
     return res.as_dict()
     
-
+@authorization_required
+@log_required
 def update(body, userId):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -100,6 +107,8 @@ def update(body, userId):
     # return register as dict
     return res2.as_dict()
 
+@authorization_required
+@log_required
 def delete(userId):
     """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
 
@@ -123,6 +132,8 @@ def delete(userId):
         return error
     return res.id
 
+@authorization_required
+@log_required
 def read_all():
     """ Query all registers of the user model.
 
