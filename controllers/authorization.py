@@ -32,7 +32,6 @@ from functools import wraps
 from flask import (current_app)
 from flask import request
 from string import split
-from controllers.common import is_num
 
 @authorization_required
 @log_required
