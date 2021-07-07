@@ -220,7 +220,7 @@ def is_authorized(*args, **kwargs):
     # set tables if the get_params or the body_params contain a "table" key
     if body_params is not None:
         if "table" in body_params:
-            if isinstance(body_params['table'], dict):
+            if not isinstance(body_params['table'], dict):
                 b_p = json.loads(body_params['table'])
             else:
                 b_p = body_params['table']
