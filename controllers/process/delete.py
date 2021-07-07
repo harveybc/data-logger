@@ -10,6 +10,8 @@ from models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 
+@log_required
+@authorization_required
 def delete(processId):
     """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
