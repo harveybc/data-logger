@@ -219,7 +219,7 @@ def is_authorized(*args, **kwargs):
         route = route.replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
     if "table" in body_params:
-        table = body_params.table.name
+        table = body_params['table']['name']
     elif "table" in get_params:
         table = get_params.table
     else: 
