@@ -191,8 +191,8 @@ def is_authorized(*args, **kwargs):
     """ 
     method = request.method
     route = request.path
-    get_params = request.args
-    body_params = request.json
+    get_params = json.dumps(request.args)
+    body_params = json.dumps(request.json)
     # find process_id from args
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
     if len(args) > 0:
