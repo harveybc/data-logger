@@ -242,7 +242,6 @@ def is_authorized(*args, **kwargs):
                     if method == 'DEL' and process_id is not None and r.delete: auth = True
     return auth
 
-@login_required
 def authorization_required(func):
     """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
 
@@ -253,6 +252,7 @@ def authorization_required(func):
         res (dict): func if the user is authorized, login_manager.unauthorized() 
     """
     @wraps(func)
+    @login_required
     def decorated_view(*args, **kwargs):
         if is_authorized(*args, **kwargs):
             return func(*args, **kwargs)
