@@ -221,7 +221,6 @@ def log_request(*args, **kwargs):
         db.session.flush()
     except SQLAlchemyError as e:
         error = str(e)
-        res['process'] = { 'error_l' : error}
         return -1
     return new_log.id
 
