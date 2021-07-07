@@ -223,7 +223,7 @@ def log_request(*args, **kwargs):
     try:
         db.session.commit()
         new_id = new_log.id
-        db.session.close()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return -1
