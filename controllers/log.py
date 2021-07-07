@@ -221,11 +221,9 @@ def log_request(*args, **kwargs):
     # add the new_log to the session
     db.session.add(new_log)
     try:
-        #db.session.flush()
-        
         db.session.commit()
-        db.session.close()
         new_id = new_log.id
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return -1
