@@ -180,8 +180,8 @@ def log_request(*args, **kwargs):
     log_params['method'] = request.method
     
     log_params['route'] = request.path
-    log_params['parameters'] = request.args
-    log_params['body'] = request.json
+    log_params['parameters'] = json.dumps(request.args)
+    log_params['body'] = json.dumps(request.json)
     # find process_id from args
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
     if len(args) > 0:
