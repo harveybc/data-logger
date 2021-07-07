@@ -27,7 +27,7 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
-#from controllers.log import log_required
+from controllers.log import log_required
 from functools import wraps
 from flask import (current_app)
 from flask import request
@@ -50,7 +50,9 @@ def authorization_required(func):
             return current_app.login_manager.unauthorized()
     return decorated_view
 
+
 @authorization_required
+@log_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -98,6 +100,7 @@ def read(authorization_id):
     return res
 
 @authorization_required
+@log_required
 def update(authorization_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -135,6 +138,7 @@ def update(authorization_id, body):
     return res
 
 @authorization_required
+@log_required
 def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
