@@ -22,7 +22,7 @@ def update(process_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:

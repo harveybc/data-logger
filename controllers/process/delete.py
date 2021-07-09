@@ -15,10 +15,10 @@ from controllers.log import log_required
 @authorization_required
 @log_required
 def delete(process_id):
-    """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
+    """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
         Args:
-        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
 
         Returns:
         res (int): the deleted register id field

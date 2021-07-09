@@ -87,7 +87,7 @@ def read(authorization_id):
     """ Performs a query log register.
 
         Args:
-        processId (str): authorization_id (log/<authorization_id>).
+        process_id (str): authorization_id (log/<authorization_id>).
 
         Returns:
         res (dict): the requested  register.
@@ -143,7 +143,7 @@ def delete(authorization_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
         Args:
-        processId (str): id field , obtained from a request's url parameter (log/<authorization_id>).
+        process_id (str): id field , obtained from a request's url parameter (log/<authorization_id>).
 
         Returns:
         res (int): the deleted register id field

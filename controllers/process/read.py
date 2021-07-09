@@ -17,7 +17,7 @@ def read(process_id):
     """ Performs a query to a process, process table or process table register based on the existence and value of GET parameters.
 
         Args:
-        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
 
         Returns:
         res (dict): the requested process register, process table or process table register.
@@ -27,7 +27,7 @@ def read(process_id):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=processId).first_or_404().as_dict()
+            res = Process.query.filter_by(id=process_id).first_or_404().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error 
@@ -41,7 +41,7 @@ def read(process_id):
             try:
                 # TODO: query table by name from process tables array 
                 #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=processId).first_or_404().as_dict()
+                proc = Process.query.filter_by(id=process_id).first_or_404().as_dict()
                 res_list = json.loads(proc["tables"])
             except SQLAlchemyError as e:
                 error = str(e)
