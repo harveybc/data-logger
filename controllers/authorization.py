@@ -235,8 +235,10 @@ def is_authorized(*args, **kwargs):
         table = "user"
     elif body_params is not None:
         if "table" in body_params:
-            b_p = body_params['table']
-            table = b_p['name']
+            if isinstance(body_params['table'], str):
+                table = body_params['table']
+            else:
+                table = body_params['table']['name']
         elif "table" in get_params:
             table = get_params['table']
         else: 
