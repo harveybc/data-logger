@@ -210,7 +210,7 @@ def log_request(*args, **kwargs):
     # split the process_id from the end of the route 
     if log_params['process_id'] is not None:
         # TODO: remove only the last one, currently removes any /<process_id> from the route
-        log_params['route'] = log_params['route'].replace('/'+str(process_id), '')
+        log_params['route'] = log_params['route'].replace('/'+str(log_params['process_id']), '')
     # set tables if the get_params or the body_params contain a "table" key
     if log_params['route'] == "/logs": 
         log_params['table'] = "log"
