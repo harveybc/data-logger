@@ -197,6 +197,7 @@ def is_authorized(*args, **kwargs):
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
     print("args" , args)
     print("kwargs" , kwargs)
+    process_id = None
     if len(kwargs) > 0:
         if "process_id" in kwargs:
             process_id = kwargs["process_id"]
