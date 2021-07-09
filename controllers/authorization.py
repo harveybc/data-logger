@@ -197,19 +197,15 @@ def is_authorized(*args, **kwargs):
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
     print("args" , args)
     print("kwargs" , kwargs)
-    if len(args) > 0:
-       
-        if args[0] is None:
-            process_id = request.args.get("process_id")
-        # if args[0] is of type int , use it as process_id, since is the first parameter of controllers: read, update and delete
-        elif is_num(args[0]):
-            process_id = args[0]
+    if len(kwargs) > 0:
+        if "process_id" in kwargs:
+            process_id = kwargs["process_id"]
         # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
-        elif isinstance(args[0], dict):
-            if 'table' in args[0]:
-                process_id = args[0]['table']['process_id']
-            elif 'register' in args[0]:
-                process_id =  args[0]['register']['process_id']
+        elif "body" in kwargs:
+            if "table" in kwargs["body"]:
+                process_id = kwargs["body"]['table']['process_id']
+            elif "register" in kwargs["body"]:
+                process_id =  kwargs["body"]['register']['process_id']
             else:
                 process_id = None
         else:

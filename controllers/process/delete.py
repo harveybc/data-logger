@@ -14,7 +14,7 @@ from controllers.log import log_required
 
 @authorization_required
 @log_required
-def delete(processId):
+def delete(process_id):
     """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
 
         Args:
@@ -30,7 +30,7 @@ def delete(processId):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=processId).one()
+            res = Process.query.filter_by(id=process_id).one()
         except SQLAlchemyError as e:
             error = str(e)
             return error

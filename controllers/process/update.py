@@ -18,7 +18,7 @@ from controllers.log import log_required
 
 @authorization_required
 @log_required
-def update(processId, body):
+def update(process_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
@@ -34,7 +34,7 @@ def update(processId, body):
     if 'process' in body:
         # query the existing register
         try:
-            process_model = Process.query.filter_by(id=processId).one()
+            process_model = Process.query.filter_by(id=process_id).one()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
@@ -50,7 +50,7 @@ def update(processId, body):
             res['process'] = { 'error_b' : error}
         # test if the model was updated 
         try:
-            res['process'] = Process.query.filter_by(id=int(processId)).one().as_dict()
+            res['process'] = Process.query.filter_by(id=int(process_id)).one().as_dict()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
