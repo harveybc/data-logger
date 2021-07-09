@@ -203,7 +203,10 @@ def is_authorized(*args, **kwargs):
         # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
         elif "body" in kwargs:
             if "table" in kwargs["body"]:
-                process_id = kwargs["body"]['table']['process_id']
+                if isinstance(kwargs["body"]["table"], dict):  
+                    process_id = kwargs["body"]['table']['process_id']
+                else:
+                    table = kwargs["body"]['table']
             elif "register" in kwargs["body"]:
                 process_id =  kwargs["body"]['register']['process_id']
             elif "process_id" in kwargs["body"]:
