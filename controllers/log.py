@@ -200,7 +200,7 @@ def log_request(*args, **kwargs):
             elif "process_id" in kwargs["body"]:
                 log_params['process_id'] =  kwargs["body"]["process_id"]
                 if "user_id" in kwargs["body"]:
-                   log_params[' user_id'] = kwargs["body"]["user_id"]
+                   log_params['user_id'] = kwargs["body"]["user_id"]
             else:
                 log_params['process_id'] = None
         else:
