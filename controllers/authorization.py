@@ -206,6 +206,10 @@ def is_authorized(*args, **kwargs):
                 process_id = kwargs["body"]['table']['process_id']
             elif "register" in kwargs["body"]:
                 process_id =  kwargs["body"]['register']['process_id']
+            elif "process_id" in kwargs["body"]:
+                process_id =  kwargs["body"]["process_id"]
+                if "user_id" in kwargs["body"]:
+                    user_id = kwargs["body"]["user_id"]
             else:
                 process_id = None
         else:
