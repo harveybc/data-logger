@@ -18,8 +18,28 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
+from flask import request
+from functools import wraps
 
-@login_required
+def log_required(func):
+    """ This decoration indicates that a new log has to be created before executing the decorated function.
+
+        Args:
+        func (function): The function to be decorated
+
+        Returns:
+        res (dict): func if the user is authorized, login_manager.unauthorized() 
+    """
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        # perform  request logging before actually calling the function
+        log_request(*args, **kwargs)
+        return func(*args, **kwargs)
+    return decorated_view
+
+from controllers.authorization import authorization_required
+
+@authorization_required
 def create(body):
     """ Create a register in db based on a json from a request's body parameter.
 
@@ -49,11 +69,12 @@ def create(body):
     # return register as dict
     return res.as_dict()
 
+@authorization_required
 def read(log_id):
     """ Performs a query log register.
 
         Args:
-        processId (str): log_id (log/<log_id>).
+        process_id (str): log_id (log/<log_id>).
 
         Returns:
         res (dict): the requested  register.
@@ -65,6 +86,8 @@ def read(log_id):
         return error 
     return res
 
+@authorization_required
+@log_required
 def update(log_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
@@ -101,11 +124,13 @@ def update(log_id, body):
         res = { 'error_c' : error}
     return res
 
+@authorization_required
+@log_required
 def delete(log_id):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's log_id url parameter.
 
         Args:
-        processId (str): id field , obtained from a request's url parameter (log/<log_id>).
+        process_id (str): id field , obtained from a request's url parameter (log/<log_id>).
 
         Returns:
         res (int): the deleted register id field
@@ -124,7 +149,7 @@ def delete(log_id):
         return error
     return res.id
 
-@login_required
+@authorization_required
 def read_all():
     """ Query all registers of the logs table.
 
@@ -141,6 +166,115 @@ def read_all():
     for r in res:
         res2.append(r.as_dict())
     return res2
+
+def log_request(*args, **kwargs):
+    """ Log the current request.
+        
+        Args:
+        process_id (int): The id of the process of the request to be logged (may be None)
+
+        Returns:
+        res (dict): the id in the log table of the new log register, -1 if error
+    """ 
+    log_params = {}
+    log_params['method'] = request.method
+    
+    log_params['route'] = request.path
+    log_params['parameters'] = json.dumps(request.args)
+    log_params['body'] = json.dumps(request.json)
+    log_params['process_id'] = None
+    log_params['user_id'] = current_user.id
+    # find process_id from args
+    # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
+    if len(kwargs) > 0:
+        if "process_id" in kwargs:
+            log_params['process_id'] = kwargs["process_id"]
+        # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
+        elif "body" in kwargs:
+            if "user_id" in kwargs["body"]:
+                   log_params['user_id'] = kwargs["body"]["user_id"]
+            if "table" in kwargs["body"]:
+                if isinstance(kwargs["body"]["table"], dict):  
+                    log_params['process_id'] = kwargs["body"]['table']['process_id']
+                else:
+                    log_params['table'] = kwargs["body"]['table']
+            elif "register" in kwargs["body"]:
+                log_params['process_id'] =  kwargs["body"]['register']['process_id']
+            elif "process_id" in kwargs["body"]:
+                log_params['process_id'] =  kwargs["body"]["process_id"]
+                
+            else:
+                log_params['process_id'] = None
+        else:
+            log_params['process_id'] = None
+    else:
+        log_params['process_id'] = None
+    # split the process_id from the end of the route 
+    if log_params['process_id'] is not None:
+        # TODO: remove only the last one, currently removes any /<process_id> from the route
+        log_params['route'] = log_params['route'].replace('/'+str(log_params['process_id']), '')
+    # set tables if the get_params or the body_params contain a "table" key
+    if log_params['route'] == "/logs": 
+        log_params['table'] = "log"
+    elif log_params['route'] == "/authorizations": 
+        log_params['table'] = "authorization"
+    elif log_params['route'] == "/users": 
+        log_params['table'] = "user"
+    elif request.json is not None:
+        body_params = request.json 
+        if "table" in body_params:
+            if isinstance(body_params['table'], str):
+                log_params['table'] = body_params['table']
+            else:
+                log_params['table'] = body_params['table']['name']
+        elif "table" in request.args:
+            log_params['table'] = request.args['table']
+        else: 
+            log_params['table'] = None
+    else:
+        log_params['table'] = None
+    # create a new log table register
+    new_log = Log(**log_params)
+    # add the new_log to the session
+    db.session.add(new_log)
+    try:
+        db.session.commit()
+        new_id = new_log.id
+        #db.session.close()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return -1
+    return new_id
+
+def result_log_required(id, code, result):
+    """ This function updates a request log with the result of the request before the function returns.
+
+        Args:
+        id (integer): The id field of the log register to be updated
+        code (integer): HTTP result code
+        result (string): The result of the result of the request to be updated on the log
+
+        Returns:
+        res (dict): True if the log was updated, False on error
+    """
+    # query the existing register
+    try:
+        log_model = Log.query.filter_by(id=id).one()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return False
+    # replace code and result on the model 
+    setattr(log_model, 'code', code)
+    setattr(log_model, 'result', result)
+    # perform update 
+    try:
+        db.session.commit()
+        db.session.close()
+    except SQLAlchemyError as e:
+        error = str(e)
+        return False
+    return True
+
 
 
 

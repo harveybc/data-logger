@@ -11,8 +11,9 @@ from models.process import Process
 from sqlalchemy.ext.automap import automap_base
 from flask import request
 from controllers.common import as_dict, is_num
+from controllers.authorization import authorization_required
 
-@login_required
+@authorization_required
 def read_all():
     """ Query all registers of the process, process table or process register.
 

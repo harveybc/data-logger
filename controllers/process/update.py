@@ -13,13 +13,16 @@ from models.process_table import ProcessTable
 from models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from controllers.common import as_dict, is_num
+from controllers.authorization import authorization_required
+from controllers.log import log_required
 
-@login_required
-def update(processId, body):
+@authorization_required
+@log_required
+def update(process_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
@@ -31,7 +34,7 @@ def update(processId, body):
     if 'process' in body:
         # query the existing register
         try:
-            process_model = Process.query.filter_by(id=processId).one()
+            process_model = Process.query.filter_by(id=process_id).one()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
@@ -47,7 +50,7 @@ def update(processId, body):
             res['process'] = { 'error_b' : error}
         # test if the model was updated 
         try:
-            res['process'] = Process.query.filter_by(id=int(processId)).one().as_dict()
+            res['process'] = Process.query.filter_by(id=int(process_id)).one().as_dict()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)

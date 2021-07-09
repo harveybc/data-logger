@@ -202,10 +202,13 @@ definitions:
     properties:
       process:
         $ref: '#/definitions/input_process'
+        type: null
       table:
         $ref: '#/definitions/input_process_table'
+        type: null
       register:
         $ref: '#/definitions/input_process_register'
+        type: null
   output_process_register:
     type: array
     items:
@@ -617,7 +620,7 @@ paths:
             processes table.
           required: false
           type: string
-  '/process/{processId}':
+  '/process/{process_id}':
     get:
       tags:
         - process
@@ -671,11 +674,11 @@ paths:
             query (returns only the first one)
           required: false
           type: string
-        - name: processId
+        - name: process_id
           in: path
           description: ''
           required: true
-          type: integer
+          type: string
     put:
       tags:
         - process
@@ -708,11 +711,11 @@ paths:
         '404':
           $ref: '#/responses/trait:error-response:404'
       parameters:
-        - name: processId
+        - name: process_id
           in: path
           description: ''
           required: true
-          type: integer
+          type: string
         - name: body
           in: body
           schema:
@@ -757,11 +760,11 @@ paths:
           description: ''
           required: false
           type: integer
-        - name: processId
+        - name: process_id
           in: path
           description: ''
           required: true
-          type: integer
+          type: string
         - name: body
           in: body
           schema:

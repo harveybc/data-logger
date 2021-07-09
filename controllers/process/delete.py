@@ -9,12 +9,16 @@ from app.app import login_manager
 from models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
+from controllers.authorization import authorization_required
+from controllers.log import log_required
 
-def delete(processId):
-    """ Delete a register in db based on the id field of the process model, obtained from a request's processId url parameter.
+@authorization_required
+@log_required
+def delete(process_id):
+    """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
         Args:
-        processId (str): id field of the process model, obtained from a request's processId url parameter (processs/<processId>).
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
 
         Returns:
         res (int): the deleted register id field
@@ -26,7 +30,7 @@ def delete(processId):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=processId).one()
+            res = Process.query.filter_by(id=process_id).one()
         except SQLAlchemyError as e:
             error = str(e)
             return error
