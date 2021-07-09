@@ -183,6 +183,7 @@ def log_request(*args, **kwargs):
     log_params['parameters'] = json.dumps(request.args)
     log_params['body'] = json.dumps(request.json)
     log_params['process_id'] = None
+    log_params['user_id'] = current_user.id
     # find process_id from args
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
     if len(kwargs) > 0:
@@ -190,6 +191,8 @@ def log_request(*args, **kwargs):
             log_params['process_id'] = kwargs["process_id"]
         # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
         elif "body" in kwargs:
+            if "user_id" in kwargs["body"]:
+                   log_params['user_id'] = kwargs["body"]["user_id"]
             if "table" in kwargs["body"]:
                 if isinstance(kwargs["body"]["table"], dict):  
                     log_params['process_id'] = kwargs["body"]['table']['process_id']
@@ -199,8 +202,7 @@ def log_request(*args, **kwargs):
                 log_params['process_id'] =  kwargs["body"]['register']['process_id']
             elif "process_id" in kwargs["body"]:
                 log_params['process_id'] =  kwargs["body"]["process_id"]
-                if "user_id" in kwargs["body"]:
-                   log_params['user_id'] = kwargs["body"]["user_id"]
+                
             else:
                 log_params['process_id'] = None
         else:
