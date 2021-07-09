@@ -182,39 +182,54 @@ def log_request(*args, **kwargs):
     log_params['route'] = request.path
     log_params['parameters'] = json.dumps(request.args)
     log_params['body'] = json.dumps(request.json)
+    log_params['process_id'] = None
     # find process_id from args
     # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
-    if len(args) > 0:
-        if args[0] is None:
-            process_id = request.args.get("process_id")
-        # if args[0] is of type int , use it as process_id, since is the first parameter of controllers: read, update and delete
-        elif is_num(args[0]):
-            process_id = args[0]
+    if len(kwargs) > 0:
+        if "process_id" in kwargs:
+            log_params['process_id'] = kwargs["process_id"]
         # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
-        elif isinstance(args[0], dict):
-            if 'table' in args[0]:
-                process_id = args[0]['table']['process_id']
-            elif 'register' in args[0]:
-                process_id =  args[0]['register']['process_id']
+        elif "body" in kwargs:
+            if "table" in kwargs["body"]:
+                if isinstance(kwargs["body"]["table"], dict):  
+                    log_params['process_id'] = kwargs["body"]['table']['process_id']
+                else:
+                    log_params['table'] = kwargs["body"]['table']
+            elif "register" in kwargs["body"]:
+                log_params['process_id'] =  kwargs["body"]['register']['process_id']
+            elif "process_id" in kwargs["body"]:
+                log_params['process_id'] =  kwargs["body"]["process_id"]
+                if "user_id" in kwargs["body"]:
+                   log_params[' user_id'] = kwargs["body"]["user_id"]
             else:
-                process_id = None
+                log_params['process_id'] = None
         else:
-            process_id = None
+            log_params['process_id'] = None
     else:
-        process_id = None
+        log_params['process_id'] = None
     # split the process_id from the end of the route 
-    if process_id is not None:
+    if log_params['process_id'] is not None:
         # TODO: remove only the last one, currently removes any /<process_id> from the route
         log_params['route'] = log_params['route'].replace('/'+str(process_id), '')
     # set tables if the get_params or the body_params contain a "table" key
-    if request.json is not None:
-        if "table" in request.json:
-            table = request.json['table']['name']
+    if log_params['route'] == "/logs": 
+        log_params['table'] = "log"
+    elif log_params['route'] == "/authorizations": 
+        log_params['table'] = "authorization"
+    elif log_params['route'] == "/users": 
+        log_params['table'] = "user"
+    elif request.json is not None:
+        body_params = request.json 
+        if "table" in body_params:
+            if isinstance(body_params['table'], str):
+                log_params['table'] = body_params['table']
+            else:
+                log_params['table'] = body_params['table']['name']
         elif "table" in request.args:
             log_params['table'] = request.args['table']
         else: 
             log_params['table'] = None
-    else: 
+    else:
         log_params['table'] = None
     # create a new log table register
     new_log = Log(**log_params)
