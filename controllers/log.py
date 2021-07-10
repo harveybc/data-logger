@@ -2,9 +2,6 @@
     Description: Contains API endpoint handler functions for CRUD operations 
     on the log table whose registers are an historic set of registers
     containing the requests made to the server and the results of those requests.
-    
-    The log can configure the fields saved in the registers.
-
 """
 
 from app.app import db
