@@ -11,6 +11,11 @@ class Config(object):
     # Set up the App SECRET_KEY
     SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_007')
 
+    
+    # TODO: RELOCATE ON STORE PLUGINS
+    # TODO: LOAD AS A STORE PLUGIN
+    
+    
     # This will create a file in <app> FOLDER
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -22,6 +27,9 @@ class ProductionConfig(Config):
     SESSION_COOKIE_HTTPONLY  = True
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_DURATION = 3600
+
+    # TODO: RELOCATE ON STORE PLUGINS
+    # TODO: LOAD AS A STORE PLUGIN
 
     # PostgreSQL database
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(

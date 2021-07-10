@@ -17,11 +17,13 @@ from sqlalchemy import MetaData
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+# TODO:  MODIFY TO READ CONFIG FOR STORE PLUGIN
 def read_plugin_config(vis_config_file=None):
     """ Read the plugin configuration JSON file from a path, if its None, uses a default configuration """
     if vis_config_file != None:
         file_path = vis_config_file
     else:
+
         file_path = path.dirname(path.abspath(__file__)) + "//data_logger.json"
     with open(file_path) as f:
         data = json.load(f)
@@ -40,8 +42,15 @@ def create_app(config):
     # app = Flask(__name__, static_folder='base/static')
     app = connexion.App(__name__, specification_dir='./')
 
+
+
+
+    # TODO: RELOCATE ON CORE PLUGINS
+    # TODO: LOAD AS A CORE PLUGIN, AFTER THE STORE PLUGINS ARE LOADED 
     # Read the swagger.yml file to configure the endpoints
     app.add_api('DataLogger-OAS.apic.yaml')
+
+
 
     # set Flast static_folder  to be used with connexion
     app.app.static_url_path = '/base/static'
