@@ -15,7 +15,7 @@ from app.app import create_app, db
 from app.data_logger import DataLogger
 
 # load the plugin config file from /plugin_config.json
-print("DataLogger: Loading plugin configuration from /plugin_config.json ")
+print("Loading plugin configuration from /plugin_config.json ")
 try:
     with open("plugin_config.json", "r") as conf_file:
         plugin_conf = json.load(conf_file)
@@ -23,23 +23,19 @@ except:
     exit("Can't load plugin configuration from /plugin_config.json")
 # initialize plugin system
 data_logger_instance = DataLogger(plugin_conf)
-
-
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
-
-# The configuration
+# setup config mode
 get_config_mode = 'Debug' if DEBUG else 'Production'
-
 try:
     # Load the configuration using the default values 
     app_config = config_dict[get_config_mode.capitalize()]
-
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-
 app = create_app( app_config ) 
 #Migrate(app, db)
 
+# run the flask app from the data_logger instance
 if __name__ == "__main__":
+    print("Starting app...")
     app.run()
