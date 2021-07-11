@@ -1,35 +1,6 @@
 {
-    "input_plugin": "vis_input_sqlite",
-    "input_plugin_config": {
-        "filename": "test/db/plots.sqlite",
-        "tables": [
-            {
-                "table_name": "training_progress",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_stats",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "fields": [
-                    "original",
-                    "predicted"
-                ]
-            }
-        ]
-    },
-    "output_plugin": "vis_output_html",
-    "output_plugin_config": {
+    "gui_plugin": "visualizer",
+    "gui_plugin_config": {
         "dashboard": 
             {
                 "title": "Dashboard",
@@ -53,7 +24,6 @@
                     "col_1_title": "MSE",
                     "col_2_title": "Status",
                     "col_3_title": "Last Update"
-
                 }
             },
         "views": [
@@ -82,6 +52,18 @@
                 "table_name": "validation_stats",
                 "title": "Feature Extractor Stats on Validation Data",
                 "online": false,
+                "fields": [
+                    "mse",
+                    "mae",
+                    "r2"
+                ]
+            }
+        ]
+        ,
+        "forms": [
+            {
+                "table_name": "automation_parameters",
+                "title": "Automation Parameters Configuration",
                 "fields": [
                     "mse",
                     "mae",

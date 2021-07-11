@@ -1,0 +1,7 @@
+{
+    "core_plugin": "core_basic_auth",
+    "core_plugin_config": {
+        "filename": "DataLogger-OAS.apic.yaml"
+    }
+}
+  
