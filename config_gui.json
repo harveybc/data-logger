@@ -1,5 +1,5 @@
 {
-    "gui_plugin": "visualizer",
+    "gui_plugin": "gui_visualizer",
     "gui_plugin_config": {
         "dashboard": 
             {
