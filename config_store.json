@@ -1,5 +1,5 @@
 {
-    "store_plugin": "store_sqlite",
+    "store_plugin": "sqlite_store",
     "store_plugin_config": {
         "filename": "db.sqlite3",
         "tables": [
