@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" This File contains the FeatureExtractor class, has methods for listing and loading plugins and execute their entry point. """
+""" This File contains the DataLogger class, has methods for listing and loading plugins and execute their entry point. """
 
 import argparse
 import sys
@@ -7,7 +7,7 @@ import logging
 import numpy as np
 import csv
 import pkg_resources
-from data_logger_base import FeatureExtractorBase
+from data_logger_base import DataLoggerBase
 
 # from data_logger import __version__
 
@@ -18,11 +18,11 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 
-class FeatureExtractor(FeatureExtractorBase):
+class DataLogger(DataLoggerBase):
     """ Base class. """
 
     def __init__(self, conf):
-        """ Initializes FeatureExtractorBase with the configurationloaded from a JSON file. 
+        """ Initializes DataLoggerBase with the configurationloaded from a JSON file. 
         Args:
         conf (JSON): plugin configuration loaded from configuration file.
         """
@@ -91,7 +91,7 @@ class FeatureExtractor(FeatureExtractorBase):
         
 def run(args):
     """ Entry point for console_scripts """
-    data_logger = FeatureExtractor(None)
+    data_logger = DataLogger(None)
     data_logger.main(args)
 
 if __name__ == "__main__":
