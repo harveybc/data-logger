@@ -4,10 +4,9 @@
 import argparse
 import sys
 import logging
-import numpy as np
 import csv
 import pkg_resources
-from data_logger_base import DataLoggerBase
+from app.data_logger_base import DataLoggerBase
 
 # from data_logger import __version__
 
