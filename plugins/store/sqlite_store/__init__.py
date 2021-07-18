@@ -14,7 +14,7 @@ __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
 __license__ = "mit"
 
-class VisSqlite(PluginBase): 
+class SqliteStore(PluginBase): 
     """ input plugin for the FeatureExtractor class, after initialization, the input_ds attribute is set """
 
     def __init__(self, conf):
