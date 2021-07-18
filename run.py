@@ -25,7 +25,7 @@ try:
 except:
     exit("Can't load plugin configuration files")
 # initialize plugin system
-data_logger_instance = DataLogger(plugin_conf)
+data_logger_instance = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 # setup config mode

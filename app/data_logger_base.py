@@ -18,68 +18,69 @@ _logger = logging.getLogger(__name__)
 class DataLoggerBase():
     """ Base class For DataLogger. """
     
-    def __init__(self, conf):
-        """ Initializes DataLoggerBase with the configuration loaded from a JSON file. 
-        Args:
-        conf (JSON): plugin configuration loaded from configuration file.
-        """
-        self.conf = conf
-        if conf != None:         
-            self.setup_logging(logging.DEBUG) 
-            _logger.debug(" * Creating data_logger instance...")
-            # list available plugins
-            if 'list_plugins' in conf:
-                if self.conf['list_plugins'] == True:
-                    _logger.debug("Listing plugins.")
-                    self.find_plugins()
-                    _logger.debug("Printing plugins.")
-                    self.print_plugins()
-            # set default plugin values if not found on config and execute core operations
-            else:
-                # sets default values for plugins
-                if 'core_plugin' not in conf: 
-                    self.conf['core_plugin'] = "core_basic_auth"
-                    _logger.debug("Warning: core plugin not found in config file, using core_basic_auth")
-                if 'store_plugin' not in conf: 
-                    self.conf['store_plugin'] = "store_sqlite"  
-                    _logger.debug("Warning: store plugin not found, using store_sqlite")
-                if 'gui_plugin' not in conf: 
-                    self.conf['gui_plugin'] = None
-                    _logger.debug("* Warning: gui plugin not found")
-                # execute core operations
-                self.core()
+    def find_plugins(self):
+        """" Populate the discovered plugin lists """
 
-    def core(self):
-        """ Core feature_extractor operations. """
-        _logger.debug("* Finding Plugins.")
-        self.find_plugins()
-        _logger.debug("* Loading plugins.")
-        self.load_plugins() 
-        if self.conf['core_plugin'] != None:
-            _logger.debug("Setting up store plugin" )
-            self.input_ds = self.ep_input.load_data() 
-            _logger.debug("Performing core operations from the  core plugin.")
-            self.output_ds = self.ep_core.core(self.input_ds) 
-            _logger.debug("Executing the output plugin.")
-            self.ep_output.store_data(self.output_ds) 
-            _logger.info("feature_extractor finished.")
+        # TODO: make the iter_entry_points configurable to be used by the 3 fe modules
+
+        self.discovered_input_plugins = {
+            entry_point.name: entry_point.load()
+            for entry_point
+            in pkg_resources.iter_entry_points('data_logger.plugins_input')
+        }
+        self.discovered_output_plugins = {
+            entry_point.name: entry_point.load()
+            for entry_point
+            in pkg_resources.iter_entry_points('data_logger.plugins_output')
+        }
+        self.discovered_core_plugins = {
+            entry_point.name: entry_point.load()
+            for entry_point
+            in pkg_resources.iter_entry_points('data_logger.plugins_core')
+        }
+
+    def load_plugins(self):
+        """ Loads plugin entry points into class attributes"""
+        for i in self.discovered_input_plugins:
+            print(i, " => ", self.discovered_input_plugins[i])
+        if self.conf['input_plugin'] in self.discovered_input_plugins:
+            self.ep_i = self.discovered_input_plugins[self.conf['input_plugin']]
+            if self.conf['args'] == None:
+                # TODO: QUITAR
+                _logger.debug("initializing input plugin via constructor.")
+            else:
+                # if using command line (conf == None), uses unknown parameters from arparser as params for plugins
+                _logger.debug("initializing input plugin via command line parameters.")
+            self.ep_input = self.ep_i(self.conf)
         else:
-            exit('Error: No core plugin loaded.')
-            
+            print("Error: Input Plugin not found. Use option --list_plugins to show the list of available plugins.")
+            sys.exit()
+        if self.conf['output_plugin'] in self.discovered_output_plugins:
+            self.ep_o = self.discovered_output_plugins[self.conf['output_plugin']]
+            self.ep_output = self.ep_o(self.conf)
+        else:
+            print("Error: Output Plugin not found. Use option --list_plugins to show the list of available plugins.")
+            sys.exit()
+        if self.conf['core_plugin'] in self.discovered_core_plugins:
+            self.ep_c = self.discovered_core_plugins[self.conf['core_plugin']]
+            self.ep_core = self.ep_c(self.conf)
+        else:
+            print("Warning: Core Plugin not found. Ignore this warning if using the data_logger(it only has input and output plugins). Use data_logger --list_plugins, to show the list of available plugins.")
+            self.ep_core = None
     
-    def setup_logging(self, loglevel):
-        """Setup basic logging.
-        Args:
-        loglevel (int): minimum loglevel for emitting messages
-        """
-        logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-        logging.basicConfig(
-            level=loglevel,
-            stream=sys.stdout,
-            format=logformat,
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-    
+    def print_plugins(self):
+        print("Discovered input plugins:")
+        for key in self.discovered_input_plugins:
+            print(key+"\n")
+        print("Discovered output plugins:")
+        for key in self.discovered_output_plugins:
+            print(key+"\n")
+        print("Discovered core plugins:")
+        for key in self.discovered_core_plugins:
+            print(key+"\n")
+        
+
+
    
 
 
