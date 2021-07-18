@@ -50,10 +50,10 @@ class DataLogger(DataLoggerBase):
             _logger.debug("Warning: store plugin not found, using store_sqlite")
         if 'gui_plugin' not in gui_conf: 
             self.conf['gui_plugin'] = "gui_basic_auth"
-            _logger.debug("* Warning: gui plugin not found, using core_basic_auth")
-        _logger.debug("* Finding Plugins.")
+            _logger.debug("Warning: gui plugin not found, using core_basic_auth")
+        _logger.debug("Finding Plugins.")
         self.find_plugins()
-        _logger.debug("* Loading plugins.")
+        _logger.debug("Loading plugins.")
         self.load_plugins() 
         if self.core_conf['core_plugin'] != None:
             #_logger.debug("Setting up store plugin" )
