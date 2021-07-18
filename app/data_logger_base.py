@@ -41,21 +41,27 @@ class DataLoggerBase():
         """ Loads plugin entry points into class attributes"""
         for i in self.discovered_store_plugins:
             print(i, " => ", self.discovered_store_plugins[i])
-        if self.conf['store_plugin'] in self.discovered_store_plugins:
-            self.ep_s = self.discovered_store_plugins[self.conf['store_plugin']]
+        if self.store_conf['store_plugin'] in self.discovered_store_plugins:
+            # entry point for plugin from discovered plugins
+            self.s_ep = self.discovered_store_plugins[self.conf['store_plugin']]
+            # instantiate plugin class defined in the setup.cfg [options.entry_points] section.
             self.store_ep = self.ep_s(self.store_conf)
         else:
             print("Error: Store Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             sys.exit()
-        if self.conf['gui_plugin'] in self.discovered_gui_plugins:
-            self.ep_g = self.discovered_gui_plugins[self.conf['gui_plugin']]
-            self.gui_ep = self.ep_g(self.gui_conf)
+        if self.gui_conf['gui_plugin'] in self.discovered_gui_plugins:
+            # entry point for plugin from discovered plugins
+            self.g_ep = self.discovered_gui_plugins[self.gui_conf['gui_plugin']]
+            # instantiate plugin class defined in the setup.cfg [options.entry_points] section.
+            self.gui_ep = self.g_ep(self.gui_conf)
         else:
             print("Error: GUI Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             sys.exit()
-        if self.conf['core_plugin'] in self.discovered_core_plugins:
-            self.ep_c = self.discovered_core_plugins[self.conf['core_plugin']]
-            self.core_ep = self.ep_c(self.core_conf)
+        if self.core_conf['core_plugin'] in self.discovered_core_plugins:
+            # entry point for plugin from discovered plugins
+            self.c_ep = self.discovered_core_plugins[self.core_conf['core_plugin']]
+            # instantiate plugin class defined in the setup.cfg [options.entry_points] section.
+            self.core_ep = self.c_ep(self.core_conf)
         else:
             print("Error: Core Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             sys.exit()
