@@ -14,7 +14,7 @@ from app.app import create_app, db
 from app.data_logger import DataLogger
 
 # load the plugin config file from /plugin_config.json
-print("Loading plugin configuration from /plugin_config.json ")
+print("* Loading plugin configuration from /plugin_config.json ")
 try:
     with open("plugin_config.json", "r") as conf_file:
         plugin_conf = json_load(conf_file)

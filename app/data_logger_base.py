@@ -4,7 +4,6 @@
 import argparse
 import sys
 import logging
-import numpy as np
 import csv
 import pkg_resources
 
@@ -46,18 +45,18 @@ class DataLoggerBase():
                     _logger.debug("Warning: store plugin not found, using store_sqlite")
                 if 'gui_plugin' not in conf: 
                     self.conf['gui_plugin'] = None
-                    _logger.debug("Warning: gui plugin not found")
+                    _logger.debug("* Warning: gui plugin not found")
                 # execute core operations
                 self.core()
 
     def core(self):
         """ Core feature_extractor operations. """
-        _logger.debug("Finding Plugins.")
+        _logger.debug("* Finding Plugins.")
         self.find_plugins()
-        _logger.debug("Loading plugins.")
+        _logger.debug("* Loading plugins.")
         self.load_plugins() 
         if self.conf['core_plugin'] != None:
-            _logger.debug("Setting up store")
+            _logger.debug("Setting up store plugin" )
             self.input_ds = self.ep_input.load_data() 
             _logger.debug("Performing core operations from the  core plugin.")
             self.output_ds = self.ep_core.core(self.input_ds) 

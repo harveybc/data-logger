@@ -88,10 +88,4 @@ class DataLogger(DataLoggerBase):
         for key in self.discovered_core_plugins:
             print(key+"\n")
         
-def run(args):
-    """ Entry point for console_scripts """
-    data_logger = DataLogger(None)
-    data_logger.main(args)
 
-if __name__ == "__main__":
-    run(sys.argv)
