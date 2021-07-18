@@ -42,29 +42,23 @@ class DataLoggerBase():
         for i in self.discovered_store_plugins:
             print(i, " => ", self.discovered_store_plugins[i])
         if self.conf['store_plugin'] in self.discovered_store_plugins:
-            self.ep_i = self.discovered_store_plugins[self.conf['store_plugin']]
-            if self.conf['args'] == None:
-                # TODO: QUITAR
-                _logger.debug("initializing input plugin via constructor.")
-            else:
-                # if using command line (conf == None), uses unknown parameters from arparser as params for plugins
-                _logger.debug("initializing input plugin via command line parameters.")
-            self.ep_input = self.ep_i(self.conf)
+            self.ep_s = self.discovered_store_plugins[self.conf['store_plugin']]
+            self.store_ep = self.ep_s(self.store_conf)
         else:
-            print("Error: Input Plugin not found. Use option --list_plugins to show the list of available plugins.")
+            print("Error: Store Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             sys.exit()
         if self.conf['gui_plugin'] in self.discovered_gui_plugins:
-            self.ep_o = self.discovered_gui_plugins[self.conf['gui_plugin']]
-            self.ep_output = self.ep_o(self.conf)
+            self.ep_g = self.discovered_gui_plugins[self.conf['gui_plugin']]
+            self.gui_ep = self.ep_g(self.gui_conf)
         else:
-            print("Error: Output Plugin not found. Use option --list_plugins to show the list of available plugins.")
+            print("Error: GUI Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             sys.exit()
         if self.conf['core_plugin'] in self.discovered_core_plugins:
             self.ep_c = self.discovered_core_plugins[self.conf['core_plugin']]
-            self.ep_core = self.ep_c(self.conf)
+            self.core_ep = self.ep_c(self.core_conf)
         else:
-            print("Warning: Core Plugin not found. Ignore this warning if using the data_logger(it only has input and output plugins). Use data_logger --list_plugins, to show the list of available plugins.")
-            self.ep_core = None
+            print("Error: Core Plugin not found. Use option list_plugins=True to show the list of available plugins.")
+            sys.exit()
     
     def print_plugins(self):
         print("Discovered input plugins:")
