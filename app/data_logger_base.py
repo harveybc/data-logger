@@ -48,6 +48,7 @@ class DataLoggerBase():
             self.store_ep = self.ep_s(self.store_conf)
         else:
             print("Error: Store Plugin not found. Use option list_plugins=True to show the list of available plugins.")
+            self.print_plugins()
             sys.exit()
         if self.gui_conf['gui_plugin'] in self.discovered_gui_plugins:
             # entry point (plugin class) for plugin from discovered plugins
@@ -56,6 +57,7 @@ class DataLoggerBase():
             self.gui_ep = self.g_ep(self.gui_conf)
         else:
             print("Error: GUI Plugin not found. Use option list_plugins=True to show the list of available plugins.")
+            self.print_plugins()
             sys.exit()
         if self.core_conf['core_plugin'] in self.discovered_core_plugins:
             # entry point (plugin class) for plugin from discovered plugins
@@ -64,13 +66,14 @@ class DataLoggerBase():
             self.core_ep = self.c_ep(self.core_conf)
         else:
             print("Error: Core Plugin not found. Use option list_plugins=True to show the list of available plugins.")
+            self.print_plugins()
             sys.exit()
     
     def print_plugins(self):
-        print("Discovered input plugins:")
+        print("Discovered store plugins:")
         for key in self.discovered_store_plugins:
             print(key+"\n")
-        print("Discovered output plugins:")
+        print("Discovered gui plugins:")
         for key in self.discovered_gui_plugins:
             print(key+"\n")
         print("Discovered core plugins:")
