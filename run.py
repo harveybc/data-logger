@@ -22,9 +22,9 @@ try:
         core_plugin_conf = json_load(conf_file)
     with open("/config_gui.json", "r") as conf_file:
         gui_plugin_conf = json_load(conf_file)
-except:
-    print("Error: Can't load plugin configuration files")
-    exit("Error")
+except Exception as e:
+    print(e)
+    exit(e)
 # initialize plugin system
 print(" * Creating data_logger instance...")
 data_logger_instance = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
