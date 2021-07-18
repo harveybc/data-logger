@@ -45,4 +45,4 @@ app = create_app( app_config )
 # run the flask app from the data_logger instance
 if __name__ == "__main__":
     print("Starting app...")
-    app.run()
+    app.run(debug=DEBUG, use_reloader=False)
