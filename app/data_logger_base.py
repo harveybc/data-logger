@@ -26,7 +26,7 @@ class DataLoggerBase():
         self.conf = conf
         if conf != None:         
             self.setup_logging(logging.DEBUG) 
-            _logger.info("Starting feature_extractor via class constructor...")
+            _logger.debug(" * Creating data_logger instance...")
             # list available plugins
             if 'list_plugins' in conf:
                 if self.conf['list_plugins'] == True:
@@ -60,7 +60,7 @@ class DataLoggerBase():
             self.input_ds = self.ep_input.load_data() 
             _logger.debug("Performing core operations from the  core plugin.")
             self.output_ds = self.ep_core.core(self.input_ds) 
-            logger.debug("Executing the output plugin.")
+            _logger.debug("Executing the output plugin.")
             self.ep_output.store_data(self.output_ds) 
             _logger.info("feature_extractor finished.")
         else:
