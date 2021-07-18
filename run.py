@@ -14,13 +14,13 @@ from app.app import create_app, db
 from app.data_logger import DataLogger
 
 # load the plugin config files
-print(" * Loading plugin configuration from /plugin_config.json ")
+print(" * Loading plugin configuration files")
 try:
-    with open("/config_store.json", "r") as conf_file:
+    with open("config_store.json", "r") as conf_file:
         store_plugin_conf = json_load(conf_file)
-    with open("/config_core.json", "r") as conf_file:
+    with open("config_core.json", "r") as conf_file:
         core_plugin_conf = json_load(conf_file)
-    with open("/config_gui.json", "r") as conf_file:
+    with open("config_gui.json", "r") as conf_file:
         gui_plugin_conf = json_load(conf_file)
 except Exception as e:
     print(e)
