@@ -21,30 +21,28 @@ class DataLoggerBase():
     def find_plugins(self):
         """" Populate the discovered plugin lists """
 
-        # TODO: make the iter_entry_points configurable to be used by the 3 fe modules
-
-        self.discovered_input_plugins = {
+        self.discovered_store_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('data_logger.plugins_input')
+            in pkg_resources.iter_entry_points('data_logger.store_plugins')
         }
-        self.discovered_output_plugins = {
+        self.discovered_gui_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('data_logger.plugins_output')
+            in pkg_resources.iter_entry_points('data_logger.gui_plugins')
         }
         self.discovered_core_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
-            in pkg_resources.iter_entry_points('data_logger.plugins_core')
+            in pkg_resources.iter_entry_points('data_logger.core_plugins')
         }
 
     def load_plugins(self):
         """ Loads plugin entry points into class attributes"""
-        for i in self.discovered_input_plugins:
-            print(i, " => ", self.discovered_input_plugins[i])
-        if self.conf['input_plugin'] in self.discovered_input_plugins:
-            self.ep_i = self.discovered_input_plugins[self.conf['input_plugin']]
+        for i in self.discovered_store_plugins:
+            print(i, " => ", self.discovered_store_plugins[i])
+        if self.conf['store_plugin'] in self.discovered_store_plugins:
+            self.ep_i = self.discovered_store_plugins[self.conf['store_plugin']]
             if self.conf['args'] == None:
                 # TODO: QUITAR
                 _logger.debug("initializing input plugin via constructor.")
@@ -55,8 +53,8 @@ class DataLoggerBase():
         else:
             print("Error: Input Plugin not found. Use option --list_plugins to show the list of available plugins.")
             sys.exit()
-        if self.conf['output_plugin'] in self.discovered_output_plugins:
-            self.ep_o = self.discovered_output_plugins[self.conf['output_plugin']]
+        if self.conf['gui_plugin'] in self.discovered_gui_plugins:
+            self.ep_o = self.discovered_gui_plugins[self.conf['gui_plugin']]
             self.ep_output = self.ep_o(self.conf)
         else:
             print("Error: Output Plugin not found. Use option --list_plugins to show the list of available plugins.")
@@ -70,10 +68,10 @@ class DataLoggerBase():
     
     def print_plugins(self):
         print("Discovered input plugins:")
-        for key in self.discovered_input_plugins:
+        for key in self.discovered_store_plugins:
             print(key+"\n")
         print("Discovered output plugins:")
-        for key in self.discovered_output_plugins:
+        for key in self.discovered_gui_plugins:
             print(key+"\n")
         print("Discovered core plugins:")
         for key in self.discovered_core_plugins:
