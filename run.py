@@ -40,9 +40,4 @@ try:
     app_config = config_dict[get_config_mode.capitalize()]
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-app = create_app( app_config ) 
-
-# run the flask app from the data_logger instance
-if __name__ == "__main__":
-    print("Starting app...")
-    app.run(debug=DEBUG, use_reloader=False)
+app = create_app( app_config )
