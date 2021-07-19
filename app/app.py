@@ -45,7 +45,7 @@ def create_app(app_config, data_logger):
     static_url_path = data_logger.gui_ep.static_url_path
     #app.app.static_url_path = '/base/static'
     app.app.static_url_path = static_url_path
-  # remove old static map
+    # remove old static map
     url_map = app.app.url_map
     try:
         for rule in url_map.iter_rules('static'):
@@ -53,8 +53,7 @@ def create_app(app_config, data_logger):
     except ValueError:
         # no static view was created yet
         pass
-
-    # register new; the same view function is used
+    # adds an url rule to serve stati files from the gui plugin location
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
 
      # read plugin configuration JSON file
@@ -86,18 +85,23 @@ def create_app(app_config, data_logger):
     # If it is the first time the app is run, create the database and perform data seeding
     @app.app.before_first_request
     def ini_db():
-        # TODO: AFTER TESTING, REMOVE FROM HERE
-        print("Dropping database")
-        db.drop_all()
-        print("done.")
-        from models.user import User
-        from models.process import Process
-        print("Creating database")
-        db.create_all()
-        print("Seeding database with test user")
-        from models.seeds.user import seed
-        seed(app.app, db)
-        # TODO: REMOVE UP TO HERE
+        if DEBUG:
+            print("Dropping database")
+            db.drop_all()
+            print("done.")
+            #from models.user import User
+            # create user, authorization, log and process models from core plugin class factories
+            User = data_logger.core_ep.user_factory()
+            Authorization = data_logger.core_ep.authorization_factory()
+            Log = data_logger.core_ep.log_factory()
+            Process = data_logger.core_ep.process_factory()
+            print("Creating database")
+            db.create_all()
+            print("Seeding database with test user")
+            #from models.seeds.user import seed
+            # user seed function from core plugin       
+            data_logger.core_ep.user_seed(app.app, db)
+            # TODO: REMOVE UP TO HERE
         # reflect the tables
         db.Model.metadata.reflect(bind=db.engine)
         Base = automap_base()
@@ -109,6 +113,4 @@ def create_app(app_config, data_logger):
     #    @app.teardown_request
     #    def shutdown_session(exception=None):
     #        db.session.remove()
-
-    
     return app.app
