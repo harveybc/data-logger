@@ -40,11 +40,11 @@ def is_num(n):
         return n.is_integer()
     return False
 
-from .user import User as Usr
+from .user import User
 
 @login_manager.user_loader
 def user_loader(id):
-    return Usr.query.filter_by(id=id).first()
+    return User.query.filter_by(id=id).first()
 
 @login_manager.request_loader
 def load_user_from_request(request):
@@ -60,7 +60,7 @@ def load_user_from_request(request):
         cred_list = credentials.decode().split(':')
         username = cred_list[0]
         password = cred_list[1]
-        user = Usr.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
         if user:
             return user
 

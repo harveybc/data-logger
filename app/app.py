@@ -11,6 +11,7 @@ import connexion
 from flask import current_app
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
+import base64
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -76,12 +77,36 @@ def create_app(app_config, data_logger):
     #tmp = user_bp(plugin_folder)
     #app.register_blueprint(tmp)
 
-
     # register the blueprints
     register_blueprints(app.app)
     
     print("\n#1\n")
     #init_db(app.app)
+    User = data_logger.core_ep.User
+
+    @login_manager.user_loader
+    def user_loader(id):
+        return User.query.filter_by(id=id).first()
+
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        # login using Basic Auth
+        credentials = request.headers.get('Authorization')
+        if credentials:
+            credentials = credentials.replace('Basic ', '', 1)
+            try:
+                credentials = base64.b64decode(credentials)
+            except TypeError:
+                pass
+            cred_list = credentials.decode().split(':')
+            username = cred_list[0]
+            password = cred_list[1]
+            user = User.query.filter_by(username=username).first()
+            if user:
+                return user
+        # return None if user is not logged in
+        return None
+
     # If it is the first time the app is run, create the database and perform data seeding
     @app.app.before_first_request
     def ini_db():
