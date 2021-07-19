@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from .base_model import BaseModel
 
 # TODO: activate cache for read authorization table select queries, since they are made in every other request
 # TODO: use indexes in all searchable non numeric columns.

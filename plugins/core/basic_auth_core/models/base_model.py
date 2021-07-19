@@ -40,7 +40,7 @@ def is_num(n):
         return n.is_integer()
     return False
 
-from models.user import User
+from .user import User
 
 @login_manager.user_loader
 def user_loader(id):

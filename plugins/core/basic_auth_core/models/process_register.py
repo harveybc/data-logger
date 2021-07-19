@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from .base_model import BaseModel
 from pydoc import locate 
 
 class ProcessRegister():
