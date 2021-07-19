@@ -2,7 +2,7 @@
     Description: Contains common methods for all models.
 """ 
 import datetime
-from app.base.util import hash_pass
+from app.util import hash_pass
 from app.app import login_manager
 import base64
 
