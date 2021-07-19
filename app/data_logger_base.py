@@ -21,16 +21,19 @@ class DataLoggerBase():
     def find_plugins(self):
         """" Populate the discovered plugin lists """
 
+        _logger.debug("Searching for store plugins")
         self.discovered_store_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
             in pkg_resources.iter_entry_points('data_logger.store_plugins')
         }
+        _logger.debug("Searching for gui plugins")
         self.discovered_gui_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
             in pkg_resources.iter_entry_points('data_logger.gui_plugins')
         }
+        _logger.debug("Searching for core plugin")
         self.discovered_core_plugins = {
             entry_point.name: entry_point.load()
             for entry_point
