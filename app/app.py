@@ -15,18 +15,6 @@ from sqlalchemy import MetaData
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-# TODO:  MODIFY TO READ CONFIG FOR STORE PLUGIN
-def read_plugin_config(vis_config_file=None):
-    """ Read the plugin configuration JSON file from a path, if its None, uses a default configuration """
-    if vis_config_file != None:
-        file_path = vis_config_file
-    else:
-
-        file_path = path.dirname(path.abspath(__file__)) + "//data_logger.json"
-    with open(file_path) as f:
-        data = json.load(f)
-    return data
-
 def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
@@ -36,24 +24,28 @@ def register_blueprints(app):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 
-def create_app(config):
-    # app = Flask(__name__, static_folder='base/static')
-    app = connexion.App(__name__, specification_dir='./')
+def create_app(app_config, data_logger):
+    """ Create the Flask-Sqlalchemy app 
+    Args:
+    app_config (dict): flask app config data
+    data_logger (obj): DataLogger class instance
 
+    Returns:
+    app.app (dict): the flask-sqlalchemy app instance
+    """    
 
-
-
-    # TODO: RELOCATE ON CORE PLUGINS
-    # TODO: LOAD AS A CORE PLUGIN, AFTER THE STORE PLUGINS ARE LOADED 
-    # Read the swagger.yml file to configure the endpoints
-    app.add_api('DataLogger-OAS.apic.yaml')
-
-
-
-    # set Flast static_folder  to be used with connexion
-    app.app.static_url_path = '/base/static'
-
-    # remove old static map
+    # read the Connexion swagger yaml specification_dir from the core plugin entry point
+    specification_dir = data_logger.core_ep.specification_dir
+    app = connexion.App(__name__, specification_dir = specification_dir)
+    # read the Connexion swagger yaml specification filename from the core plugin entry point
+    specification_filename = data_logger.core_ep.specification_filename
+    #app.add_api('DataLogger-OAS.apic.yaml')
+    app.add_api(specification_filename)
+    # set Flask static_folder  to be used with Connexion from the gui plugin entry point 
+    static_url_path = data_logger.gui_ep.static_url_path
+    #app.app.static_url_path = '/base/static'
+    app.app.static_url_path = static_url_path
+  # remove old static map
     url_map = app.app.url_map
     try:
         for rule in url_map.iter_rules('static'):
@@ -66,13 +58,13 @@ def create_app(config):
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
 
      # read plugin configuration JSON file
-    p_config = read_plugin_config()
+    #p_config = read_plugin_config()
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
     # set flask app parameters
-    app.app.config.from_object(config)
+    app.app.config.from_object(app_config)
     # plugin configuration from data_logger.json
-    app.app.config['P_CONFIG'] = p_config 
+    #app.app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
     ### current_app.config['FE'] = fe
     register_extensions(app.app)

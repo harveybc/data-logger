@@ -27,7 +27,7 @@ except Exception as e:
     exit(e)
 # initialize plugin system
 print(" * Creating data_logger instance...")
-dl = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
+data_logger = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 # setup config mode
@@ -35,9 +35,8 @@ get_config_mode = 'Debug' if DEBUG else 'Production'
 # load config from the config_dict according to the set config mode.
 try:
     # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
-    # TODO: función get_config_dict in the store plugin
-    config_dict = dl.store_ep.get_config_dict()
+    config_dict = data_logger.store_ep.get_config_dict()
     app_config = config_dict[get_config_mode.capitalize()]
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-app = create_app( app_config )
+app = create_app( app_config, data_logger)
