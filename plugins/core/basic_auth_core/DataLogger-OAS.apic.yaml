@@ -383,7 +383,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      x-swagger-router-controller: .controllers.user
+      x-openapi-router-controller: .controllers.user
       operationId: create
       responses:
         '200':
