@@ -2,7 +2,6 @@
 """
 This File contains the Visualizer class plugin that implements static file serving for the current core plugin (sqlalchemy-flask app), to be used as its GUI.
 """
-
 import json
 import logging
 import os
