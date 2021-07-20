@@ -49,7 +49,7 @@ class DataLoggerBase():
             # entry point (plugin class) for plugin from discovered plugins
             self.s_ep = self.discovered_store_plugins[self.store_conf['store_plugin']]
             # instantiate plugin class defined in the setup.cfg [options.entry_points] section.
-            self.store_ep = self.ep_s(self.store_conf)
+            self.store_ep = self.s_ep(self.store_conf)
         else:
             print("Error: Store Plugin not found. Use option list_plugins=True to show the list of available plugins.")
             self.print_plugins()
