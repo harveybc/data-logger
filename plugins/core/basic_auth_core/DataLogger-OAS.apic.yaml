@@ -383,7 +383,8 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.user.create
+      x-swagger-router-controller: .controllers.user
+      operationId: create
       responses:
         '200':
           schema:
