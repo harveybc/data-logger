@@ -383,8 +383,9 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      x-openapi-router-controller: .controllers.user
+      
       operationId: create
+      x-openapi-router-controller: controllers.user
       responses:
         '200':
           schema:
