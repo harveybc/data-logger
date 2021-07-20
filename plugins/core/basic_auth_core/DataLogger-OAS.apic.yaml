@@ -12,8 +12,8 @@ securityDefinitions:
     type: basic
     description: >-
       Basic auth, please add the following line to the yaml: x-basicInfoFunc:
-      .controllers.authentication.basic_auth.authenticate
-    x-basicInfoFunc: .controllers.authentication.basic_auth.authenticate
+      app.plugins.corebasic_auth_core.controllers.authentication.basic_auth.authenticate
+    x-basicInfoFunc: app.plugins.corebasic_auth_core.controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
     type: object
@@ -382,10 +382,8 @@ paths:
       produces: []
       schemes: []
       security:
-        - basic_auth: []
-      
-      operationId: create
-      x-openapi-router-controller: controllers.user
+        - basic_auth: []      
+      operationId: app.plugins.corebasic_auth_core.controllers.user.create
       responses:
         '200':
           schema:
@@ -415,7 +413,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.user.read_all
+      operationId: app.plugins.corebasic_auth_core.controllers.user.read_all
       responses:
         '200':
           schema:
@@ -444,7 +442,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.user.read
+      operationId: app.plugins.corebasic_auth_core.controllers.user.read
       responses:
         '200':
           schema:
@@ -475,7 +473,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.user.update
+      operationId: app.plugins.corebasic_auth_core.controllers.user.update
       responses:
         '200':
           schema:
@@ -510,7 +508,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.user.delete
+      operationId: app.plugins.corebasic_auth_core.controllers.user.delete
       responses:
         '200':
           schema:
@@ -548,7 +546,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.process.create.create
+      operationId: app.plugins.corebasic_auth_core.controllers.process.create.create
       responses:
         '200':
           schema:
@@ -592,7 +590,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.process.read_all.read_all
+      operationId: app.plugins.corebasic_auth_core.controllers.process.read_all.read_all
       responses:
         '200':
           schema:
@@ -636,7 +634,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.process.read.read
+      operationId: app.plugins.corebasic_auth_core.controllers.process.read.read
       responses:
         '200':
           schema:
@@ -694,7 +692,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.process.update.update
+      operationId: app.plugins.corebasic_auth_core.controllers.process.update.update
       responses:
         '200':
           schema:
@@ -735,7 +733,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.process.delete.delete
+      operationId: app.plugins.corebasic_auth_core.controllers.process.delete.delete
       responses:
         '200':
           schema:
@@ -783,7 +781,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.authorization.create
+      operationId: app.plugins.corebasic_auth_core.controllers.authorization.create
       responses:
         '201':
           schema:
@@ -815,7 +813,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.authorization.read_all
+      operationId: app.plugins.corebasic_auth_core.controllers.authorization.read_all
       responses:
         '200':
           schema:
@@ -844,7 +842,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.authorization.read
+      operationId: app.plugins.corebasic_auth_core.controllers.authorization.read
       responses:
         '200':
           schema:
@@ -877,7 +875,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.authorization.update
+      operationId: app.plugins.corebasic_auth_core.controllers.authorization.update
       responses:
         '200':
           schema:
@@ -912,7 +910,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.authorization.delete
+      operationId: app.plugins.corebasic_auth_core.controllers.authorization.delete
       responses:
         '200':
           schema:
@@ -948,7 +946,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.log.create
+      operationId: app.plugins.corebasic_auth_core.controllers.log.create
       responses:
         '200':
           schema:
@@ -978,7 +976,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.log.read_all
+      operationId: app.plugins.corebasic_auth_core.controllers.log.read_all
       responses:
         '200':
           schema:
@@ -1007,7 +1005,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.log.read
+      operationId: app.plugins.corebasic_auth_core.controllers.log.read
       responses:
         '200':
           schema:
@@ -1038,7 +1036,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.log.update
+      operationId: app.plugins.corebasic_auth_core.controllers.log.update
       responses:
         '200':
           schema:
@@ -1073,7 +1071,7 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: .controllers.log.delete
+      operationId: app.plugins.corebasic_auth_core.controllers.log.delete
       responses:
         '200':
           schema:
