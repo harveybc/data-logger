@@ -6,11 +6,11 @@ from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
-from controllers.common import as_dict, is_num
-from models.process import Process
+from .controllers.common import as_dict, is_num
+from .models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
-from controllers.authorization import authorization_required
+from .controllers.authorization import authorization_required
 
 @authorization_required
 def read(process_id):

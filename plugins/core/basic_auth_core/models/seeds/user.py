@@ -1,4 +1,4 @@
-from models.user import User
+from .models.user import User
 # add the default user with id = 0 and username = test
 def seed(app, db):
     with app.app_context():

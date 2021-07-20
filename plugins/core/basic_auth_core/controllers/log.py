@@ -10,11 +10,11 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from datetime import datetime
 from app.app import login_manager
-from models.log import Log
-from models.process_table import ProcessTable
-from models.process_register import ProcessRegister
+from .models.log import Log
+from .models.process_table import ProcessTable
+from .models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
-from controllers.common import as_dict, is_num
+from .controllers.common import as_dict, is_num
 from flask import request
 from functools import wraps
 
@@ -34,7 +34,7 @@ def log_required(func):
         return func(*args, **kwargs)
     return decorated_view
 
-from controllers.authorization import authorization_required
+from .controllers.authorization import authorization_required
 
 @authorization_required
 def create(body):

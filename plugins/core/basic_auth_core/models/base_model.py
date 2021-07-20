@@ -1,5 +1,5 @@
 """ Base Model. 
-    Description: Contains common methods for all models.
+    Description: Contains common methods for all .models.
 """ 
 import datetime
 from app.util import hash_pass
