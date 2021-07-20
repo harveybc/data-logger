@@ -47,7 +47,7 @@ class DataLoggerBase():
             print(i, " => ", self.discovered_store_plugins[i])
         if self.store_conf['store_plugin'] in self.discovered_store_plugins:
             # entry point (plugin class) for plugin from discovered plugins
-            self.s_ep = self.discovered_store_plugins[self.conf['store_plugin']]
+            self.s_ep = self.discovered_store_plugins[self.store_conf['store_plugin']]
             # instantiate plugin class defined in the setup.cfg [options.entry_points] section.
             self.store_ep = self.ep_s(self.store_conf)
         else:
