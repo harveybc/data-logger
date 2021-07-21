@@ -1,4 +1,4 @@
-from ..models.process import Process
+from ...models.process import Process
 # add the default process with id = 0
 def seed(app, db):
     with app.app_context():

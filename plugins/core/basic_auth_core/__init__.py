@@ -10,6 +10,7 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 import os
+from .models.seeds.user import seed as u_seed
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -31,5 +32,10 @@ class BasicAuthCore():
         self.Authorization = Authorization
         self.Log = Log 
         self.Process = Process
+        # seed initial user 
+    
+    def user_seed(self, app, db):
+        u_seed(app,db)
+
         
 
