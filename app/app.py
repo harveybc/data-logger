@@ -112,10 +112,10 @@ def create_app(app_config, data_logger):
             print("done.")
             #from models.user import User
             # create user, authorization, log and process models from core plugin class factories
-            User = data_logger.core_ep.user_factory()
-            Authorization = data_logger.core_ep.authorization_factory()
-            Log = data_logger.core_ep.log_factory()
-            Process = data_logger.core_ep.process_factory()
+            User = data_logger.core_ep.User
+            Authorization = data_logger.core_ep.Authorization
+            Log = data_logger.core_ep.Log
+            Process = data_logger.core_ep.Process
             print("Creating database")
             db.create_all()
             print("Seeding database with test user")
