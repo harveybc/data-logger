@@ -4,7 +4,7 @@ import connexion
 from connexion.decorators.security import validate_scope
 from connexion.exceptions import OAuthScopeProblem
 # the user model is used for authentication
-from .models.user import User
+from ..models.user import User
 from app.app import db
 from app.base.util import verify_pass
 

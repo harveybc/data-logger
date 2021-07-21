@@ -7,11 +7,11 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required
 from app.app import login_manager
-from .models.process import Process
+from ..models.process import Process
 from sqlalchemy.ext.automap import automap_base
 from flask import request
-from .controllers.common import as_dict, is_num
-from .controllers.authorization import authorization_required
+from ..controllers.common import as_dict, is_num
+from ..controllers.authorization import authorization_required
 
 @authorization_required
 def read_all():

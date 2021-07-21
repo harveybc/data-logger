@@ -6,11 +6,11 @@ from app.app import db
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from app.app import login_manager
-from .models.process import Process
+from ..models.process import Process
 from flask import request
 from sqlalchemy.ext.automap import automap_base
-from .controllers.authorization import authorization_required
-from .controllers.log import log_required
+from ..controllers.authorization import authorization_required
+from ..controllers.log import log_required
 
 @authorization_required
 @log_required

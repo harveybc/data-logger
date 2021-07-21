@@ -22,11 +22,11 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from datetime import datetime
 from app.app import login_manager
-from .models.authorization import Authorization
-from .models.process_table import ProcessTable
-from .models.process_register import ProcessRegister
+from ..models.authorization import Authorization
+from ..models.process_table import ProcessTable
+from ..models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
-from .controllers.common import as_dict, is_num
+from ..controllers.common import as_dict, is_num
 from functools import wraps
 from flask import (current_app)
 from flask import request
@@ -49,7 +49,7 @@ def authorization_required(func):
             return current_app.login_manager.unauthorized()
     return decorated_view
 
-from .controllers.log import log_required
+from ..controllers.log import log_required
 
 @authorization_required
 @log_required

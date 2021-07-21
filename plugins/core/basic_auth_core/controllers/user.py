@@ -2,13 +2,13 @@
     Description: Contains API endpoint handler functions for CRUD (create, read, update, delete) and other model operations.  
 """
 
-from .models.user import User
+from ..models.user import User
 from app.app import db
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.attributes import flag_dirty, flag_modified
-from .controllers.authorization import authorization_required
-from .controllers.log import log_required
+from ..controllers.authorization import authorization_required
+from ..controllers.log import log_required
 
 @authorization_required
 @log_required
