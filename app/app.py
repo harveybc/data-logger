@@ -12,7 +12,7 @@ from flask import current_app
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
-import prance
+#import prance
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -37,7 +37,7 @@ def create_app(app_config, data_logger):
     # read the Connexion swagger yaml specification filename from the core plugin entry point
     specification_filename = data_logger.core_ep.specification_filename
     #app.add_api('DataLogger-OAS.apic.yaml')
-    app.add_api(bundled_specs(specification_filename))
+    app.add_api(specification_filename)
     # set Flask static_folder  to be used with Connexion from the gui plugin entry point 
     static_url_path = data_logger.gui_ep.static_url_path
     #app.app.static_url_path = '/base/static'
@@ -137,8 +137,8 @@ def create_app(app_config, data_logger):
     return app.app
 
 
-def bundled_specs(main_file: Path) -> Dict[str, Any]:
-    parser = prance.ResolvingParser(str(main_file.absolute()),
-                                    lazy = True, backend = 'openapi-spec-validator')
-    parser.parse()
-    return parser.specs
+#def bundled_specs(main_file: Path) -> Dict[str, Any]:
+#    parser = prance.ResolvingParser(str(main_file.absolute()),
+#                                    lazy = True, backend = 'openapi-spec-validator')
+#    parser.parse()
+#    return parser.specs
