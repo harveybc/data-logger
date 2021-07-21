@@ -15,7 +15,7 @@ from .forms import LoginForm, CreateAccountForm
 
 # TODO: import User model from core plugin
 #from ...models.user import User
-User = data_logger.core_ep.specification_dir
+from run import data_logger
 
 from app.util import verify_pass
 
@@ -29,14 +29,12 @@ from app.util import verify_pass
 def login():
     login_form = LoginForm(request.form)
     if 'login' in request.form:
-        
         # read form data
         username = request.form['username']
         password = request.form['password']
-
         # Locate user
+        User = data_logger.core_ep.specification_dir
         user = User.query.filter_by(username=username).first()
-        
         # Check the password
         if user and verify_pass( password, user.password):
 
