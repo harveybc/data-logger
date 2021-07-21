@@ -29,7 +29,7 @@ Also, the installation can be made by clonning the github repo and manually inst
 On Linux use the .sh scripts, on windows use the .bat scripts.
 
 1. Clone the GithHub repo:   
-> git clone https://github.com/harveybc/data_logger
+> git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
 > cd data_logger
 3. Install requirements.
@@ -71,16 +71,16 @@ A default user us created with the username: "test", and password: "pass", pleas
 
 ### Plugin Configuration File
 
-data_logger uses a configuration file located in the data_logger/data_logger directory that sets the Web service parameters and the configuration of the input and output plugins.
+data_logger uses 3 configuration files: config_core.json, config_gui.json and config_store.json to configure the respective plugins
 
-The following is the default JSON configuration file:
+The following is the default JSON configuration file config_store.json:
 
 
 ```
 {
-    "input_plugin": "vis_input_sqlite",
-    "input_plugin_config": {
-        "filename": "test/db/plots.sqlite",
+    "store_plugin": "sqlite_store",
+    "store_plugin_config": {
+        "filename": "db.sqlite3",
         "tables": [
             {
                 "table_name": "training_progress",
@@ -106,7 +106,7 @@ The following is the default JSON configuration file:
                 ]
             }
         ]
-    } 
+    }
 }
 ```
 .
