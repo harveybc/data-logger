@@ -10,8 +10,8 @@ from flask_login import (
 )
 
 from app.app import db, login_manager
-from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm
+from . import blueprint
+from .forms import LoginForm, CreateAccountForm
 
 # TODO: import User model from core plugin
 #from ...models.user import User
