@@ -33,7 +33,8 @@ class Visualizer():
     # register blueprints for gui
     def register_blueprints(self, app):
         for module_name in ('base', 'home'):
-            module = import_module('{}.routes'.format(module_name))
+
+            module = import_module('app.plugins.gui.visualizer_gui.{}.routes'.format(module_name))
             app.register_blueprint(module.blueprint)
         
 
