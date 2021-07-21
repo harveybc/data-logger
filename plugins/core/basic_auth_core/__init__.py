@@ -5,10 +5,10 @@ This File contains the BasicAuthCore class plugin that implements a Connexion Fl
 
 import json
 import logging
-from ..models.user import User
-from ..models.authorization import Authorization
-from ..models.log import Log
-from ..models.process import Process
+from .models.user import User
+from .models.authorization import Authorization
+from .models.log import Log
+from .models.process import Process
 import os
 
 __author__ = "Harvey Bastidas"
