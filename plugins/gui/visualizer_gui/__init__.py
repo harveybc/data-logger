@@ -20,7 +20,8 @@ class Visualizer():
         # Insert your plugin initialization code here.
         _logger.debug("Initializing Visualizer gui plugin")
         self.conf = conf
-        self.static_url_path = os.path.dirname(__file__) + '/base/static'
+        # rel_path = os.path.relpath(os.path.dirname(__file__) )
+        self.static_url_path = '/base/static'
         #self.specification_dir = os.path.dirname(__file__)
         #self.specification_filename = 'DataLogger-OAS.apic.yaml'
         #self.User = User
