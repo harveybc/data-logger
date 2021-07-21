@@ -12,9 +12,12 @@ from flask_login import (
 from app.app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
-from ..models.user import User
 
-from app.base.util import verify_pass
+# TODO: import User model from core plugin
+#from ...models.user import User
+User = data_logger.core_ep.specification_dir
+
+from app.util import verify_pass
 
 #@blueprint.route('/')
 #def route_default():
