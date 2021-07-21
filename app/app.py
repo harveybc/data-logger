@@ -20,11 +20,6 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
 
-def register_blueprints(app):
-    for module_name in ('base', 'home'):
-        module = import_module('app.{}.routes'.format(module_name))
-        app.register_blueprint(module.blueprint)
-
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
     Args:
@@ -77,8 +72,8 @@ def create_app(app_config, data_logger):
     #tmp = user_bp(plugin_folder)
     #app.register_blueprint(tmp)
 
-    # register the blueprints
-    register_blueprints(app.app)
+    # register the blueprints from the gui plugin
+    data_logger.gui_ep.register_blueprints(app.app)
     
     print("\n#1\n")
     #init_db(app.app)

@@ -5,6 +5,7 @@ This File contains the Visualizer class plugin that implements static file servi
 import json
 import logging
 import os
+from importlib import import_module
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -28,5 +29,11 @@ class Visualizer():
         #self.Authorization = Authorization
         #self.Log = Log 
         #self.Process = Process
+        
+    # register blueprints for gui
+    def register_blueprints(self, app):
+        for module_name in ('base', 'home'):
+            module = import_module('.{}.routes'.format(module_name))
+            app.register_blueprint(module.blueprint)
         
 
