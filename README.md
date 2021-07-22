@@ -11,11 +11,14 @@ Configurable structure, configurable storage, generic data-logger API.
 
 The purpose of this system is to implement a reusable REST API that provides Authentication, Authorization and Accounting (AAA), the API is scalable by using a processes table that stores configurable data structures and tables for the data to be used by an application.
 
-The system has a database plugin architecture that allows loading of plugins that configure a custom database engine to save all the data from all processes.
+The system has a plugin architecture that allows loading of plugins of three types configured from json files in the root directory:  
+- Store plugin: Configures the initial data structure and a custom database engine to save all the data from all processes (default: sqlite_store).
+- Core plugin: Configures the API endpoints and provides AAA (default: basic_auth_core, designed with [https://github.com/bjdash/apic](APIC: design, documentation and testing tool for Swagger 2.0 API specification).
+- GUI plugin (optional): Configures a graphical user interface (default: visualizer_gui that uses [https://github.com/ColorlibHQ/AdminLTE](AdminLTE: Web dashboard based on Bootstrap 4).
 
 The data structures used can be divided in two groups: 
-a)	The fixed data structures that are the users and the processes tables.
-b)	The configurable data structures are a variable number of tables per process that are created on the database upon creation of a process, the created tables can be used by other processes and accessed via the process route endpoints.
+1.	The fixed data structures that are the following tables: users, authorization, processes and log. Which provide AAA to the API and are defined in the core plugin.
+2.	The configurable data structures that are a variable number of tables per process that are created on the database upon creation of a process, the created tables can be accessed via the process route endpoints.
 
 ## Installation (Work In Progress, use github installation)
 
@@ -75,7 +78,7 @@ The Web interface configured in the gui plugin can be accessed by default at:
 
 The default port can be modified by setting the FLASK_RUN_PORT environment variable or bly using the --port argument to the flask run command.
 
-A default user us created with the username: "test", and password: "pass", please delete this user once you have created another one.
+A default user is created with the username: "test", and password: "pass", please delete this user once you have created another one.
 
 ### Plugin Configuration File (WORK IN PROGRESS)
 

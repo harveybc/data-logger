@@ -65,7 +65,7 @@ def create_app(app_config, data_logger):
     #app.app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
     ### current_app.config['FE'] = fe
-    register_extensions(app.app)
+    register_extensions(app.app, data_logger)
     # get the output plugin template folder
     ### plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
