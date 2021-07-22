@@ -29,7 +29,7 @@ Also, the installation can be made by clonning the github repo and manually inst
 On Linux use the .sh scripts, on windows use the .bat scripts.
 
 1. Clone the GithHub repo:   
-> git clone https://github.com/harveybc/data_logger
+> git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
 > cd data_logger
 3. Install requirements.
@@ -69,46 +69,44 @@ The default port can be modified by setting the FLASK_RUN_PORT environment varia
 
 A default user us created with the username: "test", and password: "pass", please delete this user once you have created another one.
 
-### Plugin Configuration File
+### Plugin Configuration File (WORK IN PROGRESS)
 
-data_logger uses a configuration file located in the data_logger/data_logger directory that sets the Web service parameters and the configuration of the input and output plugins.
+data_logger uses 3 configuration files: config_core.json, config_gui.json and config_store.json to configure the respective plugins
 
-The following is the default JSON configuration file:
-
+The following is the default JSON configuration file config_store.json, where a the sqlite store is configured and a process with a single table with a column is defined, the default type of columns is float:
 
 ```
 {
-    "input_plugin": "vis_input_sqlite",
-    "input_plugin_config": {
-        "filename": "test/db/plots.sqlite",
-        "tables": [
+    "store_plugin": "sqlite_store",
+    "store_plugin_config": {
+        "filename": "db.sqlite3",
+        "processes" : [
             {
-                "table_name": "training_progress",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_stats",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "fields": [
-                    "original",
-                    "predicted"
+                "name": "test",
+                "tables": [ 	
+                    {
+                        "name": "test_table",
+                        "columns": [
+                            "test_column"
+                        ]
+                    }
                 ]
             }
         ]
-    } 
+    }
 }
 ```
+
+The following is the default JSON configuration file config_core.json, where a the core api is configured via a swagger api specification file in json or yaml format (relative to the core plugin path):
+
+```
+{
+    "core_plugin": "basic_auth_core", 
+    "core_plugin_config": {
+        "filename": "DataLogger-OAS.apic.json"
+    }
+}
+```  
 .
 
 
