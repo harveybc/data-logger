@@ -49,7 +49,7 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 
 ### Command-Line Execution
 
-For ease of use, a script for setting the environment variables and executing the app is included, it must be executed in the root feature-extractor directory, where the scripts are located:
+For ease of use, a script for setting the environment variables and executing the app is included, it must be executed in the root data-logger directory, where the scripts are located:
 
 * For Linux and Mac:
 
@@ -59,11 +59,19 @@ For ease of use, a script for setting the environment variables and executing th
 
 > data_logger.bat
 
+## Online documentation 
+
+The Swagger UI Web interface provides API documentation and is installed by default at:
+
+[http://localhost:5000/ui](http://localhost:5000/ui)
+
+It documents the parameters for each API endpoint configured in the core plugin and alows to test them with your own parameters.
+
 ## Usage
 
-The Web intreface can be accessed by default at:
+The Web interface configured in the gui plugin can be accessed by default at:
 
-[localhost:5000](localhost:5000)
+[http://localhost:5000](http://localhost:5000)
 
 The default port can be modified by setting the FLASK_RUN_PORT environment variable or bly using the --port argument to the flask run command.
 
