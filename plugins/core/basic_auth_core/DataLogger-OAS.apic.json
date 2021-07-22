@@ -13,8 +13,8 @@
     "securityDefinitions": {
         "basic_auth": {
             "type": "basic",
-            "description": "Basic auth, please add the following line to the yaml: x-basicInfoFunc: controllers.authentication.basic_auth.authenticate",
-            "x-basicInfoFunc": "controllers.authentication.basic_auth.authenticate"
+            "description": "Basic auth, please add the following line to the yaml: x-basicInfoFunc: plugins.core.basic_auth_core.controllers.authentication.basic_auth.authenticate",
+            "x-basicInfoFunc": "plugins.core.basic_auth_core.controllers.authentication.basic_auth.authenticate"
         }
     },
     "definitions": {
@@ -536,7 +536,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.user.create",
+                "operationId": "plugins.core.basic_auth_core.controllers.user.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -582,7 +582,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.user.read_all",
+                "operationId": "plugins.core.basic_auth_core.controllers.user.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -625,7 +625,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.user.read",
+                "operationId": "plugins.core.basic_auth_core.controllers.user.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -671,7 +671,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.user.update",
+                "operationId": "plugins.core.basic_auth_core.controllers.user.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -724,7 +724,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.user.delete",
+                "operationId": "plugins.core.basic_auth_core.controllers.user.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -779,7 +779,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.process.create.create",
+                "operationId": "plugins.core.basic_auth_core.controllers.process.create.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -837,7 +837,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.process.read_all.read_all",
+                "operationId": "plugins.core.basic_auth_core.controllers.process.read_all.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -897,7 +897,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.process.read.read",
+                "operationId": "plugins.core.basic_auth_core.controllers.process.read.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -970,7 +970,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.process.update.update",
+                "operationId": "plugins.core.basic_auth_core.controllers.process.update.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1029,7 +1029,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.process.delete.delete",
+                "operationId": "plugins.core.basic_auth_core.controllers.process.delete.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1098,7 +1098,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.authorization.create",
+                "operationId": "plugins.core.basic_auth_core.controllers.authorization.create",
                 "responses": {
                     "201": {
                         "schema": {
@@ -1144,7 +1144,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.authorization.read_all",
+                "operationId": "plugins.core.basic_auth_core.controllers.authorization.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1187,7 +1187,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.authorization.read",
+                "operationId": "plugins.core.basic_auth_core.controllers.authorization.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1233,7 +1233,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.authorization.update",
+                "operationId": "plugins.core.basic_auth_core.controllers.authorization.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1286,7 +1286,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.authorization.delete",
+                "operationId": "plugins.core.basic_auth_core.controllers.authorization.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1341,7 +1341,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.log.create",
+                "operationId": "plugins.core.basic_auth_core.controllers.log.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1387,7 +1387,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.log.read_all",
+                "operationId": "plugins.core.basic_auth_core.controllers.log.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1430,7 +1430,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.log.read",
+                "operationId": "plugins.core.basic_auth_core.controllers.log.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1476,7 +1476,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.log.update",
+                "operationId": "plugins.core.basic_auth_core.controllers.log.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1529,7 +1529,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "controllers.log.delete",
+                "operationId": "plugins.core.basic_auth_core.controllers.log.delete",
                 "responses": {
                     "200": {
                         "schema": {
