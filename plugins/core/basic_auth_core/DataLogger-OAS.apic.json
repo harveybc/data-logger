@@ -76,10 +76,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 }
             }
@@ -102,10 +99,7 @@
                 "tables": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table"
                     }
                 }
             },
@@ -267,10 +261,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 },
                 "name": {
@@ -287,16 +278,13 @@
             "type": "object",
             "properties": {
                 "process": {
-                    "$ref": "#/definitions/input_process",
-                    "type": null
+                    "$ref": "#/definitions/input_process"
                 },
                 "table": {
-                    "$ref": "#/definitions/input_process_table",
-                    "type": null
+                    "$ref": "#/definitions/input_process_table"
                 },
                 "register": {
-                    "$ref": "#/definitions/input_process_register",
-                    "type": null
+                    "$ref": "#/definitions/input_process_register"
                 }
             }
         },
@@ -318,8 +306,7 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/definitions/table",
-                    "type": null
+                    "$ref": "#/definitions/table"
                 }
             },
             "required": [
@@ -346,10 +333,7 @@
                 "tables": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table"
                     }
                 }
             }
@@ -358,16 +342,13 @@
             "type": "object",
             "properties": {
                 "process": {
-                    "$ref": "#/definitions/input_process",
-                    "type": null
+                    "$ref": "#/definitions/input_process"
                 },
                 "table": {
-                    "$ref": "#/definitions/input_process_table",
-                    "type": null
+                    "$ref": "#/definitions/input_process_table"
                 },
                 "register": {
-                    "$ref": "#/definitions/input_process_register",
-                    "type": null
+                    "$ref": "#/definitions/input_process_register"
                 }
             }
         },
