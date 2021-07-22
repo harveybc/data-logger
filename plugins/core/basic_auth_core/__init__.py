@@ -27,7 +27,7 @@ class BasicAuthCore():
         _logger.debug("Initializing SqliteStore plugin")
         self.conf = conf
         self.specification_dir = os.path.dirname(__file__)
-        self.specification_filename = 'DataLogger-OAS.apic.yaml'
+        self.specification_filename = conf['core_plugin_config']['filename']
         self.User = User
         self.Authorization = Authorization
         self.Log = Log 
