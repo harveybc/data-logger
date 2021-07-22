@@ -2,28 +2,16 @@
     "store_plugin": "sqlite_store",
     "store_plugin_config": {
         "filename": "db.sqlite3",
-        "tables": [
+        "processes" : [
             {
-                "table_name": "training_progress",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_stats",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "fields": [
-                    "original",
-                    "predicted"
+                "name": "test",
+                "tables": [ 	
+                    {
+                        "name": "test_table",
+                        "columns": [
+                            "test_column"
+                        ]
+                    }
                 ]
             }
         ]

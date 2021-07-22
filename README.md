@@ -73,42 +73,40 @@ A default user us created with the username: "test", and password: "pass", pleas
 
 data_logger uses 3 configuration files: config_core.json, config_gui.json and config_store.json to configure the respective plugins
 
-The following is the default JSON configuration file config_store.json:
-
+The following is the default JSON configuration file config_store.json, where a the sqlite store is configured and a process with a single table with a column is defined, the default type of columns is float:
 
 ```
 {
     "store_plugin": "sqlite_store",
     "store_plugin_config": {
         "filename": "db.sqlite3",
-        "tables": [
+        "processes" : [
             {
-                "table_name": "training_progress",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_stats",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plots",
-                "fields": [
-                    "original",
-                    "predicted"
+                "name": "test",
+                "tables": [ 	
+                    {
+                        "name": "test_table",
+                        "columns": [
+                            "test_column"
+                        ]
+                    }
                 ]
             }
         ]
     }
 }
 ```
+
+The following is the default JSON configuration file config_core.json, where a the core api is configured via a swagger api specification file in json or yaml format (relative to the core plugin path):
+
+```
+{
+    "core_plugin": "basic_auth_core", 
+    "core_plugin_config": {
+        "filename": "DataLogger-OAS.apic.json"
+    }
+}
+```  
 .
 
 
