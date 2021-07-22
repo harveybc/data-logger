@@ -10,6 +10,7 @@ from os import environ
 from sys import exit
 from decouple import config
 from json import load as json_load
+from json import dumps
 from app.app import create_app
 from app.data_logger import DataLogger
 
@@ -40,4 +41,10 @@ try:
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 app = create_app( app_config, data_logger)
+
+def print_spec():
+    # read json
+    spec = json_load(data_logger.core_ep.specification_dir+'/' + data_logger.core_ep.specification_filename)
+    # dump json as string
+    return dumps(spec)
 
