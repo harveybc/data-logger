@@ -69,7 +69,7 @@ The default port can be modified by setting the FLASK_RUN_PORT environment varia
 
 A default user us created with the username: "test", and password: "pass", please delete this user once you have created another one.
 
-### Plugin Configuration File
+### Plugin Configuration File (WORK IN PROGRESS)
 
 data_logger uses 3 configuration files: config_core.json, config_gui.json and config_store.json to configure the respective plugins
 
