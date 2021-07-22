@@ -87,7 +87,7 @@ The following is the default JSON configuration file config_store.json, where a 
                     {
                         "name": "test_table",
                         "columns": [
-                            "test_column"
+                            {"name" : "test_column"}
                         ]
                     }
                 ]

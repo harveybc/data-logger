@@ -17,12 +17,14 @@ import base64
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-def register_extensions(app):
+def register_extensions(app, data_logger):
     db.init_app(app)
     login_manager.init_app(app)
+    # TODO: create the data structure from the store plugin config file if it does not exist
+    data_logger.store_ep.init_data_structure()
 
 def create_app(app_config, data_logger):
-    """ Create the Flask-Sqlalchemy app 
+    """ Create the Flask-Sqlalchemy app w
     Args:
     app_config (dict): flask app config data
     data_logger (obj): DataLogger class instance
