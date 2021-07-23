@@ -43,7 +43,7 @@ class BasicAuthCore():
         u_seed(app,db)
 
     def create_process(self, db, process):
-        new_process = Process(process)
+        new_process = Process(**process)
         db.session.add(new_process)
         db.session.commit()
         return new_process.id
