@@ -27,9 +27,14 @@ class SqliteStore():
         _logger.debug("SqliteStore plugin connecting with data_logger app")
         return config_dict
     
-    def init_data_structure(self):
+    def init_data_structure(self, core_ep):
         """ Create the data structure (processes/tables) from the config_store.json """
-         
+        # create each process from the processes attribute
+        for process in self.conf["store_plugin_config"]["processes"]:
+            process_id = core_ep.create_process(process)
+            # create each table of the process
+            for table in process["tables"]:
+                core_ep.crete_table(process_id, table)
 
     #Imported methods
     #from ._dashboard import load_data, get_user_id, get_max, get_count, get_column_by_pid, get_columns, get_users, get_user_by_username, get_processes, get_process_by_pid, processes_by_uid

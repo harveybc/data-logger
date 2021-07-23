@@ -9,6 +9,10 @@ from .models.user import User
 from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
+from .models.process_table import ProcessTable
+from .models.process_register import ProcessRegister
+from sqlalchemy.ext.automap import automap_base
+
 import os
 from .models.seeds.user import seed as u_seed
 
@@ -32,10 +36,30 @@ class BasicAuthCore():
         self.Authorization = Authorization
         self.Log = Log 
         self.Process = Process
+        self.ProcessTable = ProcessTable
         # seed initial user 
     
     def user_seed(self, app, db):
         u_seed(app,db)
+
+    def create_process(self, db, process):
+        new_process = Process(process)
+        db.session.add(new_process)
+        db.session.commit()
+        return new_process.id
+
+    def create_table(self, db, process_id, table):
+        # instantiate process table with the body dict as kwargs
+        new_table = ProcessTable(table)
+        if not db.engine.dialect.has_table(db.engine, new_table.name):
+            new_table.table.create(db.engine)
+        #update metadata and tables
+        db.Model.metadata.reflect(bind=db.engine)
+        # reflect the tables
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
+        
+    
 
         
 

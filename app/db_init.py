@@ -24,7 +24,8 @@ def init():
         raise SystemExit()
     if begin_reset:
         # import all the models
-        from models.user import User
+        #from models.user import User
+        User = 
         from models.process import Process
         print("Dropping database")
         db.drop_all()
