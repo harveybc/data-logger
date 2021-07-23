@@ -42,22 +42,24 @@ class BasicAuthCore():
     def user_seed(self, app, db):
         u_seed(app,db)
 
-    def create_process(self, db, process):
-        new_process = Process(**process)
-        db.session.add(new_process)
-        db.session.commit()
+    def create_process(self, app, db, process):
+        with app.app_context():
+            new_process = Process(**process)
+            db.session.add(new_process)
+            db.session.commit()
         return new_process.id
 
-    def create_table(self, db, process_id, table):
+    def create_table(self, app, db, process_id, table):
         # instantiate process table with the body dict as kwargs
-        new_table = ProcessTable(table)
-        if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.engine)
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)
-        # reflect the tables
-        Base = automap_base()
-        Base.prepare(db.engine, reflect=True)
+        with app.app_context():
+            new_table = ProcessTable(table)
+            if not db.engine.dialect.has_table(db.engine, new_table.name):
+                new_table.table.create(db.engine)
+            #update metadata and tables
+            db.Model.metadata.reflect(bind=db.engine)
+            # reflect the tables
+            Base = automap_base()
+            Base.prepare(db.engine, reflect=True)
         
     
 
