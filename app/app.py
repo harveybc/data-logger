@@ -130,7 +130,7 @@ def create_app(app_config, data_logger):
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
         # Initialize data structure if does not exist
-        data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
+        data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
