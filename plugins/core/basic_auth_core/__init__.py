@@ -13,6 +13,7 @@ from .models.process_table import ProcessTable
 from .models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 import os
 from .models.seeds.user import seed as u_seed
@@ -59,6 +60,7 @@ class BasicAuthCore():
             new_process.id (int): the id of the new process or -1 if the process already exists
         """ 
         # Check if a process with the same name exists
+        db.session = sessionmaker(bind=db.engine)
         try:
             with app.app_context():
                 p = Process.query.filter_by(name=process["name"]).one()
