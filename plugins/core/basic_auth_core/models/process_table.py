@@ -30,6 +30,7 @@ class ProcessTable():
             if "default" not in c: c["default"] = {}
             if "nullable" not in c: c["nullable"] = False
             # generate the arguments for this column
+            if "col_type" not in c: c["col_type"] = "Float"
             col_type = self.parse_sqlalchemy_column_type(c["col_type"])
             if "primary_key" in c:
                 if c["primary_key"]:
