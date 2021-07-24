@@ -37,11 +37,13 @@ class SqliteStore():
                 try:
                     Process = core_ep.Process
                     p = Process.query.filter_by(name=process["name"]).one()
+                    process_id == p.id
                 except SQLAlchemyError as e:
                     p = None
-            # create each table of the process
-            for table in process["tables"]:
-                core_ep.crete_table(app, db, process_id, table)
+            if process_id>-1:
+                # create each table of the process
+                for table in process["tables"]:
+                    core_ep.crete_table(app, db, process_id, table)
 
     #Imported methods
     #from ._dashboard import load_data, get_user_id, get_max, get_count, get_column_by_pid, get_columns, get_users, get_user_by_username, get_processes, get_process_by_pid, processes_by_uid

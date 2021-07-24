@@ -60,7 +60,8 @@ class BasicAuthCore():
         """ 
         # Check if a process with the same name exists
         try:
-            p = Process.query.filter_by(name=process["name"]).one()
+            with app.app_context():
+                p = Process.query.filter_by(name=process["name"]).one()
         except SQLAlchemyError as e:
             p = None
         # Create the new process
