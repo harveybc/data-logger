@@ -14,6 +14,7 @@ from .models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
+from copy import deepcopy
 
 import os
 from .models.seeds.user import seed as u_seed
@@ -69,9 +70,9 @@ class BasicAuthCore():
                 p = None
             # Create the new process
             if p is None:
-                process_copy = process
-                process_copy["tables"] = json.dumps(process["tables"])
-                new_process = Process(**process_copy)
+                process = deepcopy(process)
+                process["tables"] = json.dumps(process["tables"])
+                new_process = Process(**process)
                 db.session.add(new_process)
                 db.session.commit()
                 db.session.close()
@@ -95,6 +96,7 @@ class BasicAuthCore():
         # Create the new table
         if not table_exists:
             with app.app_context():
+                table = deepcopy(table)
                 table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(table)
                 if not db.engine.dialect.has_table(db.engine, new_table.name):
