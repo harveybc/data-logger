@@ -60,23 +60,22 @@ class BasicAuthCore():
             new_process.id (int): the id of the new process or -1 if the process already exists
         """ 
         # Check if a process with the same name exists
-        db.session = sessionmaker(bind=db.engine)
-        try:
-            with app.app_context():
+        with app.app_context():
+            db.session = sessionmaker(bind=db.engine)
+            try:
                 p = Process.query.filter_by(name=process["name"]).one()
                 db.session.close()
-        except SQLAlchemyError as e:
-            p = None
-        # Create the new process
-        if p is None:
-            with app.app_context():
+            except SQLAlchemyError as e:
+                p = None
+            # Create the new process
+            if p is None:
                 process["tables"] = json.dumps(process["tables"])
                 new_process = Process(**process)
                 db.session.add(new_process)
                 db.session.commit()
-            return new_process.id
-        else:
-            return -1
+                return new_process.id
+            else:
+                return -1
 
     def create_table(self, app, db, process_id, table):
         """ Create a table if another with the same name does not exist.
