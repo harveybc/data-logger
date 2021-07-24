@@ -62,6 +62,7 @@ class BasicAuthCore():
         try:
             with app.app_context():
                 p = Process.query.filter_by(name=process["name"]).one()
+                db.session.close()
         except SQLAlchemyError as e:
             p = None
         # Create the new process
