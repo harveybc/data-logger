@@ -20,7 +20,7 @@ login_manager = LoginManager()
 def register_extensions(app, data_logger):
     db.init_app(app)
     login_manager.init_app(app)
-    # TODO: create the data structure from the store plugin config file if it does not exist
+    # create the data structure from the store plugin config file if it does not exist
     data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
 
 def create_app(app_config, data_logger):
@@ -129,6 +129,8 @@ def create_app(app_config, data_logger):
         db.Model.metadata.reflect(bind=db.engine)
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
+        # Initialize data structure if does not exist
+        data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
