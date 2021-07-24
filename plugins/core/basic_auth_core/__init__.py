@@ -73,6 +73,7 @@ class BasicAuthCore():
                 new_process = Process(**process)
                 db.session.add(new_process)
                 db.session.commit()
+                db.session.close()
                 return new_process.id
             else:
                 return -1
