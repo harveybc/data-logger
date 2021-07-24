@@ -4,12 +4,12 @@
         "filename": "db.sqlite3",
         "processes" : [
             {
-                "name": "test_ini",
+                "name": "init_process",
                 "tables": [ 	
                     {
-                        "name": "test_table",
+                        "name": "init_table",
                         "columns": [
-                            {"name" : "test_column"}
+                            {"name" : "init_column"}
                         ]
                     }
                 ]
