@@ -4,7 +4,7 @@
         "filename": "db.sqlite3",
         "processes" : [
             {
-                "name": "test",
+                "name": "test_ini",
                 "tables": [ 	
                     {
                         "name": "test_table",
