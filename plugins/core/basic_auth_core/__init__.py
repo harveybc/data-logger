@@ -69,8 +69,9 @@ class BasicAuthCore():
                 p = None
             # Create the new process
             if p is None:
-                process["tables"] = json.dumps(process["tables"])
-                new_process = Process(**process)
+                process_copy = process
+                process_copy["tables"] = json.dumps(process["tables"])
+                new_process = Process(**process_copy)
                 db.session.add(new_process)
                 db.session.commit()
                 db.session.close()
