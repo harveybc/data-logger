@@ -17,7 +17,7 @@ class Process(db.Model, BaseModel):
     description = Column(String)
     tables=Column(String)
     created=Column(String, default=str(datetime.now()))
-    user_id=Column(Integer, ForeignKey('user.id'))
+    user_id=Column(Integer, ForeignKey('user.id'), default=0)
 
     # relationships
     users = relationship("User", back_populates='processes')
