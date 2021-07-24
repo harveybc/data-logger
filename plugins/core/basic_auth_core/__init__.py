@@ -44,6 +44,7 @@ class BasicAuthCore():
 
     def create_process(self, app, db, process):
         with app.app_context():
+            process["tables"] = json.dumps(process["tables"])
             new_process = Process(**process)
             db.session.add(new_process)
             db.session.commit()
@@ -52,6 +53,7 @@ class BasicAuthCore():
     def create_table(self, app, db, process_id, table):
         # instantiate process table with the body dict as kwargs
         with app.app_context():
+            table["columns"]= json.dumps(table["columns"])
             new_table = ProcessTable(table)
             if not db.engine.dialect.has_table(db.engine, new_table.name):
                 new_table.table.create(db.engine)
