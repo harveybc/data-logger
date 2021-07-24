@@ -97,7 +97,7 @@ class BasicAuthCore():
         if not table_exists:
             with app.app_context():
                 table = deepcopy(table)
-                table["columns"]= json.dumps(table["columns"])
+                #table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(**table)
                 if not db.engine.dialect.has_table(db.engine, new_table.name):
                     new_table.table.create(db.engine)
