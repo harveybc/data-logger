@@ -12,6 +12,7 @@ from .models.process import Process
 from .models.process_table import ProcessTable
 from .models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.exc import SQLAlchemyError
 
 import os
 from .models.seeds.user import seed as u_seed
@@ -40,29 +41,65 @@ class BasicAuthCore():
         # seed initial user 
     
     def user_seed(self, app, db):
+        """ Populate starting user table
+        Args:
+        app (Flask): the current flask app object.
+        db  (SQLAlchemy) : SQLAlchemy object
+        """ 
         u_seed(app,db)
 
     def create_process(self, app, db, process):
-        with app.app_context():
-            process["tables"] = json.dumps(process["tables"])
-            new_process = Process(**process)
-            db.session.add(new_process)
-            db.session.commit()
-        return new_process.id
+        """ Create a register in the process table if another with the same name does not exist.
+            Args:
+            app (Flask): the current flask app instance.
+            db (SQLAlchemy) : SQLAlchemy instance
+            process (dict): process parameters
+
+            Returns:
+            new_process.id (int): the id of the new process or -1 if the process already exists
+        """ 
+        # Check if a process with the same name exists
+        try:
+            p = Process.query.filter_by(name=process["name"]).one()
+        except SQLAlchemyError as e:
+            p = None
+        # Create the new process
+        if p is None:
+            with app.app_context():
+                process["tables"] = json.dumps(process["tables"])
+                new_process = Process(**process)
+                db.session.add(new_process)
+                db.session.commit()
+            return new_process.id
+        else:
+            return -1
 
     def create_table(self, app, db, process_id, table):
-        # instantiate process table with the body dict as kwargs
-        with app.app_context():
-            table["columns"]= json.dumps(table["columns"])
-            new_table = ProcessTable(table)
-            if not db.engine.dialect.has_table(db.engine, new_table.name):
-                new_table.table.create(db.engine)
-            #update metadata and tables
-            db.Model.metadata.reflect(bind=db.engine)
-            # reflect the tables
-            Base = automap_base()
-            Base.prepare(db.engine, reflect=True)
-        
+        """ Create a table if another with the same name does not exist.
+            Args:
+            app (Flask): the current flask app instance.
+            db (SQLAlchemy) : SQLAlchemy instance
+            process_id (Integer): id of the process for which the table will be created
+            table (dict): table parameters
+        """
+        # verify if the table already exists
+        try:
+           table_exists = db.engine.dialect.has_table(db.engine, table.name)
+        except SQLAlchemyError as e:
+            table_exists = True
+        # Create the new table
+        if not table_exists:
+            with app.app_context():
+                table["columns"]= json.dumps(table["columns"])
+                new_table = ProcessTable(table)
+                if not db.engine.dialect.has_table(db.engine, new_table.name):
+                    new_table.table.create(db.engine)
+                #update metadata and tables
+                db.Model.metadata.reflect(bind=db.engine)
+                # reflect the tables
+                Base = automap_base()
+                Base.prepare(db.engine, reflect=True)
+            
     
 
         
