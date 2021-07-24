@@ -139,7 +139,7 @@ def create_app(app_config, data_logger):
     #    def shutdown_session(exception=None):
     #        db.session.remove()
 
-    @app.teardown_appcontext
+    @app.app.teardown_appcontext
     def shutdown_session(exception=None):
         db.session.remove()
     
