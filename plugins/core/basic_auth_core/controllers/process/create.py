@@ -115,6 +115,8 @@ def create(body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         #new_register = ProcessRegister(**body['register'])
+        #update metadata and tables
+        db.Model.metadata.reflect(bind=db.engine)        
         # query a table register
         Base = automap_base()
         #update metadata and tables
