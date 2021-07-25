@@ -9,7 +9,10 @@
                     {
                         "name": "test_table",
                         "columns": [
-                            "test_column"
+                            {
+                                "name" : "test_column",
+                                "col_type": "Integer"
+                            }
                         ]
                     }
                 ]

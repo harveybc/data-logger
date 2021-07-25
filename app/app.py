@@ -17,9 +17,11 @@ import base64
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-def register_extensions(app):
+def register_extensions(app, data_logger):
     db.init_app(app)
     login_manager.init_app(app)
+    # create the data structure from the store plugin config file if it does not exist
+    data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
 
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
@@ -63,7 +65,7 @@ def create_app(app_config, data_logger):
     #app.app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
     ### current_app.config['FE'] = fe
-    register_extensions(app.app)
+    register_extensions(app.app, data_logger)
     # get the output plugin template folder
     ### plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
@@ -127,6 +129,8 @@ def create_app(app_config, data_logger):
         db.Model.metadata.reflect(bind=db.engine)
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
+        # Initialize data structure if does not exist
+        data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
         #print("tables=", db.metadata.tables)
     #    @app.before_first_request
     #    def initialize_database():
@@ -134,6 +138,11 @@ def create_app(app_config, data_logger):
     #    @app.teardown_request
     #    def shutdown_session(exception=None):
     #        db.session.remove()
+
+    @app.app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db.session.remove()
+    
     return app.app
 
 

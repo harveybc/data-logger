@@ -6,6 +6,7 @@ This File contains the SqliteStore class plugin that allows data_logger to use a
 import json
 from .config import config_dict
 import logging
+from sqlalchemy.exc import SQLAlchemyError
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -27,6 +28,24 @@ class SqliteStore():
         _logger.debug("SqliteStore plugin connecting with data_logger app")
         return config_dict
     
+    def init_data_structure(self, app, db, core_ep):
+        """ Create the data structure (processes/tables) from the config_store.json """
+        # create each process from the processes attribute
+        for process in self.conf["store_plugin_config"]["processes"]:
+            process_id = core_ep.create_process(app, db, process)
+            if process_id == -1:
+                try:
+                    Process = core_ep.Process
+                    with app.app_context():
+                        p = Process.query.filter_by(name=process["name"]).one()
+                    process_id == p.id
+                except SQLAlchemyError as e:
+                    p = None
+            if process_id>-1:
+                # create each table of the process
+                for table in process["tables"]:
+                    core_ep.create_table(app, db, process_id, table)
+
     #Imported methods
     #from ._dashboard import load_data, get_user_id, get_max, get_count, get_column_by_pid, get_columns, get_users, get_user_by_username, get_processes, get_process_by_pid, processes_by_uid
     #from ._user import user_create
