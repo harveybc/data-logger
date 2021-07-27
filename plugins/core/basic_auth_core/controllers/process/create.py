@@ -15,6 +15,7 @@ from sqlalchemy.ext.automap import automap_base
 from ...controllers.common import as_dict, is_num
 from ...controllers.authorization import authorization_required
 from ...controllers.log import log_required
+from copy import deepcopy
 
 @authorization_required
 @log_required
@@ -60,7 +61,8 @@ def create(body):
     # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
-        new_table = ProcessTable(**body['table'])
+        table = deepcopy(body['table'])
+        new_table = ProcessTable(**table)
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         #update metadata and tables
