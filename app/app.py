@@ -151,8 +151,8 @@ def create_app(app_config, data_logger):
 #                                    lazy = True, backend = 'openapi-spec-validator')
 #    parser.parse()
 #    return parser.specs
-def drop_everything(engine: Engine):
-    """(On a live db) drops all foreign key constraints before dropping all tables.
+def drop_everything(engine):
+    """drops all foreign key constraints before dropping all tables.
     Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
     (https://github.com/pallets/flask-sqlalchemy/issues/722)
     """
