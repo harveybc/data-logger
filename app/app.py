@@ -110,7 +110,7 @@ def create_app(app_config, data_logger):
     def ini_db():
         if DEBUG:
             print("Dropping database")
-            drop_everything(db.engine)
+            drop_everything(app.engine)
             print("done.")
             #from models.user import User
             # create user, authorization, log and process models from core plugin class factories
@@ -164,34 +164,22 @@ def drop_everything(engine: Engine):
         Table,
         ForeignKeyConstraint,
     )
-
     con = engine.connect()
     trans = con.begin()
     inspector = Inspector.from_engine(db.engine)
-
-    # We need to re-create a minimal metadata with only the required things to
-    # successfully emit drop constraints and tables commands for postgres (based
-    # on the actual schema of the running instance)
     meta = MetaData()
     tables = []
     all_fkeys = []
-
     for table_name in inspector.get_table_names():
         fkeys = []
-
         for fkey in inspector.get_foreign_keys(table_name):
             if not fkey["name"]:
                 continue
-
             fkeys.append(ForeignKeyConstraint((), (), name=fkey["name"]))
-
         tables.append(Table(table_name, meta, *fkeys))
         all_fkeys.extend(fkeys)
-
     for fkey in all_fkeys:
         con.execute(DropConstraint(fkey))
-
     for table in tables:
         con.execute(DropTable(table))
-
     trans.commit()
