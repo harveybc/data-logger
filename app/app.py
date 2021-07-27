@@ -110,7 +110,7 @@ def create_app(app_config, data_logger):
     def ini_db():
         if DEBUG:
             print("Dropping database")
-            drop_everything(app.engine)
+            drop_everything(db.engine)
             print("done.")
             #from models.user import User
             # create user, authorization, log and process models from core plugin class factories
