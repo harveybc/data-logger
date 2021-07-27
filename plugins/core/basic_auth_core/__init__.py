@@ -95,7 +95,7 @@ class BasicAuthCore():
             table_exists = True
         # Create the new table
         if not table_exists:
-            with app.app_context():
+            with app.app_context(): 
                 table = deepcopy(table)
                 #table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(**table)
@@ -106,8 +106,4 @@ class BasicAuthCore():
                 # reflect the tables
                 Base = automap_base()
                 Base.prepare(db.engine, reflect=True)
-            
-    
-
-        
-
+                
