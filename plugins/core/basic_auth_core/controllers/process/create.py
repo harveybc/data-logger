@@ -15,6 +15,7 @@ from sqlalchemy.ext.automap import automap_base
 from ...controllers.common import as_dict, is_num
 from ...controllers.authorization import authorization_required
 from ...controllers.log import log_required
+from copy import deepcopy
 
 @authorization_required
 @log_required
@@ -38,7 +39,10 @@ def create(body):
         #new_process.user_id = current_user
         new_process.user_id = current_user.get_id()
         # transform the tables json into string
-        new_process.tables = json.dumps(new_process.tables)
+        if new_process.tables is not None:
+            new_process.tables = json.dumps(new_process.tables)
+        else:
+            new_process.tables = "[]"
         # set the string date into datetime
         # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
         new_process.created = str(datetime.now())
@@ -60,7 +64,8 @@ def create(body):
     # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
-        new_table = ProcessTable(**body['table'])
+        table = deepcopy(body['table'])
+        new_table = ProcessTable(**table)
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         #update metadata and tables

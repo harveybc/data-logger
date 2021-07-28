@@ -110,7 +110,8 @@ def create_app(app_config, data_logger):
     def ini_db():
         if DEBUG:
             print("Dropping database")
-            db.drop_all()
+            db.drop_all(app=app.app)
+            drop_everything(db.engine)
             print("done.")
             #from models.user import User
             # create user, authorization, log and process models from core plugin class factories
@@ -151,3 +152,35 @@ def create_app(app_config, data_logger):
 #                                    lazy = True, backend = 'openapi-spec-validator')
 #    parser.parse()
 #    return parser.specs
+def drop_everything(engine):
+    """drops all foreign key constraints before dropping all tables.
+    Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
+    (https://github.com/pallets/flask-sqlalchemy/issues/722)
+    """
+    from sqlalchemy.engine.reflection import Inspector
+    from sqlalchemy.schema import (
+        DropConstraint,
+        DropTable,
+        MetaData,
+        Table,
+        ForeignKeyConstraint,
+    )
+    con = engine.connect()
+    trans = con.begin()
+    inspector = Inspector.from_engine(db.engine)
+    meta = MetaData()
+    tables = []
+    all_fkeys = []
+    for table_name in inspector.get_table_names():
+        fkeys = []
+        for fkey in inspector.get_foreign_keys(table_name):
+            if not fkey["name"]:
+                continue
+            fkeys.append(ForeignKeyConstraint((), (), name=fkey["name"]))
+        tables.append(Table(table_name, meta, *fkeys))
+        all_fkeys.extend(fkeys)
+    for fkey in all_fkeys:
+        con.execute(DropConstraint(fkey))
+    for table in tables:
+        con.execute(DropTable(table))
+    trans.commit()

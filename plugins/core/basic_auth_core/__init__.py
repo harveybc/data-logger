@@ -71,7 +71,7 @@ class BasicAuthCore():
             # Create the new process
             if p is None:
                 process = deepcopy(process)
-                process["tables"] = json.dumps(process["tables"]).replace("a","X")
+                process["tables"] = json.dumps(process["tables"]) 
                 new_process = Process(**process) 
                 db.session.add(new_process)
                 db.session.commit()
@@ -95,7 +95,7 @@ class BasicAuthCore():
             table_exists = True
         # Create the new table
         if not table_exists:
-            with app.app_context():
+            with app.app_context(): 
                 table = deepcopy(table)
                 #table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(**table)
@@ -106,8 +106,4 @@ class BasicAuthCore():
                 # reflect the tables
                 Base = automap_base()
                 Base.prepare(db.engine, reflect=True)
-            
-    
-
-        
-
+                
