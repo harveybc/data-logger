@@ -27,7 +27,7 @@ def read(process_id):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=process_id).first_or_404().as_dict()
+            res = Process.query.filter_by(id=process_id).one().as_dict()
         except SQLAlchemyError as e:
             error = str(e)
             return error 
@@ -41,7 +41,7 @@ def read(process_id):
             try:
                 # TODO: query table by name from process tables array 
                 #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=process_id).first_or_404().as_dict()
+                proc = Process.query.filter_by(id=process_id).one().as_dict()
                 res_list = json.loads(proc["tables"])
             except SQLAlchemyError as e:
                 error = str(e)
@@ -60,7 +60,7 @@ def read(process_id):
             Base.prepare(db.engine, reflect=True)
             register_model = eval("Base.classes." + table_param)
             # perform query
-            res=db.session.query(register_model).filter_by(id=reg_id).first_or_404()
+            res=db.session.query(register_model).filter_by(id=reg_id).one()
             return as_dict(res)
     #return res.as_dict()
     
