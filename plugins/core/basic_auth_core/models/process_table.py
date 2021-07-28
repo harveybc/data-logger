@@ -52,7 +52,7 @@ class ProcessTable():
             t_args.append(Column("id", col_type, autoincrement=True, primary_key=True, nullable=False))
         # create a new timestamp column if it was not found
         if not timestamp_found:
-            t_args.append(Column("timestamp", String, default=str(datetime.now())))
+            t_args.append(Column("timestamp", String, server_default=str(datetime.now())))
         # instance the Table class with the t_args
         self.table = Table(*t_args, extend_existing=True)
     

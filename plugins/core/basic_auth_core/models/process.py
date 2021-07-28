@@ -15,7 +15,7 @@ class Process(db.Model, BaseModel):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     description = Column(String, default="")
-    tables=Column(String, default="[]")
+    tables=Column(String, server_default="[]")
     created=Column(String, default=str(datetime.now()))
     user_id=Column(Integer, ForeignKey('user.id'), default=0)
 
