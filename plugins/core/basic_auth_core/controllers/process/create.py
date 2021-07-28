@@ -39,7 +39,10 @@ def create(body):
         #new_process.user_id = current_user
         new_process.user_id = current_user.get_id()
         # transform the tables json into string
-        new_process.tables = json.dumps(new_process.tables)
+        if new_process.tables is not None:
+            new_process.tables = json.dumps(new_process.tables)
+        else:
+            new_process.tables = "[]"
         # set the string date into datetime
         # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
         new_process.created = str(datetime.now())
