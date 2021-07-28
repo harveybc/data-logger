@@ -33,7 +33,7 @@ class DataLogger(DataLoggerBase):
         self.gui_conf = gui_conf
         # setup stdout logging
         # TODO: Configurable stdout logging mode
-        self.setup_logging(logging.DEBUG) 
+        self.setup_logging(logging.INFO) 
         # list available plugins if required
         if ('list_plugins' in store_conf) or ('list_plugins' in core_conf) or ('list_plugins' in gui_conf):
             if self.conf['list_plugins'] == True:
