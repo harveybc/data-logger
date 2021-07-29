@@ -55,7 +55,7 @@ def create_app(app_config, data_logger):
     # adds an url rule to serve stati files from the gui plugin location
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
 
-     # read plugin configuration JSON file
+    # read plugin configuration JSON file
     #p_config = read_plugin_config()
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
@@ -76,9 +76,7 @@ def create_app(app_config, data_logger):
     #app.register_blueprint(tmp)
 
     # register the blueprints from the gui plugin
-    #data_logger.gui_ep.register_blueprints(app.app)
-    
-    print("\n#1\n")
+    data_logger.gui_ep.register_blueprints(app.app)
     #init_db(app.app)
     User = data_logger.core_ep.User
 

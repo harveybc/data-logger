@@ -13,16 +13,16 @@ __license__ = "mit"
 
 _logger = logging.getLogger(__name__)
 
-class Visualizer(): 
+class VisualizerGui(): 
     """ gui plugin for the DataLogger class """
 
     def __init__(self, conf):
         """ assign configuration params as class attributes """
         # Insert your plugin initialization code here.
-        _logger.debug("Initializing Visualizer gui plugin")
+        _logger.info("Initializing VisualizerGui plugin")
         self.conf = conf
         # rel_path = os.path.relpath(os.path.dirname(__file__) )
-        self.static_url_path = '/base/static'
+        self.static_url_path = './base/static'
         #self.specification_dir = os.path.dirname(__file__)
         #self.specification_filename = 'DataLogger-OAS.apic.yaml'
         #self.User = User
@@ -33,7 +33,6 @@ class Visualizer():
     # register blueprints for gui
     def register_blueprints(self, app):
         for module_name in ('base', 'home'):
-
             module = import_module('plugins.gui.visualizer_gui.{}.routes'.format(module_name))
             app.register_blueprint(module.blueprint)
         
