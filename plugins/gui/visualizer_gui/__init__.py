@@ -22,7 +22,7 @@ class VisualizerGui():
         _logger.info("Initializing VisualizerGui plugin")
         self.conf = conf
         # rel_path = os.path.relpath(os.path.dirname(__file__) )
-        self.static_url_path = './base/static'
+        self.static_url_path = os.path.dirname(__file__)+'/base/static'
         #self.specification_dir = os.path.dirname(__file__)
         #self.specification_filename = 'DataLogger-OAS.apic.yaml'
         #self.User = User
