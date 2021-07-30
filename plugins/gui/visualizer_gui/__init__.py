@@ -23,7 +23,7 @@ class VisualizerGui():
         self.conf = conf
         # rel_path = os.path.relpath(os.path.dirname(__file__) )
         print("abspath=", os.path.abspath(__file__) +'/base/static')
-        print("commonpath=", os.path.commonpath(__file__) +'/base/static')
+        print("commonpath=", os.path.commonpath(__file__))
         print("basename=", os.path.basename(__file__) +'/base/static')
         print("relpath=", os.path.relpath(os.curdir, start=os.curdir))
         self.static_url_path = os.path.dirname(__file__)+'/base/static'
