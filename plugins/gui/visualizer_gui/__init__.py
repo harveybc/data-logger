@@ -26,7 +26,7 @@ class VisualizerGui():
         #print("commonpath=", os.path.commonpath(__file__))
         print("basename=", os.path.basename(__file__) +'/base/static')
         print("relpath=", os.path.relpath(os.curdir, start=os.curdir))
-        self.static_url_path = os.path.dirname(__file__)+'/base/static'
+        self.static_url_path = os.path.abspath(__file__)+'/base/static'
         #self.specification_dir = os.path.dirname(__file__)
         #self.specification_filename = 'DataLogger-OAS.apic.yaml'
         #self.User = User
