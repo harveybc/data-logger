@@ -21,7 +21,7 @@ from app.util import verify_pass
 
 @blueprint.route('/')
 def route_default():
-    return redirect(url_for('../home/index'))
+    return redirect(url_for('home_blueprint.index'))
 
 ## Login & Registration
 @blueprint.route('/login', methods=['GET', 'POST'])
