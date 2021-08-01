@@ -5,7 +5,6 @@
     where FLASK_APP env variable is set to 'run.py'(this script).
 """
 
-#from flask_migrate import Migrate
 from os import environ
 from sys import exit
 from decouple import config
