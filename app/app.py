@@ -69,14 +69,27 @@ def create_app(app_config, data_logger):
     # get the output plugin template folder
     ### plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
-    #tmp = dashboard_bp(plugin_folder)
-    #app.register_blueprint(tmp)
+    tmp = dashboard_bp(plugin_folder)
+    app.register_blueprint(tmp)
     ## construct the blueprint for the users views
-    #tmp = user_bp(plugin_folder)
-    #app.register_blueprint(tmp)
+    tmp = user_bp(plugin_folder)
+    app.register_blueprint(tmp)
+    ## construct the blueprint for the process views
+    tmp = process_bp(plugin_folder)
+    app.register_blueprint(tmp)
+    ## construct the blueprint for the process table views
+    tmp = user_bp(plugin_folder)
+    app.register_blueprint(tmp)
+## construct the blueprint for the Authorization views
+    tmp = user_bp(plugin_folder)
+    app.register_blueprint(tmp)
+## construct the blueprint for the Log views
+    tmp = user_bp(plugin_folder)
+    app.register_blueprint(tmp)
+
 
     # register the blueprints from the gui plugin
-    data_logger.gui_ep.register_blueprints(app.app)
+    #data_logger.gui_ep.register_blueprints(app.app)
     #init_db(app.app)
     User = data_logger.core_ep.User
 
