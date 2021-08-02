@@ -17,7 +17,7 @@ from flask import current_app
 from flask import jsonify
 
 
-def user_bp(plugin_folder):
+def process_bp(plugin_folder):
 
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
