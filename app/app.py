@@ -82,13 +82,13 @@ def create_app(app_config, data_logger):
     #log_bp = data_logger.gui_ep.log_bp
 
     tmp = dashboard_bp(plugin_folder)
-    app.register_blueprint(tmp)
+    app.app.register_blueprint(tmp)
     ## construct the blueprint for the users views
     tmp = user_bp(plugin_folder)
-    app.register_blueprint(tmp)
+    app.app.register_blueprint(tmp)
     ## construct the blueprint for the process views
     tmp = process_bp(plugin_folder)
-    app.register_blueprint(tmp)
+    app.app.register_blueprint(tmp)
     ## construct the blueprint for the process table views
     #tmp = process_table_bp(plugin_folder)
     #app.register_blueprint(tmp)
