@@ -67,8 +67,14 @@ def create_app(app_config, data_logger):
     ### current_app.config['FE'] = fe
     register_extensions(app.app, data_logger)
     # get the output plugin template folder
-    ### plugin_folder = fe.ep_output.template_path(p_config)
+    
+    # TODO: import plugin folder from gui plugin
+    
+    plugin_folder = fe.ep_output.template_path(p_config)
     ## construct the blueprint with configurable plugin_folder for the dashboard views
+    
+    # TODO: import all _bp functions from gui plugin
+
     tmp = dashboard_bp(plugin_folder)
     app.register_blueprint(tmp)
     ## construct the blueprint for the users views
