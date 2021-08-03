@@ -23,7 +23,7 @@ def process_bp(plugin_folder):
     bp = Blueprint("process_bp", __name__,  template_folder=plugin_folder)
 
     @bp.route("/views/process")
-    @login_required
+    #@login_required
     def process_index():
         """Show the users index."""
         user_list = current_app.config['FE'].ep_input.get_users()
