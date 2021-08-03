@@ -22,34 +22,34 @@ def user_bp(plugin_folder):
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
 
-    @bp.route("/users")
+    @bp.route("/views/users")
     @login_required
     def user_index():
         """Show the users index."""
         user_list = current_app.config['FE'].ep_input.get_users()
-        return render_template("/plugin_templates/user/index.html", user_list = user_list)
+        return render_template("../plugin_templates/user/index.html", user_list = user_list)
 
-    @bp.route("/user/create", methods=["GET"])
+    @bp.route("/views/user/create", methods=["GET"])
     @login_required
     def user_create_view():
         """Show the users index."""
-        return render_template("/plugin_templates/user/create.html")
+        return render_template("../plugin_templates/user/create.html")
     
-    @bp.route("/user/create", methods=["POST"])
+    @bp.route("/views/user/create", methods=["POST"])
     @login_required
     def user_create():
         """Show the users index."""
         result = current_app.config['FE'].ep_input.user_create(request.form)
-        return render_template("/plugin_templates/user/create.html")
+        return render_template("../plugin_templates/user/create.html")
 
-    @bp.route("/user/<username>")
+    @bp.route("/views/user/<username>")
     @login_required
     def user_detail(username):
         """Show the user detail view, if it is the current user, shows a change password button."""
         user_list = current_app.config['FE'].ep_input.get_user_by_username(username)
-        return render_template("/plugin_templates/user/detail.html", user_list =  user_list, username = username)
+        return render_template("../plugin_templates/user/detail.html", user_list =  user_list, username = username)
 
-    @bp.route("/user/<int:id>/update", methods=("GET", "POST"))
+    @bp.route("/views/user/<int:id>/update", methods=("GET", "POST"))
     @login_required
     def update(id):
         """Update a post if the current user is the author."""
@@ -71,7 +71,7 @@ def user_bp(plugin_folder):
                 return redirect(url_for("data_logger.index"))
         return render_template("data_logger/update.html", post=post)
 
-    @bp.route("/user/<int:id>/delete", methods=("POST",))
+    @bp.route("/views/user/<int:id>/delete", methods=("POST",))
     @login_required
     def delete(id):
         """Delete a post.
