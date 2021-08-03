@@ -23,7 +23,7 @@ def user_bp(plugin_folder):
     bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
 
     @bp.route("/views/users")
-    @login_required
+    #@login_required
     def user_index():
         """Show the users index."""
         user_list = current_app.config['FE'].ep_input.get_users()
