@@ -33,27 +33,15 @@ def create(body):
     res = {}
     # check if the process parameter is present
     if 'process' in body:
-        # create new process
-        new_process = Process(**body['process'])
         # set user_id same as the requesting user
-        #new_process.user_id = current_user
-        new_process.user_id = current_user.get_id()
+        body["process"]["user_id"] = current_user.get_id()
         # transform the tables json into string
-        if new_process.tables is not None:
-            new_process.tables = json.dumps(new_process.tables)
-        else:
-            new_process.tables = "[]"
+        if "tables" not in body["process"]:
+            body["process"]["tables"] = "[]"
         # set the string date into datetime
-        # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
-        new_process.created = str(datetime.now())
-        # add the modified process to the session
-        db.session.add(new_process)
-        try:
-            db.session.commit()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['process'] = { 'error_a' : error}
-        # TODO: Remove the following and return the same input instead of confirming (nah)?
+        body["process"]["created"] = str(datetime.now())
+        # create new process
+        new_process = Process.create(**body['process'])
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).one().as_dict()
