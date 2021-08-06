@@ -7,6 +7,11 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
 from pydoc import locate 
+from copy import deepcopy
+from sqlalchemy.ext.automap import automap_base
+from ..models.process import Process
+import json
+from sqlalchemy.exc import SQLAlchemyError
 
 
 class ProcessTable():
@@ -76,3 +81,108 @@ class ProcessTable():
     def __repr__(self):
         return str(self.name)
 
+    def create(self, table_dict): 
+        """ Create a table.
+        
+            Args:
+            body (dict): dict containing the fields of the new table.
+
+            Returns:
+            res (dict): the process containing the new table.
+        """
+        #initialize void response
+        res = {}
+        # instantiate process table with the body dict as kwargs
+        table = deepcopy(table_dict)
+        new_table = self.__init__(**table)
+        if not db.engine.dialect.has_table(db.engine, new_table.name):
+            new_table.table.create(db.engine)
+        #update metadata and tables
+        db.Model.metadata.reflect(bind=db.engine)
+        # reflect the tables
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
+        # add the table to the tables array in the process (convert to string for compatibility)
+        try:
+            p_model = Process.query.filter_by(id=new_table.process_id).one()
+            p_table = p_model.as_dict()
+            # construct a table model (see swagger yaml) with table_column models
+            table_m = {}
+            table_m["name"] = new_table.name
+            # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
+            table_m["real_name"] = new_table.name
+            table_m["columns"] = new_table.columns
+            # convert the tables string to an array
+            t_array = json.loads(p_table["tables"])
+            #insert the new table model in the tables array
+            t_array.append(table_m)
+            # save the table_m array in a json string in process.tables 
+            p_table["tables"] = json.dumps(t_array)
+            # update the tables attribute in the process model
+            p_model.tables = p_table["tables"] 
+            db.session.commit()
+            db.session.close()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res = { 'error_c' : error}
+            return res
+        return p_table
+            
+    def read(self, process_id, table_param):
+        """ Performs a query to a process table.
+
+            Args:
+            process_id (str): id field of the process model.
+
+            table_param (str): name of the table 
+
+            Returns:
+            res (dict): the requested process table.
+        """ 
+        # query a process model 
+        # TODO: filter by userid and column,value
+        # sanitize the table_param string 
+        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
+        # query a table
+        try:
+            # TODO: query table by name from process tables array 
+            #ptable.read_all(int(process_param))
+            proc = Process.query.filter_by(id=process_id).one().as_dict()
+            res_list = json.loads(proc["tables"])
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # search for the name in the keys of elements of  the tables array.       
+        try:
+            return next(x for x in res_list if table_param in x["name"])
+        except StopIteration:
+            raise ValueError("No matching record found")     
+            return None
+
+    def delete(self, process_id, table_param):
+        """ Delete a table from a process.
+
+            Args:
+            process_id (str): id field of the process.
+
+            table_param (str): name of the table
+
+            Returns:
+            res (str): table deleted confirmation message
+        """ 
+        # query a process model 
+        # TODO: filter by userid and column,value
+        # sanitize the table_param string because eval is used
+        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
+        Base = automap_base()
+        #update metadata and tables
+        Base.prepare(db.engine, reflect=True)
+        register_model = eval("Base.classes." + table_param)
+        # TODO: verify that the table is in the tables array of the current process
+        # delete the table
+        try:
+            register_model.__table__.drop(db.engine)
+            return table_param + " table deleted"
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error

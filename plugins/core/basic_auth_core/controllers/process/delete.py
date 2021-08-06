@@ -7,6 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from app.app import login_manager
 from ...models.process import Process
+from ...models.process_table import ProcessTable
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.authorization import authorization_required
@@ -26,8 +27,8 @@ def delete(process_id):
     
 
     table_param = request.args.get("table")
-    # query a process model 
     # TODO: filter by userid and column,value
+    # delete process
     if table_param is None:
         try:
             res = Process.query.filter_by(id=process_id).one()
@@ -44,30 +45,22 @@ def delete(process_id):
         return res.id
     else:
         # parse the table_param string because eval is used
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
-        Base = automap_base()
         #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        register_model = eval("Base.classes." + table_param)
         # verify if the reg_id param is set
         reg_id = request.args.get("reg_id")
+        # delete table
         if reg_id is None:
-            # TODO: verify that the table is in the tables array of the current process
-            # delete the table
-            try:
-                register_model.__table__.drop(db.engine)
-                return table_param + " table deleted"
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
+            return ProcessTable.delete(process_id, table_param)
+        # delete register
         else:
             # perform query
+            register_model = eval("Base.classes." + table_param)
             try:
                 res=db.session.query(register_model).filter_by(id=reg_id).one()
             except SQLAlchemyError as e:
                 error = str(e)
                 return error
-            # perform delete 
+            # perform register delete 
             db.session.delete(res)
             try:
                 db.session.commit()
