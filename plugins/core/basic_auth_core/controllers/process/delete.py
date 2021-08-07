@@ -24,8 +24,6 @@ def delete(process_id):
         Returns:
         res (int): the deleted register id field
     """ 
-    
-
     table_param = request.args.get("table")
     # TODO: filter by userid and column,value
     # delete process
