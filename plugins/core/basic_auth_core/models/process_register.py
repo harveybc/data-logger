@@ -40,19 +40,12 @@ class ProcessRegister():
 
             Returns:
             res (dict): the newly created register model
-        """
-        # instantiate process register with the body dict as kwargs
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)        
-        # query a table register
-        Base = automap_base()
-        #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        # sanitize the table_param string because eval is used
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
-        register_base = eval("Base.classes." + body['register']['table'])
+        """  
+        # sanitize the input string and limit its length
+        table_param = self.sanitize_str(register['table'], 256)
+        register_base = eval("self.Base.classes." + table_param)
         # set the new values from the values array
-        register_model = register_base(**body['register']['values'])
+        register_model = register_base(**register['values'])
         # update the register
         try:
             db.session.add(register_model)
@@ -61,13 +54,6 @@ class ProcessRegister():
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
-            res['register'] ={ 'error_d' : error}
-        # verify if the register was created
-        try:
-            res['register'] = as_dict(db.session.query(register_base).filter_by(id=new_id).one())
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_e' : error}
-        # return register as dict
+            res ={ 'error_d' : error}
         return res
+

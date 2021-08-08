@@ -13,8 +13,7 @@ from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
 
-
-class ProcessTable():
+class ProcessTable(BaseModel):
     """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
@@ -63,10 +62,8 @@ class ProcessTable():
     
     # ensures the type is a single word representing the sqlalchemy type of the columns
     def parse_sqlalchemy_column_type(self, input_str):
-        # limit the length of the input_str  to 256 chars
-        short_input = (input_str[:256]) if len(input_str) > 256 else input_str
-        # remove dangerous characters
-        translated_input = short_input.strip("\"',\\*.!:-+/ #\{\}[]")
+        # sanitize the input string and limit its length
+        translated_input = self.sanitize_str(input_str, 256)
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
             translated_input == "Float", translated_input == "Integer", translated_input == "Interval", translated_input == "LargeBinary", translated_input == "MatchType", 
@@ -98,10 +95,7 @@ class ProcessTable():
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)
-        # reflect the tables
-        Base = automap_base()
-        Base.prepare(db.engine, reflect=True)
+        self.reflect_prepare()
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
             p_model = Process.query.filter_by(id=new_table.process_id).one()
@@ -141,8 +135,8 @@ class ProcessTable():
         """ 
         # query a process model 
         # TODO: filter by userid and column,value
-        # sanitize the table_param string 
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
+        # sanitize the input string and limit its length
+        table_param = self.sanitize_str(table_param, 256)
         # query a table
         try:
             # TODO: query table by name from process tables array 
@@ -175,13 +169,14 @@ class ProcessTable():
         Base = automap_base()
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
-        # sanitize the table_param string because eval is used
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
+        # sanitize the input string and limit its length
+        table_param = self.sanitize_str(table_param, 256)
         register_model = eval("Base.classes." + table_param)
         # TODO: verify that the table is in the tables array of the current process
         # delete the table
         try:
             register_model.__table__.drop(db.engine)
+            self.reflect_prepare()
             return table_param + " table deleted"
         except SQLAlchemyError as e:
             error = str(e)
