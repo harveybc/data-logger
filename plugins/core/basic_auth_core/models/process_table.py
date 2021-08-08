@@ -172,11 +172,11 @@ class ProcessTable():
         """ 
         # query a process model 
         # TODO: filter by userid and column,value
-        # sanitize the table_param string because eval is used
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
         Base = automap_base()
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
+        # sanitize the table_param string because eval is used
+        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
         register_model = eval("Base.classes." + table_param)
         # TODO: verify that the table is in the tables array of the current process
         # delete the table
