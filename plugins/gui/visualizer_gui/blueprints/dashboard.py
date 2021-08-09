@@ -23,7 +23,7 @@ def dashboard_bp(plugin_folder):
     bp = Blueprint("dashboard_bp", __name__,  template_folder=plugin_folder)
     
     @bp.route("/")
-    @authorization_required
+    @login_required
     def index():
         # read the data to be visualized using the using the Feature extractor instance, preinitialized in __init__.py with input and output plugins entry points.
         # TODO: replace 0 in vis_data by process_id, obtained as the first process_id belonging to the current user.    
@@ -69,14 +69,14 @@ def dashboard_bp(plugin_folder):
 
 
     @bp.route("/processes")
-    @authorization_required
+    @login_required
     def process_index():
         """Show the processes index."""
         process_list = current_app.config['FE'].ep_input.get_processes(current_user.id)
         return render_template("/plugin_templates/process/index.html", process_list = process_list)
 
     @bp.route("/process/<pid>")
-    @authorization_required
+    @login_required
     def process_detail(pid):
         """Show the process detail view, if it is the current user, shows a change password button."""
         process_list = current_app.config['FE'].ep_input.get_process_by_pid(pid)

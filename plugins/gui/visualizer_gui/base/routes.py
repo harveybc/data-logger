@@ -19,12 +19,11 @@ from run import data_logger
 
 from app.util import verify_pass
 
-#@blueprint.route('/')
-#def route_default():
-#    return redirect(url_for('base_blueprint.login'))
+@blueprint.route('/')
+def route_default():
+    return redirect(url_for('home_blueprint.index'))
 
 ## Login & Registration
-
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm(request.form)

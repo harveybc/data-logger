@@ -16,6 +16,7 @@ from ...controllers.common import as_dict, is_num
 from ...controllers.authorization import authorization_required
 from ...controllers.log import log_required
 from copy import deepcopy
+from ...models.process_table import ProcessTable
 
 @authorization_required
 @log_required
@@ -33,27 +34,15 @@ def create(body):
     res = {}
     # check if the process parameter is present
     if 'process' in body:
-        # create new process
-        new_process = Process(**body['process'])
         # set user_id same as the requesting user
-        #new_process.user_id = current_user
-        new_process.user_id = current_user.get_id()
+        body["process"]["user_id"] = current_user.get_id()
         # transform the tables json into string
-        if new_process.tables is not None:
-            new_process.tables = json.dumps(new_process.tables)
-        else:
-            new_process.tables = "[]"
+        if "tables" not in body["process"]:
+            body["process"]["tables"] = "[]"
         # set the string date into datetime
-        # new_process.created = datetime.strptime(new_process.created, '%Y-%m-%d  %H:%M:%S.%f')
-        new_process.created = str(datetime.now())
-        # add the modified process to the session
-        db.session.add(new_process)
-        try:
-            db.session.commit()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['process'] = { 'error_a' : error}
-        # TODO: Remove the following and return the same input instead of confirming (nah)?
+        body["process"]["created"] = str(datetime.now())
+        # create new process
+        new_process = Process.create(**body['process'])
         # test if the new process was created 
         try:
             res['process'] = Process.query.filter_by(name=new_process.name).one().as_dict()
@@ -64,50 +53,16 @@ def create(body):
     # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
-        table = deepcopy(body['table'])
-        new_table = ProcessTable(**table)
-        if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.engine)
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)
-        # reflect the tables
-        Base = automap_base()
-        Base.prepare(db.engine, reflect=True)
-        
-        # add the table to the tables array in the process (convert to string for compatibility)
-        try:
-            p_model = Process.query.filter_by(id=new_table.process_id).one()
-            p_table = p_model.as_dict()
-            # construct a table model (see swagger yaml) with table_column models
-            table_m = {}
-            table_m["name"] = new_table.name
-            # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
-            table_m["real_name"] = new_table.name
-            table_m["columns"] = new_table.columns
-            # convert the tables string to an array
-            t_array = json.loads(p_table["tables"])
-            #insert the new table model in the tables array
-            t_array.append(table_m)
-            # save the table_m array in a json string in process.tables 
-            p_table["tables"] = json.dumps(t_array)
-            # update the tables attribute in the process model
-            p_model.tables = p_table["tables"] 
-            db.session.commit()
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['table'] ={ 'error_c' : error}
-            return res
+        p_table = ProcessTable.create(body["table"])
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
-            res['process']["tables"] = p_table["tables"]
-            
+            res['process']["tables"] = p_table["tables"]    
         # test if the new process table  was created 
         try:
-            if db.engine.dialect.has_table(db.engine, new_table.name):
-                cols = db.metadata.tables[new_table.name].c
+            if db.engine.dialect.has_table(db.engine, body["table"]["name"]):
+                cols = db.metadata.tables[body["table"]["name"]].c
                 r_table={}
-                r_table['name'] = new_table.name
+                r_table['name'] = body["table"]["name"]
                 r_table['columns'] = [column.key for column in cols]               
                 res['table'] = r_table
             else:

@@ -55,7 +55,7 @@ def create_app(app_config, data_logger):
     # adds an url rule to serve stati files from the gui plugin location
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
 
-     # read plugin configuration JSON file
+    # read plugin configuration JSON file
     #p_config = read_plugin_config()
     # initialize FeatureExtractor
     ###fe = FeatureExtractor(p_config)
@@ -67,18 +67,41 @@ def create_app(app_config, data_logger):
     ### current_app.config['FE'] = fe
     register_extensions(app.app, data_logger)
     # get the output plugin template folder
-    ### plugin_folder = fe.ep_output.template_path(p_config)
+    
+    # TODO: import plugin folder from gui plugin
+    
+    plugin_folder = data_logger.gui_ep.template_path()
     ## construct the blueprint with configurable plugin_folder for the dashboard views
-    #tmp = dashboard_bp(plugin_folder)
-    #app.register_blueprint(tmp)
+    
+    # TODO: import all _bp functions from gui plugin
+    dashboard_bp = data_logger.gui_ep.dashboard_bp
+    user_bp = data_logger.gui_ep.user_bp
+    process_bp = data_logger.gui_ep.process_bp
+    #process_table_bp = data_logger.gui_ep.process_table_bp
+    #authorization_bp = data_logger.gui_ep.authorization_bp
+    #log_bp = data_logger.gui_ep.log_bp
+
+    tmp = dashboard_bp(plugin_folder)
+    app.app.register_blueprint(tmp)
     ## construct the blueprint for the users views
-    #tmp = user_bp(plugin_folder)
+    tmp = user_bp(plugin_folder, data_logger)
+    app.app.register_blueprint(tmp)
+    ## construct the blueprint for the process views
+    tmp = process_bp(plugin_folder)
+    app.app.register_blueprint(tmp)
+    ## construct the blueprint for the process table views
+    #tmp = process_table_bp(plugin_folder)
     #app.register_blueprint(tmp)
+    ## construct the blueprint for the Authorization views
+    #tmp = authorization_bp(plugin_folder)
+    #app.register_blueprint(tmp)
+    ## construct the blueprint for the Log views
+    #tmp = log_bp(plugin_folder)
+    #app.register_blueprint(tmp)
+
 
     # register the blueprints from the gui plugin
     #data_logger.gui_ep.register_blueprints(app.app)
-    
-    print("\n#1\n")
     #init_db(app.app)
     User = data_logger.core_ep.User
 

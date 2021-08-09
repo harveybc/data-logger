@@ -8,6 +8,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required, current_user
 from ...controllers.common import as_dict, is_num
 from ...models.process import Process
+from ...models.process_table import ProcessTable
+
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.authorization import authorization_required
@@ -23,6 +25,7 @@ def read(process_id):
         res (dict): the requested process register, process table or process table register.
     """ 
     table_param = request.args.get("table")
+     
     # query a process model 
     # TODO: filter by userid and column,value
     if table_param is None:
@@ -38,19 +41,7 @@ def read(process_id):
         # query a table
         reg_id = request.args.get("reg_id")
         if reg_id is None:
-            try:
-                # TODO: query table by name from process tables array 
-                #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=process_id).one().as_dict()
-                res_list = json.loads(proc["tables"])
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
-            # search for the name in the keys of elements of an the tables array.       
-            try:
-                return next(x for x in res_list if table_param in x["name"])
-            except StopIteration:
-                raise ValueError("No matching record found")     
+            res = ProcessTable.read(process_id, table_param)
             return res
         # query a table register
         else:

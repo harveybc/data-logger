@@ -17,21 +17,21 @@ from flask import current_app
 from flask import jsonify
 
 
-def user_bp(plugin_folder):
+def process_bp(plugin_folder):
 
     # construct the data_logger blueprint using the plugin folder as template folder
-    bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
+    bp = Blueprint("process_bp", __name__,  template_folder=plugin_folder)
 
-    @bp.route("/users")
-    @authorization_required
-    def user_index():
+    @bp.route("/views/process")
+    #@login_required
+    def process_index():
         """Show the users index."""
         user_list = current_app.config['FE'].ep_input.get_users()
         return render_template("/plugin_templates/user/index.html", user_list = user_list)
 
-    @bp.route("/user/<username>")
-    @authorization_required
-    def user_detail(username):
+    @bp.route("/views/process/<username>")
+    @login_required
+    def process_detail(username):
         """Show the user detail view, if it is the current user, shows a change password button."""
         user_list = current_app.config['FE'].ep_input.get_user_by_username(username)
         return render_template("/plugin_templates/user/detail.html", user_list =  user_list, username = username)

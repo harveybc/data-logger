@@ -17,40 +17,40 @@ from flask import current_app
 from flask import jsonify
 from flask import request
 
-def user_bp(plugin_folder):
+def user_bp(plugin_folder, data_logger):
 
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
 
-    @bp.route("/users")
-    @authorization_required
+    @bp.route("/views/users")
+    #@login_required
     def user_index():
         """Show the users index."""
-        user_list = current_app.config['FE'].ep_input.get_users()
-        return render_template("/plugin_templates/user/index.html", user_list = user_list)
+        user_list = data_logger.core_ep.User.real_all()
+        return render_template("../plugin_templates/user/index.html", user_list = user_list)
 
-    @bp.route("/user/create", methods=["GET"])
-    @authorization_required
+    @bp.route("/views/user/create", methods=["GET"])
+    @login_required
     def user_create_view():
         """Show the users index."""
-        return render_template("/plugin_templates/user/create.html")
+        return render_template("../plugin_templates/user/create.html")
     
-    @bp.route("/user/create", methods=["POST"])
-    @authorization_required
+    @bp.route("/views/user/create", methods=["POST"])
+    @login_required
     def user_create():
         """Show the users index."""
         result = current_app.config['FE'].ep_input.user_create(request.form)
-        return render_template("/plugin_templates/user/create.html")
+        return render_template("../plugin_templates/user/create.html")
 
-    @bp.route("/user/<username>")
-    @authorization_required
+    @bp.route("/views/user/<username>")
+    @login_required
     def user_detail(username):
         """Show the user detail view, if it is the current user, shows a change password button."""
         user_list = current_app.config['FE'].ep_input.get_user_by_username(username)
-        return render_template("/plugin_templates/user/detail.html", user_list =  user_list, username = username)
+        return render_template("../plugin_templates/user/detail.html", user_list =  user_list, username = username)
 
-    @bp.route("/user/<int:id>/update", methods=("GET", "POST"))
-    @authorization_required
+    @bp.route("/views/user/<int:id>/update", methods=("GET", "POST"))
+    @login_required
     def update(id):
         """Update a post if the current user is the author."""
         post = get_post(id)
@@ -71,8 +71,8 @@ def user_bp(plugin_folder):
                 return redirect(url_for("data_logger.index"))
         return render_template("data_logger/update.html", post=post)
 
-    @bp.route("/user/<int:id>/delete", methods=("POST",))
-    @authorization_required
+    @bp.route("/views/user/<int:id>/delete", methods=("POST",))
+    @login_required
     def delete(id):
         """Delete a post.
 

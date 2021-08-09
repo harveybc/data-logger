@@ -14,6 +14,15 @@
                                 "col_type": "Integer"
                             }
                         ]
+                    },
+                    {
+                        "name": "test_table4",
+                        "columns": [
+                            {
+                                "name" : "test_column",
+                                "col_type": "Integer"
+                            }
+                        ]
                     }
                 ]
             }
