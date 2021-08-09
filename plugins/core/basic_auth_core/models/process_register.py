@@ -13,7 +13,7 @@ from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
 
-class ProcessRegister():
+class ProcessRegister(BaseModel):
     """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
     def __init__(self, **kwargs):
         # extract kwargs into class attributes

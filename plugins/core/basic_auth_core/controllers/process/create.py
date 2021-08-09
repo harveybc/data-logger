@@ -73,32 +73,7 @@ def create(body):
             return res
     # check if the process parameter is present    
     if 'register' in body:
-        # instantiate process register with the body dict as kwargs
-        #new_register = ProcessRegister(**body['register'])
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)        
-        # query a table register
-        Base = automap_base()
-        #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        register_base = eval("Base.classes." + body['register']['table'])
-        # set the new values from the values array
-        register_model = register_base(**body['register']['values'])
-        # update the register
-        try:
-            db.session.add(register_model)
-            db.session.commit()
-            new_id = register_model.id
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_d' : error}
-        # verify if the register was created
-        try:
-            res['register'] = as_dict(db.session.query(register_base).filter_by(id=new_id).one())
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_e' : error}
+        register_model = ProcessRegister.create()    
         # return register as dict
+        res['register'] = register_model.as_dict()
     return res
