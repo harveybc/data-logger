@@ -17,8 +17,8 @@ The data structures used can be divided in two groups:
 
 The system has a plugin architecture that allows loading of plugins of three types configured from json files in the root directory:  
 - Store plugin (config_store.json): Configures the initial data structure and a custom database engine to save all the data from all processes (default: sqlite_store).
-- Core plugin (config_core.json): Configures the API endpoints and provides AAA , default: basic_auth_core, used [https://github.com/bjdash/apic](APIC: design, documentation and testing tool for Swagger 2.0 API specification).
-- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required, default: visualizer_gui that auto generate plots and uses [https://github.com/ColorlibHQ/AdminLTE](AdminLTE: Web dashboard based on Bootstrap 4).
+- Core plugin (config_core.json): Configures the API endpoints and provides AAA , default: basic_auth_core, used [APIC:](https://github.com/bjdash/apic) design, documentation and testing tool for Swagger 2.0 API specification.
+- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required, default: visualizer_gui that auto generate plots and uses [AdminLTE:](https://github.com/ColorlibHQ/AdminLTE) Web dashboard based on Bootstrap 4.
 
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
@@ -26,8 +26,8 @@ This system can be useful for:
 - As a framework for general-purpose Web application development because:
     - It features a plugin architecture and can be used as starting point for an expanded or modified application. 
     - A Model View Controller (MVC) design pattern of the core (back-end) and GUI (front-end) plugins allows data-logger to be easily modified or expanded to a general-purpose application (in a separate plugin).
-    - The use of [https://flask-sqlalchemy.palletsprojects.com/](flask-sqlalchemy) Object Relational Mapping (ORM) allows for object-oriented database-independent queries without SQL (configured from the store plugin).
-    - The use of [https://github.com/zalando/connexion](Connexion) allows for API deployment from an OpenAPI/Swagger specification in the core plugin.
+    - The use of [flask-sqlalchemy](https://flask-sqlalchemy.palletsprojects.com/) Object Relational Mapping (ORM) allows for object-oriented database-independent queries without SQL (configured from the store plugin).
+    - The use of [Connexion](https://github.com/zalando/connexion) allows for API deployment from an OpenAPI/Swagger specification in the core plugin.
 
 ## Installation (Work In Progress, use github installation)
 
