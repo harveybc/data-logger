@@ -17,8 +17,8 @@ The data structures used can be divided in two groups:
 
 The system has a plugin architecture that allows loading of plugins of three types configured from json files in the root directory:  
 - Store plugin (config_store.json): Configures the initial data structure and a custom database engine to save all the data from all processes (default: sqlite_store).
-- Core plugin (config_core.json): Configures the API endpoints and provides AAA (default: basic_auth_core, used [https://github.com/bjdash/apic](APIC: design, documentation and testing tool for Swagger 2.0 API specification).
-- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required. (default: visualizer_gui that auto generate plots and uses [https://github.com/ColorlibHQ/AdminLTE](AdminLTE: Web dashboard based on Bootstrap 4)).
+- Core plugin (config_core.json): Configures the API endpoints and provides AAA , default: basic_auth_core, used [https://github.com/bjdash/apic](APIC: design, documentation and testing tool for Swagger 2.0 API specification).
+- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required, default: visualizer_gui that auto generate plots and uses [https://github.com/ColorlibHQ/AdminLTE](AdminLTE: Web dashboard based on Bootstrap 4).
 
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
