@@ -12,6 +12,7 @@ from sqlalchemy.ext.automap import automap_base
 from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
+from ..controllers.common import as_dict, is_num
 
 class ProcessRegister(BaseModel):
     """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
@@ -57,3 +58,20 @@ class ProcessRegister(BaseModel):
             res ={ 'error_d' : error}
         return res
 
+    def read(self, process_id, table_param, reg_id):
+        """ Performs a query to a process table register.
+
+            Args:
+            process_id (str): id field of the process model.
+
+            table_param (str): name of the table 
+
+            Returns:
+            res (moderes): the requested process table.
+        """ 
+        register_model = eval("Base.classes." + table_param)
+        # perform query
+        reg_id = self.sanitize_str(reg_id)
+        res=db.session.query(register_model).filter_by(id=reg_id).one()
+        return res
+    
