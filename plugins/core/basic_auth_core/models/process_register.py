@@ -67,7 +67,7 @@ class ProcessRegister(BaseModel):
             table_param (str): name of the table 
 
             Returns:
-            res (moderes): the requested process table.
+            res (model): the requested process table.
         """ 
         register_model = eval("Base.classes." + table_param)
         # perform query
@@ -75,3 +75,38 @@ class ProcessRegister(BaseModel):
         res=db.session.query(register_model).filter_by(id=reg_id).one()
         return res
     
+    def update(self, register):
+        """ Update a register in db based on a json from a request's body parameter.
+
+            Args:
+            register (dict): dict containing the register values
+            table_param (dict): name of the table
+
+            Returns:
+            register_model (model): the updated model
+        """
+        table_param = self.sanitize_str(register['table'])
+        register_model = eval("Base.classes." + table_param)
+        # perform query
+        model = db.session.query(register_model).filter_by(id=register['reg_id']).one()
+        # set the new values from the values array
+        for property, value in register['values'].items():
+            setattr(model, property, value)
+        # update the register
+        try:
+            db.session.commit()
+            db.session.close()
+        except SQLAlchemyError as e:
+            error = str(e)
+            res['register'] ={ 'error_d' : error}
+        return register_model
+
+def delete(process_id, table_param, reg_id):
+    """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
+
+        Args:
+        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
+
+        Returns:
+        res (int): the deleted register id field
+    """  

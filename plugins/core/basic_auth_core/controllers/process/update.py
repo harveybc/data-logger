@@ -54,37 +54,10 @@ def update(process_id, body):
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
-            res['process'] = { 'error_c' : error}
-    
+            res['process'] = { 'error_c' : error}    
     # check if the process parameter is present    
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
-        #new_register = ProcessRegister(**body['register'])
-        
-        # query a table register
-        Base = automap_base()
-        #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        register_model = eval("Base.classes." + body['register']['table'])
-        # perform query
-        model = db.session.query(register_model).filter_by(id=body['register']['reg_id']).one()
-        # set the new values from the values array
-        for property, value in body['register']['values'].items():
-            setattr(model, property, value)
-        # update the register
-        try:
-            db.session.commit()
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_d' : error}
-        # verify if the register was updated
-        try:
-            res['register'] = as_dict(db.session.query(register_model).filter_by(id=body['register']['reg_id']).one())
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_e' : error}
-        
+        res['register'] = as_dict(ProcessRegister.update(body['register']))
     # return register as dict
     return res

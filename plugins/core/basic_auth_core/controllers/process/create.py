@@ -73,7 +73,7 @@ def create(body):
             return res
     # check if the process parameter is present    
     if 'register' in body:
-        register_model = ProcessRegister.create()    
+        register_model = ProcessRegister.create(body['register'])    
         # return register as dict
         res['register'] = register_model.as_dict()
     return res
