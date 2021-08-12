@@ -75,6 +75,27 @@ class ProcessRegister(BaseModel):
         res=db.session.query(register_model).filter_by(id=reg_id).one()
         return res
     
+    def read_all(self, process_id, table_param):
+        """ Query all registers of the process table register.
+            
+            Args:
+            process_id (str): id field of the process model.
+
+            table_param (str): name of the table 
+            
+            Returns:
+            res (list): the requested list of registers.
+        """ 
+        # generate list of registers
+        # TODO: filter by column,value
+        # TODO: validate if the table is in the process tables array
+        table_param = self.sanitize_str(table_param, 256)
+        register_model = eval("Base.classes." + table_param)
+        # perform query
+        res=db.session.query(register_model).all()
+        return [as_dict(c) for c in res]
+
+
     def update(self, register):
         """ Update a register in db based on a json from a request's body parameter.
 
@@ -101,12 +122,28 @@ class ProcessRegister(BaseModel):
             res['register'] ={ 'error_d' : error}
         return register_model
 
-def delete(process_id, table_param, reg_id):
-    """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
+    def delete(self, process_id, table_param, reg_id):
+        """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
-        Args:
-        process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
+            Args:
+            process_id (str): id field of the process model, obtained from a request's process_id url parameter (processs/<process_id>).
 
-        Returns:
-        res (int): the deleted register id field
-    """  
+            Returns:
+            res (int): the deleted register id field
+        """  
+        # sanitize the input string and limit its length
+        table_param = self.sanitize_str(table_param, 256)
+        register_model = eval("Base.classes." + table_param)
+        try:
+            res=db.session.query(register_model).filter_by(id=reg_id).one()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        # perform register delete 
+        db.session.delete(res)
+        try:
+            db.session.commit()
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        return reg_id

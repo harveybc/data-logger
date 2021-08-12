@@ -153,6 +153,25 @@ class ProcessTable(BaseModel):
             raise ValueError("No matching record found")     
             return None
 
+    def read_all(self, process_id):
+        """ Query all tables of a process.
+            
+            Args:
+            process_id (str): id field of the process model.
+            
+            Returns:
+            res (list): the requested list of tables.
+        """ 
+        try:
+            # TODO: get tables array from the process
+            #ptable.read_all(int(process_param))
+            proc = Process.query.filter_by(id=int(process_id)).first_or_404()
+            res = json.loads(proc.tables)
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        return res
+
     def delete(self, process_id, table_param):
         """ Delete a table from a process.
 

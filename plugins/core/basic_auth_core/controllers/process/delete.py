@@ -8,6 +8,7 @@ from flask_login import login_required, current_user
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
+from ...models.process_register import ProcessRegister
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.authorization import authorization_required
@@ -51,19 +52,6 @@ def delete(process_id):
             return ProcessTable.delete(process_id, table_param)
         # delete register
         else:
-            # perform query
-            register_model = eval("Base.classes." + table_param)
-            try:
-                res=db.session.query(register_model).filter_by(id=reg_id).one()
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
-            # perform register delete 
-            db.session.delete(res)
-            try:
-                db.session.commit()
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
-            return res.id
+            return ProcessRegister.delete(process_id, table_param, reg_id)
+
             

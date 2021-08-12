@@ -8,6 +8,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required
 from app.app import login_manager
 from ...models.process import Process
+from ...models.process_table import ProcessTable
 from sqlalchemy.ext.automap import automap_base
 from flask import request
 from ...controllers.common import as_dict, is_num
@@ -41,14 +42,7 @@ def read_all():
         # generate the list of tables 
         # TODO: filter by userid and column,value
         if table_param is None:
-            try:
-                # TODO: get tables array from the process
-                #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=int(process_param)).first_or_404()
-                res = json.loads(proc.tables)
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
+            res = ProcessTable.read_all(process_param)
             return res
         else:
             # generate list of registers
