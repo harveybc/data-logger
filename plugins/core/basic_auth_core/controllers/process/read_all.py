@@ -9,6 +9,7 @@ from flask_login import login_required
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
+from ...models.process_register import ProcessRegister
 from sqlalchemy.ext.automap import automap_base
 from flask import request
 from ...controllers.common import as_dict, is_num
@@ -50,10 +51,5 @@ def read_all():
             # TODO: validate if the table name is valid 
             # TODO: validate if the table is in the process tables array
             # TODO: declare automap base class
-            Base = automap_base()
-            #update metadata and tables
-            Base.prepare(db.engine, reflect=True)
-            register_model = eval("Base.classes." + table_param)
-            # perform query
-            res=db.session.query(register_model).all()
-            return [as_dict(c) for c in res]
+            res = ProcessRegister.read_all(process_param, table_param)
+            return res
