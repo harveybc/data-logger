@@ -13,7 +13,7 @@ from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
 
-class ProcessTable(BaseModel):
+class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
         # extract kwargs into class attributes

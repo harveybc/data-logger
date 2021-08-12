@@ -8,7 +8,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.app import db
 from sqlalchemy.ext.automap import automap_base
 
-class BaseModel(db.Model):
+class BaseModel():
     """ Base class for the data_logger models 
         
         Args:

@@ -14,7 +14,7 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 
-class ProcessRegister(BaseModel):
+class ProcessRegister(db.Model):
     """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
