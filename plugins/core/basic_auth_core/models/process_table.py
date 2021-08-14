@@ -6,6 +6,7 @@ from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
+from app.util import sanitize_str
 from pydoc import locate 
 from copy import deepcopy
 from sqlalchemy.ext.automap import automap_base
@@ -63,7 +64,7 @@ class ProcessTable():
     # ensures the type is a single word representing the sqlalchemy type of the columns
     def parse_sqlalchemy_column_type(self, input_str):
         # sanitize the input string and limit its length
-        translated_input = BaseModel.sanitize_str(input_str, 256)
+        translated_input = sanitize_str(input_str, 256)
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
             translated_input == "Float", translated_input == "Integer", translated_input == "Interval", translated_input == "LargeBinary", translated_input == "MatchType", 
@@ -136,7 +137,7 @@ class ProcessTable():
         # query a process model 
         # TODO: filter by userid and column,value
         # sanitize the input string and limit its length
-        table_param = BaseModel.sanitize_str(table_param, 256)
+        table_param = sanitize_str(table_param, 256)
         # query a table
         try:
             # TODO: query table by name from process tables array 
@@ -189,7 +190,7 @@ class ProcessTable():
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
         # sanitize the input string and limit its length
-        table_param = BaseModel.sanitize_str(table_param, 256)
+        table_param = sanitize_str(table_param, 256)
         register_model = eval("Base.classes." + table_param)
         # TODO: verify that the table is in the tables array of the current process
         # delete the table

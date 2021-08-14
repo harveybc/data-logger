@@ -32,45 +32,6 @@ class BaseModel():
         # initializes automap base class that allows ORM in all tables
         self.reflect_prepare()
     
-    def sanitize_str(self, insecure_str, max_len):
-        """ Limits a string's length and removes insecure characters from it.
-
-            Args:
-            insecure_str (str): input string.
-            max_len (int): maximum string length.
-
-            Returns:
-            secure_str (str): sanitized string.
-        """
-        # limit the length of the input_str  to 256 chars
-        short_input = (insecure_str[:max_len]) if len(insecure_str) > max_len else insecure_str
-        # remove dangerous characters
-        secure_str = short_input.strip("\"',\\*.!:-+/ #\{\}[]")
-        return secure_str
-
-    def as_dict(self):   
-        """ Convert to dict containing all the columns in this model
-
-            Returns:
-            r2 (dict): the model's columns as dict.
-        """
-        r2 = {}
-        for c in self.__table__.columns:
-            attr = getattr(self, c.name)
-            if is_num(attr):
-                r2[c.name]=attr
-            else:
-                r2[c.name]=str(attr)
-        return r2
-
-    def reflect_prepare(self):
-        """ Update SQLAlchemy metadata and prepare automap base to allow ORM in all tables. """
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)
-        # reflect the tables
-        self.Base = automap_base()
-        self.Base.prepare(db.engine, reflect=True)
-
     def create(self, body): 
         """ Create a register in db based on a json from a request's body parameter.
 
@@ -172,12 +133,3 @@ class BaseModel():
             error = str(e.__dict__['orig'])
             return error
         return Id
-
-
-def is_num(n):
-    if isinstance(n, int):
-        return True
-    if isinstance(n, float):
-        return n.is_integer()
-    return False
-
