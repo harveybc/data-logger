@@ -9,6 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.attributes import flag_dirty, flag_modified
 from ..controllers.authorization import authorization_required
 from ..controllers.log import log_required
+from app.util import as_dict
 
 @authorization_required
 @log_required
@@ -30,7 +31,7 @@ def create(body):
         error = str(e.__dict__['orig'])
         return error
     # empty pass
-    res2 = res.as_dict()
+    res2 = as_dict(res)
     res2["password"] =""
     # return register as dict
     return res2
@@ -48,7 +49,7 @@ def read(userId):
     """ 
     res = User.read(userId)
     # empty pass
-    res2 = res.as_dict()
+    res2 = as_dict(res)
     res2["password"]=""
     return res2
     
@@ -67,7 +68,7 @@ def update(body, userId):
     # update the existing register
     res = User.update(body, userId)
     # empty pass
-    res2 = res.as_dict()
+    res2 = as_dict(res)
     res2["password"]=""
     # return register as dict
     return res2
@@ -97,7 +98,7 @@ def read_all():
     res = User.read_all()
     res2 =[]
     for r in res:
-        r2 = r.as_dict()
+        r2 = as_dict(r)
         r2["password"] = ""
         res2.append(r2)
         res2 =[]
