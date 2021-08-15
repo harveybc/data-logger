@@ -43,15 +43,15 @@ class BaseModel():
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        cls(**body)
+        res = cls(**body)
         # create new flask-sqlalchemy session
-        db.session.add(cls)
+        db.session.add(res)
         try:
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
-        return cls
+        return res
 
     @classmethod
     def read_all(cls):
@@ -102,8 +102,7 @@ class BaseModel():
             error = str(e.__dict__['orig'])
             return error
         # replace model with body fields
-        cls(**body)
-        res = cls
+        res = cls(**body)
         res.id =  Id
         # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
         db.session.merge(res)
