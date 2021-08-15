@@ -43,7 +43,7 @@ class BaseModel():
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        cls.__init__(**body)
+        cls(**body)
         # create new flask-sqlalchemy session
         db.session.add(cls)
         try:
@@ -102,7 +102,7 @@ class BaseModel():
             error = str(e.__dict__['orig'])
             return error
         # replace model with body fields
-        cls.__init__(**body)
+        cls(**body)
         res = cls
         res.id =  Id
         # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
