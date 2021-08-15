@@ -52,6 +52,7 @@ class BaseModel():
             return error
         return self
 
+    @classmethod
     def read_all(self):
         """ Query all models.
 
