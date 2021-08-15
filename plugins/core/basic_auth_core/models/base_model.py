@@ -32,7 +32,8 @@ class BaseModel():
         # initializes automap base class that allows ORM in all tables
         self.reflect_prepare()
     
-    def create(self, body): 
+    @classmethod
+    def create(cls, body): 
         """ Create a register in db based on a json from a request's body parameter.
 
             Args:
@@ -42,31 +43,32 @@ class BaseModel():
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        self.__init__(**body)
+        cls.__init__(**body)
         # create new flask-sqlalchemy session
-        db.session.add(self)
+        db.session.add(cls)
         try:
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
-        return self
+        return cls
 
     @classmethod
-    def read_all(self):
+    def read_all(cls):
         """ Query all models.
 
             Returns:
             res [(model)]: list of models.
         """ 
         try:
-            res = self.query.all()
+            res = cls.query.all()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         return res
         
-    def read(self, Id):
+    @classmethod
+    def read(cls, Id):
         """ Query a register in db based on the id field of the model.
 
             Args:
@@ -76,13 +78,14 @@ class BaseModel():
             res (model): the requested model.
         """ 
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         return res
 
-    def update(self, body, Id):
+    @classmethod
+    def update(cls, body, Id):
         """ Update a register in db based on a json from a request's body parameter.
 
             Args:
@@ -94,13 +97,13 @@ class BaseModel():
         """
         # query the existing register
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         # replace model with body fields
-        self.__init__(**body)
-        res = self
+        cls.__init__(**body)
+        res = cls
         res.id =  Id
         # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
         db.session.merge(res)
@@ -112,7 +115,8 @@ class BaseModel():
             return error
         return res
 
-    def delete(self, Id):
+    @classmethod
+    def delete(cls, Id):
         """ Delete a register in db based on the id field of the model.
 
             Args:
@@ -122,7 +126,7 @@ class BaseModel():
             res (int): the deleted register id field
         """ 
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
