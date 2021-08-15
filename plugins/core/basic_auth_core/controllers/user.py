@@ -101,7 +101,6 @@ def read_all():
         r2 = as_dict(r)
         r2["password"] = ""
         res2.append(r2)
-        res2 =[]
     return res2
 
    
