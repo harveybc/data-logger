@@ -33,7 +33,7 @@ class BaseModel():
         self.reflect_prepare()
     
     @classmethod
-    def create(cls, body): 
+    def create(cls, **body): 
         """ Create a register in db based on a json from a request's body parameter.
 
             Args:
@@ -43,7 +43,7 @@ class BaseModel():
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        res = cls(**body)
+        res = cls(body)
         # create new flask-sqlalchemy session
         db.session.add(res)
         try:
