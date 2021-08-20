@@ -43,7 +43,7 @@ class BaseModel():
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        res = cls(body)
+        res = cls(**body)
         # create new flask-sqlalchemy session
         db.session.add(res)
         try:
