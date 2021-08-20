@@ -23,7 +23,7 @@ def create(body):
         res (dict): the newly created user register with empty password field.
     """
     # instantiate user with the body dict as kwargs
-    new_user = User.create(body)
+    new_user = User.create(**body)
     # test if the new user was created 
     try:
         res = User.query.filter_by(username=new_user.username).first_or_404()
