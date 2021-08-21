@@ -23,5 +23,5 @@ def read_all():
     res2 =[]
     for r in res:
         r.password = ""
-        res2.append(r.as_dict())
+        res2.append(as_dict(r))
     return res2

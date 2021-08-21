@@ -13,6 +13,7 @@ from sqlalchemy.ext.automap import automap_base
 from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
+from ..controllers.common import as_dict, is_num
 
 class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
@@ -100,7 +101,7 @@ class ProcessTable():
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
             p_model = Process.query.filter_by(id=new_table.process_id).one()
-            p_table = p_model.as_dict()
+            p_table = as_dict(p_model)
             # construct a table model (see swagger yaml) with table_column models
             table_m = {}
             table_m["name"] = new_table.name
@@ -142,7 +143,7 @@ class ProcessTable():
         try:
             # TODO: query table by name from process tables array 
             #ptable.read_all(int(process_param))
-            proc = Process.query.filter_by(id=process_id).one().as_dict()
+            proc = as_dict(Process.query.filter_by(id=process_id).one())
             res_list = json.loads(proc["tables"])
         except SQLAlchemyError as e:
             error = str(e)

@@ -64,7 +64,7 @@ def create(body):
         error = str(e.__dict__['orig'])
         return error
     # return register as dict
-    return res.as_dict()
+    return as_dict(res)
 
 @authorization_required
 def read(log_id):
@@ -77,7 +77,7 @@ def read(log_id):
         res (dict): the requested  register.
     """
     try:
-        res = Log.query.filter_by(id=log_id).one().as_dict()
+        res = as_dict(Log.query.filter_by(id=log_id).one())
     except SQLAlchemyError as e:
         error = str(e)
         return error 
@@ -114,7 +114,7 @@ def update(log_id, body):
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res = Log.query.filter_by(id=int(log_id)).one().as_dict()
+        res = as_dict(Log.query.filter_by(id=int(log_id)).one())
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
@@ -161,7 +161,7 @@ def read_all():
     # convert to list of dicts and empty pass
     res2 =[]
     for r in res:
-        res2.append(r.as_dict())
+        res2.append(as_dict(r))
     return res2
 
 def log_request(*args, **kwargs):

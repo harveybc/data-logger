@@ -31,7 +31,7 @@ def read(process_id):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=process_id).one().as_dict()
+            res = as_dict(Process.query.filter_by(id=process_id).one())
         except SQLAlchemyError as e:
             error = str(e)
             return error 
@@ -47,5 +47,5 @@ def read(process_id):
             # query a table register
             res = ProcessRegister.read(process_id, table_param, reg_id)
             return as_dict(res)
-    #return res.as_dict()
+    #return as_dict(res)
     

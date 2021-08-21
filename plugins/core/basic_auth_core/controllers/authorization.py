@@ -80,7 +80,7 @@ def create(body):
         error = str(e.__dict__['orig'])
         return error
     # return register as dict
-    return res.as_dict()
+    return as_dict(res)
 
 @authorization_required
 def read(authorization_id):
@@ -93,7 +93,7 @@ def read(authorization_id):
         res (dict): the requested  register.
     """
     try:
-        res = Authorization.query.filter_by(id=authorization_id).one().as_dict()
+        res = as_dict(Authorization.query.filter_by(id=authorization_id).one())
     except SQLAlchemyError as e:
         error = str(e)
         return error 
@@ -130,7 +130,7 @@ def update(authorization_id, body):
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res = Authorization.query.filter_by(id=int(authorization_id)).one().as_dict()
+        res = as_dict(Authorization.query.filter_by(id=int(authorization_id)).one())
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
@@ -177,7 +177,7 @@ def read_all():
     # convert to list of dicts and empty pass
     res2 =[]
     for r in res:
-        res2.append(r.as_dict())
+        res2.append(as_dict(r))
     return res2
 
 def is_authorized(*args, **kwargs):

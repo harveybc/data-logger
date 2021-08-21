@@ -45,7 +45,7 @@ def create(body):
         new_process = Process.create(**body['process'])
         # test if the new process was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).one().as_dict()
+            res['process'] = as_dict(Process.query.filter_by(name=new_process.name).one())
 #            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
@@ -75,5 +75,5 @@ def create(body):
     if 'register' in body:
         register_model = ProcessRegister.create(body['register'])    
         # return register as dict
-        res['register'] = register_model.as_dict()
+        res['register'] = as_dict(register_model)
     return res
