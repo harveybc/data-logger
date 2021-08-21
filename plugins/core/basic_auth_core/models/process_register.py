@@ -36,7 +36,7 @@ def ProcessRegister(table_param):
         def __repr__(self):
             return str(self.table)
 
-        def create(self, register): 
+        def create(self, **register): 
             """ Create a register in a process' table
             
                 Args:
@@ -99,7 +99,7 @@ def ProcessRegister(table_param):
             return [as_dict(c) for c in res]
 
 
-        def update(self, register):
+        def update(self, **register):
             """ Update a register in db based on a json from a request's body parameter.
 
                 Args:

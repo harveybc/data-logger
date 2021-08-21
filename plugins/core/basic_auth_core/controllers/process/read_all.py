@@ -35,7 +35,7 @@ def read_all():
         # convert to list of dicts and empty pass
         res2 =[]
         for r in res:
-            res2.append(r.as_dict())
+            res2.append(as_dict(r))
         return res2
     # if the process url param is present, either generate a list of tables or a list of registers of a table
     else:

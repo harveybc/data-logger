@@ -80,7 +80,7 @@ class ProcessTable():
     def __repr__(self):
         return str(self.name)
 
-    def create(self, table_dict): 
+    def create(self,**table_dict): 
         """ Create a table.
         
             Args:
