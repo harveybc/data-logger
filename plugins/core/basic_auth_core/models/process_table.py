@@ -92,8 +92,8 @@ class ProcessTable():
         #initialize void response
         res = {}
         # instantiate process table with the body dict as kwargs
-        table = deepcopy(table_dict)
-        new_table = self.__init__(**table)
+        #table = deepcopy(table_dict)
+        new_table = self.__init__(**table_dict)
         if not db.engine.dialect.has_table(db.engine, new_table.name):
             new_table.table.create(db.engine)
         #update metadata and tables
