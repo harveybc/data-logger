@@ -80,7 +80,7 @@ class ProcessTable():
     def __repr__(self):
         return str(self.name)
 
-    def create(self,**table_dict): 
+    def create(self, **table_dict): 
         """ Create a table.
         
             Args:
@@ -93,21 +93,21 @@ class ProcessTable():
         res = {}
         # instantiate process table with the body dict as kwargs
         #table = deepcopy(table_dict)
-        new_table = self.__init__(**table_dict)
-        if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.engine)
+        self.__init__(**table_dict)
+        if not db.engine.dialect.has_table(db.engine, self.name):
+            self.table.create(db.engine)
         #update metadata and tables
         self.reflect_prepare()
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_model = Process.query.filter_by(id=new_table.process_id).one()
+            p_model = Process.query.filter_by(id=self.process_id).one()
             p_table = as_dict(p_model)
             # construct a table model (see swagger yaml) with table_column models
             table_m = {}
-            table_m["name"] = new_table.name
+            table_m["name"] = self.name
             # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
-            table_m["real_name"] = new_table.name
-            table_m["columns"] = new_table.columns
+            table_m["real_name"] = self.name
+            table_m["columns"] = self.columns
             # convert the tables string to an array
             t_array = json.loads(p_table["tables"])
             #insert the new table model in the tables array
