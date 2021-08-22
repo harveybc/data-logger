@@ -53,7 +53,7 @@ def create(body):
     # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
-        p_table = ProcessTable.create(body["table"])
+        p_table = ProcessTable.create(**body["table"])
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
             res['process']["tables"] = p_table["tables"]    
@@ -73,7 +73,7 @@ def create(body):
             return res
     # check if the process parameter is present    
     if 'register' in body:
-        register_model = ProcessRegister.create(body['register'])    
+        register_model = ProcessRegister.create(**body['register'])    
         # return register as dict
         res['register'] = as_dict(register_model)
     return res

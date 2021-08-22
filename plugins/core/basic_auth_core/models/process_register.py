@@ -35,8 +35,9 @@ def ProcessRegister(table_param):
 
         def __repr__(self):
             return str(self.table)
-
-        def create(self, **register): 
+        
+        @classmethod
+        def create(cls, **register): 
             """ Create a register in a process' table
             
                 Args:
@@ -47,7 +48,7 @@ def ProcessRegister(table_param):
             """  
             # sanitize the input string and limit its length
             table_param = sanitize_str(register['table'], 256)
-            register_base = eval("self.Base.classes." + table_param)
+            register_base = eval("cls.Base.classes." + table_param)
             # set the new values from the values array
             register_model = register_base(**register['values'])
             # update the register
@@ -60,7 +61,8 @@ def ProcessRegister(table_param):
                 error = str(e)
                 res ={ 'error_d' : error}
             return res
-
+        
+        @classmethod
         def read(self, process_id, table_param, reg_id):
             """ Performs a query to a process table register.
 
@@ -78,6 +80,7 @@ def ProcessRegister(table_param):
             res=db.session.query(register_model).filter_by(id=reg_id).one()
             return res
         
+        @classmethod
         def read_all(self, process_id, table_param):
             """ Query all registers of the process table register.
                 
@@ -98,7 +101,7 @@ def ProcessRegister(table_param):
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
 
-
+        @classmethod
         def update(self, **register):
             """ Update a register in db based on a json from a request's body parameter.
 
@@ -125,6 +128,7 @@ def ProcessRegister(table_param):
                 res['register'] ={ 'error_d' : error}
             return register_model
 
+        @classmethod
         def delete(self, process_id, table_param, reg_id):
             """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
