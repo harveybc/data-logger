@@ -10,7 +10,7 @@ from datetime import datetime
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
-from ...models.process_register import ProcessRegister
+from ...models.process_register import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.common import as_dict, is_num
 from ...controllers.authorization import authorization_required
@@ -71,10 +71,10 @@ def create(body):
             error = str(e)
             res['table'] ={ 'error_d' : error}
             return res
-    # check if the process parameter is present    
+    # check if the process register parameter is present    
     if 'register' in body:
-        register_model = ProcessRegister(body['register']['table'])    
-        register_model = register_model.create(**body['register'])    
+        register_model = ProcessRegisterFactory(body['register']['table'])    
+        register_instance = register_model.create(**body['register'])    
         # return register as dict
-        res['register'] = as_dict(register_model)
+        res['register'] = as_dict(register_instance)
     return res
