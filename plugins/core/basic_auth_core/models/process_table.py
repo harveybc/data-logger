@@ -96,6 +96,8 @@ class ProcessTable():
         # instantiate process table with the body dict as kwargs
         #table = deepcopy(table_dict)
         cls(**table_dict)
+        for attr, value in cls.__dict__.items():
+            print(attr, value)
         if not db.engine.dialect.has_table(db.engine, cls.name):
             cls.table.create(db.engine)
         #update metadata and tables
