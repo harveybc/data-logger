@@ -24,7 +24,7 @@ from datetime import datetime
 from app.app import login_manager
 from ..models.authorization import Authorization
 from ..models.process_table import ProcessTable
-from ..models.process_register import ProcessRegister
+from ..models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from ..controllers.common import as_dict, is_num
 from functools import wraps

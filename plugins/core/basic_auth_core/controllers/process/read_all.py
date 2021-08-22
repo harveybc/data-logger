@@ -9,7 +9,7 @@ from flask_login import login_required
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
-from ...models.process_register import ProcessRegister
+from ...models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from flask import request
 from ...controllers.common import as_dict, is_num

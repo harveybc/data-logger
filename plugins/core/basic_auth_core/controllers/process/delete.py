@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
-from ...models.process_register import ProcessRegister
+from ...models.process_register_factory import ProcessRegisterFactory
 from flask import request
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.authorization import authorization_required
