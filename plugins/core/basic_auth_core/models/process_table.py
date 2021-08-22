@@ -6,7 +6,7 @@ from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
-from app.util import sanitize_str
+from app.util import sanitize_str, reflect_prepare
 from pydoc import locate 
 from copy import deepcopy
 from sqlalchemy.ext.automap import automap_base

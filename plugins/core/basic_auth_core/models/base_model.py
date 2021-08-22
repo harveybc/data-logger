@@ -2,7 +2,7 @@
     Description: Contains common methods for all models so they can use ORM.
 """ 
 import datetime
-from app.util import hash_pass
+from app.util import hash_pass, reflect_prepare
 from app.app import login_manager
 from sqlalchemy.exc import SQLAlchemyError
 from app.app import db
