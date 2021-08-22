@@ -19,9 +19,9 @@ class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
-        #for property, value in kwargs.items():
+        for property, value in kwargs.items():
         #    print(property, " = ", value)
-        #    setattr(self, property, value)
+            setattr(self, property, value)
         # initialize Table class parameters list
         t_args = []
         # add the name
