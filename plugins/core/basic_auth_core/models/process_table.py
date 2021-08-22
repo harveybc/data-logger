@@ -101,7 +101,7 @@ class ProcessTable():
         if not db.engine.dialect.has_table(db.engine, cls.name):
             cls.table.create(db.engine)
         #update metadata and tables
-        reflect_prepare()
+        reflect_prepare(cls)
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
             p_model = Process.query.filter_by(id=cls.process_id).one()
@@ -204,7 +204,7 @@ class ProcessTable():
         # delete the table
         try:
             register_model.__table__.drop(db.engine)
-            reflect_prepare()
+            reflect_prepare(cls)
             return table_param + " table deleted"
         except SQLAlchemyError as e:
             error = str(e)

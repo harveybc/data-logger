@@ -30,7 +30,7 @@ class BaseModel():
                 value = hash_pass( value ) # we need bytes here (not plain str)
             setattr(self, property, value)
         # initializes automap base class that allows ORM in all tables
-        self.reflect_prepare()
+        reflect_prepare(self)
     
     @classmethod
     def create(cls, **body): 
