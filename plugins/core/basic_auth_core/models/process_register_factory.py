@@ -19,7 +19,7 @@ def ProcessRegisterFactory(table_param):
     # Process register model factory
     class NewModel(db.Model):    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
-        table_name = sanitize_str(table_param)
+        table_name = sanitize_str(table_param, 256)
         __tablename__ = table_name
 
 
