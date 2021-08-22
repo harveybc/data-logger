@@ -51,8 +51,8 @@ def ProcessRegisterFactory(table_param):
                 res (dict): the newly created register model
             """  
             # sanitize the input string and limit its length
-            table_param = sanitize_str(register['table'], 256)
-            register_base = eval("cls.Base.classes." + table_param)
+            table_name = sanitize_str(register['table'], 256)
+            register_base = eval("cls.Base.classes." + table_name)
             # set the new values from the values array
             register_model = register_base(**register['values'])
             # update the register
@@ -99,8 +99,8 @@ def ProcessRegisterFactory(table_param):
             # generate list of registers
             # TODO: filter by column,value
             # TODO: validate if the table is in the process tables array
-            table_param = sanitize_str(table_param, 256)
-            register_model = eval("Base.classes." + table_param)
+            table_name = sanitize_str(table_param, 256)
+            register_model = eval("Base.classes." + table_name)
             # perform query
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
@@ -116,8 +116,8 @@ def ProcessRegisterFactory(table_param):
                 Returns:
                 register_model (model): the updated model
             """
-            table_param = sanitize_str(register['table'])
-            register_model = eval("Base.classes." + table_param)
+            table_name = sanitize_str(register['table'])
+            register_model = eval("Base.classes." + table_name)
             # perform query
             model = db.session.query(register_model).filter_by(id=register['reg_id']).one()
             # set the new values from the values array
@@ -143,8 +143,8 @@ def ProcessRegisterFactory(table_param):
                 res (int): the deleted register id field
             """  
             # sanitize the input string and limit its length
-            table_param = sanitize_str(table_param, 256)
-            register_model = eval("Base.classes." + table_param)
+            table_name = sanitize_str(table_param, 256)
+            register_model = eval("Base.classes." + table_name)
             try:
                 res=db.session.query(register_model).filter_by(id=reg_id).one()
             except SQLAlchemyError as e:
