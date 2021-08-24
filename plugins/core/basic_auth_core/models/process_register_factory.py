@@ -15,14 +15,15 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 from app.util import sanitize_str
 
+Base = automap_base()
+
 def ProcessRegisterFactory(table_param):
     # Process register model factory
-    class NewModel(db.Model):    
+    class NewModel(Base):    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
         table_name = sanitize_str(table_param, 256)
         __tablename__ = table_name
-        Base = automap_base()
-
+        
         def __init__(self, **kwargs):
             # extract kwargs into class attributes
             for property, value in kwargs.items():
