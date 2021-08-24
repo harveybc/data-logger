@@ -36,13 +36,12 @@ def as_dict(model):
             r2[c.name]=str(attr)
     return r2
 
-def reflect_prepare(model):
+def reflect_prepare(Base):
     """ Update SQLAlchemy metadata and prepare automap base to allow ORM in all tables. """
     #update metadata and tables
     db.Model.metadata.reflect(bind=db.engine)
     # reflect the tables
-    model.Base = automap_base()
-    model.Base.prepare(db.engine, reflect=True)
+    Base.prepare(db.engine, reflect=True)
 
 def is_num(n):
     if isinstance(n, int):

@@ -15,6 +15,8 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 
+Base = automap_base()
+
 class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
@@ -101,7 +103,7 @@ class ProcessTable():
         if not db.engine.dialect.has_table(db.engine, cls.name):
             cls.table.create(db.engine)
         #update metadata and tables
-        reflect_prepare(cls)
+        reflect_prepare(Base)
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
             p_model = Process.query.filter_by(id=cls.process_id).one()
@@ -194,7 +196,6 @@ class ProcessTable():
         """ 
         # query a process model 
         # TODO: filter by userid and column,value
-        Base = automap_base()
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
         # sanitize the input string and limit its length

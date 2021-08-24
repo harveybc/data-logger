@@ -13,7 +13,7 @@ from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
-from app.util import sanitize_str
+from app.util import sanitize_str, reflect_prepare
 
 Base = automap_base()
 
