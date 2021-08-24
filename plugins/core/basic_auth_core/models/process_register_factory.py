@@ -53,6 +53,7 @@ def ProcessRegisterFactory(table_param):
             """  
             # sanitize the input string and limit its length
             table_name = sanitize_str(register['table'], 256)
+            reflect_prepare(Base)
             register_base = eval("Base.classes." + table_name)
             # set the new values from the values array
             register_model = register_base(**register['values'])
@@ -68,7 +69,7 @@ def ProcessRegisterFactory(table_param):
             return res
         
         @classmethod
-        def read(self, process_id, table_param, reg_id):
+        def read(cls, process_id, table_param, reg_id):
             """ Performs a query to a process table register.
 
                 Args:
@@ -86,7 +87,7 @@ def ProcessRegisterFactory(table_param):
             return res
         
         @classmethod
-        def read_all(self, process_id, table_param):
+        def read_all(cls, process_id, table_param):
             """ Query all registers of the process table register.
                 
                 Args:
@@ -107,7 +108,7 @@ def ProcessRegisterFactory(table_param):
             return [as_dict(c) for c in res]
 
         @classmethod
-        def update(self, **register):
+        def update(cls, **register):
             """ Update a register in db based on a json from a request's body parameter.
 
                 Args:
@@ -134,7 +135,7 @@ def ProcessRegisterFactory(table_param):
             return register_model
 
         @classmethod
-        def delete(self, process_id, table_param, reg_id):
+        def delete(cls, process_id, table_param, reg_id):
             """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
                 Args:
