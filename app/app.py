@@ -12,11 +12,12 @@ from flask import current_app
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
-from app.app import Base
 #import prance
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+Base = automap_base()
+
 
 def register_extensions(app, data_logger):
     db.init_app(app)
