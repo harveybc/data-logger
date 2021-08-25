@@ -21,6 +21,7 @@ def ProcessRegisterFactory(table_param):
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
         table_name = sanitize_str(table_param, 256)
         __tablename__ = table_name
+        __table_args__ = {'extend_existing': True} 
         id = Column(Integer, primary_key=True)
         
         def __init__(self, **kwargs):
