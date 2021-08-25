@@ -76,5 +76,6 @@ def create(body):
         register_model = ProcessRegisterFactory(body['register']['table'])    
         register_instance = register_model.create(**body['register'])    
         # return register as dict
-        res['register'] = register_instance
+        res['register']=register_instance
+
     return res
