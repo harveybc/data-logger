@@ -7,7 +7,7 @@
                 "name": "test",
                 "tables": [ 	
                     {
-                        "name": "test",
+                        "name": "test_table",
                         "columns": [
                             {
                                 "name" : "test_column",
