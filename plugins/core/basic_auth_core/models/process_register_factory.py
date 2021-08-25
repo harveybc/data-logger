@@ -54,7 +54,8 @@ def ProcessRegisterFactory(table_param):
             # sanitize the input string and limit its length
             table_name = sanitize_str(register['table'], 256)
             reflect_prepare(Base)
-            register_base = eval("Base.classes." + table_name)
+            register_base = Base.classes.test_table
+            #register_base = eval("Base.classes." + table_name)
             # set the new values from the values array
             register_model = register_base(**register['values'])
             # update the register
