@@ -22,8 +22,8 @@ def ProcessRegisterFactory(table_param):
     class NewModel(Base):    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
         table_name = sanitize_str(table_param, 256)
-        id = Column(Integer, primary_key=True)
         __tablename__ = table_name
+        id = Column(Integer, primary_key=True)
         
         def __init__(self, **kwargs):
             # extract kwargs into class attributes

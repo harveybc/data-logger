@@ -41,7 +41,7 @@ def reflect_prepare(Base):
     #update metadata and tables
     db.Model.metadata.reflect(bind=db.engine)
     # reflect the tables
-    Base.prepare(db.engine, reflect=True)
+    #Base.prepare(db.engine, reflect=True)
 
 def is_num(n):
     if isinstance(n, int):
