@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, Numeric, PickleType, SmallInteger, String, Text, Time, Unicode, UnicodeText
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db
+from app.app import db, Base
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
@@ -14,8 +14,6 @@ from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
-
-Base = automap_base()
 
 class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """

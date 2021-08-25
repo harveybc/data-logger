@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData, Table, insert, update
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db
+from app.app import db, Base
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
@@ -14,8 +14,6 @@ import json
 from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 from app.util import sanitize_str, reflect_prepare
-
-Base = automap_base()
 
 def ProcessRegisterFactory(table_param):
     # Process register model factory

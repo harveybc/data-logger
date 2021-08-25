@@ -15,6 +15,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
+from app.app import Base
 
 import os
 from .models.seeds.user import seed as u_seed
@@ -104,6 +105,5 @@ class BasicAuthCore():
                 #update metadata and tables
                 db.Model.metadata.reflect(bind=db.engine)
                 # reflect the tables
-                Base = automap_base()
-                Base.prepare(db.engine, reflect=True)
+                Base.prepare(db.engine, reflect=False)
                 
