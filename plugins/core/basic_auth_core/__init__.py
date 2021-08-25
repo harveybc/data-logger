@@ -15,7 +15,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
-from app.app import Base
+Base = automap_base()
 
 import os
 from .models.seeds.user import seed as u_seed
