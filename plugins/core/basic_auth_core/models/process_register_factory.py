@@ -54,8 +54,8 @@ def ProcessRegisterFactory(table_param):
             # sanitize the input string and limit its length
             table_name = sanitize_str(register['table'], 256)
             Base.prepare(db.engine, reflect=False)
-            register_base = Base.classes.test_table
-            #register_base = eval("Base.classes." + table_name)
+            #register_base = Base.classes.test_table
+            register_base = eval("Base.classes." + table_name)
             # set the new values from the values array
             register_model = register_base(**register['values'])
             # update the register
@@ -120,7 +120,7 @@ def ProcessRegisterFactory(table_param):
                 Returns:
                 register_model (model): the updated model
             """
-            table_name = sanitize_str(register['table'])
+            table_name = sanitize_str(register['table'], 256)
             register_model = eval("Base.classes." + table_name)
             # perform query
             model = db.session.query(register_model).filter_by(id=register['reg_id']).one()
