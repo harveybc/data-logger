@@ -51,5 +51,6 @@ def read_all():
             # TODO: validate if the table name is valid 
             # TODO: validate if the table is in the process tables array
             # TODO: declare automap base class
+            ProcessRegister = ProcessRegisterFactory(table_param) 
             res = ProcessRegister.read_all(process_param, table_param)
             return res
