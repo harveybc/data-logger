@@ -10,7 +10,7 @@ from datetime import datetime
 from app.app import login_manager
 from ...models.process import Process
 from ...models.process_table import ProcessTable
-from ...models.process_register import ProcessRegister
+from ...models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from ...controllers.common import as_dict, is_num
 from ...controllers.authorization import authorization_required
@@ -45,15 +45,16 @@ def create(body):
         new_process = Process.create(**body['process'])
         # test if the new process was created 
         try:
-            res['process'] = Process.query.filter_by(name=new_process.name).one().as_dict()
-#            db.session.close()
+            res['process'] = as_dict(Process.query.filter_by(name=new_process.name).one())
+            db.session.expunge_all()
+            db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'error_b' : error}
     # check if the table parameter is present    
     if 'table' in body:
         # instantiate process table with the body dict as kwargs
-        p_table = ProcessTable.create(body["table"])
+        p_table = ProcessTable.create(**body["table"])
         # update  the output in case the table was created in the same request as the process
         if "process" in res:
             res['process']["tables"] = p_table["tables"]    
@@ -71,34 +72,11 @@ def create(body):
             error = str(e)
             res['table'] ={ 'error_d' : error}
             return res
-    # check if the process parameter is present    
+    # check if the process register parameter is present    
     if 'register' in body:
-        # instantiate process register with the body dict as kwargs
-        #new_register = ProcessRegister(**body['register'])
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)        
-        # query a table register
-        Base = automap_base()
-        #update metadata and tables
-        Base.prepare(db.engine, reflect=True)
-        register_base = eval("Base.classes." + body['register']['table'])
-        # set the new values from the values array
-        register_model = register_base(**body['register']['values'])
-        # update the register
-        try:
-            db.session.add(register_model)
-            db.session.commit()
-            new_id = register_model.id
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_d' : error}
-        # verify if the register was created
-        try:
-            res['register'] = as_dict(db.session.query(register_base).filter_by(id=new_id).one())
-            db.session.close()
-        except SQLAlchemyError as e:
-            error = str(e)
-            res['register'] ={ 'error_e' : error}
+        register_model = ProcessRegisterFactory(body['register']['table'])    
+        register_instance = register_model.create(**body['register'])    
         # return register as dict
+        res['register']=register_instance
+
     return res

@@ -2,22 +2,25 @@
 
 from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, Numeric, PickleType, SmallInteger, String, Text, Time, Unicode, UnicodeText
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db
+from app.app import db, Base
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
+from app.util import sanitize_str, reflect_prepare
 from pydoc import locate 
 from copy import deepcopy
 from sqlalchemy.ext.automap import automap_base
 from ..models.process import Process
 import json
 from sqlalchemy.exc import SQLAlchemyError
+from ..controllers.common import as_dict, is_num
 
-class ProcessTable(BaseModel):
+class ProcessTable():
     """ Map the columns to a list of Table constructor arguments """
     def __init__(self, **kwargs):
         # extract kwargs into class attributes
         for property, value in kwargs.items():
+        #    print(property, " = ", value)
             setattr(self, property, value)
         # initialize Table class parameters list
         t_args = []
@@ -63,7 +66,7 @@ class ProcessTable(BaseModel):
     # ensures the type is a single word representing the sqlalchemy type of the columns
     def parse_sqlalchemy_column_type(self, input_str):
         # sanitize the input string and limit its length
-        translated_input = self.sanitize_str(input_str, 256)
+        translated_input = sanitize_str(input_str, 256)
         valid_types = [
             translated_input == "BigInteger", translated_input == "Boolean", translated_input == "Date", translated_input == "DateTime", translated_input == "Enum", 
             translated_input == "Float", translated_input == "Integer", translated_input == "Interval", translated_input == "LargeBinary", translated_input == "MatchType", 
@@ -78,7 +81,8 @@ class ProcessTable(BaseModel):
     def __repr__(self):
         return str(self.name)
 
-    def create(self, table_dict): 
+    @classmethod
+    def create(cls, **table_dict): 
         """ Create a table.
         
             Args:
@@ -90,22 +94,24 @@ class ProcessTable(BaseModel):
         #initialize void response
         res = {}
         # instantiate process table with the body dict as kwargs
-        table = deepcopy(table_dict)
-        new_table = self.__init__(**table)
-        if not db.engine.dialect.has_table(db.engine, new_table.name):
-            new_table.table.create(db.engine)
+        #table = deepcopy(table_dict)
+        cls = cls(**table_dict)
+        for attr, value in cls.__dict__.items():
+            print(attr, value)
+        if not db.engine.dialect.has_table(db.engine, cls.name):
+            cls.table.create(db.engine)
         #update metadata and tables
-        self.reflect_prepare()
+        reflect_prepare(Base)
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
-            p_model = Process.query.filter_by(id=new_table.process_id).one()
-            p_table = p_model.as_dict()
+            p_model = Process.query.filter_by(id=cls.process_id).one()
+            p_table = as_dict(p_model)
             # construct a table model (see swagger yaml) with table_column models
             table_m = {}
-            table_m["name"] = new_table.name
+            table_m["name"] = cls.name
             # TODO: verify if its neccesary to have the real_name attribute or of is required to use a prefix
-            table_m["real_name"] = new_table.name
-            table_m["columns"] = new_table.columns
+            table_m["real_name"] = cls.name
+            table_m["columns"] = cls.columns
             # convert the tables string to an array
             t_array = json.loads(p_table["tables"])
             #insert the new table model in the tables array
@@ -115,14 +121,16 @@ class ProcessTable(BaseModel):
             # update the tables attribute in the process model
             p_model.tables = p_table["tables"] 
             db.session.commit()
+            db.session.expunge_all()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res = { 'error_c' : error}
             return res
         return p_table
-            
-    def read(self, process_id, table_param):
+        
+    @classmethod            
+    def read(cls, process_id, table_param):
         """ Performs a query to a process table.
 
             Args:
@@ -136,12 +144,12 @@ class ProcessTable(BaseModel):
         # query a process model 
         # TODO: filter by userid and column,value
         # sanitize the input string and limit its length
-        table_param = self.sanitize_str(table_param, 256)
+        table_param = sanitize_str(table_param, 256)
         # query a table
         try:
             # TODO: query table by name from process tables array 
             #ptable.read_all(int(process_param))
-            proc = Process.query.filter_by(id=process_id).one().as_dict()
+            proc = as_dict(Process.query.filter_by(id=process_id).one())
             res_list = json.loads(proc["tables"])
         except SQLAlchemyError as e:
             error = str(e)
@@ -153,7 +161,28 @@ class ProcessTable(BaseModel):
             raise ValueError("No matching record found")     
             return None
 
-    def delete(self, process_id, table_param):
+    @classmethod
+    def read_all(cls, process_id):
+        """ Query all tables of a process.
+            
+            Args:
+            process_id (str): id field of the process model.
+            
+            Returns:
+            res (list): the requested list of tables.
+        """ 
+        try:
+            # TODO: get tables array from the process
+            #ptable.read_all(int(process_param))
+            proc = Process.query.filter_by(id=int(process_id)).first_or_404()
+            res = json.loads(proc.tables)
+        except SQLAlchemyError as e:
+            error = str(e)
+            return error
+        return res
+
+    @classmethod
+    def delete(cls, process_id, table_param):
         """ Delete a table from a process.
 
             Args:
@@ -166,17 +195,16 @@ class ProcessTable(BaseModel):
         """ 
         # query a process model 
         # TODO: filter by userid and column,value
-        Base = automap_base()
         #update metadata and tables
         Base.prepare(db.engine, reflect=True)
         # sanitize the input string and limit its length
-        table_param = self.sanitize_str(table_param, 256)
+        table_param = sanitize_str(table_param, 256)
         register_model = eval("Base.classes." + table_param)
         # TODO: verify that the table is in the tables array of the current process
         # delete the table
         try:
             register_model.__table__.drop(db.engine)
-            self.reflect_prepare()
+            reflect_prepare(Base)
             return table_param + " table deleted"
         except SQLAlchemyError as e:
             error = str(e)

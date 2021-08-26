@@ -2,13 +2,13 @@
     Description: Contains common methods for all models so they can use ORM.
 """ 
 import datetime
-from app.util import hash_pass
+from app.util import hash_pass, reflect_prepare
 from app.app import login_manager
 from sqlalchemy.exc import SQLAlchemyError
 from app.app import db
 from sqlalchemy.ext.automap import automap_base
 
-class BaseModel(db.Model):
+class BaseModel():
     """ Base class for the data_logger models 
         
         Args:
@@ -30,48 +30,10 @@ class BaseModel(db.Model):
                 value = hash_pass( value ) # we need bytes here (not plain str)
             setattr(self, property, value)
         # initializes automap base class that allows ORM in all tables
-        self.reflect_prepare()
+        reflect_prepare(self)
     
-    def sanitize_str(self, insecure_str, max_len):
-        """ Limits a string's length and removes insecure characters from it.
-
-            Args:
-            insecure_str (str): input string.
-            max_len (int): maximum string length.
-
-            Returns:
-            secure_str (str): sanitized string.
-        """
-        # limit the length of the input_str  to 256 chars
-        short_input = (insecure_str[:max_len]) if len(insecure_str) > max_len else insecure_str
-        # remove dangerous characters
-        secure_str = short_input.strip("\"',\\*.!:-+/ #\{\}[]")
-        return secure_str
-
-    def as_dict(self):   
-        """ Convert to dict containing all the columns in this model
-
-            Returns:
-            r2 (dict): the model's columns as dict.
-        """
-        r2 = {}
-        for c in self.__table__.columns:
-            attr = getattr(self, c.name)
-            if is_num(attr):
-                r2[c.name]=attr
-            else:
-                r2[c.name]=str(attr)
-        return r2
-
-    def reflect_prepare(self):
-        """ Update SQLAlchemy metadata and prepare automap base to allow ORM in all tables. """
-        #update metadata and tables
-        db.Model.metadata.reflect(bind=db.engine)
-        # reflect the tables
-        self.Base = automap_base()
-        self.Base.prepare(db.engine, reflect=True)
-
-    def create(self, body): 
+    @classmethod
+    def create(cls, **body): 
         """ Create a register in db based on a json from a request's body parameter.
 
             Args:
@@ -81,30 +43,32 @@ class BaseModel(db.Model):
             res (model): the newly created model.
         """
         # instantiate user with the body dict as kwargs
-        self.__init__(self, **body)
+        res = cls(**body)
         # create new flask-sqlalchemy session
-        db.session.add(self)
+        db.session.add(res)
         try:
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
-        return self
+        return res
 
-    def read_all(self):
+    @classmethod
+    def read_all(cls):
         """ Query all models.
 
             Returns:
             res [(model)]: list of models.
         """ 
         try:
-            res = self.query.all()
+            res = cls.query.all()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         return res
         
-    def read(self, Id):
+    @classmethod
+    def read(cls, Id):
         """ Query a register in db based on the id field of the model.
 
             Args:
@@ -114,13 +78,14 @@ class BaseModel(db.Model):
             res (model): the requested model.
         """ 
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         return res
 
-    def update(self, body, Id):
+    @classmethod
+    def update(cls, body, Id):
         """ Update a register in db based on a json from a request's body parameter.
 
             Args:
@@ -132,13 +97,12 @@ class BaseModel(db.Model):
         """
         # query the existing register
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
         # replace model with body fields
-        self.__init__(**body)
-        res = self
+        res = cls(**body)
         res.id =  Id
         # set the updated model as modified for update. Use flag_modified to flag a single attribute change.
         db.session.merge(res)
@@ -150,7 +114,8 @@ class BaseModel(db.Model):
             return error
         return res
 
-    def delete(self, Id):
+    @classmethod
+    def delete(cls, Id):
         """ Delete a register in db based on the id field of the model.
 
             Args:
@@ -160,7 +125,7 @@ class BaseModel(db.Model):
             res (int): the deleted register id field
         """ 
         try:
-            res = self.query.filter_by(id=Id).first_or_404()
+            res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
             return error
@@ -172,12 +137,3 @@ class BaseModel(db.Model):
             error = str(e.__dict__['orig'])
             return error
         return Id
-
-
-def is_num(n):
-    if isinstance(n, int):
-        return True
-    if isinstance(n, float):
-        return n.is_integer()
-    return False
-

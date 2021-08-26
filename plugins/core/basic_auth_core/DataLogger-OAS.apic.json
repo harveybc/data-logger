@@ -32,6 +32,9 @@
                 },
                 "admin": {
                     "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
                 }
             },
             "required": [
@@ -76,7 +79,10 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column"
+                        "$ref": "#/definitions/table_column",
+                        "type": [
+                            null
+                        ]
                     }
                 }
             }
@@ -261,7 +267,10 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column"
+                        "$ref": "#/definitions/table_column",
+                        "type": [
+                            null
+                        ]
                     }
                 },
                 "name": {
@@ -333,7 +342,10 @@
                 "tables": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table"
+                        "$ref": "#/definitions/table",
+                        "type": [
+                            null
+                        ]
                     }
                 }
             }
@@ -698,7 +710,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -951,7 +963,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     }
                 ]
             },
@@ -1003,7 +1015,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -1070,7 +1082,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -1214,7 +1226,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     }
                 ]
             },
@@ -1260,7 +1272,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -1313,7 +1325,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -1457,7 +1469,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     }
                 ]
             },
@@ -1503,7 +1515,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -1556,7 +1568,7 @@
                         "in": "path",
                         "description": "",
                         "required": true,
-                        "type": "string"
+                        "type": "integer"
                     },
                     {
                         "name": "body",

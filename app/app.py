@@ -16,6 +16,8 @@ import base64
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+Base = automap_base()
+
 
 def register_extensions(app, data_logger):
     db.init_app(app)
@@ -151,8 +153,7 @@ def create_app(app_config, data_logger):
             # TODO: REMOVE UP TO HERE
         # reflect the tables
         db.Model.metadata.reflect(bind=db.engine)
-        Base = automap_base()
-        Base.prepare(db.engine, reflect=True)
+        Base.prepare(db.engine, reflect=False)
         # Initialize data structure if does not exist
         data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
         #print("tables=", db.metadata.tables)

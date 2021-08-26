@@ -8,6 +8,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_required
 from app.app import login_manager
 from ...models.process import Process
+from ...models.process_table import ProcessTable
+from ...models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from flask import request
 from ...controllers.common import as_dict, is_num
@@ -33,7 +35,7 @@ def read_all():
         # convert to list of dicts and empty pass
         res2 =[]
         for r in res:
-            res2.append(r.as_dict())
+            res2.append(as_dict(r))
         return res2
     # if the process url param is present, either generate a list of tables or a list of registers of a table
     else:
@@ -41,14 +43,7 @@ def read_all():
         # generate the list of tables 
         # TODO: filter by userid and column,value
         if table_param is None:
-            try:
-                # TODO: get tables array from the process
-                #ptable.read_all(int(process_param))
-                proc = Process.query.filter_by(id=int(process_param)).first_or_404()
-                res = json.loads(proc.tables)
-            except SQLAlchemyError as e:
-                error = str(e)
-                return error
+            res = ProcessTable.read_all(process_param)
             return res
         else:
             # generate list of registers
@@ -56,10 +51,6 @@ def read_all():
             # TODO: validate if the table name is valid 
             # TODO: validate if the table is in the process tables array
             # TODO: declare automap base class
-            Base = automap_base()
-            #update metadata and tables
-            Base.prepare(db.engine, reflect=True)
-            register_model = eval("Base.classes." + table_param)
-            # perform query
-            res=db.session.query(register_model).all()
-            return [as_dict(c) for c in res]
+            ProcessRegister = ProcessRegisterFactory(table_param) 
+            res = ProcessRegister.read_all(process_param, table_param)
+            return res

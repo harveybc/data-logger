@@ -24,7 +24,7 @@ from datetime import datetime
 from app.app import login_manager
 from ..models.authorization import Authorization
 from ..models.process_table import ProcessTable
-from ..models.process_register import ProcessRegister
+from ..models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from ..controllers.common import as_dict, is_num
 from functools import wraps
@@ -69,6 +69,7 @@ def create(body):
     try:
         db.session.commit()
         new_id =  new.id
+        db.session.expunge_all()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
@@ -80,7 +81,7 @@ def create(body):
         error = str(e.__dict__['orig'])
         return error
     # return register as dict
-    return res.as_dict()
+    return as_dict(res)
 
 @authorization_required
 def read(authorization_id):
@@ -93,7 +94,7 @@ def read(authorization_id):
         res (dict): the requested  register.
     """
     try:
-        res = Authorization.query.filter_by(id=authorization_id).one().as_dict()
+        res = as_dict(Authorization.query.filter_by(id=authorization_id).one())
     except SQLAlchemyError as e:
         error = str(e)
         return error 
@@ -124,13 +125,15 @@ def update(authorization_id, body):
     # perform update 
     try:
         db.session.commit()
+        db.session.expunge_all()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res = Authorization.query.filter_by(id=int(authorization_id)).one().as_dict()
+        res = as_dict(Authorization.query.filter_by(id=int(authorization_id)).one())
+        db.session.expunge_all()
         db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
@@ -177,7 +180,7 @@ def read_all():
     # convert to list of dicts and empty pass
     res2 =[]
     for r in res:
-        res2.append(r.as_dict())
+        res2.append(as_dict(r))
     return res2
 
 def is_authorized(*args, **kwargs):

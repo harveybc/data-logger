@@ -10,11 +10,12 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 from .models.process_table import ProcessTable
-from .models.process_register import ProcessRegister
+from .models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
+Base = automap_base()
 
 import os
 from .models.seeds.user import seed as u_seed
@@ -65,6 +66,8 @@ class BasicAuthCore():
             db.session = scoped_session(sessionmaker(bind=db.engine, expire_on_commit=False))
             try:
                 p = Process.query.filter_by(name=process["name"]).one()
+                db.session.expunge_all()
+                db.session.expunge_all()
                 db.session.close()
             except SQLAlchemyError as e:
                 p = None
@@ -75,6 +78,7 @@ class BasicAuthCore():
                 new_process = Process(**process) 
                 db.session.add(new_process)
                 db.session.commit()
+                db.session.expunge_all()
                 db.session.close()
                 return new_process.id
             else:
@@ -104,6 +108,5 @@ class BasicAuthCore():
                 #update metadata and tables
                 db.Model.metadata.reflect(bind=db.engine)
                 # reflect the tables
-                Base = automap_base()
-                Base.prepare(db.engine, reflect=True)
+                Base.prepare(db.engine, reflect=False)
                 

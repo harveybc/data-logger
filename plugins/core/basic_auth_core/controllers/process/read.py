@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 from ...controllers.common import as_dict, is_num
 from ...models.process import Process
 from ...models.process_table import ProcessTable
+from ...models.process_register_factory import ProcessRegisterFactory
 
 from flask import request
 from sqlalchemy.ext.automap import automap_base
@@ -30,14 +31,12 @@ def read(process_id):
     # TODO: filter by userid and column,value
     if table_param is None:
         try:
-            res = Process.query.filter_by(id=process_id).one().as_dict()
+            res = as_dict(Process.query.filter_by(id=process_id).one())
         except SQLAlchemyError as e:
             error = str(e)
             return error 
         return res
     else:
-        # parse the table_param string because eval is used
-        table_param = table_param.strip("\"',\\*.!:-+/ #\{\}[]")
         # query a table
         reg_id = request.args.get("reg_id")
         if reg_id is None:
@@ -46,12 +45,8 @@ def read(process_id):
         # query a table register
         else:
             # query a table register
-            Base = automap_base()
-            #update metadata and tables
-            Base.prepare(db.engine, reflect=True)
-            register_model = eval("Base.classes." + table_param)
-            # perform query
-            res=db.session.query(register_model).filter_by(id=reg_id).one()
+            ProcessRegister = ProcessRegisterFactory(table_param)
+            res = ProcessRegister.read(process_id, table_param, reg_id)
             return as_dict(res)
-    #return res.as_dict()
+    #return as_dict(res)
     
