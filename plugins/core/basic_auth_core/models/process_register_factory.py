@@ -136,7 +136,7 @@ def ProcessRegisterFactory(table_param):
             except SQLAlchemyError as e:
                 error = str(e)
                 res['register'] ={ 'error_e' : error}
-            return register_model
+            return as_dict(model)
 
         @classmethod
         def delete(cls, process_id, table_param, reg_id):
