@@ -45,6 +45,7 @@ def read(process_id):
         # query a table register
         else:
             # query a table register
+            ProcessRegister = ProcessRegisterFactory(table_param)
             res = ProcessRegister.read(process_id, table_param, reg_id)
             return as_dict(res)
     #return as_dict(res)
