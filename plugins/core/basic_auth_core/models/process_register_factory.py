@@ -82,9 +82,9 @@ def ProcessRegisterFactory(table_param):
                 Returns:
                 res (model): the requested process table.
             """ 
+            table_param = sanitize_str(table_param, 256)
             register_model = eval("Base.classes." + table_param)
             # perform query
-            reg_id = sanitize_str(reg_id)
             res=db.session.query(register_model).filter_by(id=reg_id).one()
             return res
         
