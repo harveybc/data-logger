@@ -63,12 +63,12 @@ def ProcessRegisterFactory(table_param):
                 db.session.add(register_model)
                 db.session.commit()
                 new_id = register_model.id
-                db.session.expunge_all()
-                db.session.close()
+                #db.session.expunge_all()
+                #db.session.close()
                 res = as_dict(register_model)
             except SQLAlchemyError as e:
                 error = str(e)
-                res ={ 'error_d' : error}
+                res ={ 'error_c' : error}
             return res
         
         @classmethod
@@ -131,11 +131,11 @@ def ProcessRegisterFactory(table_param):
             # update the register
             try:
                 db.session.commit()
-                db.session.expunge_all()
-                db.session.close()
+                #db.session.expunge_all()
+                #db.session.close()
             except SQLAlchemyError as e:
                 error = str(e)
-                res['register'] ={ 'error_d' : error}
+                res['register'] ={ 'error_e' : error}
             return register_model
 
         @classmethod
