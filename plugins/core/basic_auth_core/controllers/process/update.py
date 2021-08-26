@@ -35,12 +35,12 @@ def update(process_id, body):
         # query the existing register
         try:
             process_model = Process.query.filter_by(id=process_id).one()
+            # replace model with body fields
+            for property, value in body['process'].items():
+                setattr(process_model, property, value) 
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] = { 'error_a' : error}
-        # replace model with body fields
-        for property, value in body['process'].items():
-            setattr(process_model, property, value)
         # perform update 
         try:
             db.session.commit()
