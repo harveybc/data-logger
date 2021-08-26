@@ -54,7 +54,7 @@ def create(body):
         db.session.commit()
         new_id =  new.id
         db.session.expunge_all()
-                db.session.close()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         return error
@@ -110,7 +110,7 @@ def update(log_id, body):
     try:
         db.session.commit()
         db.session.expunge_all()
-                db.session.close()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_b' : error}
@@ -118,7 +118,7 @@ def update(log_id, body):
     try:
         res = as_dict(Log.query.filter_by(id=int(log_id)).one())
         db.session.expunge_all()
-                db.session.close()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         res = { 'error_c' : error}
@@ -241,7 +241,7 @@ def log_request(*args, **kwargs):
         db.session.commit()
         new_id = new_log.id
         #db.session.expunge_all()
-                db.session.close()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return -1
@@ -271,7 +271,7 @@ def result_log_required(id, code, result):
     try:
         db.session.commit()
         db.session.expunge_all()
-                db.session.close()
+        db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
         return False
