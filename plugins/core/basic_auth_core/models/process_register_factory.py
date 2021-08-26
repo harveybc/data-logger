@@ -122,6 +122,7 @@ def ProcessRegisterFactory(table_param):
                 register_model (model): the updated model
             """
             table_name = sanitize_str(register['table'], 256)
+            Base.prepare(db.engine, reflect=False)
             register_model = eval("Base.classes." + table_name)
             # perform query
             model = db.session.query(register_model).filter_by(id=register['reg_id']).one()
