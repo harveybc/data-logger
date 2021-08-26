@@ -59,6 +59,6 @@ def update(process_id, body):
     if 'register' in body:
         # instantiate process register with the body dict as kwargs
         ProcessRegister = ProcessRegisterFactory(body['register']['table'])
-        res['register'] = as_dict(ProcessRegister.update(body['register']))
+        res['register'] = as_dict(ProcessRegister.update(**body['register']))
     # return register as dict
     return res

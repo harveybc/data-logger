@@ -52,6 +52,7 @@ def delete(process_id):
             return ProcessTable.delete(process_id, table_param)
         # delete register
         else:
+            ProcessRegister = ProcessRegisterFactory(table_param)
             return ProcessRegister.delete(process_id, table_param, reg_id)
 
             
