@@ -69,7 +69,7 @@ def create(body):
     try:
         db.session.commit()
         new_id =  new.id
-        db.db.session.expunge_all()
+        db.session.expunge_all()
                 db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
@@ -125,7 +125,7 @@ def update(authorization_id, body):
     # perform update 
     try:
         db.session.commit()
-        db.db.session.expunge_all()
+        db.session.expunge_all()
                 db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
@@ -133,7 +133,7 @@ def update(authorization_id, body):
     # test if the model was updated 
     try:
         res = as_dict(Authorization.query.filter_by(id=int(authorization_id)).one())
-        db.db.session.expunge_all()
+        db.session.expunge_all()
                 db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
