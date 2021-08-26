@@ -3,9 +3,9 @@ import tempfile
 
 import pytest
 
-from data_logger import create_app
-from data_logger.db import get_db
-from data_logger.db import init_db
+from app.app import create_app
+from app.app import db
+from app.app import init_db
 
 # read in SQL for populating test data
 with open(os.path.join(os.path.dirname(__file__), "data/data_logger_test_data.sql"), "rb") as f:
@@ -23,7 +23,7 @@ def app():
     # create the database and load test data
     with app.app_context():
         init_db()
-        get_db().executescript(_data_sql)
+        db.executescript(_data_sql)
 
     yield app
 
