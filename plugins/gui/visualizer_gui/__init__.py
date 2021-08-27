@@ -35,6 +35,8 @@ class VisualizerGui():
         #self.authorization_bp = authorization_bp
         #self.log_bp = log_bp        
     # register blueprints for gui
+    
+    # TODO: QUITAR?
     def register_blueprints(self, app):
         for module_name in ('base', 'home'):
             module = import_module('plugins.gui.visualizer_gui.{}.routes'.format(module_name))
