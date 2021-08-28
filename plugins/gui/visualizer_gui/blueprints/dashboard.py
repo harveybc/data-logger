@@ -22,7 +22,7 @@ def new_bp(plugin_folder, core_ep):
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("dashboard_bp", __name__, template_folder=plugin_folder+"/templates")
     
-    #@bp.route("/")
+    @bp.route("/")
     #@login_required
     def index():
         # read the data to be visualized using the using the Feature extractor instance, preinitialized in __init__.py with input and output plugins entry points.
