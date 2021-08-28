@@ -29,7 +29,7 @@ class VisualizerGui():
         """ create the blueprints with all routes of the gui """
         for module_name in ('dashboard', 'base', 'user', 'process'):
             module = import_module('plugins.gui.visualizer_gui.blueprints.{}'.format(module_name))
-            bp = module.new_bp(self.template_path, core_ep)
+            bp = module.new_bp(self.template_path(), core_ep)
             app.register_blueprint(bp)
     
     def template_path(self):
