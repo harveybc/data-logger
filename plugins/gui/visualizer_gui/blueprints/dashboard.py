@@ -52,8 +52,8 @@ def new_bp(plugin_folder, core_ep):
         #        v[i] = t[i]
         #        status.append("Training")
         #    print("status[",i,"] = ", status[i])
-        #return render_template("/plugin_templates/dashboard/index.html", p_config = current_app.config['P_CONFIG'], box = box, v_original = v_original, v_predicted = v_predicted, p=p, v=v, status=status)
-        return render_template("/plugin_templates/dashboard/index.html")
+        #return render_template("/templates/dashboard/index.html", p_config = current_app.config['P_CONFIG'], box = box, v_original = v_original, v_predicted = v_predicted, p=p, v=v, status=status)
+        return render_template("/templates/dashboard/index.html")
 
 
     @bp.route("/<int:pid>/trainingpoints")
@@ -75,14 +75,14 @@ def new_bp(plugin_folder, core_ep):
     def process_index():
         """Show the processes index."""
         process_list = current_app.config['FE'].ep_input.get_processes(current_user.id)
-        return render_template("/plugin_templates/process/index.html", process_list = process_list)
+        return render_template("/templates/process/index.html", process_list = process_list)
 
     @bp.route("/process/<pid>")
     @login_required
     def process_detail(pid):
         """Show the process detail view, if it is the current user, shows a change password button."""
         process_list = current_app.config['FE'].ep_input.get_process_by_pid(pid)
-        return render_template("/plugin_templates/process/detail.html", process_list = process_list, pid = pid)
+        return render_template("/templates/process/detail.html", process_list = process_list, pid = pid)
 
 
 
