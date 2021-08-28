@@ -15,10 +15,6 @@ def new_bp(plugin_folder, core_ep):
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User
 
-    @bp.route('/')
-    def route_default():
-        return redirect(url_for('dashboard_bp.index'))
-
     ## Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
     def login():
