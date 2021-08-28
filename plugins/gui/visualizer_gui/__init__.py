@@ -36,11 +36,12 @@ class VisualizerGui():
         #self.log_bp = log_bp        
     # register blueprints for gui
     
-    # TODO: QUITAR?
-    def register_blueprints(self, app):
-        for module_name in ('base', 'home'):
-            module = import_module('plugins.gui.visualizer_gui.{}.routes'.format(module_name))
-            app.register_blueprint(module.blueprint)
+    def register_blueprints(self, app, core_ep):
+        """ create the blueprints with all routes of the gui """
+        for module_name in ('base', 'dashboard', 'user', 'process'):
+            module = import_module('plugins.gui.visualizer_gui.blueprints.{}'.format(module_name))
+            bp = module.new_bp(self.template_path, core_ep)
+            app.register_blueprint(bp)
     
     def template_path(self):
         """ return this module's path """
