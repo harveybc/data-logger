@@ -25,6 +25,97 @@
                         ]
                     }
                 ]
+            },
+            {
+                "name": "feature_extractor",
+                "tables": [
+                    {
+                        "name": "configuration",
+                        "columns": [
+                            {
+                                "name": "max_iterations",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "min_mse"
+                            },
+                            {
+                                "name": "min_mae"
+                            },
+                            {
+                                "name": "min_r2"
+                            },
+                            {
+                                "name": "save_optimum",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "overwrite_optimum",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "preprocessor_params",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "feature_eng_params",
+                                "col_type": "String" 
+                            }
+                        ]
+                    }, 	
+                    {
+                        "name": "training_error",
+                        "columns": [
+                            {
+                                "name" : "mse"
+                            },
+                            {
+                                "name" : "mae"
+                            },
+                            {
+                                "name" : "r2"
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "validation_error",
+                        "columns": [
+                            {
+                                "name" : "mse"
+                            },
+                            {
+                                "name" : "mae"
+                            },
+                            {
+                                "name" : "r2"
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "validation_plot",
+                        "columns": [
+                            {
+                                "name" : "original"
+                            },
+                            {
+                                "name" : "predicted"
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                            
+                        ]
+                    }
+                ]
             }
         ]
     }
