@@ -28,7 +28,7 @@
             },
         "views": [
             {
-                "table_name": "training_progress",
+                "table_name": "training_error",
                 "title": "Progress of Training Process",
                 "online": true,
                 "delay": 3,
@@ -40,7 +40,7 @@
                 ]
             },
             {
-                "table_name": "validation_plots",
+                "table_name": "validation_plot",
                 "title": "Validation Data Plot",
                 "online":  false,
                 "fields": [
@@ -49,7 +49,7 @@
                 ]
             },
             {
-                "table_name": "validation_stats",
+                "table_name": "validation_error",
                 "title": "Feature Extractor Stats on Validation Data",
                 "online": false,
                 "fields": [

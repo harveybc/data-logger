@@ -27,6 +27,123 @@
                 ]
             },
             {
+                "name": "IoT",
+                "tables": [ 	
+                    {
+                        "name": "configuration",
+                        "columns": [
+                            {
+                                "name": "description",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "device_configuration",
+                                "col_type": "String" 
+                            }
+                        ]
+                    }, 	
+                    {
+                        "name": "greenhouses",
+                        "columns": [
+                            { "name" : "thermometer" },
+                            { "name" : "hygrometer" },
+                            { "name" : "co2_sensor" },
+                            { "name" : "light_sensor" },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "weather_stations",
+                        "columns": [
+                            { "name" : "thermometer" },
+                            { "name" : "hygrometer" } ,
+                            { "name" : "barometer" },
+                            { "name" : "anemometer" },
+                            { "name" : "pluviometer" },
+                            { "name" : "co2_sensor" },
+                            { "name" : "light_sensor" },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "grasslands",
+                        "columns": [
+                            { "name" : "height" },
+                            { "name" : "leaves" },
+                            { "name" : "stolons" },
+                            { "name" : "internode" },
+                            { "name" : "kg_ha" },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "cattle",
+                        "columns": [
+                            { "name" : "weight" },
+                            { "name" : "bcs" },
+                            {
+                                "name": "cow_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "milking_system",
+                        "columns": [
+                            { "name" : "production" },
+                            { "name" : "duration" },
+                            {
+                                "name": "cow_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "cooling_tanks",
+                        "columns": [
+                            { "name" : "level_sensor" }
+                        ]
+                    }
+                ]
+            },
+            {
                 "name": "feature_extractor",
                 "tables": [
                     {
@@ -36,15 +153,9 @@
                                 "name": "max_iterations",
                                 "col_type": "Integer" 
                             },
-                            {
-                                "name": "min_mse"
-                            },
-                            {
-                                "name": "min_mae"
-                            },
-                            {
-                                "name": "min_r2"
-                            },
+                            { "name": "min_mse" },
+                            { "name": "min_mae" },
+                            { "name": "min_r2" },
                             {
                                 "name": "save_optimum",
                                 "col_type": "Boolean" 
@@ -66,15 +177,9 @@
                     {
                         "name": "training_error",
                         "columns": [
-                            {
-                                "name" : "mse"
-                            },
-                            {
-                                "name" : "mae"
-                            },
-                            {
-                                "name" : "r2"
-                            },
+                            { "name" : "mse" },
+                            { "name" : "mae" },
+                            { "name" : "r2" },
                             {
                                 "name" : "configuration_id",
                                 "col_type" : "Integer"
@@ -84,15 +189,9 @@
                     {
                         "name": "validation_error",
                         "columns": [
-                            {
-                                "name" : "mse"
-                            },
-                            {
-                                "name" : "mae"
-                            },
-                            {
-                                "name" : "r2"
-                            },
+                            { "name" : "mse" },
+                            { "name" : "mae" },
+                            { "name" : "r2" },
                             {
                                 "name" : "configuration_id",
                                 "col_type" : "Integer"
@@ -102,13 +201,9 @@
                     {
                         "name": "validation_plot",
                         "columns": [
-                            {
-                                "name" : "original"
-                            },
-                            {
-                                "name" : "predicted"
-                            },
-                            {
+                            { "name" : "original" },
+                            { "name" : "predicted" },
+                            { 
                                 "name" : "configuration_id",
                                 "col_type" : "Integer"
                             }
