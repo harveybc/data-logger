@@ -21,9 +21,7 @@
                 "process_list":{
                     "title": "List of Processes",
                     "col_0_title": "ID",
-                    "col_1_title": "MSE",
-                    "col_2_title": "Status",
-                    "col_3_title": "Last Update"
+                    "col_2_title": "name"
                 }
             },
         "views": [
@@ -62,8 +60,8 @@
         ,
         "forms": [
             {
-                "table_name": "automation_parameters",
-                "title": "Automation Parameters Configuration",
+                "table_name": "control",
+                "title": "Instance Control",
                 "fields": [
                     "mse",
                     "mae",
