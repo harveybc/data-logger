@@ -8,6 +8,11 @@
                 "box_1_title": "Best Validation MSE",
                 "box_2_title": "Number of Users",
                 "box_3_title": "Number of Processes",
+                "box_0_value": "feature_extractor.training_error.mse",
+                "box_1_value": "Best Validation MSE",
+                "box_2_value": "Number of Users",
+                "box_3_value": "Number of Processes",
+                
                 "rt_plot": {
                     "title": "Online Training MSE",
                     "height": "300px"
