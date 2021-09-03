@@ -8,25 +8,31 @@
                 "box_1_title": "Best Validation MSE",
                 "box_2_title": "Number of Users",
                 "box_3_title": "Number of Processes",
-                "box_0_value": "feature_extractor.training_error.mse",
-                "box_1_value": "Best Validation MSE",
-                "box_2_value": "Number of Users",
-                "box_3_value": "Number of Processes",
+                "box_0_value": "column_max('feature_extractor', 'training_error','mse')",
+                "box_1_value": "column_max('feature_extractor', 'validation_error','mse')",
+                "box_2_value": "num_users()",
+                "box_3_value": "num_processes()",
                 
                 "rt_plot": {
                     "title": "Online Training MSE",
-                    "height": "300px"
+                    "height": "300px",
+                    "interval": 10,
+                    "url": "http://localhost:5000/rt_plot?process=feature_extractor,table=training_error,column=mse,points=1000",
+                    "callback": "rt_plot(url)"
                 },
                 "val_plot": {
                     "title": "Validation MSE",
                     "height": "300px",
                     "max_points": "500",
-                    "use_latest": true
+                    "use_latest": true,
+                    "data": "val_plot()"
+
                 },
                 "process_list":{
                     "title": "List of Processes",
                     "col_0_title": "ID",
-                    "col_2_title": "name"
+                    "col_2_title": "name",
+                    "data": "process_list()"
                 }
             },
         "views": [
