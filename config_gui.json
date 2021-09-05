@@ -1,85 +1,39 @@
 {
     "gui_plugin": "visualizer_gui",
     "gui_plugin_config": {
-        "dashboard": 
-            {
-                "title": "Dashboard",
-                "box_0_title": "Best Training MSE",
-                "box_1_title": "Best Validation MSE",
-                "box_2_title": "Number of Users",
-                "box_3_title": "Number of Processes",
-                "box_0_value": "column_max('feature_extractor', 'training_error','mse')",
-                "box_1_value": "column_max('feature_extractor', 'validation_error','mse')",
-                "box_2_value": "num_users()",
-                "box_3_value": "num_processes()",
-                
-                "rt_plot": {
-                    "title": "Online Training MSE",
-                    "height": "300px",
-                    "interval": 10,
-                    "url": "http://localhost:5000/rt_plot?process=feature_extractor,table=training_error,column=mse,points=1000",
-                    "callback": "rt_plot(url)"
-                },
-                "val_plot": {
-                    "title": "Validation MSE",
-                    "height": "300px",
-                    "max_points": "500",
-                    "use_latest": true,
-                    "data": "val_plot()"
+        "dashboard": {
+            "title": "Dashboard",
+            "box_0_title": "Best Training MSE",
+            "box_1_title": "Best Validation MSE",
+            "box_2_title": "Number of Users",
+            "box_3_title": "Number of Processes",
+            "box_0_value": "column_max('feature_extractor', 'training_error','mse')",
+            "box_1_value": "column_max('feature_extractor', 'validation_error','mse')",
+            "box_2_value": "num_users()",
+            "box_3_value": "num_processes()",
+            
+            "rt_plot": {
+                "title": "Online Training MSE",
+                "height": "300px",
+                "interval": 10,
+                "url": "http://localhost:5000/rt_plot?process=feature_extractor,table=training_error,column=mse,points=1000",
+                "callback": "rt_plot(url)"
+            },
+            "val_plot": {
+                "title": "Validation MSE",
+                "height": "300px",
+                "max_points": "500",
+                "use_latest": true,
+                "data": "val_plot()"
 
-                },
-                "process_list":{
-                    "title": "List of Processes",
-                    "col_0_title": "ID",
-                    "col_2_title": "name",
-                    "data": "process_list()"
-                }
             },
-        "views": [
-            {
-                "table_name": "training_error",
-                "title": "Progress of Training Process",
-                "online": true,
-                "delay": 3,
-                "points": 1600,
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            },
-            {
-                "table_name": "validation_plot",
-                "title": "Validation Data Plot",
-                "online":  false,
-                "fields": [
-                    "original",
-                    "predicted"
-                ]
-            },
-            {
-                "table_name": "validation_error",
-                "title": "Feature Extractor Stats on Validation Data",
-                "online": false,
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
+            "process_list":{
+                "title": "List of Processes",
+                "col_0_title": "ID",
+                "col_2_title": "name",
+                "data": "process_list()"
             }
-        ]
-        ,
-        "forms": [
-            {
-                "table_name": "control",
-                "title": "Instance Control",
-                "fields": [
-                    "mse",
-                    "mae",
-                    "r2"
-                ]
-            }
-        ]
+        }
     }
 }
   
