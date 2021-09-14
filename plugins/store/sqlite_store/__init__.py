@@ -30,6 +30,7 @@ class SqliteStore():
     
     def init_data_structure(self, app, db, core_ep):
         """ Create the data structure (processes/tables) from the config_store.json """
+        # create the processes table if it does not exists
         # create each process from the processes attribute
         for process in self.conf["store_plugin_config"]["processes"]:
             process_id = core_ep.create_process(app, db, process)
