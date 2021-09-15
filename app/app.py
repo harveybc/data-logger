@@ -3,7 +3,7 @@
 from flask import Flask, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from importlib import import_module
+import sys
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
 import json
@@ -13,6 +13,8 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
 #import prance
+
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -105,12 +107,16 @@ def create_app(app_config, data_logger):
             db.drop_all(app=app.app)
             drop_everything(db.engine)
             print("done.")
-            #from models.user import User
-            # create user, authorization, log and process models from core plugin class factories
-            User = data_logger.core_ep.User
-            Authorization = data_logger.core_ep.Authorization
-            Log = data_logger.core_ep.Log
-            Process = data_logger.core_ep.Process
+            # add the core plugin directory to the sys path
+            sys.path.append(data_logger.core_ep.specification_dir)
+            # import user, authorization, log and process models from core plugin 
+            from models.user import User
+            from models.process import Process
+            from models.authorization import Authorization
+            from models.log import Log
+            #Authorization = data_logger.core_ep.Authorization
+            #Log = data_logger.core_ep.Log
+            #Process = data_logger.core_ep.Process
             print("Creating database")
             db.create_all()
             print("Seeding database with test user")
