@@ -103,6 +103,7 @@ def create_app(app_config, data_logger):
     @app.app.before_first_request
     def ini_db():
         if DEBUG:
+            # TODO: QUITAR ESTO Y COLOCARLO EN EL SCRIPT DE MIGRATE/SEED
             print("Dropping database")
             db.drop_all(app=app.app)
             drop_everything(db.engine)
