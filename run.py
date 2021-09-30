@@ -10,7 +10,7 @@ from sys import exit
 from decouple import config
 from json import load as json_load
 from json import dumps
-from app.app import create_app
+from app.app import create_app, init_plugins
 from app.data_logger import DataLogger
 
 # load the plugin config files
@@ -28,6 +28,7 @@ except Exception as e:
 # initialize plugin system
 print(" * Creating data_logger instance...")
 data_logger = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
+data_logger = init_plugins()
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 # setup config mode
