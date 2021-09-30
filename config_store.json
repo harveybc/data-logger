@@ -129,6 +129,53 @@
                 ]
             },
             {
+                "name": "GrasslandsApp",
+                "tables": [ 	
+                    {
+                        "name": "configuration",
+                        "columns": [
+                            {
+                                "name": "description",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "device_configuration",
+                                "col_type": "String" 
+                            }
+                        ]
+                    },
+                    {
+                        "name": "grasslands",
+                        "columns": [
+                            { "name" : "area_ha"},
+                            {
+                                "name": "quality",
+                                "col_type": "Integer" 
+                            },
+                            { "name" : "height" },
+                            { "name" : "leaves" },
+                            { "name" : "stolons" },
+                            { "name" : "internode" },
+                            { "name" : "kg_ha" },
+                            { "name" : "total_capacity" },
+                            { "name" : "used_capacity" },
+                            { "name" : "seed_composition"},
+                            { "name" : "days_from_rotation"},
+                            { "name" : "days_to_rotation"},
+                            { "name" : "days_from_sowing"},
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "configuration_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    }
+                ]	
+            },
+            {
                 "name": "IoT",
                 "tables": [ 	
                     {
@@ -171,24 +218,6 @@
                             { "name" : "pluviometer" },
                             { "name" : "co2_sensor" },
                             { "name" : "light_sensor" },
-                            {
-                                "name": "station_id",
-                                "col_type": "Integer" 
-                            },
-                            {
-                                "name" : "configuration_id",
-                                "col_type" : "Integer"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "grasslands",
-                        "columns": [
-                            { "name" : "height" },
-                            { "name" : "leaves" },
-                            { "name" : "stolons" },
-                            { "name" : "internode" },
-                            { "name" : "kg_ha" },
                             {
                                 "name": "station_id",
                                 "col_type": "Integer" 
