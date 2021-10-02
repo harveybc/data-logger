@@ -1,7 +1,12 @@
 import connexion
 from flask_sqlalchemy import SQLAlchemy
+from app.app import load_plugin_config
+from app.data_logger import DataLogger
+import sys
+from sqlalchemy.ext.automap import automap_base
 
 db = SQLAlchemy()
+Base = automap_base()
 
 def drop_everything(engine):
     """drops all foreign key constraints before dropping all tables.
@@ -36,6 +41,11 @@ def drop_everything(engine):
         con.execute(DropTable(table))
     trans.commit()
  
+# load the plugin config files
+plugin_conf = load_plugin_config()
+# initialize plugin system
+print(" * Creating data_logger instance...")
+data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
 # read the Connexion swagger yaml specification_dir from the core plugin entry point
 specification_dir = data_logger.core_ep.specification_dir
 app = connexion.App(__name__, specification_dir = specification_dir)

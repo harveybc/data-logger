@@ -14,12 +14,24 @@ from sqlalchemy import MetaData
 import base64
 #import prance
 
-
-
 db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()
 
+def load_plugin_config():
+    print(" * Loading plugin configuration files")
+    plugin_conf = {}
+    try:
+        with open("config_store.json", "r") as conf_file:
+            plugin_conf['store'] = json.load(conf_file)
+        with open("config_core.json", "r") as conf_file:
+            plugin_conf['core'] = json.load(conf_file)
+        with open("config_gui.json", "r") as conf_file:
+            plugin_conf['gui'] = json.load(conf_file)
+    except Exception as e:
+        print(e)
+        exit(e)
+    return(plugin_conf)
 
 def register_extensions(app, data_logger):
     db.init_app(app)
