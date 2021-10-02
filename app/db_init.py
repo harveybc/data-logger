@@ -1,3 +1,11 @@
+import connexion
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+# read the Connexion swagger yaml specification_dir from the core plugin entry point
+specification_dir = data_logger.core_ep.specification_dir
+app = connexion.App(__name__, specification_dir = specification_dir)
+
+
 def drop_everything(engine):
     """drops all foreign key constraints before dropping all tables.
     Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
