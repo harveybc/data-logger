@@ -35,7 +35,14 @@ def drop_everything(engine):
     for table in tables:
         con.execute(DropTable(table))
     trans.commit()
-
+ 
+# read the Connexion swagger yaml specification_dir from the core plugin entry point
+specification_dir = data_logger.core_ep.specification_dir
+app = connexion.App(__name__, specification_dir = specification_dir)
+# read the Connexion swagger yaml specification filename from the core plugin entry point
+specification_filename = data_logger.core_ep.specification_filename
+#app.add_api('DataLogger-OAS.apic.yaml')
+app.add_api(specification_filename)
 # Drops db
 print("Dropping database")
 db.drop_all(app=app.app)
