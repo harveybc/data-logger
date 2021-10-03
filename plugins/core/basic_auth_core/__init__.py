@@ -15,6 +15,8 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
+from app.util import sanitize_str
+
 Base = automap_base()
 
 import os
@@ -43,6 +45,13 @@ class BasicAuthCore():
         self.ProcessTable = ProcessTable
         # seed initial user 
     
+    def import_models(self):
+        from .models.user import User
+        from .models.authorization import Authorization
+        from .models.log import Log
+        from .models.process import Process
+
+
     def user_seed(self, app, db):
         """ Populate starting user table
         Args:
