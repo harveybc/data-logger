@@ -80,14 +80,14 @@ print("done.")
 sys.path.append(data_logger.core_ep.specification_dir)
 print("Import core models")
 # import user, authorization, log and process models from core plugin 
-#from models.user import User
-#from models.process import Process
-#from models.authorization import Authorization
-#from models.log import Log
+from models.user import User
+from models.process import Process
+from models.authorization import Authorization
+from models.log import Log
 #data_logger.core_ep.UserFactory()
 #data_logger.core_ep.AuthorizationFactory()
 #data_logger.core_ep.LogFactory()
-data_logger.core_ep.import_models()
+#data_logger.core_ep.import_models()
 
 print("Creating database")
 db.create_all()
