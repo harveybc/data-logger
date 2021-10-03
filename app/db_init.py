@@ -84,10 +84,10 @@ print("Import core models")
 #from models.process import Process
 #from models.authorization import Authorization
 #from models.log import Log
-User = data_logger.core_ep.User
-Authorization = data_logger.core_ep.Authorization
-Log = data_logger.core_ep.Log
-Process = data_logger.core_ep.Process
+data_logger.core_ep.User
+data_logger.core_ep.Authorization
+data_logger.core_ep.Log
+data_logger.core_ep.Process
 print("Creating database")
 db.create_all()
 print("Seeding database with test user")
