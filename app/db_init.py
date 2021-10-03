@@ -68,7 +68,7 @@ except KeyError:
 # set flask app parameters
 app.app.config.from_object(app_config)
 # init app
-db.init_app(app)
+db.init_app(app.app)
 
 # Drops db
 print("Dropping database")
