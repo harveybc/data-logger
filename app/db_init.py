@@ -56,8 +56,6 @@ db.init_app(app)
 specification_filename = data_logger.core_ep.specification_filename
 #app.add_api('DataLogger-OAS.apic.yaml')
 app.add_api(specification_filename)
-# set flask app parameters
-app.app.config.from_object(app_config)
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 # setup config mode
@@ -69,6 +67,9 @@ try:
     app_config = config_dict[get_config_mode.capitalize()]
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
+# set flask app parameters
+app.app.config.from_object(app_config)
+
 # Drops db
 print("Dropping database")
 db.drop_all(app=app.app)
