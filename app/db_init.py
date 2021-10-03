@@ -49,6 +49,8 @@ data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf[
 # read the Connexion swagger yaml specification_dir from the core plugin entry point
 specification_dir = data_logger.core_ep.specification_dir
 app = connexion.App(__name__, specification_dir = specification_dir)
+# init app
+db.init_app(app)
 # read the Connexion swagger yaml specification filename from the core plugin entry point
 specification_filename = data_logger.core_ep.specification_filename
 #app.add_api('DataLogger-OAS.apic.yaml')
