@@ -15,7 +15,7 @@ import base64
 #import prance
 
 if 'db' not in g:
-    db = SQLAlchemy()
+    db = SQLAlchemy(app=current_app)
     g.db =db
 login_manager = LoginManager()
 Base = automap_base()
