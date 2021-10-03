@@ -78,6 +78,7 @@ drop_everything(db.engine)
 print("done.")
 # add the core plugin directory to the sys path
 sys.path.append(data_logger.core_ep.specification_dir)
+print("Import core models")
 # import user, authorization, log and process models from core plugin 
 from models.user import User
 from models.process import Process
