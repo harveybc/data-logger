@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.app import load_plugin_config
 from app.data_logger import DataLogger
 import sys
+from decouple import config
 from sqlalchemy.ext.automap import automap_base
 
 db = SQLAlchemy()
@@ -55,6 +56,19 @@ db.init_app(app)
 specification_filename = data_logger.core_ep.specification_filename
 #app.add_api('DataLogger-OAS.apic.yaml')
 app.add_api(specification_filename)
+# set flask app parameters
+app.app.config.from_object(app_config)
+# WARNING: Don't run with debug turned on in production!
+DEBUG = config('DEBUG', default=True)
+# setup config mode
+get_config_mode = 'Debug' if DEBUG else 'Production'
+# load config from the config_dict according to the set config mode.
+try:
+    # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
+    config_dict = data_logger.store_ep.get_config_dict()
+    app_config = config_dict[get_config_mode.capitalize()]
+except KeyError:
+    exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 # Drops db
 print("Dropping database")
 db.drop_all(app=app.app)

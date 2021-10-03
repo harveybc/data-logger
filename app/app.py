@@ -68,7 +68,7 @@ def create_app(app_config, data_logger):
     except ValueError:
         # no static view was created yet
         pass
-    # adds an url rule to serve stati files from the gui plugin location
+    # adds an url rule to serve static files from the gui plugin location
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
     # read plugin configuration JSON file
     #p_config = read_plugin_config()
