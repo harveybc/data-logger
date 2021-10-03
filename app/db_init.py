@@ -9,38 +9,6 @@ from sqlalchemy.ext.automap import automap_base
 db = SQLAlchemy()
 Base = automap_base()
 
-def drop_everything(engine):
-    """drops all foreign key constraints before dropping all tables.
-    Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
-    (https://github.com/pallets/flask-sqlalchemy/issues/722)
-    """
-    from sqlalchemy.engine.reflection import Inspector
-    from sqlalchemy.schema import (
-        DropConstraint,
-        DropTable,
-        MetaData,
-        Table,
-        ForeignKeyConstraint,
-    )
-    con = engine.connect()
-    trans = con.begin()
-    inspector = Inspector.from_engine(db.engine)
-    meta = MetaData()
-    tables = []
-    all_fkeys = []
-    for table_name in inspector.get_table_names():
-        fkeys = []
-        for fkey in inspector.get_foreign_keys(table_name):
-            if not fkey["name"]:
-                continue
-            fkeys.append(ForeignKeyConstraint((), (), name=fkey["name"]))
-        tables.append(Table(table_name, meta, *fkeys))
-        all_fkeys.extend(fkeys)
-    for fkey in all_fkeys:
-        con.execute(DropConstraint(fkey))
-    for table in tables:
-        con.execute(DropTable(table))
-    trans.commit()
  
 # load the plugin config files
 plugin_conf = load_plugin_config()
@@ -73,7 +41,39 @@ db.init_app(app.app)
 # Drops db
 print("Dropping database")
 db.drop_all(app=app.app)
-drop_everything(db.engine)
+#drop_everything(db.engine)
+engine = db.engine
+"""drops all foreign key constraints before dropping all tables.
+Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
+(https://github.com/pallets/flask-sqlalchemy/issues/722)
+"""
+from sqlalchemy.engine.reflection import Inspector
+from sqlalchemy.schema import (
+    DropConstraint,
+    DropTable,
+    MetaData,
+    Table,
+    ForeignKeyConstraint,
+)
+con = engine.connect()
+trans = con.begin()
+inspector = Inspector.from_engine(db.engine)
+meta = MetaData()
+tables = []
+all_fkeys = []
+for table_name in inspector.get_table_names():
+    fkeys = []
+    for fkey in inspector.get_foreign_keys(table_name):
+        if not fkey["name"]:
+            continue
+        fkeys.append(ForeignKeyConstraint((), (), name=fkey["name"]))
+    tables.append(Table(table_name, meta, *fkeys))
+    all_fkeys.extend(fkeys)
+for fkey in all_fkeys:
+    con.execute(DropConstraint(fkey))
+for table in tables:
+    con.execute(DropTable(table))
+trans.commit()
 print("done.")
 # add the core plugin directory to the sys path
 sys.path.append(data_logger.core_ep.specification_dir)
