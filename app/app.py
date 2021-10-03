@@ -14,8 +14,9 @@ from sqlalchemy import MetaData
 import base64
 #import prance
 
-current_app.app_context().push()
+
 if 'db' not in g:
+    current_app.app_context().push()
     db = SQLAlchemy(app=current_app)
     g.db =db
 login_manager = LoginManager()
