@@ -8,13 +8,15 @@ from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
 import json
 import connexion
-from flask import current_app
+from flask import current_app, g
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
 #import prance
 
-db = SQLAlchemy()
+if 'db' not in g:
+    db = SQLAlchemy()
+    g.db =db
 login_manager = LoginManager()
 Base = automap_base()
 
