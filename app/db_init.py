@@ -70,7 +70,7 @@ def drop_everything(engine):
     trans.commit()
 
 # create command function
-@click.command(name='dbinit')
+@app.cli.command(name='dbinit')
 @with_appcontext
 def dbinit():
     
