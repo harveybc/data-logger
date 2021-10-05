@@ -13,6 +13,8 @@ from json import dumps
 from app.app import create_app, load_plugin_config
 from app.data_logger import DataLogger
 from app.db_init import database_init
+import click
+from flask.cli import with_appcontext
 
 # load the plugin config files
 plugin_conf = load_plugin_config()
@@ -40,7 +42,7 @@ def print_spec():
     return dumps(spec)
 
 # create command function db_init for database reset/init
-@app.click.command()
+@click.command()
 @with_appcontext
 def dbinit():
     database_init(app, data_logger)
