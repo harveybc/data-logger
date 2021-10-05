@@ -1,4 +1,4 @@
-from sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from app.util import load_plugin_config
 from app.data_logger import DataLogger
 import sys
