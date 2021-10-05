@@ -3,6 +3,7 @@
  
 import hashlib, binascii, os
 from app.app import db
+import json
 from sqlalchemy.ext.automap import automap_base
 
 def sanitize_str(insecure_str, max_len):
