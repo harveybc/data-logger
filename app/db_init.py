@@ -8,33 +8,31 @@ import sys
 from decouple import config
 from sqlalchemy.ext.automap import automap_base
 
-# initialize flask app
-app = Flask(__name__)
-# initialize Database configuration
-# load the plugin config files
-plugin_conf = load_plugin_config()
-# initialize plugin system
-print(" * Creating data_logger instance...")
-data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
 
-# WARNING: Don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True)
-# setup config mode
-get_config_mode = 'Debug' if DEBUG else 'Production'
-# load config from the config_dict according to the set config mode.
-try:
-    # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
-    config_dict = data_logger.store_ep.get_config_dict()
-    app_config = config_dict[get_config_mode.capitalize()]
-except KeyError:
-    exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://db.sqlite3'
-app.config.from_object(app_config)
-# database
-db = SQLAlchemy(app)
-Base = automap_base()
+def database_init(app, data_logger):
+    # initialize Database configuration
+    # load the plugin config files
+    plugin_conf = load_plugin_config()
+    # initialize plugin system
+    print(" * Creating data_logger instance...")
+    data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
+    # WARNING: Don't run with debug turned on in production!
+    DEBUG = config('DEBUG', default=True)
+    # setup config mode
+    get_config_mode = 'Debug' if DEBUG else 'Production'
+    # load config from the config_dict according to the set config mode.
+    try:
+        # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
+        config_dict = data_logger.store_ep.get_config_dict()
+        app_config = config_dict[get_config_mode.capitalize()]
+    except KeyError:
+        exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
+        
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://db.sqlite3'
+    app.config.from_object(app_config)
+    # database
+    db = SQLAlchemy(app)
+    reset_db(db, data_logger)
 
 def drop_everything(engine):
     """drops all foreign key constraints before dropping all tables.
@@ -70,10 +68,8 @@ def drop_everything(engine):
     trans.commit()
 
 # create command function
-@app.click.command()
-@with_appcontext
-def dbinit():
-    
+
+def reset_db(db, data_logger):
     # Drops db
     print("Dropping database")
     drop_everything(db.engine)
@@ -103,7 +99,3 @@ def dbinit():
     #Base.prepare(db.engine, reflect=False)
     # Initialize data structure if does not exist
     #data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
-
-
-# add command function to cli commands
-app.cli.add_command(dbinit)
