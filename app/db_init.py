@@ -70,7 +70,7 @@ def drop_everything(engine):
     trans.commit()
 
 # create command function
-@click.command(name='create')
+@click.command(name='db_init')
 @with_appcontext
 def db_init():
     
