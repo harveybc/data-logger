@@ -70,7 +70,7 @@ def drop_everything(engine):
     trans.commit()
 
 # create command function
-@app.cli.command(name='dbinit')
+@app.click.command()
 @with_appcontext
 def dbinit():
     
@@ -106,4 +106,4 @@ def dbinit():
 
 
 # add command function to cli commands
-app.cli.add_command(db_init)
+app.cli.add_command(dbinit)
