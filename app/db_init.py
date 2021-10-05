@@ -70,9 +70,9 @@ def drop_everything(engine):
     trans.commit()
 
 # create command function
-@click.command(name='db_init')
+@click.command(name='dbinit')
 @with_appcontext
-def db_init():
+def dbinit():
     
     # Drops db
     print("Dropping database")
