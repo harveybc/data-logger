@@ -42,8 +42,8 @@ def print_spec():
 # create command function db_init for database reset/init
 @app.click.command()
 @with_appcontext
-def db_init():
+def dbinit():
     database_init(app, data_logger)
 
 # add command function to cli commands
-app.cli.add_command(db_init)
+app.cli.add_command(dbinit)
