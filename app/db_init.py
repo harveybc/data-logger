@@ -1,6 +1,6 @@
 import connexion
 from flask_sqlalchemy import SQLAlchemy
-from app.app import load_plugin_config
+from app.util import load_plugin_config
 from app.data_logger import DataLogger
 import sys
 from decouple import config
