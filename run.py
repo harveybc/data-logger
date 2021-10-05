@@ -42,10 +42,9 @@ def print_spec():
     return dumps(spec)
 
 # create command function db_init for database reset/init
-@click.command()
-@with_appcontext
+@app.cli.command("dbinit")
 def dbinit():
     database_init(app, data_logger)
 
 # add command function to cli commands
-app.cli.add_command(dbinit)
+#app.cli.add_command(dbinit)
