@@ -16,10 +16,8 @@ from app.util import load_plugin_config
 #import prance
 
 
-if 'db' not in g:
-    current_app.app_context().push()
-    db = SQLAlchemy(app=current_app)
-    g.db =db
+
+db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()
 
