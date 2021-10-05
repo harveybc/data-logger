@@ -1,5 +1,4 @@
-import connexion
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import SQLAlchemy
 from app.util import load_plugin_config
 from app.data_logger import DataLogger
 import sys
@@ -49,31 +48,10 @@ print(" * Creating data_logger instance...")
 data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
 # read the Connexion swagger yaml specification_dir from the core plugin entry point
 specification_dir = data_logger.core_ep.specification_dir
-app = connexion.App(__name__, specification_dir = specification_dir)
-# read the Connexion swagger yaml specification filename from the core plugin entry point
-specification_filename = data_logger.core_ep.specification_filename
-#app.add_api('DataLogger-OAS.apic.yaml')
-app.add_api(specification_filename)
-# WARNING: Don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True)
-# setup config mode
-get_config_mode = 'Debug' if DEBUG else 'Production'
-# load config from the config_dict according to the set config mode.
-try:
-    # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
-    config_dict = data_logger.store_ep.get_config_dict()
-    app_config = config_dict[get_config_mode.capitalize()]
-except KeyError:
-    exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-# set flask app parameters
-app.app.config.from_object(app_config)
-# init app
-db.init_app(app.app)
-app.app.app_context().push()
+
 
 # Drops db
 print("Dropping database")
-db.drop_all(app=app.app)
 drop_everything(db.engine)
 print("done.")
 # add the core plugin directory to the sys path
@@ -94,10 +72,10 @@ db.create_all()
 print("Seeding database with test user")
 #from models.seeds.user import seed
 # user seed function from core plugin       
-data_logger.core_ep.user_seed(app.app, db)
+#data_logger.core_ep.user_seed(app.app, db)
 # TODO: REMOVE UP TO HERE
 # reflect the tables
 db.Model.metadata.reflect(bind=db.engine)
 Base.prepare(db.engine, reflect=False)
 # Initialize data structure if does not exist
-data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
+#data_logger.store_ep.init_data_structure(app.app, db, data_logger.core_ep)
