@@ -47,4 +47,4 @@ def dbinit():
     database_init(app, data_logger)
 
 # add command function to cli commands
-#app.cli.add_command(dbinit)
+app.cli.add_command(dbinit)
