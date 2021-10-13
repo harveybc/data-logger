@@ -15,8 +15,6 @@ import base64
 from app.util import load_plugin_config
 #import prance
 
-
-
 db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()

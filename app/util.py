@@ -2,7 +2,6 @@
 """ Common functions """
  
 import hashlib, binascii, os
-from app.app import db
 import json
 from sqlalchemy.ext.automap import automap_base
 
@@ -52,7 +51,7 @@ def as_dict(model):
             r2[c.name]=str(attr)
     return r2
 
-def reflect_prepare(Base):
+def reflect_prepare(db, Base):
     """ Update SQLAlchemy metadata and prepare automap base to allow ORM in all tables. """
     #update metadata and tables
     db.Model.metadata.reflect(bind=db.engine)
