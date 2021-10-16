@@ -14,27 +14,14 @@ def database_init(app, data_logger):
     # load the plugin config files
     plugin_conf = load_plugin_config()
     # initialize plugin system
-    print(" * Creating data_logger instance...")
+    print(" * Creatin data_logger instance...")
     data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
     # WARNING: Don't run with debug turned on in production!
-    DEBUG = config('DEBUG', default=True)
+    DEBUG = config('DgEBUG', default=True)
     # setup config mode
     get_config_mode = 'Debug' if DEBUG else 'Production'
     # load config from the config_dict according to the set config mode.
-    try:
-        # load the config_dict from the store plugin entry point (instance of the selected store plugin's class)
-        config_dict = data_logger.store_ep.get_config_dict()
-        app_config = config_dict[get_config_mode.capitalize()]
-    except KeyError:
-        exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-        
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://db.sqlite3'
-    app.config.from_object(app_config)
-    # database
-    db = SQLAlchemy(app)
-    reset_db(db, data_logger)
-
-def drop_everything(engine):
+    try:w
     """drops all foreign key constraints before dropping all tables.
     Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
     (https://github.com/pallets/flask-sqlalchemy/issues/722)
