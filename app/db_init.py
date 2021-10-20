@@ -21,7 +21,7 @@ def database_init(app, data_logger):
     # setup config mode
     get_config_mode = 'Debug' if DEBUG else 'Production'
     # load config from the config_dict according to the set config mode.
-    try:w
+    try:
     """drops all foreign key constraints before dropping all tables.
     Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
     (https://github.com/pallets/flask-sqlalchemy/issues/722)
