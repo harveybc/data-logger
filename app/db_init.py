@@ -20,7 +20,7 @@ def database_init(app, data_logger):
         Table,
         ForeignKeyConstraint,
     )
-    con = app.db.engine.connect()
+    con = app.app.db.engine.connect()
     trans = con.begin()
     inspector = Inspector.from_engine(db.engine)
     meta = MetaData()
