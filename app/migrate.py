@@ -14,6 +14,7 @@ from app.app import create_app, load_plugin_config
 from app.data_logger import DataLogger
 from app.db_init import database_init
 import click
+from flask import Flask
 from flask.cli import with_appcontext
 
 # load the plugin config files
@@ -33,13 +34,15 @@ try:
     app_config = config_dict[get_config_mode.capitalize()]
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-app = create_app( app_config, data_logger)
+app = Flask(__name__)
 
 def print_spec():
     # read json
     spec = json_load(data_logger.core_ep.specification_dir+'/' + data_logger.core_ep.specification_filename)
     # dump json as string
     return dumps(spec)
+
+database_init(app, data_logger)
 
 # create command function db_init for database reset/init
 #@app.cli.command("dbinit")
