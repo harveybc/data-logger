@@ -11,21 +11,7 @@ from sqlalchemy.ext.automap import automap_base
 
 def database_init(app, data_logger):
     # initialize Database configuration
-    # load the plugin config files
-    plugin_conf = load_plugin_config()
-    # initialize plugin system
-    print(" * Creatin data_logger instance...")
-    data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
-    # WARNING: Don't run with debug turned on in production!
-    DEBUG = config('DgEBUG', default=True)
-    # setup config mode
-    get_config_mode = 'Debug' if DEBUG else 'Production'
-    # load config from the config_dict according to the set config mode.
-    try:
-    """drops all foreign key constraints before dropping all tables.
-    Workaround for SQLAlchemy not doing DROP ## CASCADE for drop_all()
-    (https://github.com/pallets/flask-sqlalchemy/issues/722)
-    """
+    db = SQLAlchemy(app)
     from sqlalchemy.engine.reflection import Inspector
     from sqlalchemy.schema import (
         DropConstraint,
@@ -34,7 +20,7 @@ def database_init(app, data_logger):
         Table,
         ForeignKeyConstraint,
     )
-    con = engine.connect()
+    con = app.db.engine.connect()
     trans = con.begin()
     inspector = Inspector.from_engine(db.engine)
     meta = MetaData()
@@ -56,26 +42,26 @@ def database_init(app, data_logger):
 
 # create command function
 
-def reset_db(db, data_logger):
-    # Drops db
-    print("Dropping database")
-    drop_everything(db.engine)
-    print("done.")
-    # add the core plugin directory to the sys path
-    sys.path.append(data_logger.core_ep.specification_dir)
-    print("Import core models")
-    # import user, authorization, log and process models from core plugin 
-    from models.user import User
-    #from models.process import Process
-    #from models.authorization import Authorization
-    #from models.log import Log
-    #data_logger.core_ep.UserFactory()
-    #data_logger.core_ep.AuthorizationFactory()
-    #data_logger.core_ep.LogFactory()
-    #data_logger.core_ep.import_models()
+#def reset_db(db, data_logger):
+#    # Drops db
+#    print("Dropping database")
+#    drop_everything(db.engine)
+#    print("done.")
+#    # add the core plugin directory to the sys path
+#    sys.path.append(data_logger.core_ep.specification_dir)
+#    print("Import core models")
+#    # import user, authorization, log and process models from core plugin 
+#    from models.user import User
+#    #from models.process import Process
+#    #from models.authorization import Authorization
+#    #from models.log import Log
+#    #data_logger.core_ep.UserFactory()
+##    #data_logger.core_ep.AuthorizationFactory()
+ #   #data_logger.core_ep.LogFactory()
+ #   #data_logger.core_ep.import_models()
 
-    print("Creating database")
-    db.create_all()
+#    print("Creating database")
+#    db.create_all()
     #print("Seeding database with test user")
     #from models.seeds.user import seed
     # user seed function from core plugin       
