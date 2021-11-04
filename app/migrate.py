@@ -38,4 +38,13 @@ except KeyError:
 app = Flask(__name__)
 # configure the app from the config dict
 app.config.from_object(app_config)
-database_init(app, data_logger)
+# database_init(app, data_logger)
+
+
+# create command function db_init for database reset/init
+@app.cli.command("dbinit")
+def dbinit():
+    database_init(app, data_logger)
+
+# add command function to cli commands
+app.cli.add_command(dbinit)
