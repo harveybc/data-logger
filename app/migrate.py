@@ -10,7 +10,7 @@ from sys import exit
 from decouple import config
 from json import load as json_load
 from json import dumps
-from app.app import create_app, load_plugin_config
+from app.app import register_extensions, load_plugin_config
 from app.data_logger import DataLogger
 from app.db_init import database_init
 import click
@@ -34,7 +34,11 @@ try:
     app_config = config_dict[get_config_mode.capitalize()]
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
+# create the flask app
 app = Flask(__name__)
+# configure the app from the config dict
+app.config.from_object(app_config)
+
 
 def print_spec():
     # read json
