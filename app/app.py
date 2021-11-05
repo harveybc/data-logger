@@ -95,7 +95,7 @@ def create_app(app_config, data_logger):
 #    return parser.specs
 
 # create command function dbinit for database reset/init
-@app.cli.command("dbinit")
+@app.app.cli.command("dbinit")
 def dbinit():
     # drop all tables and create the data structure defined in the store plugin config file.
     data_logger.core_ep.database_init(app, db, data_logger, plugin_conf['store'])
