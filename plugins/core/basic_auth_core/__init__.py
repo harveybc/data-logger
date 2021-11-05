@@ -98,7 +98,7 @@ class BasicAuthCore():
             Args:
             app (Flask): the current flask app instance.
             db (SQLAlchemy) : SQLAlchemy instance
-            process_id (Integer): id of the process for which the table will be created
+            process_id (Integer): id of the process for which the table will be created, use -1 for none.
             table (dict): table parameters
         """
         # verify if the table already exists
