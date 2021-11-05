@@ -32,7 +32,7 @@ class SqliteStore():
         """ Create the data structure (processes/tables) from the config_store.json """
         # create the processes table if it does not exists
         try:
-            Process = core_ep.Process
+            core_ep.import_models()
             db.create_all()
         except SQLAlchemyError as e:
             print(str(e))
