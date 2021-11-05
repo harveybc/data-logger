@@ -129,13 +129,13 @@ class BasicAuthCore():
             from .models.process import Process
 
             db.create_all()
-            print("Tables:")
+            _logger.info("Created fixed data structure tables:")
             for t in db.metadata.sorted_tables:
-                print("tablename",t.name)
+                _logger.info("  %s", t.name)
         except SQLAlchemyError as e:
             print(str(e))
-        _logger.info("Fixed data structure created")
         # create each process from the processes attribute
+        _logger.info("Created configurable data structure tables:")
         for process in store_conf["store_plugin_config"]["processes"]:
             process_id = self.create_process(app, db, process)
             if process_id == -1:
@@ -147,11 +147,12 @@ class BasicAuthCore():
                 except SQLAlchemyError as e:
                     p = None
             if process_id>-1:
+                _logger.info("  Process created: %s", process_id)
                 # create each table of the process
                 for table in process["tables"]:
                     self.create_table(app, db, table)
+                    _logger.info("      Table created: %s", table["name"])
             db.session.commit()
-            _logger.info("Configurable data structure created")
 
     def database_init(self, app, db, data_logger, store_conf):
         _logger = logging.getLogger(__name__)
