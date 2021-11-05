@@ -180,7 +180,7 @@ class BasicAuthCore():
         trans.commit()
         _logger.info("Database dropped")
         # create the data structure from the store plugin config file
-        self.init_data_structure(app, db, data_logger.core_ep)
+        self.init_data_structure(app, db)
         _logger.info("Data structure created")
         
     
