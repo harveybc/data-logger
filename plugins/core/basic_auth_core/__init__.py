@@ -34,7 +34,7 @@ class BasicAuthCore():
     def __init__(self, conf):
         """ assign configuration params as class attributes """
         # Insert your plugin initialization code here.
-        _logger.debug("Initializing SqliteStore plugin")
+        _logger.info("Initializing SqliteStore plugin")
         self.conf = conf
         self.specification_dir = os.path.dirname(__file__)
         self.specification_filename = conf['core_plugin_config']['filename']

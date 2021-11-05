@@ -36,6 +36,7 @@ class SqliteStore():
             db.create_all()
         except SQLAlchemyError as e:
             print(str(e))
+        _logger.info("Created fixed data structure")
         # create each process from the processes attribute
         for process in self.conf["store_plugin_config"]["processes"]:
             process_id = core_ep.create_process(app, db, process)
@@ -51,6 +52,7 @@ class SqliteStore():
                 # create each table of the process
                 for table in process["tables"]:
                     core_ep.create_table(app, db, table)
+            _logger.info("Created configurable data structure")
 
     #Imported methods
     #from ._dashboard import load_data, get_user_id, get_max, get_count, get_column_by_pid, get_columns, get_users, get_user_by_username, get_processes, get_process_by_pid, processes_by_uid
