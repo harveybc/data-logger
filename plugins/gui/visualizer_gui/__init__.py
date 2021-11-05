@@ -19,7 +19,7 @@ class VisualizerGui():
     def __init__(self, conf):
         """ assign configuration params as class attributes """
         # Insert your plugin initialization code here.
-        _logger.info("Initializing VisualizerGui plugin")
+        _logger.info("Initializing gui plugin")
         self.conf = conf
         # path for static files .//base/static
         self.static_url_path = '/plugins/gui/visualizer_gui/base/static'
