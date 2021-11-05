@@ -130,7 +130,7 @@ class BasicAuthCore():
             print(str(e))
         _logger.info("Created fixed data structure")
         # create each process from the processes attribute
-        for process in store_conf["processes"]:
+        for process in store_conf["store_plugin_config"]["processes"]:
             process_id = self.create_process(app, db, process)
             if process_id == -1:
                 try:
