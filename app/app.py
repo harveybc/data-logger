@@ -56,7 +56,7 @@ def create_app(app_config, data_logger):
     # get the output plugin template folder
     plugin_folder = data_logger.gui_ep.template_path()
     # register the blueprints from the gui plugin
-    data_logger.gui_ep.register_blueprints(app.app, data_logger.core_ep )
+    data_logger.gui_ep.register_blueprints(app.app, data_logger.core_ep)
     
     # create User model for login manager
     User = data_logger.core_ep.User
