@@ -129,8 +129,6 @@ class BasicAuthCore():
             from .models.process import Process
 
             db.create_all()
-            db.session.commit()
-            db.session.close()
             print("Tables:")
             for t in db.metadata.sorted_tables:
                 print("tablename",t.name)
