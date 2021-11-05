@@ -94,4 +94,4 @@ def create_app(app_config, data_logger):
 #    parser.parse()
 #    return parser.specs
 
-app.cli.add_command(dbinit)
+app.app.cli.add_command(dbinit)
