@@ -19,12 +19,6 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()
 
-def register_extensions(app, data_logger):
-    db.init_app(app)
-    login_manager.init_app(app)
-    # create the data structure from the store plugin config file if it does not exist
-    data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
-
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
     Args:
@@ -66,7 +60,8 @@ def create_app(app_config, data_logger):
     #app.app.config['P_CONFIG'] = p_config 
     # data_logger instance with plugins already loaded
     ### current_app.config['FE'] = fe
-    register_extensions(app.app, data_logger)
+    db.init_app(app)
+    login_manager.init_app(app)
     # get the output plugin template folder
     plugin_folder = data_logger.gui_ep.template_path()
     # register the blueprints from the gui plugin
