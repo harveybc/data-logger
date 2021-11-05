@@ -130,6 +130,10 @@ class BasicAuthCore():
 
             db.create_all()
             db.session.commit()
+            db.session.expunge_all()
+            db.session.close()
+            for t in db.metadata.sorted_tables:
+                print("tablename",t.name)
         except SQLAlchemyError as e:
             print(str(e))
         _logger.info("Fixed data structure created")
