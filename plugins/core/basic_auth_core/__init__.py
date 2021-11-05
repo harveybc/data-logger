@@ -17,11 +17,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
 
-
 Base = automap_base()
 
 import os
-from .models.seeds.user import seed as u_seed
+from .models.seeds.user import seed as user_seed
+from .models.seeds.user import seed as process_seed
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -53,13 +53,15 @@ class BasicAuthCore():
         from .models.process import Process
 
 
-    def user_seed(self, app, db):
-        """ Populate starting user table
+    def seed_init_data(self, app, db):
+        """ Populate starting user and process tables
         Args:
         app (Flask): the current flask app object.
         db  (SQLAlchemy) : SQLAlchemy object
         """ 
-        u_seed(app,db)
+        user_seed(app,db)
+        process_seed(app,db)
+        
 
     def create_process(self, app, db, process):
         """ Create a register in the process table if another with the same name does not exist.
@@ -187,5 +189,9 @@ class BasicAuthCore():
         # create the data structure from the store plugin config file
         self.init_data_structure(app, db, store_conf)
         _logger.info("Data structure created")
+        self.seed_init_data(app, db)
+        _logger.info("Initial data seed done")
+        
+
         
     
