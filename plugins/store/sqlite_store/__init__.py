@@ -31,6 +31,8 @@ class SqliteStore():
     def init_data_structure(self, app, db, core_ep):
         """ Create the data structure (processes/tables) from the config_store.json """
         # create the processes table if it does not exists
+        Process = core_ep.Process
+        db.create_all()
         try:
             core_ep.create_table(app, db, 'process')
             #with app.app_context():
