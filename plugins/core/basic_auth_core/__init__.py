@@ -119,7 +119,7 @@ class BasicAuthCore():
                 # reflect the tables
                 Base.prepare(db.engine, reflect=False)
     
-    def init_data_structure(self, app, db):
+    def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """
         # create the processes table if it does not exists
         try:
@@ -130,7 +130,7 @@ class BasicAuthCore():
             print(str(e))
         _logger.info("Created fixed data structure")
         # create each process from the processes attribute
-        for process in self.conf["store_plugin_config"]["processes"]:
+        for process in store_conf["processes"]:
             process_id = self.create_process(app, db, process)
             if process_id == -1:
                 try:
