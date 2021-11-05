@@ -39,6 +39,8 @@ def database_init(app, data_logger):
     for table in tables:
         con.execute(DropTable(table))
     trans.commit()
+    # create the data structure from the store plugin config file
+    data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
 
 # create command function
 

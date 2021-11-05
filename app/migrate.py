@@ -44,7 +44,7 @@ app.config.from_object(app_config)
 # create command function db_init for database reset/init
 @app.cli.command("dbinit")
 def dbinit():
+    # drop all tables and create the data structure defined in the store plugin config file.
     database_init(app, data_logger)
-
 # add command function to cli commands
 app.cli.add_command(dbinit)
