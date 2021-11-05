@@ -123,7 +123,11 @@ class BasicAuthCore():
         """ Create the data structure (processes/tables) from the config_store.json """
         # create the processes table if it does not exists
         try:
-            self.import_models()
+            from .models.user import User
+            from .models.authorization import Authorization
+            from .models.log import Log
+            from .models.process import Process
+
             db.create_all()
             db.session.commit()
         except SQLAlchemyError as e:
