@@ -34,6 +34,7 @@ class SqliteStore():
         try:
             core_ep.import_models()
             db.create_all()
+            db.session.commit()
         except SQLAlchemyError as e:
             print(str(e))
         _logger.info("Created fixed data structure")
@@ -52,6 +53,7 @@ class SqliteStore():
                 # create each table of the process
                 for table in process["tables"]:
                     core_ep.create_table(app, db, table)
+            db.session.commit()
             _logger.info("Created configurable data structure")
 
     #Imported methods
