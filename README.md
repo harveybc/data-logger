@@ -48,11 +48,8 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > pip install -r requirements.txt
 4. Install python package (also installs the console command data-trimmer)
 > python setup.py install
-5. Add the repo folder to the environment variable PYTHONPATH
-6. Create a test database (use scrips\migrate.bat on windows)
+5. Create a test database (use scrips\migrate.bat on windows)
 > scripts/migrate.sh
-7. Populate the test database (use test_data_seed.bat on Windows)
-> scripts/test_data_seed.sh
 6. (Optional) Perform tests
 > python setup.py test
 7. (Optional) Generate Sphinx Documentation
