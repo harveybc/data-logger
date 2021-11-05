@@ -10,7 +10,7 @@ from sys import exit
 from decouple import config
 from json import load as json_load
 from json import dumps
-from app.app import register_extensions, load_plugin_config
+from app.app import register_extensions, load_plugin_config, db
 from app.data_logger import DataLogger
 import click
 from flask import Flask
@@ -38,7 +38,7 @@ except KeyError:
 app = Flask(__name__)
 # configure the app from the config dict
 app.config.from_object(app_config)
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 # create command function db_init for database reset/init
 @app.cli.command("dbinit")

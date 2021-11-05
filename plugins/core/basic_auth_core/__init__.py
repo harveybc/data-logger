@@ -130,7 +130,6 @@ class BasicAuthCore():
 
             db.create_all()
             db.session.commit()
-            db.session.expunge_all()
             db.session.close()
             print("Tables:")
             for t in db.metadata.sorted_tables:
