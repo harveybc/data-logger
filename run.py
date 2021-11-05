@@ -12,7 +12,6 @@ from json import load as json_load
 from json import dumps
 from app.app import create_app, load_plugin_config
 from app.data_logger import DataLogger
-from app.db_init import database_init
 import click
 from flask.cli import with_appcontext
 
