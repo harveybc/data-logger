@@ -128,7 +128,7 @@ class BasicAuthCore():
             db.session.commit()
         except SQLAlchemyError as e:
             print(str(e))
-        _logger.info("Created fixed data structure")
+        _logger.info("Fixed data structure created")
         # create each process from the processes attribute
         for process in store_conf["store_plugin_config"]["processes"]:
             process_id = self.create_process(app, db, process)
@@ -145,7 +145,7 @@ class BasicAuthCore():
                 for table in process["tables"]:
                     self.create_table(app, db, table)
             db.session.commit()
-            _logger.info("Created configurable data structure")
+            _logger.info("Configurable data structure created")
 
     def database_init(self, app, data_logger, store_conf):
         _logger = logging.getLogger(__name__)
