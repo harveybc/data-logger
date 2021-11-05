@@ -3,6 +3,6 @@ set PREV_PYTHONPATH = %PYTHONPATH%
 set PYTHONPATH=%PYTHONPATH%;.\;\controllers;.
 set FLASK_APP=.\app\migrate.py
 set FLASK_ENV=development
-flask dbinit 
+flask run 
 set PYTHONPATH=%PREV_PYTHONPATH%
  
