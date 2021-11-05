@@ -51,8 +51,8 @@ def create_app(app_config, data_logger):
     # read plugin configuration JSON file
     app.app.config.from_object(app_config)
     # initialize db with current app
-    db.init_app(app)
-    login_manager.init_app(app)
+    db.init_app(app.app)
+    login_manager.init_app(app.app)
     # get the output plugin template folder
     plugin_folder = data_logger.gui_ep.template_path()
     # register the blueprints from the gui plugin
