@@ -44,6 +44,6 @@ app.config.from_object(app_config)
 @app.cli.command("dbinit")
 def dbinit():
     # drop all tables and create the data structure defined in the store plugin config file.
-    data_logger.core_ep.database_init(app, data_logger)
+    data_logger.core_ep.database_init(app, data_logger, plugin_conf['store'])
 # add command function to cli commands
 app.cli.add_command(dbinit)

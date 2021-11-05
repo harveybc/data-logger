@@ -147,7 +147,7 @@ class BasicAuthCore():
             db.session.commit()
             _logger.info("Created configurable data structure")
 
-    def database_init(self, app, data_logger):
+    def database_init(self, app, data_logger, store_conf):
         _logger = logging.getLogger(__name__)
         # initialize Database configuration
         db = SQLAlchemy(app)
@@ -180,7 +180,7 @@ class BasicAuthCore():
         trans.commit()
         _logger.info("Database dropped")
         # create the data structure from the store plugin config file
-        self.init_data_structure(app, db)
+        self.init_data_structure(app, db, store_conf)
         _logger.info("Data structure created")
         
     
