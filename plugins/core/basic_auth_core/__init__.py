@@ -93,12 +93,11 @@ class BasicAuthCore():
             else:
                 return -1
 
-    def create_table(self, app, db, process_id, table):
+    def create_table(self, app, db, table):
         """ Create a table if another with the same name does not exist.
             Args:
             app (Flask): the current flask app instance.
             db (SQLAlchemy) : SQLAlchemy instance
-            process_id (Integer): id of the process for which the table will be created, use -1 for none.
             table (dict): table parameters
         """
         # verify if the table already exists

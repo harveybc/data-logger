@@ -7,9 +7,11 @@ from app.data_logger import DataLogger
 import sys
 from decouple import config
 from sqlalchemy.ext.automap import automap_base
+import logging
 
 
 def database_init(app, data_logger):
+    _logger = logging.getLogger(__name__)
     # initialize Database configuration
     db = SQLAlchemy(app)
     from sqlalchemy.engine.reflection import Inspector
@@ -39,8 +41,11 @@ def database_init(app, data_logger):
     for table in tables:
         con.execute(DropTable(table))
     trans.commit()
+    _logger.info("Database dropped")
     # create the data structure from the store plugin config file
     data_logger.store_ep.init_data_structure(app, db, data_logger.core_ep)
+    _logger.info("Data structure created")
+    
 
 # create command function
 

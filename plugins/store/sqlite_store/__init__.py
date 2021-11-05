@@ -31,7 +31,12 @@ class SqliteStore():
     def init_data_structure(self, app, db, core_ep):
         """ Create the data structure (processes/tables) from the config_store.json """
         # create the processes table if it does not exists
-        
+        try:
+            core_ep.create_table(app, db, 'process')
+            #with app.app_context():
+            #    p = Process.query.filter_by(name=process["name"]).one()
+        except SQLAlchemyError as e:
+            print(str(e))
         # create each process from the processes attribute
         for process in self.conf["store_plugin_config"]["processes"]:
             process_id = core_ep.create_process(app, db, process)
@@ -46,7 +51,7 @@ class SqliteStore():
             if process_id>-1:
                 # create each table of the process
                 for table in process["tables"]:
-                    core_ep.create_table(app, db, process_id, table)
+                    core_ep.create_table(app, db, table)
 
     #Imported methods
     #from ._dashboard import load_data, get_user_id, get_max, get_count, get_column_by_pid, get_columns, get_users, get_user_by_username, get_processes, get_process_by_pid, processes_by_uid
