@@ -17,6 +17,7 @@ from flask import Flask
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
 
+
 # load the plugin config files
 plugin_conf = load_plugin_config()
 # initialize plugin system
@@ -42,9 +43,9 @@ db.init_app(app)
 
 
 # create command function dbinit for database reset/init
-@app.cli.command("dbinit")
+@click.command()
 def dbinit():
     # drop all tables and create the data structure defined in the store plugin config file.
     data_logger.core_ep.database_init(app, db, data_logger, plugin_conf['store'])
 # add command function to cli commands
-app.cli.add_command(dbinit)
+app.cli.add_command(commands.dbinit)
