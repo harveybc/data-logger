@@ -30,7 +30,7 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "configuration",
+                        "name": "feature_extractor_configuration",
                         "columns": [
                             {
                                 "name": "max_iterations",
@@ -129,10 +129,10 @@
                 ]
             },
             {
-                "name": "GrasslandsApp",
+                "name": "Grasslands",
                 "tables": [ 	
                     {
-                        "name": "configuration",
+                        "name": "grasslands_configuration",
                         "columns": [
                             {
                                 "name": "description",
@@ -179,7 +179,7 @@
                 "name": "IoT",
                 "tables": [ 	
                     {
-                        "name": "configuration",
+                        "name": "iot_configuration",
                         "columns": [
                             {
                                 "name": "description",

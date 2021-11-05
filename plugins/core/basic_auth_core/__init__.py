@@ -147,7 +147,7 @@ class BasicAuthCore():
                 except SQLAlchemyError as e:
                     p = None
             if process_id>-1:
-                _logger.info("  Process %s tables:", process_id)
+                _logger.info("  Process %s tables:", process["name"])
                 # create each table of the process
                 for table in process["tables"]:
                     self.create_table(app, db, table)
