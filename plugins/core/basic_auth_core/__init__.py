@@ -77,7 +77,6 @@ class BasicAuthCore():
             try:
                 p = Process.query.filter_by(name=process["name"]).one()
                 db.session.expunge_all()
-                db.session.expunge_all()
                 db.session.close()
             except SQLAlchemyError as e:
                 p = None
