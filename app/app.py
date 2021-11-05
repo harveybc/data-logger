@@ -34,11 +34,9 @@ def create_app(app_config, data_logger):
     app = connexion.App(__name__, specification_dir = specification_dir)
     # read the Connexion swagger yaml specification filename from the core plugin entry point
     specification_filename = data_logger.core_ep.specification_filename
-    #app.add_api('DataLogger-OAS.apic.yaml')
     app.add_api(specification_filename)
     # set Flask static_folder  to be used with Connexion from the gui plugin entry point 
     static_url_path = data_logger.gui_ep.static_url_path
-    #app.app.static_url_path = '/base/static'
     app.app.static_url_path = static_url_path
     # remove old static map
     url_map = app.app.url_map
@@ -51,15 +49,8 @@ def create_app(app_config, data_logger):
     # adds an url rule to serve static files from the gui plugin location
     app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
     # read plugin configuration JSON file
-    #p_config = read_plugin_config()
-    # initialize FeatureExtractor
-    ###fe = FeatureExtractor(p_config)
-    # set flask app parameters
     app.app.config.from_object(app_config)
-    # plugin configuration from data_logger.json
-    #app.app.config['P_CONFIG'] = p_config 
-    # data_logger instance with plugins already loaded
-    ### current_app.config['FE'] = fe
+    # initialize db with current app
     db.init_app(app)
     login_manager.init_app(app)
     # get the output plugin template folder
@@ -92,22 +83,10 @@ def create_app(app_config, data_logger):
         # return None if user is not logged in
         return None
 
-    # If it is the first time the app is run, create the database and perform data seeding
-    #@app.app.before_first_request
-        #print("tables=", db.metadata.tables)
-    #    @app.before_first_request
-    #    def initialize_database():
-    #        pass
-    #    @app.teardown_request
-    #    def shutdown_session(exception=None):
-    #        db.session.remove()
-
     @app.app.teardown_appcontext
     def shutdown_session(exception=None):
         db.session.remove()
-    
     return app.app
-
 
 #def bundled_specs(main_file: Path) -> Dict[str, Any]:
 #    parser = prance.ResolvingParser(str(main_file.absolute()),
