@@ -12,7 +12,6 @@ from json import load as json_load
 from json import dumps
 from app.app import register_extensions, load_plugin_config
 from app.data_logger import DataLogger
-from app.db_init import database_init
 import click
 from flask import Flask
 from flask.cli import with_appcontext
@@ -45,6 +44,6 @@ app.config.from_object(app_config)
 @app.cli.command("dbinit")
 def dbinit():
     # drop all tables and create the data structure defined in the store plugin config file.
-    database_init(app, data_logger)
+    data_logger.core_ep.database_init(app, data_logger)
 # add command function to cli commands
 app.cli.add_command(dbinit)

@@ -16,6 +16,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
+from flask_sqlalchemy import SQLAlchemy
 
 Base = automap_base()
 
@@ -34,7 +35,7 @@ class BasicAuthCore():
     def __init__(self, conf):
         """ assign configuration params as class attributes """
         # Insert your plugin initialization code here.
-        _logger.info("Initializing SqliteStore plugin")
+        _logger.info("Initializing core plugin")
         self.conf = conf
         self.specification_dir = os.path.dirname(__file__)
         self.specification_filename = conf['core_plugin_config']['filename']
@@ -117,4 +118,69 @@ class BasicAuthCore():
                 db.Model.metadata.reflect(bind=db.engine)
                 # reflect the tables
                 Base.prepare(db.engine, reflect=False)
-                
+    
+    def init_data_structure(self, app, db):
+        """ Create the data structure (processes/tables) from the config_store.json """
+        # create the processes table if it does not exists
+        try:
+            self.import_models()
+            db.create_all()
+            db.session.commit()
+        except SQLAlchemyError as e:
+            print(str(e))
+        _logger.info("Created fixed data structure")
+        # create each process from the processes attribute
+        for process in self.conf["store_plugin_config"]["processes"]:
+            process_id = self.create_process(app, db, process)
+            if process_id == -1:
+                try:
+                    Process = self.Process
+                    with app.app_context():
+                        p = Process.query.filter_by(name=process["name"]).one()
+                    process_id == p.id
+                except SQLAlchemyError as e:
+                    p = None
+            if process_id>-1:
+                # create each table of the process
+                for table in process["tables"]:
+                    self.create_table(app, db, table)
+            db.session.commit()
+            _logger.info("Created configurable data structure")
+
+    def database_init(self, app, data_logger):
+        _logger = logging.getLogger(__name__)
+        # initialize Database configuration
+        db = SQLAlchemy(app)
+        from sqlalchemy.engine.reflection import Inspector
+        from sqlalchemy.schema import (
+            DropConstraint,
+            DropTable,
+            MetaData,
+            Table,
+            ForeignKeyConstraint,
+        )
+        con = db.engine.connect()
+        trans = con.begin()
+        inspector = Inspector.from_engine(db.engine)
+        meta = MetaData()
+        tables = []
+        all_fkeys = []
+        for table_name in inspector.get_table_names():
+            fkeys = []
+            for fkey in inspector.get_foreign_keys(table_name):
+                if not fkey["name"]:
+                    continue
+                fkeys.append(ForeignKeyConstraint((), (), name=fkey["name"]))
+            tables.append(Table(table_name, meta, *fkeys))
+            all_fkeys.extend(fkeys)
+        for fkey in all_fkeys:
+            con.execute(DropConstraint(fkey))
+        for table in tables:
+            con.execute(DropTable(table))
+        trans.commit()
+        _logger.info("Database dropped")
+        # create the data structure from the store plugin config file
+        self.init_data_structure(app, db, data_logger.core_ep)
+        _logger.info("Data structure created")
+        
+    
