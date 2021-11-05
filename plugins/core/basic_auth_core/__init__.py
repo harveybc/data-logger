@@ -16,7 +16,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
-from flask_sqlalchemy import SQLAlchemy
+
 
 Base = automap_base()
 
@@ -155,10 +155,9 @@ class BasicAuthCore():
             db.session.commit()
             _logger.info("Configurable data structure created")
 
-    def database_init(self, app, data_logger, store_conf):
+    def database_init(self, app, db, data_logger, store_conf):
         _logger = logging.getLogger(__name__)
         # initialize Database configuration
-        db = SQLAlchemy(app)
         from sqlalchemy.engine.reflection import Inspector
         from sqlalchemy.schema import (
             DropConstraint,

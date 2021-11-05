@@ -15,6 +15,7 @@ from app.data_logger import DataLogger
 import click
 from flask import Flask
 from flask.cli import with_appcontext
+from flask_sqlalchemy import SQLAlchemy
 
 # load the plugin config files
 plugin_conf = load_plugin_config()
@@ -37,13 +38,12 @@ except KeyError:
 app = Flask(__name__)
 # configure the app from the config dict
 app.config.from_object(app_config)
-# database_init(app, data_logger)
-
+db = SQLAlchemy(app)
 
 # create command function db_init for database reset/init
 @app.cli.command("dbinit")
 def dbinit():
     # drop all tables and create the data structure defined in the store plugin config file.
-    data_logger.core_ep.database_init(app, data_logger, plugin_conf['store'])
+    data_logger.core_ep.database_init(app, db, data_logger, plugin_conf['store'])
 # add command function to cli commands
 app.cli.add_command(dbinit)
