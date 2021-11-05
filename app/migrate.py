@@ -40,6 +40,7 @@ app = Flask(__name__)
 app.config.from_object(app_config)
 db.init_app(app)
 
+
 # create command function dbinit for database reset/init
 @app.cli.command("dbinit")
 def dbinit():

@@ -39,11 +39,3 @@ def print_spec():
     spec = json_load(data_logger.core_ep.specification_dir+'/' + data_logger.core_ep.specification_filename)
     # dump json as string
     return dumps(spec)
-
-# create command function db_init for database reset/init
-#@app.cli.command("dbinit")
-#def dbinit():
-#    database_init(app, data_logger)
-
-# add command function to cli commands
-#app.cli.add_command(dbinit)
