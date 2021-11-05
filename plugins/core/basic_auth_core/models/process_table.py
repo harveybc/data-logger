@@ -56,7 +56,7 @@ class ProcessTable():
                 id_found = True
         # create a new id column if a primary key was not found
         if not pk_found and not id_found:
-            t_args.append(Column("id", col_type, autoincrement=True, primary_key=True, nullable=False))
+            t_args.append(Column("id", Integer, autoincrement=True, primary_key=True, nullable=False))
         # create a new timestamp column if it was not found
         if not timestamp_found:
             t_args.append(Column("timestamp", String, server_default=str(datetime.now())))
