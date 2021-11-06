@@ -5,7 +5,7 @@ import pytest
 
 from app.app import create_app
 from app.app import db
-from app.app import init_db
+from app.migrate import dbinit as init_db
 
 # read in SQL for populating test data
 with open(os.path.join(os.path.dirname(__file__), "data/data_logger_test_data.sql"), "rb") as f:
