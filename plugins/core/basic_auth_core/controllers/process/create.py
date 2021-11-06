@@ -46,7 +46,7 @@ def create(body):
         # test if the new process was created 
         try:
             res['process'] = as_dict(Process.query.filter_by(name=new_process.name).one())
-            db.session.expunge_all()
+            #db.session.expunge_all()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)

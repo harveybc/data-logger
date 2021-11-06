@@ -121,7 +121,7 @@ class ProcessTable():
             # update the tables attribute in the process model
             p_model.tables = p_table["tables"] 
             db.session.commit()
-            db.session.expunge_all()
+            #db.session.expunge_all()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)

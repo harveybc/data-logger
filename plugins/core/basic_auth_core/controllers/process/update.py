@@ -44,7 +44,7 @@ def update(process_id, body):
         # perform update 
         try:
             db.session.commit()
-            db.session.expunge_all()
+            #db.session.expunge_all()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
@@ -52,7 +52,7 @@ def update(process_id, body):
         # test if the model was updated 
         try:
             res['process'] = as_dict(Process.query.filter_by(id=int(process_id)).one())
-            db.session.expunge_all()
+            #db.session.expunge_all()
             db.session.close()
         except SQLAlchemyError as e:
             error = str(e)

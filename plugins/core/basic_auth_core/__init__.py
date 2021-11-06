@@ -72,7 +72,7 @@ class BasicAuthCore():
             db.session = scoped_session(sessionmaker(bind=db.engine, expire_on_commit=False))
             try:
                 p = Process.query.filter_by(name=process["name"]).one()
-                db.session.expunge_all()
+                #db.session.expunge_all()
                 db.session.close()
             except SQLAlchemyError as e:
                 p = None
@@ -83,7 +83,7 @@ class BasicAuthCore():
                 new_process = Process(**process) 
                 db.session.add(new_process)
                 db.session.commit()
-                db.session.expunge_all()
+                #db.session.expunge_all()
                 db.session.close()
                 return new_process.id
             else:
