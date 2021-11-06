@@ -54,7 +54,7 @@ class BasicAuthCore():
         from .models.seeds.user import seed as user_seed
         from .models.seeds.process import seed as process_seed
         user_seed(app,db)
-        process_seed(app,db)
+        #process_seed(app,db)
         
 
     def create_process(self, app, db, process):
