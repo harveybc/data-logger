@@ -15,7 +15,7 @@ from flask import Flask
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
 from app.util import load_plugin_config
-
+from app.data_logger import DataLogger
 
 # load the plugin config files
 plugin_conf = load_plugin_config()
