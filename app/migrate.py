@@ -14,6 +14,7 @@ import click
 from flask import Flask
 from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
+from app.util import load_plugin_config
 
 
 # load the plugin config files
