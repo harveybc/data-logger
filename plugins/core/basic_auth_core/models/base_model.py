@@ -53,6 +53,7 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         return res
 
@@ -67,6 +68,7 @@ class BaseModel():
             res = cls.query.all()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         return res
         
@@ -84,6 +86,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         return res
 
@@ -103,6 +106,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         # replace model with body fields
         res = cls(**body)
@@ -114,6 +118,7 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         return res
 
@@ -131,6 +136,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         # perform delete 
         db.session.delete(res)
@@ -138,5 +144,6 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+print("Error: ", error)
             return error
         return Id

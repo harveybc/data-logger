@@ -29,6 +29,7 @@ def create(body):
         res = User.query.filter_by(username=new_user.username).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+print("Error: ", error)
         return error
     # empty pass
     res2 = as_dict(res)
