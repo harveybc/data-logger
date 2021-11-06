@@ -31,6 +31,7 @@ class BaseModel():
             setattr(self, property, value)
         # initializes automap base class that allows ORM in all tables
         reflect_prepare(db, self)
+        db.session = scoped_session(sessionmaker(bind=db.engine, expire_on_commit=False))
     
     @classmethod
     def create(cls, **body): 
