@@ -38,6 +38,7 @@ except KeyError:
 app = Flask(__name__)
 # configure the app from the config dict
 app.config.from_object(app_config)
+db = SQLAlchemy()
 db.init_app(app)
 
 def dbinit():
