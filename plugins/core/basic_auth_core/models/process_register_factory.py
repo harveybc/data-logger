@@ -64,7 +64,7 @@ def ProcessRegisterFactory(table_param):
                 db.session.commit()
                 new_id = register_model.id
                 ##db.session.expunge_all()
-                #db.session.close()
+                ##db.session.close()
                 res = as_dict(register_model)
             except SQLAlchemyError as e:
                 error = str(e)
@@ -133,7 +133,7 @@ def ProcessRegisterFactory(table_param):
             try:
                 db.session.commit()
                 ##db.session.expunge_all()
-                #db.session.close()
+                ##db.session.close()
             except SQLAlchemyError as e:
                 error = str(e)
                 res['register'] ={ 'error_e' : error}

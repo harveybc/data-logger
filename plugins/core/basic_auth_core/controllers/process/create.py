@@ -47,7 +47,7 @@ def create(body):
         try:
             res['process'] = as_dict(Process.query.filter_by(name=new_process.name).one())
             #db.session.expunge_all()
-            db.session.close()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
             res['process'] ={ 'error_b' : error}

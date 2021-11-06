@@ -31,6 +31,9 @@ class BaseModel():
             setattr(self, property, value)
         # initializes automap base class that allows ORM in all tables
         reflect_prepare(db, self)
+        # initialize a new session for the current model, that expires on commit 
+        # TODO: verify performance for bulk-loading/saving
+        db.session = sessionmaker(bind=db.engine, expire_on_commit=True)
     
     @classmethod
     def create(cls, **body): 
