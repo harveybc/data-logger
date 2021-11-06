@@ -43,13 +43,6 @@ class BasicAuthCore():
         self.Process = Process
         self.ProcessTable = ProcessTable
         # seed initial user 
-    
-    def import_models(self):
-        from .models.user import User
-        from .models.authorization import Authorization
-        from .models.log import Log
-        from .models.process import Process
-
 
     def seed_init_data(self, app, db):
         """ Populate starting user and process tables

@@ -7,4 +7,4 @@ def seed(app, db):
         tmp =  User(id=0, username='test', password='pass', admin=True, email='test@test.com')
         db.session.add(tmp)
         db.session.commit()
-        _logger.info(" User table seeded")
+        _logger.info(" User table seeded")        
