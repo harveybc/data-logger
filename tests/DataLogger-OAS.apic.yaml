@@ -424,13 +424,13 @@ paths:
         "404":
           $ref: "#/responses/trait:error-response:404"
       parameters: []
-  "/users/{userId}":
+  "/users/{user_id}":
     get:
       tags:
         - user
         - get
-      summary: Get detail of user by userId
-      description: Get detail of user by userId
+      summary: Get detail of user by user_id
+      description: Get detail of user by user_id
       consumes: []
       produces: []
       schemes: []
@@ -441,7 +441,7 @@ paths:
         "200":
           schema:
             $ref: "#/definitions/output_user"
-          description: Returns 200 with the detail of user for the specified userId
+          description: Returns 200 with the detail of user for the specified user_id
         "400":
           $ref: "#/responses/trait:error-response:400"
         "401":
@@ -451,7 +451,7 @@ paths:
         "404":
           $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
           description: ""
           required: true
@@ -460,8 +460,8 @@ paths:
       tags:
         - user
         - update
-      summary: Update user details by userId
-      description: Update user details by userId
+      summary: Update user details by user_id
+      description: Update user details by user_id
       consumes: []
       produces: []
       schemes: []
@@ -482,7 +482,7 @@ paths:
         "404":
           $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
           description: ""
           required: true
@@ -495,8 +495,8 @@ paths:
       tags:
         - user
         - delete
-      summary: Delete user by userId
-      description: Delete user by userId
+      summary: Delete user by user_id
+      description: Delete user by user_id
       consumes: []
       produces: []
       schemes: []
@@ -517,7 +517,7 @@ paths:
         "404":
           $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
           description: ""
           required: true

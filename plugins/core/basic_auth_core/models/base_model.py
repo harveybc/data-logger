@@ -127,7 +127,7 @@ class BaseModel():
         """ Delete a register in db based on the id field of the model.
 
             Args:
-            userId (str): id field of the model.
+            user_id (str): id field of the model.
 
             Returns:
             res (int): the deleted register id field

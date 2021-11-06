@@ -109,7 +109,7 @@ def update(authorization_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the model, obtained from url parameter (log/<authorization_id>).
+        user_id (str): id field of the model, obtained from url parameter (log/<authorization_id>).
         body (dict): dict containing the fields of the register, obtained from json in the body of the request.
 
         Returns:
