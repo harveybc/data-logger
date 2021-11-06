@@ -1,7 +1,9 @@
 from ...models.user import User
+import logging
 # add the default user with id = 0 and username = test
 def seed(app, db):
     with app.app_context():
         tmp =  User( username='test', password='pass', admin=True, email='test@test.com')
         db.session.add(tmp)
         db.session.commit()
+        _logger.info(" User table seeded")

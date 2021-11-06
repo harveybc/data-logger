@@ -18,7 +18,7 @@ class User(db.Model, UserMixin, BaseModel):
     # columns
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)
-    email = Column(String, unique=False)
+    email = Column(String, unique=True)
     admin = Column(Boolean)
     password = Column(String)
 
