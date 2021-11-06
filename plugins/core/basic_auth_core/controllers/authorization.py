@@ -73,14 +73,14 @@ def create(body):
         #db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
-print("Error: ", error)
+        print("Error: ", error)
         return error
     # test if the new user was created 
     try:
         res = Authorization.query.filter_by(id=new_id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
-print("Error: ", error)
+        print("Error: ", error)
         return error
     # return register as dict
     return as_dict(res)
