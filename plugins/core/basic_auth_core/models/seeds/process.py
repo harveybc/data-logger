@@ -1,5 +1,6 @@
 from ...models.process import Process
 import logging
+_logger = logging.getLogger(__name__)
 # add the default process with id = 0
 def seed(app, db):
     with app.app_context():
