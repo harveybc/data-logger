@@ -59,6 +59,7 @@ class BasicAuthCore():
         app (Flask): the current flask app object.
         db  (SQLAlchemy) : SQLAlchemy object
         """ 
+        _logger.info("Seeding initial data")
         user_seed(app,db)
         process_seed(app,db)
         
