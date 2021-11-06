@@ -99,7 +99,7 @@ def read(authorization_id):
         res = as_dict(Authorization.query.filter_by(id=authorization_id).one())
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         return error 
     return res
 
@@ -122,7 +122,7 @@ def update(authorization_id, body):
             setattr(process_model, property, value)
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         res = { 'error_a' : error}
     # replace model with body fields
     
@@ -133,7 +133,7 @@ print("Error : " , error)
         #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
@@ -142,7 +142,7 @@ print("Error : " , error)
         #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         res = { 'error_c' : error}
     return res
 
@@ -161,7 +161,7 @@ def delete(authorization_id):
         res = Authorization.query.filter_by(id=authorization_id).one()
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         return error
     # perform delete 
     db.session.delete(res)
@@ -169,7 +169,7 @@ print("Error : " , error)
         db.session.commit()
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         return error
     return res.id
 
@@ -184,7 +184,7 @@ def read_all():
         res = Authorization.query.all()
     except SQLAlchemyError as e:
         error = str(e)
-print("Error : " , error)
+        print("Error : " , error)
         return error
     # convert to list of dicts and empty pass
     res2 =[]
