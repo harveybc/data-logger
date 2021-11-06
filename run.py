@@ -10,24 +10,17 @@ from sys import exit
 from decouple import config
 from json import load as json_load
 from json import dumps
-from app.app import create_app
+from app.app import create_app, load_plugin_config
 from app.data_logger import DataLogger
+import click
+from flask.cli import with_appcontext
 
 # load the plugin config files
-print(" * Loading plugin configuration files")
-try:
-    with open("config_store.json", "r") as conf_file:
-        store_plugin_conf = json_load(conf_file)
-    with open("config_core.json", "r") as conf_file:
-        core_plugin_conf = json_load(conf_file)
-    with open("config_gui.json", "r") as conf_file:
-        gui_plugin_conf = json_load(conf_file)
-except Exception as e:
-    print(e)
-    exit(e)
+plugin_conf = load_plugin_config()
 # initialize plugin system
 print(" * Creating data_logger instance...")
-data_logger = DataLogger(store_plugin_conf, core_plugin_conf, gui_plugin_conf)
+data_logger = DataLogger(plugin_conf['store'], plugin_conf['core'], plugin_conf['gui'])
+
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 # setup config mode
@@ -46,4 +39,3 @@ def print_spec():
     spec = json_load(data_logger.core_ep.specification_dir+'/' + data_logger.core_ep.specification_filename)
     # dump json as string
     return dumps(spec)
-

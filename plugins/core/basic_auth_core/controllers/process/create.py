@@ -39,6 +39,8 @@ def create(body):
         # transform the tables json into string
         if "tables" not in body["process"]:
             body["process"]["tables"] = "[]"
+        else:
+            body["process"]["tables"] = str(body["process"]["tables"]) 
         # set the string date into datetime
         body["process"]["created"] = str(datetime.now())
         # create new process
@@ -46,10 +48,11 @@ def create(body):
         # test if the new process was created 
         try:
             res['process'] = as_dict(Process.query.filter_by(name=new_process.name).one())
-            db.session.expunge_all()
-            db.session.close()
+            #db.session.expunge_all()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res['process'] ={ 'error_b' : error}
     # check if the table parameter is present    
     if 'table' in body:
@@ -70,6 +73,7 @@ def create(body):
                 res['table'] = {}
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res['table'] ={ 'error_d' : error}
             return res
     # check if the process register parameter is present    

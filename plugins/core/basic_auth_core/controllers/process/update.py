@@ -40,22 +40,25 @@ def update(process_id, body):
                 setattr(process_model, property, value) 
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res['process'] = { 'error_a' : error}
         # perform update 
         try:
             db.session.commit()
-            db.session.expunge_all()
-            db.session.close()
+            #db.session.expunge_all()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res['process'] = { 'error_b' : error}
         # test if the model was updated 
         try:
             res['process'] = as_dict(Process.query.filter_by(id=int(process_id)).one())
-            db.session.expunge_all()
-            db.session.close()
+            #db.session.expunge_all()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res['process'] = { 'error_c' : error}    
     # check if the process parameter is present    
     if 'register' in body:

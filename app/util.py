@@ -2,7 +2,7 @@
 """ Common functions """
  
 import hashlib, binascii, os
-from app.app import db
+import json
 from sqlalchemy.ext.automap import automap_base
 
 def sanitize_str(insecure_str, max_len):
@@ -21,6 +21,21 @@ def sanitize_str(insecure_str, max_len):
     secure_str = short_input.strip("\"',\\*.!:-+/ #\{\}[]")
     return secure_str
 
+def load_plugin_config():
+    print(" * Loading plugin configuration files")
+    plugin_conf = {}
+    try:
+        with open("config_store.json", "r") as conf_file:
+            plugin_conf['store'] = json.load(conf_file)
+        with open("config_core.json", "r") as conf_file:
+            plugin_conf['core'] = json.load(conf_file)
+        with open("config_gui.json", "r") as conf_file:
+            plugin_conf['gui'] = json.load(conf_file)
+    except Exception as e:
+        print(e)
+        exit(e)
+    return(plugin_conf)
+
 def as_dict(model):   
     """ Convert to dict containing all the columns in this model
 
@@ -36,7 +51,7 @@ def as_dict(model):
             r2[c.name]=str(attr)
     return r2
 
-def reflect_prepare(Base):
+def reflect_prepare(db, Base):
     """ Update SQLAlchemy metadata and prepare automap base to allow ORM in all tables. """
     #update metadata and tables
     db.Model.metadata.reflect(bind=db.engine)

@@ -17,10 +17,10 @@ from flask import current_app
 from flask import jsonify
 
 
-def process_bp(plugin_folder):
+def new_bp(plugin_folder, core_ep):
 
     # construct the data_logger blueprint using the plugin folder as template folder
-    bp = Blueprint("process_bp", __name__,  template_folder=plugin_folder)
+    bp = Blueprint("process_bp", __name__, template_folder=plugin_folder+"/templates")
 
     @bp.route("/views/process")
     #@login_required

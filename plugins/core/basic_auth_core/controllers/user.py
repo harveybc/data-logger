@@ -29,6 +29,7 @@ def create(body):
         res = User.query.filter_by(username=new_user.username).first_or_404()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+        print("Error: ", error)
         return error
     # empty pass
     res2 = as_dict(res)
@@ -38,16 +39,16 @@ def create(body):
 
 @authorization_required
 @log_required
-def read(userId):
-    """ Query a register in db based on the id field of the user model, obtained from a request's userId url parameter.
+def read(user_id):
+    """ Query a register in db based on the id field of the user model, obtained from a request's user_id url parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        user_id (str): id field of the user model, obtained from a request's user_id url parameter (users/<user_id>).
 
         Returns:
         res (dict): the requested user register with empty password field.
     """ 
-    res = User.read(userId)
+    res = User.read(user_id)
     # empty pass
     res2 = as_dict(res)
     res2["password"]=""
@@ -55,18 +56,18 @@ def read(userId):
     
 @authorization_required
 @log_required
-def update(body, userId):
+def update(body, user_id):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        user_id (str): id field of the user model, obtained from a request's user_id url parameter (users/<user_id>).
         body (dict): dict containing the fields of the new register, obtained from json in the body of the request.
 
         Returns:
         res (dict): the newly created user register with empty password field.
     """
     # update the existing register
-    res = User.update(body, userId)
+    res = User.update(body, user_id)
     # empty pass
     res2 = as_dict(res)
     res2["password"]=""
@@ -75,16 +76,16 @@ def update(body, userId):
 
 @authorization_required
 @log_required
-def delete(userId):
-    """ Delete a register in db based on the id field of the user model, obtained from a request's userId url parameter.
+def delete(user_id):
+    """ Delete a register in db based on the id field of the user model, obtained from a request's user_id url parameter.
 
         Args:
-        userId (str): id field of the user model, obtained from a request's userId url parameter (users/<userId>).
+        user_id (str): id field of the user model, obtained from a request's user_id url parameter (users/<user_id>).
 
         Returns:
         res (int): the deleted register id field
     """ 
-    res = User.delete(userId)
+    res = User.delete(user_id)
     return res
 
 @authorization_required

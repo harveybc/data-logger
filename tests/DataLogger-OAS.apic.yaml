@@ -1,19 +1,20 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: DataLogger
-  description: 'Configurable structure, configurable storage, generic data-logger API.'
-  version: '0.01'
+  description: Configurable structure, configurable storage, generic data-logger API.
+  version: "0.01"
   termsOfService: MIT
-host: 'localhost:5000'
+host: localhost:5000
 schemes:
   - http
 securityDefinitions:
   basic_auth:
     type: basic
-    description: >-
-      Basic auth, please add the following line to the yaml: x-basicInfoFunc:
-      controllers.authentication.basic_auth.authenticate
-    x-basicInfoFunc: controllers.authentication.basic_auth.authenticate
+    description: "Basic auth, please add the following line to the yaml:
+      x-basicInfoFunc:
+      plugins.core.basic_auth_core.controllers.authentication.basic_auth.authen\
+      ticate"
+    x-basicInfoFunc: plugins.core.basic_auth_core.controllers.authentication.basic_auth.authenticate
 definitions:
   input_user:
     type: object
@@ -26,6 +27,8 @@ definitions:
         type: string
       admin:
         type: boolean
+      id:
+        type: integer
     required:
       - username
       - email
@@ -57,7 +60,7 @@ definitions:
       columns:
         type: array
         items:
-          $ref: '#/definitions/table_column'
+          $ref: "#/definitions/table_column"
           type:
             - null
   output_process:
@@ -74,9 +77,7 @@ definitions:
       tables:
         type: array
         items:
-          $ref: '#/definitions/table'
-          type:
-            - null
+          $ref: "#/definitions/table"
     required:
       - id
       - name
@@ -86,10 +87,10 @@ definitions:
     properties:
       user_id:
         type: integer
-        default: '0'
+        default: "0"
       process_id:
         type: integer
-        default: '0'
+        default: "0"
       table:
         type: string
         default: '""'
@@ -109,7 +110,7 @@ definitions:
         type: boolean
       priority:
         type: integer
-        default: '0'
+        default: "0"
         minimum: 0
         maximum: 1000
   input_log:
@@ -188,7 +189,7 @@ definitions:
       columns:
         type: array
         items:
-          $ref: '#/definitions/table_column'
+          $ref: "#/definitions/table_column"
           type:
             - null
       name:
@@ -201,11 +202,11 @@ definitions:
     type: object
     properties:
       process:
-        $ref: '#/definitions/input_process'
+        $ref: "#/definitions/input_process"
       table:
-        $ref: '#/definitions/input_process_table'
+        $ref: "#/definitions/input_process_table"
       register:
-        $ref: '#/definitions/input_process_register'
+        $ref: "#/definitions/input_process_register"
   output_process_register:
     type: array
     items:
@@ -219,8 +220,7 @@ definitions:
       name:
         type: string
       table:
-        $ref: '#/definitions/table'
-        type: null
+        $ref: "#/definitions/table"
     required:
       - process_id
       - name
@@ -239,30 +239,27 @@ definitions:
       tables:
         type: array
         items:
-          $ref: '#/definitions/table'
+          $ref: "#/definitions/table"
           type:
             - null
   process_operation_output:
     type: object
     properties:
       process:
-        $ref: '#/definitions/input_process'
-        type: null
+        $ref: "#/definitions/input_process"
       table:
-        $ref: '#/definitions/input_process_table'
-        type: null
+        $ref: "#/definitions/input_process_table"
       register:
-        $ref: '#/definitions/input_process_register'
-        type: null
+        $ref: "#/definitions/input_process_register"
   output_authorization:
     type: object
     properties:
       user_id:
         type: integer
-        default: '0'
+        default: "0"
       process_id:
         type: integer
-        default: '0'
+        default: "0"
       table:
         type: string
         default: '""'
@@ -282,7 +279,7 @@ definitions:
         type: boolean
       priority:
         type: integer
-        default: '0'
+        default: "0"
         minimum: 0
         maximum: 1000
       id:
@@ -318,7 +315,7 @@ definitions:
       - method
       - id
 responses:
-  'trait:error-response:400':
+  trait:error-response:400:
     schema:
       type: object
       properties:
@@ -330,7 +327,7 @@ responses:
         - errCode
         - message
     description: Bad Request.
-  'trait:error-response:401':
+  trait:error-response:401:
     schema:
       type: object
       properties:
@@ -342,7 +339,7 @@ responses:
         - errCode
         - message
     description: Unauthorized
-  'trait:error-response:403':
+  trait:error-response:403:
     schema:
       type: object
       properties:
@@ -354,7 +351,7 @@ responses:
         - errCode
         - message
     description: Forbidden
-  'trait:error-response:404':
+  trait:error-response:404:
     schema:
       type: object
       properties:
@@ -380,25 +377,25 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.create
+      operationId: plugins.core.basic_auth_core.controllers.user.create
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_user'
+            $ref: "#/definitions/output_user"
           description: Returns response 200 with the details of the newly created user
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_user'
+            $ref: "#/definitions/input_user"
     get:
       tags:
         - user
@@ -410,119 +407,119 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.read_all
+      operationId: plugins.core.basic_auth_core.controllers.user.read_all
       responses:
-        '200':
+        "200":
           schema:
             type: array
             items:
-              $ref: '#/definitions/output_user'
+              $ref: "#/definitions/output_user"
           description: Returns 200 with list/array of users
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters: []
-  '/users/{userId}':
+  "/users/{user_id}":
     get:
       tags:
         - user
         - get
-      summary: Get detail of user by userId
-      description: Get detail of user by userId
+      summary: Get detail of user by user_id
+      description: Get detail of user by user_id
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.read
+      operationId: plugins.core.basic_auth_core.controllers.user.read
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_user'
-          description: Returns 200 with the detail of user for the specified userId
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+            $ref: "#/definitions/output_user"
+          description: Returns 200 with the detail of user for the specified user_id
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
-          description: ''
+          description: ""
           required: true
           type: integer
     put:
       tags:
         - user
         - update
-      summary: Update user details by userId
-      description: Update user details by userId
+      summary: Update user details by user_id
+      description: Update user details by user_id
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.update
+      operationId: plugins.core.basic_auth_core.controllers.user.update
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_user'
+            $ref: "#/definitions/output_user"
           description: Returns 200 with the detail of updated user
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_user'
+            $ref: "#/definitions/input_user"
     delete:
       tags:
         - user
         - delete
-      summary: Delete user by userId
-      description: Delete user by userId
+      summary: Delete user by user_id
+      description: Delete user by user_id
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.user.delete
+      operationId: plugins.core.basic_auth_core.controllers.user.delete
       responses:
-        '200':
+        "200":
           schema:
             type: object
           description: Returns 200
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: userId
+        - name: user_id
           in: path
-          description: ''
+          description: ""
           required: true
           type: integer
         - name: body
@@ -535,128 +532,121 @@ paths:
         - process
         - create
       summary: Create process
-      description: >-
-        Create process, a table for a process or a register inside a table of a
-        process, depending on the body parameters. (process, table or register)
+      description: Create process, a table for a process or a register inside a table
+        of a process, depending on the body parameters. (process, table or
+        register)
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.create.create
+      operationId: plugins.core.basic_auth_core.controllers.process.create.create
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_process_register'
-          description: >-
-            Returns response 200 with the details of the newly created register
+            $ref: "#/definitions/output_process_register"
+          description: Returns response 200 with the details of the newly created register
             in a process table
-        '201':
+        "201":
           schema:
-            $ref: '#/definitions/process_operation_output'
+            $ref: "#/definitions/process_operation_output"
           description: Returns response 201 with the details of the newly created process
-        '202':
+        "202":
           schema:
-            $ref: '#/definitions/output_process_table'
-          description: >-
-            Returns response 201 with the details of the newly created table for
-            a process
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+            $ref: "#/definitions/output_process_table"
+          description: Returns response 201 with the details of the newly created table
+            for a process
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/process_operation'
+            $ref: "#/definitions/process_operation"
     get:
       tags:
         - process
         - list
       summary: Get list of process
-      description: >-
-        Get list of processes, or a list of registers of a table of a process,
-        depending on the existence of the table query parameter.
+      description: Get list of processes, or a list of registers of a table of a
+        process, depending on the existence of the table query parameter.
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read_all.read_all
+      operationId: plugins.core.basic_auth_core.controllers.process.read_all.read_all
       responses:
-        '200':
+        "200":
           schema:
             type: array
             items:
-              $ref: '#/definitions/output_process'
+              $ref: "#/definitions/output_process"
           description: Returns 200 with list/array of processs
-        '203':
+        "203":
           schema:
             type: array
             items:
-              $ref: '#/definitions/output_process_register'
+              $ref: "#/definitions/output_process_register"
           description: Returns 203 with list/array of registers of the selected table
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: table
           in: query
-          description: >-
-            Name of the table of a process (suffix) to be queried instead of the
-            processes table.
+          description: Name of the table of a process (suffix) to be queried instead of
+            the processes table.
           required: false
           type: string
-  '/process/{processId}':
+  "/process/{process_id}":
     get:
       tags:
         - process
         - get
       summary: Get detail of process
-      description: >-
-        Get detail of process by processId, or a register from a table of a
+      description: Get detail of process by processId, or a register from a table of a
         process, depending on the existence of query parameters.
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.read.read
+      operationId: plugins.core.basic_auth_core.controllers.process.read.read
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_process'
+            $ref: "#/definitions/output_process"
           description: Returns 200 with the detail of process for the specified processId
-        '203':
+        "203":
           schema:
-            $ref: '#/definitions/output_process_register'
-          description: >-
-            Returns 203 with the detail of a register of a table in the process
+            $ref: "#/definitions/output_process_register"
+          description: Returns 203 with the detail of a register of a table in the process
             for the specified processId
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: table
           in: query
-          description: >-
-            If present indicate the table of the process (suffix) to perform the
-            query
+          description: If present indicate the table of the process (suffix) to perform
+            the query
           required: false
           type: string
         - name: column
@@ -666,14 +656,13 @@ paths:
           type: string
         - name: value
           in: query
-          description: >-
-            If present indicate the value used with the column to filter the
+          description: If present indicate the value used with the column to filter the
             query (returns only the first one)
           required: false
           type: string
-        - name: processId
+        - name: process_id
           in: path
-          description: ''
+          description: ""
           required: true
           type: integer
     put:
@@ -681,85 +670,82 @@ paths:
         - process
         - update
       summary: Update process
-      description: >-
-        Update process register by processId, or a register in a table of a
+      description: Update process register by processId, or a register in a table of a
         process
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.update.update
+      operationId: plugins.core.basic_auth_core.controllers.process.update.update
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_process'
+            $ref: "#/definitions/output_process"
           description: Returns 200 with the detail of updated process
-        '203':
+        "203":
           schema:
-            $ref: '#/definitions/output_process_register'
+            $ref: "#/definitions/output_process_register"
           description: Returns 203 with the detail of updated process register
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
-        - name: processId
+        - name: process_id
           in: path
-          description: ''
+          description: ""
           required: true
           type: integer
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/process_operation'
+            $ref: "#/definitions/process_operation"
     delete:
       tags:
         - process
         - delete
       summary: Delete process
-      description: >-
-        Delete process by processId  or a register in a table of the process by
-        a column and value filter
+      description: Delete process by processId  or a register in a table of the
+        process by a column and value filter
       consumes: []
       produces: []
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.process.delete.delete
+      operationId: plugins.core.basic_auth_core.controllers.process.delete.delete
       responses:
-        '200':
+        "200":
           schema:
             type: object
           description: Returns 200
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: table
           in: query
-          description: >-
-            If present indicate the table of the process (suffix) to perform the
-            query
+          description: If present indicate the table of the process (suffix) to perform
+            the query
           required: false
           type: string
         - name: reg_id
           in: query
-          description: ''
+          description: ""
           required: false
           type: integer
-        - name: processId
+        - name: process_id
           in: path
-          description: ''
+          description: ""
           required: true
           type: integer
         - name: body
@@ -778,27 +764,26 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.create
+      operationId: plugins.core.basic_auth_core.controllers.authorization.create
       responses:
-        '201':
+        "201":
           schema:
-            $ref: '#/definitions/output_authorization'
-          description: >-
-            Returns response 201 with the details of the newly created
+            $ref: "#/definitions/output_authorization"
+          description: Returns response 201 with the details of the newly created
             authorization
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_authorization'
+            $ref: "#/definitions/input_authorization"
     get:
       tags:
         - authorization
@@ -810,24 +795,24 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.read_all
+      operationId: plugins.core.basic_auth_core.controllers.authorization.read_all
       responses:
-        '200':
+        "200":
           schema:
             type: array
             items:
-              $ref: '#/definitions/output_authorization'
+              $ref: "#/definitions/output_authorization"
           description: Returns 200 with list/array of authorizations
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters: []
-  '/authorizations/{authorization_id}':
+  "/authorizations/{authorization_id}":
     get:
       tags:
         - authorization
@@ -839,28 +824,27 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.read
+      operationId: plugins.core.basic_auth_core.controllers.authorization.read
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_authorization'
-          description: >-
-            Returns 200 with the detail of authorization for the specified
+            $ref: "#/definitions/output_authorization"
+          description: Returns 200 with the detail of authorization for the specified
             authorizationId
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: authorization_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
     put:
       tags:
         - authorization
@@ -872,30 +856,30 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.update
+      operationId: plugins.core.basic_auth_core.controllers.authorization.update
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_authorization'
+            $ref: "#/definitions/output_authorization"
           description: Returns 200 with the detail of updated authorization
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: authorization_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_authorization'
+            $ref: "#/definitions/input_authorization"
     delete:
       tags:
         - authorization
@@ -907,26 +891,26 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.authorization.delete
+      operationId: plugins.core.basic_auth_core.controllers.authorization.delete
       responses:
-        '200':
+        "200":
           schema:
             type: object
           description: Returns 200
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: authorization_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
@@ -943,25 +927,25 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.create
+      operationId: plugins.core.basic_auth_core.controllers.log.create
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_log'
+            $ref: "#/definitions/output_log"
           description: Returns response 201 with the details of the newly created log
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_log'
+            $ref: "#/definitions/input_log"
     get:
       tags:
         - log
@@ -973,24 +957,24 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.read_all
+      operationId: plugins.core.basic_auth_core.controllers.log.read_all
       responses:
-        '200':
+        "200":
           schema:
             type: array
             items:
-              $ref: '#/definitions/output_log'
+              $ref: "#/definitions/output_log"
           description: Returns 200 with list/array of logs
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters: []
-  '/logs/{log_id}':
+  "/logs/{log_id}":
     get:
       tags:
         - log
@@ -1002,26 +986,26 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.read
+      operationId: plugins.core.basic_auth_core.controllers.log.read
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_log'
+            $ref: "#/definitions/output_log"
           description: Returns 200 with the detail of log for the specified logId
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: log_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
     put:
       tags:
         - log
@@ -1033,30 +1017,30 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.update
+      operationId: plugins.core.basic_auth_core.controllers.log.update
       responses:
-        '200':
+        "200":
           schema:
-            $ref: '#/definitions/output_log'
+            $ref: "#/definitions/output_log"
           description: Returns 200 with the detail of updated log
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: log_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:
-            $ref: '#/definitions/input_log'
+            $ref: "#/definitions/input_log"
     delete:
       tags:
         - log
@@ -1068,26 +1052,26 @@ paths:
       schemes: []
       security:
         - basic_auth: []
-      operationId: controllers.log.delete
+      operationId: plugins.core.basic_auth_core.controllers.log.delete
       responses:
-        '200':
+        "200":
           schema:
             type: object
           description: Returns 200
-        '400':
-          $ref: '#/responses/trait:error-response:400'
-        '401':
-          $ref: '#/responses/trait:error-response:401'
-        '403':
-          $ref: '#/responses/trait:error-response:403'
-        '404':
-          $ref: '#/responses/trait:error-response:404'
+        "400":
+          $ref: "#/responses/trait:error-response:400"
+        "401":
+          $ref: "#/responses/trait:error-response:401"
+        "403":
+          $ref: "#/responses/trait:error-response:403"
+        "404":
+          $ref: "#/responses/trait:error-response:404"
       parameters:
         - name: log_id
           in: path
-          description: ''
+          description: ""
           required: true
-          type: string
+          type: integer
         - name: body
           in: body
           schema:

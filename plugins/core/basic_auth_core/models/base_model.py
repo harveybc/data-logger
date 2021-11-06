@@ -30,7 +30,10 @@ class BaseModel():
                 value = hash_pass( value ) # we need bytes here (not plain str)
             setattr(self, property, value)
         # initializes automap base class that allows ORM in all tables
-        reflect_prepare(self)
+        reflect_prepare(db, self)
+        # initialize a new session for the current model, that expires on commit 
+        # TODO: verify performance for bulk-loading/saving
+        db.session = sessionmaker(bind=db.engine, expire_on_commit=True)
     
     @classmethod
     def create(cls, **body): 
@@ -50,6 +53,7 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         return res
 
@@ -64,6 +68,7 @@ class BaseModel():
             res = cls.query.all()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         return res
         
@@ -81,6 +86,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         return res
 
@@ -100,6 +106,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         # replace model with body fields
         res = cls(**body)
@@ -111,6 +118,7 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         return res
 
@@ -119,7 +127,7 @@ class BaseModel():
         """ Delete a register in db based on the id field of the model.
 
             Args:
-            userId (str): id field of the model.
+            user_id (str): id field of the model.
 
             Returns:
             res (int): the deleted register id field
@@ -128,6 +136,7 @@ class BaseModel():
             res = cls.query.filter_by(id=Id).first_or_404()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         # perform delete 
         db.session.delete(res)
@@ -135,5 +144,6 @@ class BaseModel():
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e.__dict__['orig'])
+            print("Error: ", error)
             return error
         return Id

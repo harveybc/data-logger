@@ -69,16 +69,18 @@ def create(body):
     try:
         db.session.commit()
         new_id =  new.id
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+        print("Error: ", error)
         return error
     # test if the new user was created 
     try:
         res = Authorization.query.filter_by(id=new_id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+        print("Error: ", error)
         return error
     # return register as dict
     return as_dict(res)
@@ -97,6 +99,7 @@ def read(authorization_id):
         res = as_dict(Authorization.query.filter_by(id=authorization_id).one())
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error 
     return res
 
@@ -106,7 +109,7 @@ def update(authorization_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the model, obtained from url parameter (log/<authorization_id>).
+        user_id (str): id field of the model, obtained from url parameter (log/<authorization_id>).
         body (dict): dict containing the fields of the register, obtained from json in the body of the request.
 
         Returns:
@@ -119,24 +122,27 @@ def update(authorization_id, body):
             setattr(process_model, property, value)
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_a' : error}
     # replace model with body fields
     
     # perform update 
     try:
         db.session.commit()
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
         res = as_dict(Authorization.query.filter_by(id=int(authorization_id)).one())
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_c' : error}
     return res
 
@@ -155,6 +161,7 @@ def delete(authorization_id):
         res = Authorization.query.filter_by(id=authorization_id).one()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     # perform delete 
     db.session.delete(res)
@@ -162,6 +169,7 @@ def delete(authorization_id):
         db.session.commit()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     return res.id
 
@@ -176,6 +184,7 @@ def read_all():
         res = Authorization.query.all()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     # convert to list of dicts and empty pass
     res2 =[]

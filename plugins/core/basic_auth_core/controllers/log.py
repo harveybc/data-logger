@@ -53,16 +53,18 @@ def create(body):
     try:
         db.session.commit()
         new_id =  new.id
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+        print("Error: ", error)
         return error
     # test if the new user was created 
     try:
         res = Log.query.filter_by(id=new_id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
+        print("Error: ", error)
         return error
     # return register as dict
     return as_dict(res)
@@ -81,6 +83,7 @@ def read(log_id):
         res = as_dict(Log.query.filter_by(id=log_id).one())
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error 
     return res
 
@@ -90,7 +93,7 @@ def update(log_id, body):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
-        userId (str): id field of the model, obtained from url parameter (log/<log_id>).
+        user_id (str): id field of the model, obtained from url parameter (log/<log_id>).
         body (dict): dict containing the fields of the register, obtained from json in the body of the request.
 
         Returns:
@@ -103,24 +106,27 @@ def update(log_id, body):
             setattr(process_model, property, value)
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_a' : error}
     # replace model with body fields
     
     # perform update 
     try:
         db.session.commit()
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
         res = as_dict(Log.query.filter_by(id=int(log_id)).one())
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         res = { 'error_c' : error}
     return res
 
@@ -139,6 +145,7 @@ def delete(log_id):
         res = Log.query.filter_by(id=log_id).one()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     # perform delete 
     db.session.delete(res)
@@ -146,6 +153,7 @@ def delete(log_id):
         db.session.commit()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     return res.id
 
@@ -160,6 +168,7 @@ def read_all():
         res = Log.query.all()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return error
     # convert to list of dicts and empty pass
     res2 =[]
@@ -240,10 +249,11 @@ def log_request(*args, **kwargs):
     try:
         db.session.commit()
         new_id = new_log.id
-        #db.session.expunge_all()
-        db.session.close()
+        ##db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return -1
     return new_id
 
@@ -263,6 +273,7 @@ def result_log_required(id, code, result):
         log_model = Log.query.filter_by(id=id).one()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return False
     # replace code and result on the model 
     setattr(log_model, 'code', code)
@@ -270,10 +281,11 @@ def result_log_required(id, code, result):
     # perform update 
     try:
         db.session.commit()
-        db.session.expunge_all()
-        db.session.close()
+        #db.session.expunge_all()
+        #db.session.close()
     except SQLAlchemyError as e:
         error = str(e)
+        print("Error : " , error)
         return False
     return True
 

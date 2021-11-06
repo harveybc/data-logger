@@ -31,6 +31,7 @@ def read_all():
             res = Process.query.all()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         # convert to list of dicts and empty pass
         res2 =[]

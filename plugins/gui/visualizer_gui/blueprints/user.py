@@ -17,37 +17,37 @@ from flask import current_app
 from flask import jsonify
 from flask import request
 
-def user_bp(plugin_folder, data_logger):
+def new_bp(plugin_folder, core_ep):
 
     # construct the data_logger blueprint using the plugin folder as template folder
-    bp = Blueprint("user_bp", __name__,  template_folder=plugin_folder)
+    bp = Blueprint("user_bp", __name__, template_folder=plugin_folder+"/templates")
 
     @bp.route("/views/users")
     #@login_required
     def user_index():
         """Show the users index."""
-        user_list = data_logger.core_ep.User.real_all()
-        return render_template("../plugin_templates/user/index.html", user_list = user_list)
+        user_list = core_ep.User.real_all()
+        return render_template("../"/"user/index.html", user_list = user_list)
 
     @bp.route("/views/user/create", methods=["GET"])
     @login_required
     def user_create_view():
         """Show the users index."""
-        return render_template("../plugin_templates/user/create.html")
+        return render_template("../"/"user/create.html")
     
     @bp.route("/views/user/create", methods=["POST"])
     @login_required
     def user_create():
         """Show the users index."""
         result = current_app.config['FE'].ep_input.user_create(request.form)
-        return render_template("../plugin_templates/user/create.html")
+        return render_template("../"/"user/create.html")
 
     @bp.route("/views/user/<username>")
     @login_required
     def user_detail(username):
         """Show the user detail view, if it is the current user, shows a change password button."""
         user_list = current_app.config['FE'].ep_input.get_user_by_username(username)
-        return render_template("../plugin_templates/user/detail.html", user_list =  user_list, username = username)
+        return render_template("../"/"user/detail.html", user_list =  user_list, username = username)
 
     @bp.route("/views/user/<int:id>/update", methods=("GET", "POST"))
     @login_required

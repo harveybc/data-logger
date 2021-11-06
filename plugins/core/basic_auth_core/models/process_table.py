@@ -56,7 +56,7 @@ class ProcessTable():
                 id_found = True
         # create a new id column if a primary key was not found
         if not pk_found and not id_found:
-            t_args.append(Column("id", col_type, autoincrement=True, primary_key=True, nullable=False))
+            t_args.append(Column("id", Integer, autoincrement=True, primary_key=True, nullable=False))
         # create a new timestamp column if it was not found
         if not timestamp_found:
             t_args.append(Column("timestamp", String, server_default=str(datetime.now())))
@@ -101,7 +101,7 @@ class ProcessTable():
         if not db.engine.dialect.has_table(db.engine, cls.name):
             cls.table.create(db.engine)
         #update metadata and tables
-        reflect_prepare(Base)
+        reflect_prepare(db, Base)
         # add the table to the tables array in the process (convert to string for compatibility)
         try:
             p_model = Process.query.filter_by(id=cls.process_id).one()
@@ -121,10 +121,11 @@ class ProcessTable():
             # update the tables attribute in the process model
             p_model.tables = p_table["tables"] 
             db.session.commit()
-            db.session.expunge_all()
-            db.session.close()
+            #db.session.expunge_all()
+            #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res = { 'error_c' : error}
             return res
         return p_table
@@ -153,6 +154,7 @@ class ProcessTable():
             res_list = json.loads(proc["tables"])
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         # search for the name in the keys of elements of  the tables array.       
         try:
@@ -178,6 +180,7 @@ class ProcessTable():
             res = json.loads(proc.tables)
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         return res
 
@@ -204,8 +207,9 @@ class ProcessTable():
         # delete the table
         try:
             register_model.__table__.drop(db.engine)
-            reflect_prepare(Base)
+            reflect_prepare(db, Base)
             return table_param + " table deleted"
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
