@@ -122,7 +122,7 @@ class BasicAuthCore():
     
     def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """
-        print("store_conf = "store_conf)
+        print("store_conf = ",store_conf)
         # create the processes table if it does not exists
         try:
             from .models.user import User
