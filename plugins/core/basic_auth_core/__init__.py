@@ -69,7 +69,7 @@ class BasicAuthCore():
         """ 
         # Check if a process with the same name exists
         with app.app_context():
-            db.session = scoped_session(sessionmaker(bind=db.engine, expire_on_commit=False))
+            db.session = scoped_session(sessionmaker(bind=db.engine, expire_on_commit=True))
             try:
                 p = Process.query.filter_by(name=process["name"]).one()
                 #db.session.expunge_all()
