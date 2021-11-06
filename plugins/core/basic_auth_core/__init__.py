@@ -20,8 +20,6 @@ from app.util import sanitize_str
 Base = automap_base()
 
 import os
-from .models.seeds.user import seed as user_seed
-from .models.seeds.user import seed as process_seed
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -60,6 +58,8 @@ class BasicAuthCore():
         db  (SQLAlchemy) : SQLAlchemy object
         """ 
         _logger.info("Seeding initial data")
+        from .models.seeds.user import seed as user_seed
+        from .models.seeds.process import seed as process_seed
         user_seed(app,db)
         process_seed(app,db)
         
