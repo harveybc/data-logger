@@ -125,6 +125,7 @@ class ProcessTable():
             #db.session.close()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             res = { 'error_c' : error}
             return res
         return p_table
@@ -153,6 +154,7 @@ class ProcessTable():
             res_list = json.loads(proc["tables"])
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         # search for the name in the keys of elements of  the tables array.       
         try:
@@ -178,6 +180,7 @@ class ProcessTable():
             res = json.loads(proc.tables)
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         return res
 
@@ -208,4 +211,5 @@ class ProcessTable():
             return table_param + " table deleted"
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error

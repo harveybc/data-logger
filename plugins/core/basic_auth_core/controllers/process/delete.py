@@ -33,6 +33,7 @@ def delete(process_id):
             res = Process.query.filter_by(id=process_id).one()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         # perform delete 
         db.session.delete(res)
@@ -40,6 +41,7 @@ def delete(process_id):
             db.session.commit()
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error
         return res.id
     else:

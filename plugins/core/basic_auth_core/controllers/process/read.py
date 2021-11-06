@@ -34,6 +34,7 @@ def read(process_id):
             res = as_dict(Process.query.filter_by(id=process_id).one())
         except SQLAlchemyError as e:
             error = str(e)
+            print("Error : " , error)
             return error 
         return res
     else:
