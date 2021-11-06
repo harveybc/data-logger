@@ -39,6 +39,8 @@ def create(body):
         # transform the tables json into string
         if "tables" not in body["process"]:
             body["process"]["tables"] = "[]"
+        else:
+            body["process"]["tables"] = str(body["process"]["tables"])
         # set the string date into datetime
         body["process"]["created"] = str(datetime.now())
         # create new process
