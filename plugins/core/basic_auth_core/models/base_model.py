@@ -146,4 +146,4 @@ class BaseModel():
             error = str(e.__dict__['orig'])
             print("Error: ", error)
             return error
-        return Id
+        return { "id": Id }
