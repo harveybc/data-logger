@@ -171,7 +171,7 @@ def delete(authorization_id):
         error = str(e)
         print("Error : " , error)
         return error
-    return res.id
+    return { "id" : res.id }
 
 @authorization_required
 def read_all():
