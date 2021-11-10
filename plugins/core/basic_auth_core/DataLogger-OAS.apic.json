@@ -13,10 +13,28 @@
     "securityDefinitions": {
         "basic_auth": {
             "type": "basic",
-            "description": "Basic auth, please add the following line to the yaml: x-basicInfoFunc: plugins.core.basic_auth_core.controllers.authentication.basic_auth.authenticate",
-            "x-basicInfoFunc": "plugins.core.basic_auth_core.controllers.authentication.basic_auth.authenticate"
+            "description": "Basic auth, please add the following line to the yaml: x-basicInfoFunc: controllers.authentication.basic_auth.authenticate",
+            "x-basicInfoFunc": "controllers.authentication.basic_auth.authenticate"
         }
     },
+    "tags": [
+        {
+            "name": "authorization",
+            "description": ""
+        },
+        {
+            "name": "create",
+            "description": ""
+        },
+        {
+            "name": "get",
+            "description": ""
+        },
+        {
+            "name": "delete",
+            "description": ""
+        }
+    ],
     "definitions": {
         "input_user": {
             "type": "object",
@@ -548,7 +566,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.user.create",
+                "operationId": "controllers.user.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -594,7 +612,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.user.read_all",
+                "operationId": "controllers.user.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -621,14 +639,14 @@
                 "parameters": []
             }
         },
-        "/users/{user_id}": {
+        "/users/{userId}": {
             "get": {
                 "tags": [
                     "user",
                     "get"
                 ],
-                "summary": "Get detail of user by user_id",
-                "description": "Get detail of user by user_id",
+                "summary": "Get detail of user by userId",
+                "description": "Get detail of user by userId",
                 "consumes": [],
                 "produces": [],
                 "schemes": [],
@@ -637,13 +655,13 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.user.read",
+                "operationId": "controllers.user.read",
                 "responses": {
                     "200": {
                         "schema": {
                             "$ref": "#/definitions/output_user"
                         },
-                        "description": "Returns 200 with the detail of user for the specified user_id"
+                        "description": "Returns 200 with the detail of user for the specified userId"
                     },
                     "400": {
                         "$ref": "#/responses/trait:error-response:400"
@@ -660,7 +678,7 @@
                 },
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "userId",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -673,8 +691,8 @@
                     "user",
                     "update"
                 ],
-                "summary": "Update user details by user_id",
-                "description": "Update user details by user_id",
+                "summary": "Update user details by userId",
+                "description": "Update user details by userId",
                 "consumes": [],
                 "produces": [],
                 "schemes": [],
@@ -683,7 +701,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.user.update",
+                "operationId": "controllers.user.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -706,7 +724,7 @@
                 },
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "userId",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -726,8 +744,8 @@
                     "user",
                     "delete"
                 ],
-                "summary": "Delete user by user_id",
-                "description": "Delete user by user_id",
+                "summary": "Delete user by userId",
+                "description": "Delete user by userId",
                 "consumes": [],
                 "produces": [],
                 "schemes": [],
@@ -736,7 +754,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.user.delete",
+                "operationId": "controllers.user.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -759,7 +777,7 @@
                 },
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "userId",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -791,7 +809,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.process.create.create",
+                "operationId": "controllers.process.create.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -849,7 +867,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.process.read_all.read_all",
+                "operationId": "controllers.process.read_all.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -909,7 +927,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.process.read.read",
+                "operationId": "controllers.process.read.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -982,7 +1000,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.process.update.update",
+                "operationId": "controllers.process.update.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1041,7 +1059,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.process.delete.delete",
+                "operationId": "controllers.process.delete.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1110,7 +1128,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.authorization.create",
+                "operationId": "controllers.authorization.create",
                 "responses": {
                     "201": {
                         "schema": {
@@ -1156,7 +1174,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.authorization.read_all",
+                "operationId": "controllers.authorization.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1199,7 +1217,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.authorization.read",
+                "operationId": "controllers.authorization.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1245,7 +1263,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.authorization.update",
+                "operationId": "controllers.authorization.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1298,7 +1316,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.authorization.delete",
+                "operationId": "controllers.authorization.delete",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1353,7 +1371,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.log.create",
+                "operationId": "controllers.log.create",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1399,7 +1417,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.log.read_all",
+                "operationId": "controllers.log.read_all",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1442,7 +1460,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.log.read",
+                "operationId": "controllers.log.read",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1488,7 +1506,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.log.update",
+                "operationId": "controllers.log.update",
                 "responses": {
                     "200": {
                         "schema": {
@@ -1541,7 +1559,7 @@
                         "basic_auth": []
                     }
                 ],
-                "operationId": "plugins.core.basic_auth_core.controllers.log.delete",
+                "operationId": "controllers.log.delete",
                 "responses": {
                     "200": {
                         "schema": {
