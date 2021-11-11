@@ -29,7 +29,7 @@
         ]
     },
     "output_plugin": "vis_output",
-    "output_plugin_config": {
+    "gui_plugin_config": {
         "dashboard": [
             {
                 "table_name": "training_progress",

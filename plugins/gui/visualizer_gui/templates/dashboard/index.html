@@ -40,7 +40,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">{{ p_config['output_plugin_config']['dashboard']['title'] }}</h1>
+              <h1 class="m-0 text-dark">{{ p_config['gui_plugin_config']['dashboard']['title'] }}</h1>
             </div><!-- /.col -->
             
           </div><!-- /.row -->
@@ -59,7 +59,7 @@
               <div class="inner">
                 <!-- box[0] data -->  
                 <h3>P{{ box[0]['id'] }}: {{ box[0]['mse'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_0_title'] }}</p>
+                <p>{{ p_config['gui_plugin_config']['dashboard']['box_0_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -74,7 +74,7 @@
               <div class="inner">
                 <!-- box[1] data -->  
                 <h3>P{{ box[1]['id'] }}: {{ box[1]['mse'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_1_title'] }}</p>
+                <p>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -89,7 +89,7 @@
               <div class="inner">
                 <!-- box[2] data -->
                 <h3>{{ box[2]['COUNT(id)'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_2_title'] }}</p>
+                <p>{{ p_config['gui_plugin_config']['dashboard']['box_2_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -104,7 +104,7 @@
               <div class="inner">
                 <!-- box[3] data -->  
                 <h3>{{ box[3]['COUNT(id)'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_3_title'] }}</p>
+                <p>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -122,7 +122,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
-                    {{ p_config['output_plugin_config']['dashboard']['rt_plot']['title'] }} (Process:0)
+                    {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['title'] }} (Process:0)
                   </h3>
     
                   <div class="card-tools">
@@ -134,7 +134,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="interactive" style="height: {{ p_config['output_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+                  <div id="interactive" style="height: {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -153,7 +153,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
-                    {{ p_config['output_plugin_config']['dashboard']['val_plot']['title'] }} (Process:1)
+                    {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process:1)
                   </h3>
     
                   <div class="card-tools">
@@ -166,7 +166,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="line-chart" style="height: {{ p_config['output_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
+                  <div id="line-chart" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -180,7 +180,7 @@
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">{{ p_config['output_plugin_config']['dashboard']['process_list']['title'] }}</h3>
+                  <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
   
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -197,10 +197,10 @@
                     <table class="table m-0">
                       <thea d>
                       <tr>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -478,7 +478,7 @@
       var original = [],
           predicted = []
 
-      var max_points = {{ p_config['output_plugin_config']['dashboard']['val_plot']['max_points'] }}
+      var max_points = {{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }}
       var use_latest = true
 
       // setup the first and the last index of the arrays to be plotted
