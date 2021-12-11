@@ -205,12 +205,12 @@
                       </tr>
                       </thead>
                       <tbody>
-<!-- TODO RECURRENT--><tr v-for="process in process_list">
+                      <tr v-for="process in process_list">
                         <td><a href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
-                        <td>{{ vm.get_mse() }}</td>
+                        <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
                         <td>
                             {% if status[loop.index-1]=="Not Started" %}
-                            <span class="badge badge-danger">{{ status[loop.index-1] }}</span>
+                            <span v-if="vm.get_value(process.id, )" class="badge badge-danger">{{ status[loop.index-1] }}</span>
                             {% elif status[loop.index-1]=="Training" %}
                             <span class="badge badge-warning">{{ status[loop.index-1] }}</span>
                             {% elif status[loop.index-1]=="Validation" %}
@@ -221,7 +221,6 @@
                           <div class="sparkbar" data-color="#00a65a" data-height="20">{{  v[loop.index-1]['created'] }}</div>
                         </td>
                       </tr>
-                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
