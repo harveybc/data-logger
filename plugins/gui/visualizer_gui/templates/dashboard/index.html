@@ -205,20 +205,17 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="process in process_list">
+                      <tr v-for="process in process_list": set="status = vm.get_value(process.id, 'control', 'status')">
                         <td><a href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
                         <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
                         <td>
-                            {% if status[loop.index-1]=="Not Started" %}
-                            <span v-if="vm.get_value(process.id, )" class="badge badge-danger">{{ status[loop.index-1] }}</span>
-                            {% elif status[loop.index-1]=="Training" %}
-                            <span class="badge badge-warning">{{ status[loop.index-1] }}</span>
-                            {% elif status[loop.index-1]=="Validation" %}
-                            <span class="badge badge-success">{{ status[loop.index-1] }}</span>
-                            {% endif %}
+                            <span v-if="status === 'Halted'" class="badge badge-danger">[[ status ]]</span>
+                            <span v-else-if="status === 'Training'" class="badge badge-warning">">[[ status ]]</span>
+                            <span v-else-if="status === 'Validation'" class="badge badge-warning">">[[ status ]]</span>
+                            <span v-else class="badge badge-success">">[[ status ]]</span>                           
                         </td>
                         <td>
-                          <div class="sparkbar" data-color="#00a65a" data-height="20">{{  v[loop.index-1]['created'] }}</div>
+                          <div class="sparkbar" data-color="#00a65a" data-height="20">[[ process.creaded_at ]]</div>
                         </td>
                       </tr>
                       </tbody>

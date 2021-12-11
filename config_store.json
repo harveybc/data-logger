@@ -87,6 +87,10 @@
                             {
                                 "name" : "configuration_id",
                                 "col_type" : "Integer"
+                            },
+                            {
+                                "name" : "status",
+                                "col_type" : "String"
                             }
                         ]
                     },
