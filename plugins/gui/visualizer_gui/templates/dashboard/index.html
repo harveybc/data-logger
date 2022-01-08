@@ -319,7 +319,7 @@
                 }
             };
             //#todo: buscar implem. de /parameters en syn
-            xmlhttp.open("GET", "/{{ box[0]['id'] }}/trainingpoints", true);
+            xmlhttp.open("GET", "/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/trainingpoints", true);
             xmlhttp.send();
             return xy_points;
             
