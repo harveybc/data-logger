@@ -310,20 +310,26 @@
             // return array of x,y points
             return xy_points;
         }
-        /* get performance and data pairs from remote host */
-        function getPerformanceData(){
-            var xmlhttp = new XMLHttpRequest();
+        /* get xy data from a GET request given a route */
+        function getXY(path){
+            /var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     xy_points = getPoints(this.responseText);
                 }
             };
             //#todo: buscar implem. de /parameters en syn
-            xmlhttp.open("GET", "/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/trainingpoints", true);
+            xmlhttp.open("GET", path, true);
             xmlhttp.send();
+            return xy_points;
+        }
+        /* get performance and data pairs from remote host */
+        function getPerformanceData(){
+            xy_points = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/performace")
             return xy_points;
             
         }
+
         // when page finishes loading, sets the values to the ones from data
         $(document).ready(function () {
             // Calls getPerformanceData to get a JSON from singularity
@@ -466,10 +472,12 @@
       * LINE CHART
       * ----------
       */
-      //LINE randomly generated data
+      //LINE perform request to get original and predicted data using vue.js
 
-      var   v_original = {{ v_original|tojson }},
-            v_predicted = {{ v_predicted|tojson }}
+
+
+      var   v_original = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
+            v_predicted = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
 
       var original = [],
           predicted = []
