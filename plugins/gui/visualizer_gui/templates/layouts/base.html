@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon">
 
+  <script src="/static/assets/js/axios/axios.min.js"></script>
+  <script src="/static/assets/js/vue/vue.js"></script>
   <title>
     data_logger - {% block title %}{% endblock %} | harveybc
   </title> 
@@ -32,8 +34,13 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
-
+<!-- Specific Page JS goes HERE  
+{% block javascripts %}{% endblock javascripts %}  -->
+<script >
+    const content = new Vue({ // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
+        el: '#content',
+        delimiters: ['[[', ']]']
+    })
+</script>
 </body>
 </html>
