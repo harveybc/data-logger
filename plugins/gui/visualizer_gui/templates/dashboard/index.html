@@ -206,7 +206,7 @@
                       </thead>
                       <tbody>
                       <tr v-for="process in process_list": set="status = vm.get_value(process.id, 'control', 'status')">
-                        <td><a href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
+                        <td><a :href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
                         <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
                         <td>
                             <span v-if="status === 'Halted'" class="badge badge-danger">[[ status ]]</span>
