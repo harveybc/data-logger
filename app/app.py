@@ -7,7 +7,7 @@ import sys
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
 import json
-import connexion
+
 from flask import current_app, g
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
@@ -31,6 +31,7 @@ def create_app(app_config, data_logger):
 
     # read the Connexion swagger yaml specification_dir from the core plugin entry point
     specification_dir = data_logger.core_ep.specification_dir
+    import connexion
     app = connexion.App(__name__, specification_dir = specification_dir)
     # read the Connexion swagger yaml specification filename from the core plugin entry point
     specification_filename = data_logger.core_ep.specification_filename
