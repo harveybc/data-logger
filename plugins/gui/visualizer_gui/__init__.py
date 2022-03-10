@@ -22,7 +22,7 @@ class VisualizerGui():
         _logger.info("Initializing gui plugin")
         self.conf = conf
         # path for static files .//base/static
-        self.static_url_path = '/plugins/gui/visualizer_gui/base'
+        self.static_url_path = '/plugins/gui/visualizer_gui'
     
     # register blueprints for gui    
     def register_blueprints(self, app, core_ep):
