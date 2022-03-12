@@ -325,7 +325,7 @@
         }
         /* get performance and data pairs from remote host */
         function getPerformanceData(){
-            xy_points = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/performace")
+            xy_points = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/performace")
             return xy_points;
         }
 
