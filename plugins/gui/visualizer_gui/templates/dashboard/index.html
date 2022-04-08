@@ -297,20 +297,20 @@
         /* get the x,y data for plotting from a result of a request as JSON from a text resposne*/
         var last_response;
         var xy_points = [];
-        function getPoints(res_text){   
+/*        function getPoints(res_text){   
             // JSON parse res_text as last response 
             last_response = JSON.parse(res_text);
-            var str = JSON.stringify(last_response, 2); // spacing level = 2
+            var str = JSON.stringify(lan '&' st_response, 2); // spacing level = 2
             // Zip the generated y values with the x values
             xy_points = [];
             for (var i = 0; i < last_response.length; i++) {
-                xy_points.push([i, last_response[i]])
+                xy_points.push([i, last_response[i]])f
             }
  
             // return array of x,y points
             return xy_points;
         }
-        /* get xy data from a GET request given a route 
+         get xy data from a GET request given a route 
         function getXY(path){
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
