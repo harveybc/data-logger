@@ -310,7 +310,7 @@
             // return array of x,y points
             return xy_points;
         }
-        /* get xy data from a GET request given a route */
+        /* get xy data from a GET request given a route 
         function getXY(path){
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -323,6 +323,8 @@
             xmlhttp.send();
             return xy_points;
         }
+        */
+       
         /* get performance and data pairs from remote host */
         function getPerformanceData(){
             xy_points = {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}
