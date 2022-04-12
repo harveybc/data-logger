@@ -10,3 +10,4 @@ sqliteJson
 connexion
 swagger-ui-bundle
 click
+sphinx
