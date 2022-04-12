@@ -31,11 +31,7 @@ This system can be useful for:
 
 ## Installation (Work In Progress, use github installation)
 
-To install the package via PIP, use the following command:
-
-> pip install -i https://test.pypi.org/simple/ data_logger
-
-Also, the installation can be made by clonning the github repo and manually installing it as in the following instructions.
+The installation can be made by clonning the github repo and manually installing it as in the following instructions.
 
 ### Github Installation Steps
 On Linux use the .sh scripts, on windows use the .bat scripts.
