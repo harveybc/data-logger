@@ -40,15 +40,15 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
 > cd data_logger
-3. Install requirements.
+3. Install requirements:
 > pip install -r requirements.txt
-4. Install python package (also installs the console command data-trimmer)
+4. Install python package:
 > python setup.py install
-5. Create a test database (use .\scrips\migrate.bat on windows)
+5. Create a test database (use .\scrips\migrate.bat on windows):
 > ./scripts/migrate.sh
-6. (Optional) Perform tests
+6. (Optional) Perform tests:
 > python setup.py test
-7. (Optional) Generate Sphinx Documentation
+7. (Optional) Generate Sphinx Documentation:
 > python setup.py docs
 
 
