@@ -7,7 +7,7 @@ email_validator
 python-decouple
 gunicorn
 sqliteJson
-connexion[swagger-ui]
+connexion[swagger-ui]==2.13.*
 swagger-ui-bundle
 click
 sphinx
