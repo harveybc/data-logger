@@ -342,10 +342,7 @@
                 "tables": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table"
                     }
                 }
             }
