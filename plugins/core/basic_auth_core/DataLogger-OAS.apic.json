@@ -79,10 +79,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 }
             }
@@ -267,10 +264,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 },
                 "name": {
