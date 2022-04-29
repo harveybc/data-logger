@@ -39,5 +39,4 @@ def authenticate(username, password, required_scopes=None):
                 required_scopes=required_scopes,
                 token_scopes=info['scope']
             )
-
     return info
