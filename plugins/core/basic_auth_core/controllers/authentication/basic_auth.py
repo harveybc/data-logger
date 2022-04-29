@@ -1,7 +1,7 @@
 """ Performs Basic Authentication """
 
 import connexion
-from connexion.decorators.security import validate_scope
+#from connexion.decorators.security import validate_scope
 from connexion.exceptions import OAuthScopeProblem
 # the user model is used for authentication
 from ...models.user import User
@@ -32,7 +32,8 @@ def authenticate(username, password, required_scopes=None):
         return None
 
     # optional
-    if required_scopes is not None and not validate_scope(required_scopes, info['scope']):
+    #if required_scopes is not None and not validate_scope(required_scopes, info['scope']):
+    if required_scopes is not None:
         raise OAuthScopeProblem(
                 description='Provided user doesn\'t have the required access rights',
                 required_scopes=required_scopes,
