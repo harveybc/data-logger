@@ -49,7 +49,7 @@ def create_app(app_config, data_logger):
         pass
     # adds an url rule to serve static files from the gui plugin location
     #app.app.add_url_rule(app.app.static_url_path + '/<path:filename>',endpoint='static', view_func=app.app.send_static_file)
-    app.app.add_url_rule(app.app.static_url_path + '/assets/<path:filename>',endpoint='static/assets', view_func=app.app.send_static_file)
+    app.app.add_url_rule(app.app.static_url_path + '<path:filename>',endpoint='static/assets', view_func=app.app.send_static_file)
     # read plugin configuration JSON file
     app.app.config.from_object(app_config)
     # initialize db with current app
