@@ -1,17 +1,17 @@
 {% extends "layouts/base.html" %}
 <!-- uses Jinja (preload) and Vue (postload)-->
 
-<!-- load view-specific javascript -->
-<script src="/static/assets/index.js"></script>
 
 {% block title %} Dashboard {% endblock %} 
 
 <!-- Element injected in the BODY element -->
 {% block body_class %} sidebar-mini {% endblock body_class %} 
 
-<!-- Specific Page CSS goes HERE  -->
+<!-- Specific Page CSS and JS goes HERE  -->
 {% block stylesheets %}
 
+  <!-- load view-specific javascript -->
+  <script src="/static/assets/index.js"></script>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
