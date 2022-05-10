@@ -79,10 +79,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 }
             }
@@ -120,11 +117,11 @@
             "properties": {
                 "user_id": {
                     "type": "integer",
-                    "default": "0"
+                    "default": 0
                 },
                 "process_id": {
                     "type": "integer",
-                    "default": "0"
+                    "default": 0
                 },
                 "table": {
                     "type": "string",
@@ -153,7 +150,7 @@
                 },
                 "priority": {
                     "type": "integer",
-                    "default": "0",
+                    "default": 0,
                     "minimum": 0,
                     "maximum": 1000
                 }
@@ -267,10 +264,7 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table_column",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table_column"
                     }
                 },
                 "name": {
@@ -342,10 +336,7 @@
                 "tables": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/table",
-                        "type": [
-                            null
-                        ]
+                        "$ref": "#/definitions/table"
                     }
                 }
             }
@@ -369,11 +360,11 @@
             "properties": {
                 "user_id": {
                     "type": "integer",
-                    "default": "0"
+                    "default": 0
                 },
                 "process_id": {
                     "type": "integer",
-                    "default": "0"
+                    "default": 0
                 },
                 "table": {
                     "type": "string",
@@ -402,7 +393,7 @@
                 },
                 "priority": {
                     "type": "integer",
-                    "default": "0",
+                    "default": 0,
                     "minimum": 0,
                     "maximum": 1000
                 },

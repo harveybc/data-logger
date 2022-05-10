@@ -15,7 +15,7 @@ from flask_login import current_user
 from app.db import get_db
 from flask import current_app
 from flask import jsonify
-
+from app.app import load_plugin_config
 
 def new_bp(plugin_folder, core_ep):
 
@@ -53,7 +53,9 @@ def new_bp(plugin_folder, core_ep):
         #        status.append("Training")
         #    print("status[",i,"] = ", status[i])
         #return render_template("/dashboard/index.html", p_config = current_app.config['P_CONFIG'], box = box, v_original = v_original, v_predicted = v_predicted, p=p, v=v, status=status)
-        return render_template("/dashboard/index.html")
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/index.html", p_config = p_config_gui)
 
 
     @bp.route("/<int:pid>/trainingpoints")

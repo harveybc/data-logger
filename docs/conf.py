@@ -39,7 +39,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../data_logger")
+module_dir = os.path.join(__location__, "./")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:

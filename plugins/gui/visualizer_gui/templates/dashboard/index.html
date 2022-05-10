@@ -1,13 +1,17 @@
 {% extends "layouts/base.html" %}
+<!-- uses Jinja (preload) and Vue (postload)-->
+
 
 {% block title %} Dashboard {% endblock %} 
 
 <!-- Element injected in the BODY element -->
 {% block body_class %} sidebar-mini {% endblock body_class %} 
 
-<!-- Specific Page CSS goes HERE  -->
+<!-- Specific Page CSS and JS goes HERE  -->
 {% block stylesheets %}
 
+  <!-- load view-specific javascript -->
+  <script src="/static/assets/index.js"></script>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -40,7 +44,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">{{ p_config['output_plugin_config']['dashboard']['title'] }}</h1>
+              <h1 class="m-0 text-dark">{{ p_config['gui_plugin_config']['dashboard']['title'] }}</h1>
             </div><!-- /.col -->
             
           </div><!-- /.row -->
@@ -50,7 +54,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container-fluid" id="main_content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-lg-3 col-6">
@@ -58,8 +62,8 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <!-- box[0] data -->  
-                <h3>P{{ box[0]['id'] }}: {{ box[0]['mse'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_0_title'] }}</p>
+                <h3>{{ p_config['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -73,8 +77,8 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <!-- box[1] data -->  
-                <h3>P{{ box[1]['id'] }}: {{ box[1]['mse'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_1_title'] }}</p>
+                <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
+                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -88,8 +92,8 @@
             <div class="small-box bg-warning">
               <div class="inner">
                 <!-- box[2] data -->
-                <h3>{{ box[2]['COUNT(id)'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_2_title'] }}</p>
+                <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -103,8 +107,8 @@
             <div class="small-box bg-danger">
               <div class="inner">
                 <!-- box[3] data -->  
-                <h3>{{ box[3]['COUNT(id)'] }}</h3>
-                <p>{{ p_config['output_plugin_config']['dashboard']['box_3_title'] }}</p>
+                <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -122,7 +126,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
-                    {{ p_config['output_plugin_config']['dashboard']['rt_plot']['title'] }} (Process:0)
+                    {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['title'] }} 
                   </h3>
     
                   <div class="card-tools">
@@ -134,7 +138,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="interactive" style="height: {{ p_config['output_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+                  <div id="interactive" style="height: {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -153,7 +157,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
-                    {{ p_config['output_plugin_config']['dashboard']['val_plot']['title'] }} (Process:1)
+                    {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process:[[ best_process ]])
                   </h3>
     
                   <div class="card-tools">
@@ -166,7 +170,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="line-chart" style="height: {{ p_config['output_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
+                  <div id="line-chart" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -180,7 +184,7 @@
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">{{ p_config['output_plugin_config']['dashboard']['process_list']['title'] }}</h3>
+                  <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
   
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -197,31 +201,30 @@
                     <table class="table m-0">
                       <thea d>
                       <tr>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
-                        <th>{{ p_config['output_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
+                        <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
                       </tr>
                       </thead>
                       <tbody>
-                        {% for process in p %}
-<!-- TODO RECURRENT--><tr>
-                        <td><a href="pages/examples/invoice.html">{{ process }}</a></td>
-                        <td>{{ v[loop.index-1]['mse'] }}</td>
+                      <tr v-for="process in process_list": set="status = vm.get_value(process.id, 'control', 'status')">
+                        <td><a :href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
+
+                        <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
+
+
+                        
                         <td>
-                            {% if status[loop.index-1]=="Not Started" %}
-                            <span class="badge badge-danger">{{ status[loop.index-1] }}</span>
-                            {% elif status[loop.index-1]=="Training" %}
-                            <span class="badge badge-warning">{{ status[loop.index-1] }}</span>
-                            {% elif status[loop.index-1]=="Validation" %}
-                            <span class="badge badge-success">{{ status[loop.index-1] }}</span>
-                            {% endif %}
+                            <span v-if="status === 'Halted'" class="badge badge-danger">[[ status ]]</span>
+                            <span v-else-if="status === 'Training'" class="badge badge-warning">">[[ status ]]</span>
+                            <span v-else-if="status === 'Validation'" class="badge badge-warning">">[[ status ]]</span>
+                            <span v-else class="badge badge-success">">[[ status ]]</span>                           
                         </td>
                         <td>
-                          <div class="sparkbar" data-color="#00a65a" data-height="20">{{  v[loop.index-1]['created'] }}</div>
+                          <div class="sparkbar" data-color="#00a65a" data-height="20">[[ process.creaded_at ]]</div>
                         </td>
                       </tr>
-                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -301,21 +304,21 @@
         /* get the x,y data for plotting from a result of a request as JSON from a text resposne*/
         var last_response;
         var xy_points = [];
-        function getPoints(res_text){   
+/*        function getPoints(res_text){   
             // JSON parse res_text as last response 
             last_response = JSON.parse(res_text);
-            var str = JSON.stringify(last_response, 2); // spacing level = 2
+            var str = JSON.stringify(lan '&' st_response, 2); // spacing level = 2
             // Zip the generated y values with the x values
             xy_points = [];
             for (var i = 0; i < last_response.length; i++) {
-                xy_points.push([i, last_response[i]])
+                xy_points.push([i, last_response[i]])f
             }
  
             // return array of x,y points
             return xy_points;
         }
-        /* get performance and data pairs from remote host */
-        function getPerformanceData(){
+         get xy data from a GET request given a route 
+        function getXY(path){
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -323,11 +326,18 @@
                 }
             };
             //#todo: buscar implem. de /parameters en syn
-            xmlhttp.open("GET", "/{{ box[0]['id'] }}/trainingpoints", true);
+            xmlhttp.open("GET", path, true);
             xmlhttp.send();
             return xy_points;
-            
         }
+        */
+       
+        /* get performance and data pairs from remote host */
+        function getPerformanceData(){
+            xy_points = "{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}"
+            return xy_points;
+        }
+
         // when page finishes loading, sets the values to the ones from data
         $(document).ready(function () {
             // Calls getPerformanceData to get a JSON from singularity
@@ -470,15 +480,17 @@
       * LINE CHART
       * ----------
       */
-      //LINE randomly generated data
+      //LINE perform request to get original and predicted data using vue.js
 
-      var   v_original = {{ v_original|tojson }},
-            v_predicted = {{ v_predicted|tojson }}
+
+
+      var   v_original = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
+            v_predicted = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
 
       var original = [],
           predicted = []
 
-      var max_points = {{ p_config['output_plugin_config']['dashboard']['val_plot']['max_points'] }}
+      var max_points = "{{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }}"
       var use_latest = true
 
       // setup the first and the last index of the arrays to be plotted
@@ -575,7 +587,11 @@
         + '<br>'
         + Math.round(series.percent) + '%</div>'
     }
-    </script>
+    
+    
+    // Initialize values for fields
+    field_values = field_vars();
 
+    </script>
 {% endblock javascripts %}
 

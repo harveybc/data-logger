@@ -7,10 +7,10 @@
             "box_1_title": "Best Validation MSE",
             "box_2_title": "Number of Users",
             "box_3_title": "Number of Processes",
-            "box_0_value": "column_max('feature_extractor', 'training_error','mse')",
-            "box_1_value": "column_max('feature_extractor', 'validation_error','mse')",
-            "box_2_value": "num_users()",
-            "box_3_value": "num_processes()",
+            "box_0_value": "column_max('training_error','mse')",
+            "box_1_value": "column_max('validation_error','mse')",
+            "box_2_value": "count('users')",
+            "box_3_value": "count('processes')",
             
             "rt_plot": {
                 "title": "Online Training MSE",
