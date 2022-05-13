@@ -78,7 +78,7 @@
               <div class="inner">
                 <!-- box[1] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -93,7 +93,7 @@
               <div class="inner">
                 <!-- box[2] data -->
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -108,7 +108,7 @@
               <div class="inner">
                 <!-- box[3] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -208,10 +208,10 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="process in process_list": set="status = vm.get_value(process.id, 'control', 'status')">
+                      <tr v-for="process in process_list": set="status = get_value(process.id, 'control', 'status')">
                         <td><a :href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
 
-                        <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
+                        <td[[ get_max(process.id, "validation_error", "mse") ]]</td>
 
 
                         
@@ -484,8 +484,8 @@
 
 
 
-      var   v_original = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
-            v_predicted = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
+      var   v_original = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
+            v_predicted = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
 
       var original = [],
           predicted = []
