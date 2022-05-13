@@ -1,7 +1,22 @@
-function field_vars(){
-    return {best_process: 1}
+// dashboard vue Module implementation
+export default {
+    data() {
+      return { field_start_values }
+    },
+    methods: {
+        increment() {
+          this.count++
+        }
+    },
+    compilerOptions: {
+        // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
+        delimiters: ["[[", "]]"]
+    }
 }
 
-function column_max(table_name, col_name){
-    return (0);
+// define starting field values
+function field_start_values(){
+    return {
+        count:0
+    }
 }

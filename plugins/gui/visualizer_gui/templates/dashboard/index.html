@@ -595,3 +595,9 @@
     </script>
 {% endblock javascripts %}
 
+<!-- vue module script populated into base.html by jinja -->
+{% block module_javascript %}
+<script type="module">
+    import Module from './index.js'
+</script>
+{% endblock odule_javascript %}

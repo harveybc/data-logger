@@ -38,14 +38,13 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
-<script>
-// Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
-    Vue.createApp({
-        data() {return {field_values}},
-            compilerOptions: {
-                delimiters: ["[[", "]]"]
-            }
-    }).mount('#main_content');
+
+<!-- Module loading script populated by jinja child page (index.html, etc...), must set a javascript var called Module -->
+{% block component_javascript %}{% endblock component_javascript %}  
+
+<!-- // create vue app using #main_content div to be parced by the previosuly loaded vue Module component -->
+<script>  
+    Vue.createApp(Module).mount('#main_content');
 </script>
 </body>
 </html>
