@@ -39,11 +39,9 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
-<!-- Module loading script populated by jinja child page (index.html, etc...), must set a javascript var called Module -->
-{% block module_javascript %}{% endblock module_javascript %}  
-
 <!-- // create vue app using #main_content div to be parced by the previosuly loaded vue Module component -->
-<script>  
+<script type="module">  
+
     Vue.createApp(MyModule).mount('#main_content');
 </script>
 </body>
