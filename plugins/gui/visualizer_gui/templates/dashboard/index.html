@@ -10,8 +10,6 @@
 <!-- Specific Page CSS and JS goes HERE  -->
 {% block stylesheets %}
 
-  <!-- load view-specific javascript -->
-  <script src="/static/assets/index.js"></script>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -78,7 +76,7 @@
               <div class="inner">
                 <!-- box[1] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -93,7 +91,7 @@
               <div class="inner">
                 <!-- box[2] data -->
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -108,7 +106,7 @@
               <div class="inner">
                 <!-- box[3] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
+                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -208,10 +206,10 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="process in process_list": set="status = vm.get_value(process.id, 'control', 'status')">
+                      <tr v-for="process in process_list": set="status = get_value(process.id, 'control', 'status')">
                         <td><a :href="/gui/process/[[ process.id ]]">[[ process.id ]]</a></td>
 
-                        <td[[ vm.get_max(process.id, "validation_error", "mse") ]]</td>
+                        <td[[ get_max(process.id, "validation_error", "mse") ]]</td>
 
 
                         
@@ -484,8 +482,8 @@
 
 
 
-      var   v_original = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
-            v_predicted = getXY("/[[ vm.{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
+      var   v_original = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
+            v_predicted = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
 
       var original = [],
           predicted = []
@@ -588,10 +586,13 @@
         + Math.round(series.percent) + '%</div>'
     }
     
-    
-    // Initialize values for fields
-    field_values = field_vars();
 
     </script>
 {% endblock javascripts %}
 
+<!-- vue module script populated into base.html by jinja -->
+{% block module_javascript %}
+<script type="module">
+    import MyModule from "/static/assets/index.js"
+
+{% endblock module_javascript %}

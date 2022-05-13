@@ -25,7 +25,6 @@
                 "max_points": "500",
                 "use_latest": true,
                 "data": "val_plot()"
-
             },
             "process_list":{
                 "title": "List of Processes",
