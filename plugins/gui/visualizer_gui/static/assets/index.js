@@ -1,5 +1,5 @@
 // dashboard vue Module implementation
-export function Module() {
+export default function() {
     return({    
         data() {
             return { field_start_values }
