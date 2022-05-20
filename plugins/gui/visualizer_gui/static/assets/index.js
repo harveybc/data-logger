@@ -5,6 +5,7 @@ export default {
             count: 0
         }
     },
+    /* 
     methods: {
         increment() {
             this.count++
@@ -16,6 +17,7 @@ export default {
             }
         }
     },
+    */
     compilerOptions: {
         // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
         delimiters: ["[[", "]]"]
