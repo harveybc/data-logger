@@ -65,7 +65,7 @@
               <div class="inner">
                 <!-- box[0] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
-                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]</p>
+                <p>{{  {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -80,7 +80,7 @@
               <div class="inner">
                 <!-- box[1] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
-                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} ]]</p>
+                <p>{{  {{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -95,7 +95,7 @@
               <div class="inner">
                 <!-- box[2] data -->
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} ]]</p>
+                <p>{{  {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -110,7 +110,7 @@
               <div class="inner">
                 <!-- box[3] data -->  
                 <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-                <p>[[ {{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} ]]</p>
+                <p>{{  {{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -159,7 +159,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
-                    {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process:[[ best_process ]])
+                    {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process:{{  best_process }})
                   </h3>
     
                   <div class="card-tools">
@@ -211,20 +211,20 @@
                       </thead>
                       <tbody>
                       <tr v-for="process in process_list": set="status = get_value(process.id, 'control', 'status')">
-                        <td><a href="/gui/process/[[process.id]]">[[ process.id ]]</a></td>
+                        <td><a href="/gui/process/{{ process.id]]">{{  process.id }}</a></td>
 
-                        <td>[[ get_max(process.id) ]]</td>
+                        <td>{{  get_max(process.id) }}</td>
 
 
                         
                         <td>
-                            <span v-if="status === 'Halted'" class="badge badge-danger">[[ status ]]</span>
-                            <span v-else-if="status === 'Training'" class="badge badge-warning">">[[ status ]]</span>
-                            <span v-else-if="status === 'Validation'" class="badge badge-warning">">[[ status ]]</span>
-                            <span v-else class="badge badge-success">">[[ status ]]</span>                           
+                            <span v-if="status === 'Halted'" class="badge badge-danger">{{  status }}</span>
+                            <span v-else-if="status === 'Training'" class="badge badge-warning">">{{  status }}</span>
+                            <span v-else-if="status === 'Validation'" class="badge badge-warning">">{{  status }}</span>
+                            <span v-else class="badge badge-success">">{{  status }}</span>                           
                         </td>
                         <td>
-                          <div class="sparkbar" data-color="#00a65a" data-height="20">[[ process.creaded_at ]]</div>
+                          <div class="sparkbar" data-color="#00a65a" data-height="20">{{  process.creaded_at }}</div>
                         </td>
                       </tr>
                       </tbody>
@@ -488,8 +488,8 @@
 
 
 /*
-      var   v_original = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/training"),
-            v_predicted = getXY("/[[ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} ]]/validation")
+      var   v_original = getXY("/{{  {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }}/training"),
+            v_predicted = getXY("/{{  {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }}/validation")
 
       var original = [],
           predicted = []
