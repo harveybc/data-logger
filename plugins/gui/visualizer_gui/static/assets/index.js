@@ -17,11 +17,12 @@ export default {
             }
         }
     },delimiter
-    */
+  
    config: {
         compilerOptions: {
             // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
             delimiters: ["[[", "]]"]
         }
     }
+      */
 }
