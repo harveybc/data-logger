@@ -43,7 +43,8 @@
 <!-- Specific Page JS goes HERE  -->
 {% block module_javascript %}{% endblock module_javascript %} 
     const { createApp } = Vue
-    createApp(MyModule).mount('#main_content')
+    #createApp(MyModule).mount('#main_content')
+    createApp({MyModule}).mount('#main_content')
 </script>
 </body>
 </html>
