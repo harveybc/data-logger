@@ -253,7 +253,335 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-  
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- ChartJS -->
+  <script src="/static/assets/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="/static/assets/plugins/sparklines/sparkline.js"></script>
+  <!-- 
+  <script src="/static/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="/static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  JQVMap -->
+  <!-- jQuery Knob Chart -->
+  <script src="/static/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="/static/assets/plugins/moment/moment.min.js"></script>
+  <script src="/static/assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="/static/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="/static/assets/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="/static/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="/static/assets/js/pages/dashboard.js"></script>
+  <!-- AdminLTE for demo purposes -->
+   <script src="/static/assets/js/demo.js"></script>
+  <!-- FLOT CHARTS -->
+  <script src="/static/assets/plugins/flot/jquery.flot.js"></script>
+  <!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+  <script src="/static/assets/plugins/flot-old/jquery.flot.resize.min.js"></script>
+  <script>
+
+// Gets data from controller
+       
+       // TODO: CUANDO TRAINING ONLINE, CONFIGURAR NUM_POINTS EN PLOT
+       
+        /* get the x,y data for plotting from a result of a request as JSON from a text resposne*/
+        var last_response;
+        var xy_points = [];
+/*        function getPoints(res_text){   
+            // JSON parse res_text as last response 
+            last_response = JSON.parse(res_text);
+            var str = JSON.stringify(lan '&' st_response, 2); // spacing level = 2
+            // Zip the generated y values with the x values
+            xy_points = [];
+            for (var i = 0; i < last_response.length; i++) {
+                xy_points.push([i, last_response[i]])f
+            }
+ 
+            // return array of x,y points
+            return xy_points;
+        }
+         get xy data from a GET request given a route 
+        function getXY(path){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    xy_points = getPoints(this.responseText);
+                }
+            };
+            //#todo: buscar implem. de /parameters en syn
+            xmlhttp.open("GET", path, true);
+            xmlhttp.send();
+            return xy_points;
+        }
+        */
+       
+        /* get performance and data pairs from remote host */
+        function getPerformanceData(){
+            xy_points = "{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}"
+            return xy_points;
+        }
+
+        // when page finishes loading, sets the values to the ones from data
+        $(document).ready(function () {
+            // Calls getPerformanceData to get a JSON from singularity
+            xy_points=getPerformanceData();
+            
+/*
+            // Shows Help When button clicked
+            $('#btn-trig').click(function () {
+                $('#helpModal').modal('show');
+            });
+            // Initialize values of form
+            // Metadata
+            $('#inputId').val(data[0].id);
+            $('#inputName').val(data[0].name);
+            $('#inputDescription').val(data[0].description);
+            $('#inputCreatorKey').val(data[0].creator_key);
+            $('#inputTags').val(data[0].tags);
+            $('#inputHash').val(data[0].hash);
+            $('#inputAppId').val(data[0].app_hash);
+            // 
+            $('#inputCreatedAt').val(data[0].created_at);
+            $('#inputUpdatedAt').val(data[0].updated_at);
+            $('#inputActive').val(data[0].active);
+            $('#inputDesiredBlockTime').val(data[0].desired_block_time);
+            $('#inputDesiredBlockSize').val(data[0].desired_block_size);
+            $('#inputBlockTimeControl').val(data[0].block_time_control);
+            // 
+            $('#inputModelId').val(data[0].model_id);
+            $('#inputTrainingSetId').val(data[0].training_set_id);
+            $('#inputValidationSetId').val(data[0].validation_set_id);
+            $('#inputLastBlockHash').val(data[0].last_block_hash);
+            $('#inputLastBlockDate').val(data[0].last_block_date);
+            $('#inputLastBlockTime').val(data[0].last_block_time);
+            // 
+            $('#inputCurrentThreshold').val(data[0].current_threshold);
+            $('#inputLastThreshold').val(data[0].last_threshold);
+            $('#inputCurrentBlockTime').val(data[0].current_block_time);
+            $('#inputLastBlockSize').val(data[0].last_block_size);
+            $('#inputLastBlockPerformance').val(data[0].last_block_performance);
+            $('#inputCurrentBlockPerformance').val(data[0].current_block_performance);
+            // 
+            $('#inputLastOptimumId').val(data[0].last_optimum_id);
+            $('#inputLastOptimumDate').val(data[0].last_optimum_date);
+        */
+        });
+        
+
+        
+ $(function () {
+            /*
+             * Flot Interactive Chart
+             * -----------------------
+             */
+            var data = [], totalPoints = 35
+            
+            
+            /* QUITAR */
+            function getRandomData() {
+                if (data.length > 0)
+                    data = data.slice(1)
+                // Do a random walk
+                while (data.length < totalPoints) {
+
+                    var prev = data.length > 0 ? data[data.length - 1] : 50,
+                            y = prev + Math.random() * 10 - 5
+
+                    if (y < 0) {
+                        y = 0
+                    } else if (y > 100) {
+                        y = 100
+                    }
+
+                    data.push(y)
+                }
+                // Zip the generated y values with the x values
+                var res = []
+                for (var i = 0; i < data.length; ++i) {
+                    res.push([i, data[i]])
+                }
+
+                return res
+            }
+            /*
+            // Interactive plot
+            var interactive_plot = $.plot('#interactive', [getRandomData()], {
+                grid: {
+                    borderColor: '#f3f3f3',
+                    borderWidth: 1,
+                    tickColor: '#f3f3f3'
+                },
+                series: {
+                    shadowSize: 0, // Drawing is faster without shadows
+                    color: '#3c8dbc'
+                },
+                lines: {
+                    fill: true, // Converts the line chart to area chart
+                    color: '#3c8dbc'
+                },
+                yaxis: {
+                    min : 0.0,
+                    max : 0.5,
+                    show: true
+                },
+                xaxis: {
+                    show: true
+                }
+            })
+            
+            var updateInterval = 1000 //Fetch data ever x milliseconds
+            var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
+            function update() {
+                xy_points=getPerformanceData();
+                //total_points = xy_points.length;
+                var tmp = getRandomData();
+                interactive_plot.setData([xy_points]);
+                
+                //document.getElementById("testFrame").innerHTML = xy_points.toString();
+                // Since the axes don't change, we don't need to call plot.setupGrid()
+                //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
+                interactive_plot.draw();
+                if (realtime === 'on')
+                    setTimeout(update, updateInterval);
+            }
+            //INITIALIZE REALTIME DATA FETCHING
+            if (realtime === 'on') {
+                update()
+            }
+            //REALTIME TOGGLE
+            $('#realtime .btn').click(function () {
+                if ($(this).data('toggle') === 'on') {
+                    realtime = 'on'
+                } else {
+                    realtime = 'off'
+                }
+                update()
+            })
+            /*
+             * END INTERACTIVE CHART
+             */
+      
+      /*
+      * LINE CHART
+      * ----------
+      */
+      //LINE perform request to get original and predicted data using vue.js
+
+
+/*
+      var   v_original = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/training"),
+            v_predicted = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/validation")
+
+      var original = [],
+          predicted = []
+
+      var max_points = "{{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }}"
+      var use_latest = true
+
+      // setup the first and the last index of the arrays to be plotted
+      var  first=0, last=max_points
+      if (last>(v_original.length)) {
+          last=v_original.length
+      }
+
+      // TODO: Posible error por mal cálculo del first
+      if (use_latest){
+        last = v_original.length
+        first = last - max_points
+        if (first<0) {
+            first=0
+        }
+      }
+
+      // prepare plotted arrays    
+      for (var i = first; i < last; i++) {
+        original.push([i, v_original[i]])
+        original.push([i, v_predicted[i]])
+      }
+
+      var line_data1 = {
+        data : original,
+        color: '#3c8dbc'
+      }
+
+      var line_data2 = {
+        data : predicted,
+        color: '#00c0ef'
+      }
+
+      $.plot('#line-chart', [line_data1, line_data2], {
+        grid  : {
+          hoverable  : true,
+          borderColor: '#f3f3f3',
+          borderWidth: 1,
+          tickColor  : '#f3f3f3'
+        },
+        series: {
+          shadowSize: 0,
+          lines     : {
+            show: true
+          },
+          points    : {
+            show: true
+          }
+        },
+        lines : {
+          fill : false,
+          color: ['#3c8dbc', '#f56954']
+        },
+        yaxis : {
+          show: true
+        },
+        xaxis : {
+          show: true
+        }
+      })
+      //Initialize tooltip on hover
+      $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+        position: 'absolute',
+        display : 'none',
+        opacity : 0.8
+      }).appendTo('body')
+      $('#line-chart').bind('plothover', function (event, pos, item) {
+
+        if (item) {
+          var x = item.datapoint[0].toFixed(2),
+              y = item.datapoint[1].toFixed(2)
+
+          $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
+            .css({
+              top : item.pageY + 5,
+              left: item.pageX + 5
+            })
+            .fadeIn(200)
+        } else {
+          $('#line-chart-tooltip').hide()
+        }
+
+      })
+      /* END LINE CHART */
+
+    })
+    /*
+    * Custom Label formatter
+    * ----------------------
+    */
+    function labelFormatter(label, series) {
+      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+        + label
+        + '<br>'
+        + Math.round(series.percent) + '%</div>'
+    }
+    
+
+    </script>
 {% endblock javascripts %}
 
 <!-- vue module script populated into base.html by jinja -->
