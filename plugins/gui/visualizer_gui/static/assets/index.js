@@ -3,7 +3,8 @@ export default {
     data() {
         return { 
             count: 0,
-            process_list: [0,1,2,3]
+            process_list: [0,1,2,3],
+            status : 'Halted'
         }
     }, 
     methods: {
