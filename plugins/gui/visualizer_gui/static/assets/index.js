@@ -5,8 +5,7 @@ export default {
             count: 0,
             process_list: [0,1,2,3]
         }
-    }
-    /* 
+    }, 
     methods: {
         increment() {
             this.count++
@@ -16,14 +15,15 @@ export default {
                 return {
                 count:0
             }
+        },
+        get_value(a,b,c){
+            return 0
         }
-    },delimiter
-  
+    },
    config: {
         compilerOptions: {
             // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
             delimiters: ["[[", "]]"]
         }
     }
-      */
 }

@@ -208,7 +208,7 @@
                       <tbody>  
                       <tr v-for="process in process_list">
                         
-                         [[ status =  get_value([[process.id]], 'control', 'status') ]]
+                         [[ get_value([[process.id]], 'control', 'status') ]]
                         
                         <td><a href="/gui/process/[[process.id]]"> process.id</a></td>
 
