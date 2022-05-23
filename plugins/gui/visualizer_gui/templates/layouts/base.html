@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon">
+<!-- jQuery -->
+<script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Axios and Vue -->
+<script src="/static/assets/js/axios/axios.min.js"></script>
+<!--  <script src="/static/assets/js/vue/vue.js"></script>  -->
+<script src="https://unpkg.com/vue@3"></script>
 
-  <script src="/static/assets/js/axios/axios.min.js"></script>
-  <script src="/static/assets/js/vue/vue.js"></script>
-  <!-- <script src="https://unpkg.com/vue@3"></script>  -->
-  
-  <title>
-    data_logger - {% block title %}{% endblock %} | harveybc
-  </title> 
+<title>
+  data_logger - {% block title %}{% endblock %} | harveybc
+</title> 
 
-  {% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}{% endblock stylesheets %}
 
 </head>
 <body class="hold-transition {% block body_class %}{% endblock body_class %}">
@@ -42,7 +48,17 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block module_javascript %}{% endblock module_javascript %} 
-    Vue.createApp(MyModule).mount('#main_content');
+    const { createApp } = Vue
+    createApp(MyModule).mount('#main_content')
+    /*
+    createApp({
+      data() {
+        return { 
+            count: 0
+        }
+      }
+    }).mount('#main_content')
+    */
 </script>
 </body>
 </html>
