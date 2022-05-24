@@ -2,7 +2,6 @@
 export default {
     data() {
         return { 
-            count: 0,
             process_list: [0,1,2,3],
             status : 'Halted'
         }
@@ -12,8 +11,8 @@ export default {
         column_max(table, column) {
             return 0;
         },
-        // returns the máximum value for a given table and column
-        count(table) {
+        // returns the number of rows for a given table and column
+        count_rows(table) {
             return 0;
         },
         
