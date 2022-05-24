@@ -21,6 +21,6 @@ export default {
             return 0
         }
     },
-    delimiters: ["[[", "]]"]
+    delimiters: ["|{", "}|"]
    
 }
