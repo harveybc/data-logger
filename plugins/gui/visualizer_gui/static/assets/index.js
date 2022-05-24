@@ -8,9 +8,15 @@ export default {
         }
     }, 
     methods: {
-        increment() {
-            this.count++
+        // returns the máximum value for a given table and column
+        column_max(table, column) {
+            return 0;
         },
+        // returns the máximum value for a given table and column
+        count(table) {
+            return 0;
+        },
+        
         // define starting field values
         field_start_values(){
                 return {
