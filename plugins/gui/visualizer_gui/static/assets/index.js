@@ -1,4 +1,5 @@
 // dashboard vue Module implementation
+
 export default {
     data() {
         return { 
@@ -9,11 +10,33 @@ export default {
     methods: {
         // returns the máximum value for a given table and column
         column_max(table, column) {
-            return 0;
+            // use the result of api request
+            axios.post('/column_max', {
+                table: table,
+                column: column
+              })
+              .then((response) => {
+                return response;
+                //console.log(response);
+              }, (error) => {
+                console.log(error);
+                return 0;
+              });
+            
         },
         // returns the number of rows for a given table and column
         count_rows(table) {
-            return 0;
+            // use the result of api request
+            axios.post('/count_rows', {
+                table: table
+              })
+              .then((response) => {
+                return response;
+                //console.log(response);
+              }, (error) => {
+                console.log(error);
+                return 0;
+              });
         },
         
         // define starting field values
