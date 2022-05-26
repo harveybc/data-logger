@@ -59,7 +59,7 @@ def row2dict(self,row):
         d[column.name] = str(getattr(row, column.name))
     return d
 
-def get_max(self, user_id, table, field ):
+def get_max(self, table, field,pid ):
     """Returns the maximum of the selected field belonging to the user_id from the specified table."""
     db = get_db()
     #user_id = self.get_user_id(username)
