@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-This File contains the LoadCSV class plugin. 
+This File contains functions for the dashboard view
 """
 
 from app.plugin_base import PluginBase
