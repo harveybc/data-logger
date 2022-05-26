@@ -24,37 +24,17 @@ def new_bp(plugin_folder, core_ep):
     @bp.route("/column_max")
     #@login_required
     def column_max():
-        results = current_app.config['FE'].ep_input.column_max("training_progress", "mse", pid )
+        table = request.args.get('table')
+        column = request.args.get('column')
+        pid = request.args.get('pid')
+        results = current_app.config['FE'].ep_input.column_max(table, column, pid)
         return results
 
-    @bp.route("/<int:pid>/trainingpoints")
-    def get_points(pid):
-        """Get the points to plot from the training_progress table and return them as JSON."""
-        xy_points = get_xy_training(pid)
-        return jsonify(xy_points)
-
-    def get_xy_training(pid):
-        """ Returns the points to plot from the training_progress table. """
-        results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
-        return results
-
-    @bp.route("/processes")
-    @login_required
-    def process_index():
-        """Show the processes index."""
-        process_list = current_app.config['FE'].ep_input.get_processes(current_user.id)
-        return render_template("/process/index.html", process_list = process_list)
-
-    @bp.route("/process/<pid>")
-    @login_required
-    def process_detail(pid):
-        """Show the process detail view, if it is the current user, shows a change password button."""
-        process_list = current_app.config['FE'].ep_input.get_process_by_pid(pid)
-        return render_template("/process/detail.html", process_list = process_list, pid = pid)
-
-
-
-
+#    @bp.route("/<int:pid>/trainingpoints")
+#    def get_points(pid):
+#        """Get the points to plot from the training_progress table and return them as JSON."""
+#        xy_points = get_xy_training(pid)
+#        return jsonify(xy_points)
     def get_post(id, check_author=True):
         """Get a post and its author by id.
 
