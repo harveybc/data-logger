@@ -11,7 +11,7 @@ export default {
         // returns the máximum value for a given table and column
         column_max(table, column) {
             // use the result of api request
-            axios.post('/column_max', {
+            axios.get('/column_max', {
                 table: table,
                 column: column
               })
@@ -27,7 +27,7 @@ export default {
         // returns the number of rows for a given table and column
         count_rows(table) {
             // use the result of api request
-            axios.post('/count_rows', {
+            axios.get('/count_rows', {
                 table: table
               })
               .then((response) => {
