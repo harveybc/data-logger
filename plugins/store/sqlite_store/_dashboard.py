@@ -4,8 +4,8 @@ This File contains functions for the dashboard view
 """
 
 #from app.plugin_base import PluginBase
-from numpy import genfromtxt
-from sys import exit
+#from numpy import genfromtxt
+#from sys import exit
 from flask import current_app
 from app.db import get_db
 import json
