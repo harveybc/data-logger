@@ -26,8 +26,7 @@ def new_bp(plugin_folder, core_ep, store_ep):
     def column_max():
         table = request.args.get('table')
         column = request.args.get('column')
-        pid = request.args.get('pid')
-        results = store_ep.column_max(table, column, pid)
+        results = store_ep.column_max(table, column)
         return results
 
 #    @bp.route("/<int:pid>/trainingpoints")
