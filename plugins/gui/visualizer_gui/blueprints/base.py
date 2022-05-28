@@ -10,7 +10,7 @@ from app.app import db, login_manager
 from .forms import LoginForm, CreateAccountForm
 from app.util import verify_pass
 
-def new_bp(plugin_folder, core_ep):
+def new_bp(plugin_folder, core_ep, store_ep):
     
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User
