@@ -66,7 +66,7 @@ def column_max(self, table, column):
     # user_id = self.get_user_id(username)
     user_id = flask_login.current_user.get_id()
     row = db.execute(
-        "SELECT t." + column + ", p.id"
+        "SELECT t." + str(column) + ", p.id"
         " FROM " + table + " t, process p, user u"
         " WHERE t.process_id = p.id" +
         " AND p.user_id = " + str(user_id) + 
