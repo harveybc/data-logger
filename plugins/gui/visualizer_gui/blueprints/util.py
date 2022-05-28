@@ -16,7 +16,7 @@ from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
 
-def new_bp(plugin_folder, core_ep):
+def new_bp(plugin_folder, core_ep, store_ep):
 
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("util_bp", __name__, template_folder=plugin_folder+"/templates")
@@ -27,7 +27,7 @@ def new_bp(plugin_folder, core_ep):
         table = request.args.get('table')
         column = request.args.get('column')
         pid = request.args.get('pid')
-        results = current_app.config['FE'].ep_input.column_max(table, column, pid)
+        results = store_ep.column_max(table, column, pid)
         return results
 
 #    @bp.route("/<int:pid>/trainingpoints")
