@@ -69,9 +69,6 @@ def new_bp(plugin_folder, core_ep):
         results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
         return results
 
-    
-
-
     @bp.route("/processes")
     @login_required
     def process_index():
