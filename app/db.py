@@ -21,7 +21,7 @@ def get_db():
     #        g.db.row_factory = sqlite3.Row
     #        print("Warning: db is not in g, using db.sqlite3 as database")
     #    return g.db
-    if "db" not in current_app.g:
+    if "db" not in g:
         basedir = os.path.dirname("setup.py")
         g.db = sqlite3.connect(
             os.path.join(basedir, 'db.sqlite3'), detect_types=sqlite3.PARSE_DECLTYPES
