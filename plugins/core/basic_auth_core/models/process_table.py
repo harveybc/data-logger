@@ -213,3 +213,28 @@ class ProcessTable():
             error = str(e)
             print("Error : " , error)
             return error
+
+    def column_max(self, table, column):
+        """ Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
+        db = get_db()
+        # user_id = self.get_user_id(username)
+        user_id = flask_login.current_user.get_id()
+        row = db.execute(
+            "SELECT t." + str(column) + ", p.id"
+            " FROM " + table + " t, process p, user u"
+            " WHERE t.process_id = p.id" +
+            " AND p.user_id = " + str(user_id) + 
+            " ORDER BY t." + column + " DESC LIMIT 1"
+        ).fetchone()
+        result = dict(row)        
+        return result
+
+    def get_count(self, table):
+        """Returns the count of rows in the specified table. """
+        db = get_db()
+        #user_id = self.get_user_id(username)
+        row = db.execute(
+            "SELECT COUNT(id) FROM " + table
+        ).fetchone() 
+        result = dict(row)        
+        return result
