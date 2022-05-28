@@ -28,7 +28,7 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 class BasicAuthCore(): 
-    """ core plugin for the DataLogger class, courtesy of: homegrown hawaiian snow + storz & bickel's Migthy + Swingrowers Butterfly..  ;) """
+    """ core plugin for the DataLogger class """
 
     def __init__(self, conf):
         """ assign configuration params as class attributes """
