@@ -187,6 +187,42 @@ class BasicAuthCore():
         self.seed_init_data(app, db)
         _logger.info("Initial data seed done")
         
+    def column_max(self, table, column):
+        """Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
+        db = get_db()
+        # user_id = self.get_user_id(username)
+        user_id = flask_login.current_user.get_id()
+        row = db.execute(
+            "SELECT t." + str(column) + ", p.id"
+            " FROM " + table + " t, process p, user u"
+            " WHERE t.process_id = p.id" +
+            " AND p.user_id = " + str(user_id) + 
+            " ORDER BY t." + column + " DESC LIMIT 1"
+        ).fetchone()
+        result = dict(row)        
+        return result
 
+        # TODO: COMO EJECUTAR MAX EN uNA TABLA USANDO ORM
+        if not table_exists:
+            with app.app_context(): 
+                table = deepcopy(table)
+                #table["columns"]= json.dumps(table["columns"])
+                new_table = ProcessTable(**table)
+                if not db.engine.dialect.has_table(db.engine, new_table.name):
+                    new_table.table.create(db.engine)
+                #update metadata and tables
+                db.Model.metadata.reflect(bind=db.engine)
+                # reflect the tables
+                Base.prepare(db.engine, reflect=False)
+
+    def get_count(self, table):
+        """Returns the count of rows in the specified table. """
+        db = get_db()
+        #user_id = self.get_user_id(username)
+        row = db.execute(
+            "SELECT COUNT(id) FROM " + table
+        ).fetchone() 
+        result = dict(row)        
+        return result
+            
         
-    

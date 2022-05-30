@@ -35,6 +35,8 @@ class VisualizerGui():
     def template_path(self):
         """ return this module's path """
         return os.path.dirname(__file__)
+
+    
             
         
 
