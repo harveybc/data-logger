@@ -16,6 +16,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
+from sqlalchemy import func
 
 Base = automap_base()
 
@@ -193,36 +194,16 @@ class BasicAuthCore():
         table_name = sanitize_str(table, 256)
         column_name = sanitize_str(column, 256)
         Base.prepare(db.engine, reflect=False)
-        #register_base = Base.classes.test_table
-        register_base = eval("Base.classes." + table_name)
-        # set the new values from the values array
-        #register_model = register_base(**register['values'])
-        # update the register
+        # table base class
+        table_base_column = eval("Base.classes." + table_name + "." + column_name)
+        # perform query
         try:
-            db.session.add(register_model)
-            db.session.commit()
-            new_id = register_model.id
-            ##db.session.expunge_all()
-            ##db.session.close()
-            res = as_dict(register_model)
+            res = db.session.query(func.max(table_base_column)) 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
-            res ={ 'error_c' : error}
+            res ={ 'error_ca' : error}
         return res
-
-        # TODO: COMO EJECUTAR MAX EN uNA TABLA USANDO ORM
-        if not table_exists:
-            with app.app_context(): 
-                table = deepcopy(table)
-                #table["columns"]= json.dumps(table["columns"])
-                new_table = ProcessTable(**table)
-                if not db.engine.dialect.has_table(db.engine, new_table.name):
-                    new_table.table.create(db.engine)
-                #update metadata and tables
-                db.Model.metadata.reflect(bind=db.engine)
-                # reflect the tables
-                Base.prepare(db.engine, reflect=False)
 
     def get_count(self, table):
         """Returns the count of rows in the specified table. """
