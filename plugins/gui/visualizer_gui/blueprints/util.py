@@ -26,6 +26,8 @@ def new_bp(plugin_folder, core_ep, store_ep):
     def column_max():
         table = request.args.get('table')
         column = request.args.get('column')
+        if ((not table) or (not column)):
+            abort(500, "Either table:{table} or column:{column}.")
         results = core_ep.column_max(get_db(), table, column)
         return results
 
