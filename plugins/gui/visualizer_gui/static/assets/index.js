@@ -14,8 +14,11 @@ export default {
             axios.get('/column_max', {
                 //table: table,
                 //column: column
-                table: 'training_error',
-                column: 'mse'
+                params :{
+                  table: 'training_error',
+                  column: 'mse'
+                }
+                
               })
               .then((response) => {
                 return response;
