@@ -187,20 +187,29 @@ class BasicAuthCore():
         self.seed_init_data(app, db)
         _logger.info("Initial data seed done")
         
-    def column_max(self, table, column):
+    def column_max(self, db, table, column):
         """Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
-        db = get_db()
-        # user_id = self.get_user_id(username)
-        user_id = flask_login.current_user.get_id()
-        row = db.execute(
-            "SELECT t." + str(column) + ", p.id"
-            " FROM " + table + " t, process p, user u"
-            " WHERE t.process_id = p.id" +
-            " AND p.user_id = " + str(user_id) + 
-            " ORDER BY t." + column + " DESC LIMIT 1"
-        ).fetchone()
-        result = dict(row)        
-        return result
+        # sanitize the input string and limit its length
+        table_name = sanitize_str(table, 256)
+        column_name = sanitize_str(column, 256)
+        Base.prepare(db.engine, reflect=False)
+        #register_base = Base.classes.test_table
+        register_base = eval("Base.classes." + table_name)
+        # set the new values from the values array
+        #register_model = register_base(**register['values'])
+        # update the register
+        try:
+            db.session.add(register_model)
+            db.session.commit()
+            new_id = register_model.id
+            ##db.session.expunge_all()
+            ##db.session.close()
+            res = as_dict(register_model)
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res ={ 'error_c' : error}
+        return res
 
         # TODO: COMO EJECUTAR MAX EN uNA TABLA USANDO ORM
         if not table_exists:
