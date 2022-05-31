@@ -12,8 +12,10 @@ export default {
         column_max(table, column) {
             // use the result of api request
             axios.get('/column_max', {
-                table: table,
-                column: column
+                //table: table,
+                //column: column
+                table: 'training_error',
+                column: 'mse'
               })
               .then((response) => {
                 return response;
