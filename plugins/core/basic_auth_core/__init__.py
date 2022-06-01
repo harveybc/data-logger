@@ -195,10 +195,10 @@ class BasicAuthCore():
         column_name = sanitize_str(column, 256)
         Base.prepare(db.engine, reflect=False)
         # table base class
-        table_base_column = eval("Base.classes." + table_name + "." + column_name)
+        table_base_column = eval("Base.classes." + table_name )
         # perform query
         try:
-            res = db.session.query(func.max(table_base_column)) 
+            res = db.session.query(func.max(table_base_column.mse)) 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
