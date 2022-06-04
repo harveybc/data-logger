@@ -102,6 +102,8 @@ class BasicAuthCore():
            table_exists = db.engine.dialect.has_table(db.engine, table["name"])
         except SQLAlchemyError as e:  
             table_exists = True
+            _logger.info("          Table %s exists", table["name"])
+            _logger.info("          Error: %s", str(e))
         # Create the new table
         if not table_exists:
             with app.app_context(): 
@@ -147,6 +149,7 @@ class BasicAuthCore():
                 _logger.info("  Process %s tables:", process["name"])
                 # create each table of the process
                 for table in process["tables"]:
+                    # XXX HERE IS THE ISSUE YOU 
                     self.create_table(app, db, table)
                     _logger.info("      %s", table["name"])
             db.session.commit()
