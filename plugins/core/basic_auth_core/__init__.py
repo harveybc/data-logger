@@ -110,8 +110,7 @@ class BasicAuthCore():
                 table = deepcopy(table)
                 #table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(**table)
-                if not db.engine.dialect.has_table(db.engine, new_table.name):
-                    new_table.table.create(db.engine)
+                new_table.table.create(db.engine)
                 #update metadata and tables
                 db.Model.metadata.reflect(bind=db.engine)
                 # reflect the tables
