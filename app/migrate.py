@@ -36,13 +36,14 @@ except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 # create the flask app
 app = Flask(__name__)
-# configure the app from the config dict
+# configure the app from the config dict 
+
 app.config.from_object(app_config)
 from app.app import db
 db.init_app(app)
 
 def dbinit():
     """ drop all tables and create the data structure defined in the store plugin config file. """
-    data_logger.core_ep.database_init(app, db, data_logger, plugin_conf['store'])
+    data_logger.core_ep.database_init(app, db, data_logger, plugin_conf['store']) 
 
-app.cli.add_command( app.cli.command()(dbinit))
+app.cli.add_command( app.cli.command()(dbinit) )
