@@ -99,11 +99,11 @@ class BasicAuthCore():
         """
         # verify if the table already exists
         try:
-           table_exists = db.engine.dialect.has_table(db.engine, table["name"])
+            insp = db.inspect(db.engine)
+            table_exists = insp.has_table(table["name"])
         except SQLAlchemyError as e:  
             table_exists = True
-            _logger.info("          Table %s exists", table["name"])
-            _logger.info("          Error: %s", str(e))
+            _logger.info("Error: %s", str(e))
         # Create the new table
         if not table_exists:
             with app.app_context(): 
