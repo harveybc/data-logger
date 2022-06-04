@@ -187,8 +187,8 @@ class BasicAuthCore():
         # create the data structure from the store plugin config file
         self.init_data_structure(app, db, store_conf)
         _logger.info("Data structure created")
-        #self.seed_init_data(app, db)
-        #_logger.info("Initial data seed done")
+        self.seed_init_data(app, db)
+        _logger.info("Initial data seed done")
         
     def column_max(self, db, table, column):
         """Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
