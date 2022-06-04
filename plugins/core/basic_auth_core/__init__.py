@@ -117,7 +117,7 @@ class BasicAuthCore():
     
     def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """
-        #print("store_conf = ",store_conf)
+        print("store_conf = ",store_conf)
         # create the processes table if it does not exists
         try:
             from .models.user import User
@@ -183,8 +183,8 @@ class BasicAuthCore():
         trans.commit()
         _logger.info("Database dropped")
         # create the data structure from the store plugin config file
-        #self.init_data_structure(app, db, store_conf)
-        #_logger.info("Data structure created")
+        self.init_data_structure(app, db, store_conf)
+        _logger.info("Data structure created")
         #self.seed_init_data(app, db)
         #_logger.info("Initial data seed done")
         
