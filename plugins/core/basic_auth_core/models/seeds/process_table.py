@@ -1,6 +1,10 @@
 from ..user import User
+from sqlalchemy.ext.automap import automap_base
 import logging
 _logger = logging.getLogger(__name__)
+
+Base = automap_base()
+
 # add the default user with id = 0 and username = test
 def seed(app, db):
     with app.app_context():
@@ -9,10 +13,10 @@ def seed(app, db):
         column_name = sanitize_str(column, 256)
         Base.prepare(db.engine, reflect=False)
         # table base class
-        table_base_column = eval("Base.classes.trainig_error"  )
+        table_base_column = eval("Base.classes.trainig_error.mse"  )
         # perform query
         try:
-            res = db.session.query(func.max(table_base_column.mse)) 
+            res = db.session.query(func.max(table_base_column)) 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)

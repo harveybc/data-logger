@@ -57,6 +57,7 @@ class BasicAuthCore():
         user_seed(app,db)
         #process_seed(app,db)
         
+        
 
     def create_process(self, app, db, process):
         """ Create a register in the process table if another with the same name does not exist.
