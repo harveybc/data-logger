@@ -191,16 +191,16 @@ class BasicAuthCore():
         _logger.info("Initial data seed done")
         
     def column_max(self, db, table, column):
-        """Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
+        """ Returns the maximum of the selected field(column) belonging to the user_id from the specified table. """
         # sanitize the input string and limit its length
         table_name = sanitize_str(table, 256)
         column_name = sanitize_str(column, 256)
         Base.prepare(db.engine, reflect=False)
         # table base class
-        table_base_column = eval("Base.classes." + table_name )
+        table_base_column = eval("Base.classes." + table_name + "." + column_name )
         # perform query
         try:
-            res = db.session.query(func.max(table_base_column.mse)) 
+            res = db.session.query(func.max(table_base_column)) 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
