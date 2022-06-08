@@ -149,7 +149,6 @@ class BasicAuthCore():
                 _logger.info("  Process %s tables:", process["name"])
                 # create each table of the process
                 for table in process["tables"]:
-                    # XXX HERE IS THE ISSUE YOU 
                     self.create_table(app, db, table)
                     _logger.info("      %s", table["name"])
             db.session.commit()
@@ -206,7 +205,7 @@ class BasicAuthCore():
             error = str(e)
             print("Error : " , error)
             res ={ 'error_ca' : error}
-        return res
+        return str(res)
 
     def get_count(self, table):
         """Returns the count of rows in the specified table. """
