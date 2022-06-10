@@ -21,7 +21,7 @@ def seed(app, db, table_name):
             #0	0.540289623	-0.909284882	0.28373445	2020-07-06 02:20:31	0
             #1	0.453582689	-0.808478663	0.708722942	2020-07-06 02:20:32	0
             #2	0.362343707	-0.675440952	0.960191341	2020-07-06 02:20:32	0
-            tmp =  table_base(id=0, mse=0.540289623, mae=-0.909284882, r2=0.28373445)
+            tmp =  table_base(id=0, mse=0.540289623, mae=-0.909284882, r2=0.28373445, contro_id=0)
             db.session.add(tmp)
             db.session.commit()
             _logger.info(" training_error table seeded")        
