@@ -204,8 +204,8 @@ class BasicAuthCore():
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
-            res ={ 'error_ca' : error}
-        return str(res)
+            res = { 'error_ca' : error}
+        return json.dumps(str(res))
 
     def get_count(self, table):
         """Returns the count of rows in the specified table. """
