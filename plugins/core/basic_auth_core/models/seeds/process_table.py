@@ -28,6 +28,5 @@ def seed(app, db, table_name):
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
-            res ={ 'error_ca' : error}
-        return res
+
         
