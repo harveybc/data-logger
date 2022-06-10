@@ -57,7 +57,7 @@ class BasicAuthCore():
 
         user_seed(app,db)
         # seeds training_error data
-        process_table_seed(app,db, "training_error")
+        process_table_seed(app,db, "fe_training_error")
         
 
     def create_process(self, app, db, process):
