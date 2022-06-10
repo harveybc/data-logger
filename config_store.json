@@ -34,7 +34,7 @@
                         "columns": [
                             {
                                 "name": "max_iterations",
-                                "col_type": "Integer" 
+                                "col_type": "ds" 
                             },
                             { "name": "min_mse" },
                             { "name": "min_mae" },
@@ -56,7 +56,7 @@
                                 "col_type": "String" 
                             }
                         ]
-                    }, 	
+                    },
                     {
                         "name": "fe_control",
                         "columns": [
