@@ -15,7 +15,7 @@ export default {
                 //table: table,
                 //column: column
                 params :{
-                  table: 'training_error',
+                  table: 'fe_training_error',
                   column: 'mse'
                 }
                 
