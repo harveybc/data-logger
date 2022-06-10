@@ -205,7 +205,7 @@ class BasicAuthCore():
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
-        print str(res)
+        print(str(res))
         return json.dumps(str(res))
 
     def get_count(self, table):
