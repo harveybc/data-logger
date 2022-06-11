@@ -4,6 +4,7 @@ export default {
     data() {
         return { 
             process_list: [0,1,2,3],
+            process: 0,
             status : 'Halted'
         }
     }, 
