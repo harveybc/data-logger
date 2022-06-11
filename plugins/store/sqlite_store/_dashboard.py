@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-This File contains the LoadCSV class plugin. 
+This File contains functions for the dashboard view
 """
 
-from app.plugin_base import PluginBase
-from numpy import genfromtxt
-from sys import exit
+#from app.plugin_base import PluginBase
+#from numpy import genfromtxt
+#from sys import exit
 from flask import current_app
 from app.db import get_db
 import json
+import flask_login
 
 __author__ = "Harvey Bastidas"
 __copyright__ = "Harvey Bastidas"
@@ -59,16 +60,17 @@ def row2dict(self,row):
         d[column.name] = str(getattr(row, column.name))
     return d
 
-def get_max(self, user_id, table, field ):
-    """Returns the maximum of the selected field belonging to the user_id from the specified table."""
+def column_max(self, table, column):
+    """Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
     db = get_db()
-    #user_id = self.get_user_id(username)
+    # user_id = self.get_user_id(username)
+    user_id = flask_login.current_user.get_id()
     row = db.execute(
-        "SELECT t." + field + ", p.id"
+        "SELECT t." + str(column) + ", p.id"
         " FROM " + table + " t, process p, user u"
         " WHERE t.process_id = p.id" +
         " AND p.user_id = " + str(user_id) + 
-        " ORDER BY t." + field + " DESC LIMIT 1"
+        " ORDER BY t." + column + " DESC LIMIT 1"
     ).fetchone()
     result = dict(row)        
     return result
@@ -108,7 +110,7 @@ def get_columns(self, columns, table, condition):
     )
     #result = dict(rows)  
     #rows = dict(zip(rows.keys(), rows))     
-    #  En nombre de la familia bastidas caicedo les agradezco su compañia en esta hermosa novena.  
+
     #result = [r for r in rows]
     result = self.to_json(rows)
     return result 

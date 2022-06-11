@@ -25,16 +25,18 @@ class VisualizerGui():
         self.static_url_path = '/plugins/gui/visualizer_gui'
     
     # register blueprints for gui    
-    def register_blueprints(self, app, core_ep):
+    def register_blueprints(self, app, core_ep, store_ep, db):
         """ create the blueprints with all routes of the gui """
-        for module_name in ('base', 'dashboard', 'user', 'process'):
+        for module_name in ('base', 'dashboard', 'user', 'process', 'util'):
             module = import_module('plugins.gui.visualizer_gui.blueprints.{}'.format(module_name))
-            bp = module.new_bp(self.template_path(), core_ep)
+            bp = module.new_bp(self.template_path(), core_ep, store_ep, db)
             app.register_blueprint(bp)
     
     def template_path(self):
         """ return this module's path """
         return os.path.dirname(__file__)
+
+    
             
         
 

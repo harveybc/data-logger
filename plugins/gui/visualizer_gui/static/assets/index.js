@@ -1,16 +1,50 @@
 // dashboard vue Module implementation
+
 export default {
     data() {
         return { 
-            count: 0,
             process_list: [0,1,2,3],
+            process: 0,
             status : 'Halted'
         }
     }, 
     methods: {
-        increment() {
-            this.count++
+        // returns the máximum value for a given table and column
+        column_max(table, column) {
+            // use the result of api request
+            axios.get('/column_max', {
+                //table: table,
+                //column: column
+                params :{
+                  table: 'fe_training_error',
+                  column: 'mse'
+                }
+                
+              })
+              .then((response) => {
+                return response;
+                //console.log(response);
+              }, (error) => {
+                console.log(error);
+                return 0;
+              });
+            
         },
+        // returns the number of rows for a given table and column
+        count_rows(table) {
+            // use the result of api request
+            axios.get('/count_rows', {
+                table: table
+              })
+              .then((response) => {
+                return response;
+                //console.log(response);
+              }, (error) => {
+                console.log(error);
+                return 0;
+              });
+        },
+        
         // define starting field values
         field_start_values(){
                 return {
@@ -21,10 +55,6 @@ export default {
             return 0
         }
     },
-   config: {
-        compilerOptions: {
-            // Initialize vue to have different delimiters to the ones used by jinja in flask: [[ , ]] 
-            delimiters: ["[[", "]]"]
-        }
-    }
+    delimiters: ["|{", "}|"]
+   
 }

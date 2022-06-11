@@ -16,6 +16,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
+from sqlalchemy import func
 
 Base = automap_base()
 
@@ -28,7 +29,7 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 class BasicAuthCore(): 
-    """ core plugin for the DataLogger class, courtesy of: homegrown hawaiian snow + storz & bickel's Migthy + Swingrowers Butterfly..  ;) """
+    """ core plugin for the DataLogger class """
 
     def __init__(self, conf):
         """ assign configuration params as class attributes """
@@ -52,9 +53,11 @@ class BasicAuthCore():
         """ 
         _logger.info("Seeding initial data")
         from .models.seeds.user import seed as user_seed
-        from .models.seeds.process import seed as process_seed
+        from .models.seeds.process_table import seed as process_table_seed
+
         user_seed(app,db)
-        #process_seed(app,db)
+        # seeds training_error data
+        process_table_seed(app,db, "fe_training_error")
         
 
     def create_process(self, app, db, process):
@@ -98,17 +101,18 @@ class BasicAuthCore():
         """
         # verify if the table already exists
         try:
-           table_exists = db.engine.dialect.has_table(db.engine, table["name"])
+            insp = db.inspect(db.engine)
+            table_exists = insp.has_table(table["name"])
         except SQLAlchemyError as e:  
             table_exists = True
+            _logger.info("Error: %s", str(e))
         # Create the new table
         if not table_exists:
             with app.app_context(): 
                 table = deepcopy(table)
                 #table["columns"]= json.dumps(table["columns"])
                 new_table = ProcessTable(**table)
-                if not db.engine.dialect.has_table(db.engine, new_table.name):
-                    new_table.table.create(db.engine)
+                new_table.table.create(db.engine)
                 #update metadata and tables
                 db.Model.metadata.reflect(bind=db.engine)
                 # reflect the tables
@@ -116,7 +120,7 @@ class BasicAuthCore():
     
     def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """
-        #print("store_conf = ",store_conf)
+        print("store_conf = ",store_conf)
         # create the processes table if it does not exists
         try:
             from .models.user import User
@@ -187,6 +191,32 @@ class BasicAuthCore():
         self.seed_init_data(app, db)
         _logger.info("Initial data seed done")
         
+    def column_max(self, db, table, column):
+        """ Returns the maximum of the selected field(column) belonging to the user_id from the specified table. """
+        # sanitize the input string and limit its length
+        table_name = sanitize_str(table, 256)
+        column_name = sanitize_str(column, 256)
+        Base.prepare(db.engine, reflect=False)
+        # table base class
+        table_base_column = eval("Base.classes." + table_name + "." + column_name )
+        # perform query
+        try:
+            res = db.session.query(func.max(table_base_column)) 
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        print(str(res))
+        return json.dumps(str(res.first()))
 
+    def get_count(self, table):
+        """Returns the count of rows in the specified table. """
+        db = get_db()
+        #user_id = self.get_user_id(username)
+        row = db.execute(
+            "SELECT COUNT(id) FROM " + table
+        ).fetchone() 
+        result = dict(row)        
+        return result
+            
         
-    

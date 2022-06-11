@@ -12,16 +12,23 @@ def get_db():
     is unique for each request and will be reused if this is called
     again.
     """
-    with app.app_context():
-        if "db" not in current_app.g:
-            basedir = os.path.dirname("setup.py")
-            g.db = sqlite3.connect(
-                os.path.join(basedir, 'db.sqlite3'), detect_types=sqlite3.PARSE_DECLTYPES
-            )
-            g.db.row_factory = sqlite3.Row
-            print("Warning: db is not in g, using db.sqlite3 as database")
-        return g.db
-
+    #with app.app_context():
+    #    if "db" not in current_app.g:
+    #        basedir = os.path.dirname("setup.py")
+    #        g.db = sqlite3.connect(
+    #            os.path.join(basedir, 'db.sqlite3'), detect_types=sqlite3.PARSE_DECLTYPES
+    #        )
+    #        g.db.row_factory = sqlite3.Row
+    #        print("Warning: db is not in g, using db.sqlite3 as database")
+    #    return g.db
+    if "db" not in g:
+        basedir = os.path.dirname("setup.py")
+        g.db = sqlite3.connect(
+            os.path.join(basedir, 'db.sqlite3'), detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = sqlite3.Row
+        print("Warning: db is not in g, using db.sqlite3 as database")
+    return g.db
 
 def close_db(e=None):
     """If this request connected to the database, close the

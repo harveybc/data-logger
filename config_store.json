@@ -30,11 +30,11 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "feature_extractor_configuration",
+                        "name": "fe_configuration",
                         "columns": [
                             {
                                 "name": "max_iterations",
-                                "col_type": "Integer" 
+                                "col_type": "ds" 
                             },
                             { "name": "min_mse" },
                             { "name": "min_mae" },
@@ -56,9 +56,9 @@
                                 "col_type": "String" 
                             }
                         ]
-                    }, 	
+                    },
                     {
-                        "name": "control",
+                        "name": "fe_control",
                         "columns": [
                             {
                                 "name": "scan_interval",
@@ -95,7 +95,7 @@
                         ]
                     },
                     {
-                        "name": "training_error",
+                        "name": "fe_training_error",
                         "columns": [
                             { "name" : "mse" },
                             { "name" : "mae" },
@@ -107,7 +107,7 @@
                         ]
                     },
                     {
-                        "name": "validation_error",
+                        "name": "fe_validation_error",
                         "columns": [
                             { "name" : "mse" },
                             { "name" : "mae" },
@@ -119,7 +119,7 @@
                         ]
                     },
                     {
-                        "name": "validation_plot",
+                        "name": "fe_validation_plot",
                         "columns": [
                             { "name" : "original" },
                             { "name" : "predicted" },
@@ -166,7 +166,11 @@
                             { "name" : "seed_composition"},
                             { "name" : "days_from_rotation"},
                             { "name" : "days_to_rotation"},
-                            { "name" : "days_from_sowing"},
+                            { "name" : "last_fertilization"},
+                            {
+                                "name": "last_fertilization_details",
+                                "col_type": "String" 
+                            },
                             {
                                 "name": "station_id",
                                 "col_type": "Integer" 
@@ -196,7 +200,7 @@
                         ]
                     }, 	
                     {
-                        "name": "greenhouses",
+                        "name": "iot_greenhouses",
                         "columns": [
                             { "name" : "thermometer" },
                             { "name" : "hygrometer" },
@@ -213,7 +217,7 @@
                         ]
                     },
                     {
-                        "name": "weather_stations",
+                        "name": "iot_weather_stations",
                         "columns": [
                             { "name" : "thermometer" },
                             { "name" : "hygrometer" } ,
@@ -233,10 +237,16 @@
                         ]
                     },
                     {
-                        "name": "cattle",
+                        "name": "iot_cattle",
                         "columns": [
                             { "name" : "weight" },
                             { "name" : "bcs" },
+                            { "name" : "last_heat_days" },
+                            { "name" : "last_served_days" },
+                            { "name" : "consecutive_services" },
+                            { "name" : "pregnant" },
+                            { "name" : "pregnancy_count" },
+                            { "name" : "abort_count" },
                             {
                                 "name": "cow_id",
                                 "col_type": "Integer" 
@@ -252,7 +262,7 @@
                         ]
                     },
                     {
-                        "name": "milking_system",
+                        "name": "iot_milking_system",
                         "columns": [
                             { "name" : "production" },
                             { "name" : "duration" },
@@ -271,7 +281,7 @@
                         ]
                     },
                     {
-                        "name": "cooling_tanks",
+                        "name": "iot_cooling_tanks",
                         "columns": [
                             { "name" : "level_sensor" }
                         ]
