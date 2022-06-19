@@ -9,8 +9,8 @@
             "box_3_title": "My Processes",
             "box_0_value": "column_max('fe_training_error','mse')",
             "box_1_value": "column_max('fe_validation_error','mse')",
-            "box_2_value": "count_rows('users')",
-            "box_3_value": "count_rows('processes')",
+            "box_2_value": "process_list_users()",
+            "box_3_value": "process_list()",
             
             "rt_plot": {
                 "title": "Online Training MSE",
