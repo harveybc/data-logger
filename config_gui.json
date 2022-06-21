@@ -7,10 +7,10 @@
             "box_1_title": "Validation MSE",
             "box_2_title": "Users",
             "box_3_title": "My Processes",
-            "box_0_value": "column_max('fe_training_error','mse')",
-            "box_1_value": "column_max('fe_validation_error','mse')",
-            "box_2_value": "process_list_users()",
-            "box_3_value": "process_list()",
+            "box_0_value": "process_column_max('fe_training_error','mse')",
+            "box_1_value": "process_column_max('fe_validation_error','mse')",
+            "box_2_value": "process_count_users()",
+            "box_3_value": "process_count()",
             
             "rt_plot": {
                 "title": "Online Training MSE",
