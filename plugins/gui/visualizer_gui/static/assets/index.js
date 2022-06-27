@@ -10,7 +10,8 @@ export default {
     }, 
     methods: {
         // returns the máximum value for a given table and column for the processes of the current user
-        process_column_max(table, column) {
+        user_column_max(username, table, column) {
+
             // use the result of api request
             axios.get('/column_max', {
                 //table: table,
