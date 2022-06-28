@@ -31,6 +31,35 @@ export default {
               });
             
         },
+        // returns the number of users for the processes of the user
+        process_count_users() {
+          // use the result of api request
+          axios.get('/count_rows', {
+              table: table
+            })
+            .then((response) => {
+              return response;
+              //console.log(response);
+            }, (error) => {
+              console.log(error);
+              return 0;
+            });
+        },
+        // returns the number of processes of the current user
+        process_count() {
+          // use the result of api request
+          axios.get('/count_rows', {
+              table: table
+            })
+            .then((response) => {
+              return response;
+              //console.log(response);
+            }, (error) => {
+              console.log(error);
+              return 0;
+            });
+        },
+
         // returns the number of rows for a given table and column
         count_rows(table) {
             // use the result of api request

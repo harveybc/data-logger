@@ -21,7 +21,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("util_bp", __name__, template_folder=plugin_folder+"/templates")
     
-    @bp.route("/column_max")
+    @bp.route("/user_column_max")
     #@login_required
     def column_max():
         table = request.args.get('table')
