@@ -7,8 +7,8 @@
             "box_1_title": "Validation MSE",
             "box_2_title": "Users",
             "box_3_title": "My Processes",
-            "box_0_value": "max_training_mse('fe_training_error','mse')",
-            "box_1_value": "max_validation_mse('fe_validation_error','mse')",
+            "box_0_value": "max_training_mse()",
+            "box_1_value": "max_validation_mse()",
             "box_2_value": "process_count_users()",
             "box_3_value": "process_count()",
             
