@@ -9,6 +9,15 @@ export default {
         }
     }, 
     methods: {
+        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
+        max_training_mse(){},
+        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
+        max_validation_mse(){},
+        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
+        max_training_mse(){},
+
+
+
         // returns the máximum value for a given table and column for the processes of the current user
         user_column_max(username, table, column) {
 
