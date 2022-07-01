@@ -13,8 +13,7 @@ export default {
         max_training_mse(){},
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
         max_validation_mse(){},
-        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
-        max_training_mse(){},
+
 
 
 
