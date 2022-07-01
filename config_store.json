@@ -54,12 +54,7 @@
                             {
                                 "name": "feature_eng_params",
                                 "col_type": "String" 
-                            }
-                        ]
-                    },
-                    {
-                        "name": "fe_control",
-                        "columns": [
+                            },
                             {
                                 "name": "scan_interval",
                                 "col_type": "Boolean" 
@@ -83,10 +78,6 @@
                             {
                                 "name": "evaluation_dataset",
                                 "col_type": "String" 
-                            },
-                            {
-                                "name" : "configuration_id",
-                                "col_type" : "Integer"
                             },
                             {
                                 "name" : "status",
