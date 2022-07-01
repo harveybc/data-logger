@@ -30,7 +30,7 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "fe_configuration",
+                        "name": "fe_config",
                         "columns": [
                             {
                                 "name": "max_iterations",
@@ -127,14 +127,14 @@
                 "name": "Grasslands",
                 "tables": [ 	
                     {
-                        "name": "grasslands_configuration",
+                        "name": "grasslands_config",
                         "columns": [
                             {
                                 "name": "description",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "device_configuration",
+                                "name": "device_config",
                                 "col_type": "String" 
                             }
                         ]
@@ -167,7 +167,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -178,14 +178,14 @@
                 "name": "IoT",
                 "tables": [ 	
                     {
-                        "name": "iot_configuration",
+                        "name": "iot_config",
                         "columns": [
                             {
                                 "name": "description",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "device_configuration",
+                                "name": "device_config",
                                 "col_type": "String" 
                             }
                         ]
@@ -202,7 +202,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -222,7 +222,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -247,7 +247,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -266,7 +266,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
