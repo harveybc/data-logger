@@ -53,11 +53,11 @@ For ease of use, a script for setting the environment variables and executing th
 
 * For Linux and Mac:
 
-> data_logger.sh
+> ./data_logger.sh
 
 * For Windows:
 
-> data_logger.bat
+> .\data_logger.bat
 
 ## Online documentation 
 
