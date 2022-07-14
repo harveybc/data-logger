@@ -39,7 +39,7 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > pip install -r requirements.txt
 4. Install python package:
 > python setup.py install
-5. Create a test database (use .\scrips\migrate.bat on windows):
+5. Create a test database (use .\scripts\migrate.bat on windows):
 > ./scripts/migrate.sh
 6. (Optional) Perform tests:
 > python setup.py test
