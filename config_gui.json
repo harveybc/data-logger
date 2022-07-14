@@ -3,14 +3,14 @@
     "gui_plugin_config": {
         "dashboard": {
             "title": "Dashboard",
-            "box_0_title": "Best Training MSE",
-            "box_1_title": "Best Validation MSE",
-            "box_2_title": "Number of Users",
-            "box_3_title": "Number of Processes",
-            "box_0_value": "column_max('fe_training_error','mse')",
-            "box_1_value": "column_max('fe_validation_error','mse')",
-            "box_2_value": "count_rows('users')",
-            "box_3_value": "count_rows('processes')",
+            "box_0_title": "Training MSE",
+            "box_1_title": "Validation MSE",
+            "box_2_title": "Users",
+            "box_3_title": "My Processes",
+            "box_0_value": "max_training_mse()",
+            "box_1_value": "max_validation_mse()",
+            "box_2_value": "process_count_users()",
+            "box_3_value": "process_count()",
             
             "rt_plot": {
                 "title": "Online Training MSE",

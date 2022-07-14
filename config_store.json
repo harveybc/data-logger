@@ -30,7 +30,7 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "fe_configuration",
+                        "name": "fe_config",
                         "columns": [
                             {
                                 "name": "max_iterations",
@@ -54,12 +54,7 @@
                             {
                                 "name": "feature_eng_params",
                                 "col_type": "String" 
-                            }
-                        ]
-                    },
-                    {
-                        "name": "fe_control",
-                        "columns": [
+                            },
                             {
                                 "name": "scan_interval",
                                 "col_type": "Boolean" 
@@ -83,10 +78,6 @@
                             {
                                 "name": "evaluation_dataset",
                                 "col_type": "String" 
-                            },
-                            {
-                                "name" : "configuration_id",
-                                "col_type" : "Integer"
                             },
                             {
                                 "name" : "status",
@@ -136,14 +127,14 @@
                 "name": "Grasslands",
                 "tables": [ 	
                     {
-                        "name": "grasslands_configuration",
+                        "name": "grasslands_config",
                         "columns": [
                             {
                                 "name": "description",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "device_configuration",
+                                "name": "device_config",
                                 "col_type": "String" 
                             }
                         ]
@@ -176,7 +167,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -187,14 +178,14 @@
                 "name": "IoT",
                 "tables": [ 	
                     {
-                        "name": "iot_configuration",
+                        "name": "iot_config",
                         "columns": [
                             {
                                 "name": "description",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "device_configuration",
+                                "name": "device_config",
                                 "col_type": "String" 
                             }
                         ]
@@ -211,7 +202,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -231,7 +222,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -256,7 +247,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -275,7 +266,7 @@
                                 "col_type": "Integer" 
                             },
                             {
-                                "name" : "configuration_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]

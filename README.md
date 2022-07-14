@@ -23,11 +23,6 @@ The system has a plugin architecture that allows loading of plugins of three typ
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
 - Event Logging: can be used for logging software systems events, parameters and responses/payloads such as in distributed machine learning model parameter optimization experiments.
-- As a framework for general-purpose Web application development because:
-    - It features a plugin architecture and can be used as starting point for an expanded or modified application. 
-    - A Model View Controller (MVC) design pattern of the core (back-end) and GUI (front-end) plugins allows data-logger to be easily modified or expanded to a general-purpose application (in a separate plugin).
-    - The use of [flask-sqlalchemy](https://flask-sqlalchemy.palletsprojects.com/) Object Relational Mapping (ORM) allows for object-oriented database-independent queries without SQL (configured from the store plugin).
-    - The use of [Connexion](https://github.com/zalando/connexion) allows for API deployment from an OpenAPI/Swagger specification in the core plugin.
 
 ## Installation (Work In Progress, use github installation)
 
@@ -44,7 +39,7 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > pip install -r requirements.txt
 4. Install python package:
 > python setup.py install
-5. Create a test database (use .\scrips\migrate.bat on windows):
+5. Create a test database (use .\scripts\migrate.bat on windows):
 > ./scripts/migrate.sh
 6. (Optional) Perform tests:
 > python setup.py test
@@ -58,11 +53,11 @@ For ease of use, a script for setting the environment variables and executing th
 
 * For Linux and Mac:
 
-> data_logger.sh
+> ./data_logger.sh
 
 * For Windows:
 
-> data_logger.bat
+> .\data_logger.bat
 
 ## Online documentation 
 
