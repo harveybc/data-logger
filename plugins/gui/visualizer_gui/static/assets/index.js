@@ -39,7 +39,7 @@ export default {
         // returns the máximum value for a given table and column for the processes of the current user
         user_column_max(username, table, column) {
             // use the result of api request
-            axios.get('/column_max', {
+            axios.get('/user_column_max', {
               //table: table,
               //column: column
               params :{
@@ -60,7 +60,7 @@ export default {
         // returns the number of users for the processes of the user
         process_count_users() {
           // use the result of api request
-          axios.get('/count_rows', {
+          axios.get('/process_count_users', {
               table: table
             })
             .then((response) => {
@@ -74,7 +74,7 @@ export default {
         // returns the number of processes of the current user
         process_count() {
           // use the result of api request
-          axios.get('/count_rows', {
+          axios.get('/process_count', {
               table: table
             })
             .then((response) => {
