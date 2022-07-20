@@ -12,7 +12,7 @@ export default {
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
         max_training_mse(){
             // use the response of api request
-            axios.get('/max_training_mse', {
+            axios.get('/min_training_mse', {
               params :{}
             })
             .then((response) => {
@@ -25,7 +25,7 @@ export default {
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
         max_validation_mse(){
           // use the response of api request
-          axios.get('/max_validation_mse', {
+          axios.get('/min_validation_mse', {
             params :{}
           })
           .then((response) => {
