@@ -69,10 +69,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
         return results
 
-    @bp.route("/processes")
+    @bp.route("/min_training_mse")
     @login_required
-    def process_index():
-        """ Shows the processes index."""
+    def min_training_mse():
+        """ returns the fe_config.id for the minimum fe_training_error.mse for the current process"""
+        # TODO:  use visualizer plugin function instead of store ep function if possible
         process_list = current_app.config['FE'].ep_input.get_processes(current_user.id)
         return render_template("/process/index.html", process_list = process_list)
 

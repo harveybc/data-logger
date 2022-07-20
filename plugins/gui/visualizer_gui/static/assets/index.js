@@ -10,7 +10,7 @@ export default {
     }, 
     methods: {
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
-        max_training_mse(){
+        min_training_mse(){
             // use the response of api request
             axios.get('/min_training_mse', {
               params :{}
@@ -23,7 +23,7 @@ export default {
             });        
         },
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
-        max_validation_mse(){
+        min_validation_mse(){
           // use the response of api request
           axios.get('/min_validation_mse', {
             params :{}
@@ -35,18 +35,16 @@ export default {
             return 0;
           });
         },
-        
         // returns the máximum value for a given table and column for the processes of the current user
         user_column_max(username, table, column) {
             // use the result of api request
             axios.get('/user_column_max', {
               //table: table,
               //column: column
-              params :{
+              params : {
                 table: 'fe_training_error',
                 column: 'mse'
-              }
-              
+              }    
             })
             .then((response) => {
               return response;
