@@ -15,14 +15,9 @@ The data structures used can be divided in two groups:
 1.	Fixed data structures: they are the following tables: users, authorization, processes and log. Which provide AAA to the API and they are defined in the core plugin.
 2.	Configurable data structures: they are defined in the store plugin configuration file (config_store.json), which contains a variable number of data-generating processes (groups of tables) and a variable number of tables per process, the created tables can be accessed via the "/process" route endpoints of the API, this is used to generate the GUI for visualizing the data but also can be used for any general-purpose Web application via a new gui plugin. 
 
-The system has a plugin architecture that allows loading of plugins of three types configured from json files in the root directory:  
-- Store plugin (config_store.json): Configures the initial data structure and a custom database engine to save all the data from all processes (default: sqlite_store).
-- Core plugin (config_core.json): Configures the API endpoints and provides AAA , default: basic_auth_core, used [APIC:](https://github.com/bjdash/apic) design, documentation and testing tool for Swagger 2.0 API specification.
-- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required, default: visualizer_gui that auto generate plots and uses [AdminLTE:](https://github.com/ColorlibHQ/AdminLTE) Web dashboard based on Bootstrap 4.
-
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
-- Event Logging: can be used for logging software systems events, parameters and responses/payloads such as in distributed machine learning model parameter optimization experiments.
+- Event Logging: can be used for logging software systems events, parameters and responses/payloads such as in distributed machine learning model optimization experiments.
 
 ## Installation (Work In Progress, use github installation)
 
@@ -35,15 +30,17 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
 > cd data_logger
-3. Install requirements:
+3. Update pip
+> python -m pip install --upgrade pip
+4. Install requirements:
 > pip install -r requirements.txt
-4. Install python package:
+5. Install python package:
 > python setup.py install
-5. Create a test database (use .\scripts\migrate.bat on windows):
+6. Create a test database (use .\scripts\migrate.bat on windows):
 > ./scripts/migrate.sh
-6. (Optional) Perform tests:
+7. (Optional) Perform tests:
 > python setup.py test
-7. (Optional) Generate Sphinx Documentation:
+8. (Optional) Generate Sphinx Documentation:
 > python setup.py docs
 
 
@@ -76,6 +73,11 @@ The Web interface configured in the gui plugin can be accessed by default at:
 The default port can be modified by setting the FLASK_RUN_PORT environment variable or bly using the --port argument to the flask run command.
 
 A default user is created with the username: "test", and password: "pass", please delete this user once you have created another one.
+
+The system has a plugin architecture that allows loading of plugins of three types configured from json files in the root directory:  
+- Store plugin (config_store.json): Configures the initial data structure and a custom database engine to save all the data from all processes (default: sqlite_store).
+- Core plugin (config_core.json): Configures the API endpoints and provides AAA , default: basic_auth_core, used [APIC:](https://github.com/bjdash/apic) design, documentation and testing tool for Swagger 2.0 API specification.
+- GUI plugin (config_gui.json): Configures a graphical user interface, can be disabled if not required, default: visualizer_gui that auto generate plots and uses [AdminLTE:](https://github.com/ColorlibHQ/AdminLTE) Web dashboard based on Bootstrap 4.
 
 ### Plugins Configuration Files (WORK IN PROGRESS)
 
