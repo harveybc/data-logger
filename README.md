@@ -17,8 +17,7 @@ The data structures used can be divided in two groups:
 
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
-- Event Logging: can be used for logging software systems events, parameters and responses/payloads such as in distributed machine learning model parameter optimization experiments.
-
+- Event Logging: can be used for logging software systems events, parameters and responses/payloads such as in distributed machine learning model optimization experiments.
 
 ## Installation (Work In Progress, use github installation)
 
@@ -31,15 +30,17 @@ On Linux use the .sh scripts, on windows use the .bat scripts.
 > git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
 > cd data_logger
-3. Install requirements:
+3. Update pip
+> python -m pip install --upgrade pip
+4. Install requirements:
 > pip install -r requirements.txt
-4. Install python package:
+5. Install python package:
 > python setup.py install
-5. Create a test database (use .\scripts\migrate.bat on windows):
+6. Create a test database (use .\scripts\migrate.bat on windows):
 > ./scripts/migrate.sh
-6. (Optional) Perform tests:
+7. (Optional) Perform tests:
 > python setup.py test
-7. (Optional) Generate Sphinx Documentation:
+8. (Optional) Generate Sphinx Documentation:
 > python setup.py docs
 
 
