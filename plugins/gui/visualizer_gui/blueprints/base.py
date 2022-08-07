@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from flask import Blueprint, jsonify, render_template, redirect, request, url_for
+from flask import Blueprint, jsonify, render_template, redirect, request, url_for, send_from_directory
 from flask_login import (
     current_user,
     login_required,
@@ -14,6 +14,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User
+    ## static assets for AdminLTE
+    @bp.route('/static/<path:path>')
+    def assets(path):
+        return send_from_directory(plugin_folder+"/static", path)
 
     ## Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
