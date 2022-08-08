@@ -9,11 +9,11 @@ Flexible RESTful API framework with configurable data structure, storage and aut
 
 ## Description
 
-REST API framework that provides Authentication, Authorization and Accounting (AAA). The base data-logger API is expandable by using a plugin architecture and uses a json-configurable database engine and data structure that allows to auto-generate a Web GUI from the data structure. The GUI allows visualization of timeseries or statistical data and have dialogs for creating new data or editing current data (i.e. Configuration of control parameters of an IoT device). 
+REST API framework that provides Authentication, Authorization and Accounting (AAA). It uses a json-configurable database engine and data structure that allows to auto-generate a Web GUI from the data structure. The generated GUI allows visualization of timeseries or statistical data and have dialogs for creating new data or editing current data (i.e. Configuration of control parameters of an IoT device). 
 
 The data structures used can be divided in two groups: 
 1.	Fixed data structures: they are the following tables: users, authorization, processes and log. Which provide AAA to the API and they are defined in the core plugin.
-2.	Configurable data structures: they are defined in the store plugin configuration file (config_store.json), which contains a variable number of data-generating processes (groups of tables) and a variable number of tables per process, the created tables can be accessed via the "/process" route endpoints of the API, this is used to generate the GUI for visualizing the data but also can be used for any general-purpose Web application via a new gui plugin. 
+2.	Configurable data structures: they are defined in the store plugin configuration file (config_store.json), which contains a variable number of data-generating processes (groups of tables) and a variable number of tables per process. This structure is used to generate the database, the API endpoints and the GUI for visualizing the data. 
 
 This system can be useful for:
 - IoT (Internet of Things): because it requires zero coding in exchange for the configuration of the data to be logged to auto-generate tables with timestamping and a Web GUI for visualizing or editing the data.
@@ -21,10 +21,10 @@ This system can be useful for:
 
 ## Installation (Work In Progress, use github installation)
 
-The installation can be made by clonning the github repo and manually installing it as in the following instructions.
+The installation is made by clonning the github repo and manually installing it as in the following instructions.
 
 ### Github Installation Steps
-On Linux use the .sh scripts, on windows use the .bat scripts.
+On Linux use the .sh scripts, on Windows use the .bat scripts.
 
 1. Clone the GithHub repo:   
 > git clone https://github.com/harveybc/data-logger
