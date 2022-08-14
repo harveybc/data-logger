@@ -15,12 +15,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User
     ## static assets for AdminLTE
-    @bp.route('/static/<path:patsatic_route: "+h>')
-    def assets(pat:
-        _logger.info("satic_route: "+plugin_folder+"/static")
-        return send_from_directory(plugin_folder+"/static",  path)
+    @bp.route('/static/<path:"static folder: "+path>')
+    def assets(path):
+        _logger.info("static folder: "+plugin_folder+"/static"+path)
+        return send_from_directory(plugin_folder"/static",  path)
 
-    ## Login & Registration
+    ##Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
     def login():
         login_form = LoginForm(request.form)
