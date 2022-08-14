@@ -18,7 +18,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route('/static/<path:"static folder: "+path>')
     def assets(path):
         _logger.info("static folder: "+plugin_folder+"/static"+path)
-        return send_from_directory(plugin_folder"/static",  path)
+        return send_from_directory(plugin_folder+"/static",  path)
 
     ##Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
