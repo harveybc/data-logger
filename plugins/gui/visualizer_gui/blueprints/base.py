@@ -21,8 +21,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
    # TODO: To use some minLTE package instead of linkink content in gui
     @bp.route('/static/assets/<path:path>')
     def adminlte_assets(path):
-        _logger.info("static AdminLTE assets folder: "+plugin_folder+"/static/assets/"+path)
-        return send_from_directory(plugin_folder+"/static/assets",  path)
+        _logger.info("static AdminLTE assets folder: "+plugin_folder+"/static/adminlte_assets/"+path)
+        return send_from_directory(plugin_folder+"/static/adminlte_assets",  path)
 
    ### static javascript files for gui plugin blueprints
     @bp.route('/static/js/<path:path>')
