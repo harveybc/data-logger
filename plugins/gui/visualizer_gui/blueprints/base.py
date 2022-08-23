@@ -9,6 +9,8 @@ from flask_login import (
 from app.app import db, login_manager
 from .forms import LoginForm, CreateAccountForm
 from app.util import verify_pass
+import logging
+_logger = logging.getLogger(__name__)
 
 def new_bp(plugin_folder, core_ep, store_ep, db):
     
