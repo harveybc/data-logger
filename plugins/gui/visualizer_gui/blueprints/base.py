@@ -16,12 +16,19 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User
-   # ## static assets for AdminLTE
+
+   ### static assets for AdminLTE
    # TODO: To use some minLTE package instead of linkink content in gui
     @bp.route('/static/assets/<path:path>')
-    def assets(path):
-        _logger.info("static folder: "+plugin_folder+"/static/assets/"+path)
+    def adminlte_assets(path):
+        _logger.info("static AdminLTE assets folder: "+plugin_folder+"/static/assets/"+path)
         return send_from_directory(plugin_folder+"/static/assets",  path)
+
+   ### static javascript files for gui plugin blueprints
+    @bp.route('/static/js/<path:path>')
+    def js_assets(path):
+        _logger.info("static gui js folder: "+plugin_folder+"/static/js/"+path)
+        return send_from_directory(plugin_folder+"/static/js",  path)
 
     ##Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
