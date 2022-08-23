@@ -16,10 +16,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     User = core_ep.User
    # ## static assets for AdminLTE
    # TODO: To use some minLTE package instead of linkink content in gui
-
-   # def assets(path):
-   #     _logger.info("static folder: "+plugin_folder+"/static"+path)
-   #     return send_from_directory(plugin_folder+"/static",  path)
+    @bp.route('/static/assets/<path:path>')
+    def assets(path):
+        _logger.info("static folder: "+plugin_folder+"/static/assets/"+path)
+        return send_from_directory(plugin_folder+"/static/assets/",  path)
 
     ##Login & Registration
     @bp.route('/login', methods=['GET', 'POST'])
