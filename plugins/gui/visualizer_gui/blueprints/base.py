@@ -110,19 +110,18 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
 
     @login_manager.unauthorized_handler
     def unauthorized_handler():
-        return render_template(plugin_folder+"/static/templates/page-403.html"), 403
+        return render_template("error_pages/page-403.html"), 403
 
     @bp.errorhandler(403)
     def access_forbidden(error):
-        return render_template(plugin_folder+'/static/templates/page-403.html'), 403
+        return render_template('error_pages/page-403.html'), 403
 
     @bp.errorhandler(404)
     def not_found_error(error):
-        #TODO: test this path in linux because of the backslash requirement on windows
-        return render_template(plugin_folder+"\\static\\templates\\page-404.html"), 404
+        return render_template("error_pages/page-404.html"), 404
 
     @bp.errorhandler(500)
     def internal_error(error):
-        return render_template(plugin_folder+'/static/templates/page-500.html'), 500
+        return render_template('error_pages/page-500.html'), 500
 
     return bp
