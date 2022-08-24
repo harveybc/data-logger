@@ -118,7 +118,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
 
     @bp.errorhandler(404)
     def not_found_error(error):
-        return render_template(plugin_folder+"/static/templates/page-404.html"), 404
+        #TODO: test this path in linux because of the backslash requirement on windows
+        return render_template(plugin_folder+"\\static\\templates\\page-404.html"), 404
 
     @bp.errorhandler(500)
     def internal_error(error):
