@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 class VisualizerGui(): 
     """ gui plugin for the DataLogger class """
-
+    
     def __init__(self, conf):
         """ assign configuration params as class attributes """
         # Insert your plugin initialization code here.
