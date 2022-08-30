@@ -20,7 +20,7 @@
                         "columns": [
                             {
                                 "name" : "test_column",
-                                "col_type": "Integer"
+                                "col_type": "C"
                             }
                         ]
                     }
@@ -34,7 +34,7 @@
                         "columns": [
                             {
                                 "name": "max_iterations",
-                                "col_type": "ds" 
+                                "col_type": "Integer" 
                             },
                             { "name": "min_mse" },
                             { "name": "min_mae" },

@@ -47,7 +47,7 @@ class BasicAuthCore():
 
     def seed_init_data(self, app, db):
         """ Populate starting user and process tables
-        Args:
+        Args: 
         app (Flask): the current flask app object.
         db  (SQLAlchemy) : SQLAlchemy object
         """ 
