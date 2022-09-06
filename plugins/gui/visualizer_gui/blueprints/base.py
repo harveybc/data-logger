@@ -26,6 +26,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
 
     ### statiC favicon
     @bp.route('/<path:path>/favicon.ico')
+    @bp.route('/favicon.ico')
     def favicon(path):
         #_logger.info("static favicon folder: "+plugin_folder+"/static/favicon/"+path)
         return send_from_directory(plugin_folder+"/static/favicon.ico",  path)
