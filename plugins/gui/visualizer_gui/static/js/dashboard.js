@@ -13,9 +13,11 @@ export default {
         min_training_mse(){
             // use the response of api request
             axios.get('/min_training_mse', {
-              auth: {
-                username: 'test',
-                password: 'pass'
+              params :{
+                auth: {
+                  username: 'test',
+                  password: 'pass'
+                }
               }
             })
             .then((response) => {
