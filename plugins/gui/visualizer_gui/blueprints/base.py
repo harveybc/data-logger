@@ -24,7 +24,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         #_logger.info("static AdminLTE assets folder: "+plugin_folder+"/static/adminlte_assets/"+path)
         return send_from_directory(plugin_folder+"/static/adminlte_assets",  path)
 
-    ### statiC favicon
+    ### static favicon
     @bp.route('/<path:path>/favicon.ico')
     @bp.route('/favicon.ico')
     def favicon(path):
