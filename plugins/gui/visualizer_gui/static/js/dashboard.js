@@ -13,7 +13,12 @@ export default {
         min_training_mse(){
             // use the response of api request
             axios.get('/min_training_mse', {
-              params :{}
+              params :{
+                auth: {
+                  username: 'test',
+                  password: 'pass'
+                }
+              }
             })
             .then((response) => {
               return response;
@@ -27,10 +32,6 @@ export default {
           // use the response of api request
           axios.get('/min_validation_mse', {
             params :{
-              auth: {
-                username: 'test',
-                password: 'pass'
-              }
             }
           })
           .then((response) => {
