@@ -26,7 +26,12 @@ export default {
         min_validation_mse(){
           // use the response of api request
           axios.get('/min_validation_mse', {
-            params :{}
+            params :{
+              auth: {
+                username: 'test',
+                password: 'pass'
+              }
+            }
           })
           .then((response) => {
             return response;
