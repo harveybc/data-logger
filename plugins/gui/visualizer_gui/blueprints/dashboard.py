@@ -18,6 +18,7 @@ from flask import jsonify
 from app.app import load_plugin_config
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func
 
 Base = automap_base()
 
