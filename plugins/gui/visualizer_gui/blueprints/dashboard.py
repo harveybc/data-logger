@@ -19,6 +19,7 @@ from app.app import load_plugin_config
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import func
+import json
 
 Base = automap_base()
 
