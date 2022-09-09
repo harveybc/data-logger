@@ -74,8 +74,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route("/min_training_mse")
     @login_required
     def min_training_mse():
-        """ returns the fe_config.id for the minimum fe_training_error.mse for the current process"""
-        # TODO: search for minimum mse in a joint query from me and all people belonging to the same process?, view user and process structures.
+        """ Returns the minimum training mse of the fe_training_error table. """
 
         # table base class
         Base.prepare(db.engine, reflect=False)
