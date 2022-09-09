@@ -26,6 +26,7 @@ class Authorization(db.Model, BaseModel):
     table_crud = Column(Boolean)
     process_crud = Column(Boolean)
     priority=Column(Integer, default=0)
+    created=Column(String, default=str(datetime.now()))
     
     # relationships
     users = relationship("User", back_populates='authorizations')
