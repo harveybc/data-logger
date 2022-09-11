@@ -14,11 +14,11 @@ export default {
           var username = "test"
           var password="pass"
           const buffer_auth = username + ':' + password;
-          const base64 = buffer_auth.toString('base64');
+          const b64 = buffer_auth.toString('base64');
           const axios_instance = axios.create({
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `Basic ${base64data}`,
+                  'Authorization': `Basic ${b64}`,
               }
           });
             // use the response of api request
