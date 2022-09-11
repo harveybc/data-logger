@@ -11,8 +11,8 @@ export default {
     methods: {
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
         min_training_mse(){
-          username = "test"
-          password="pass"
+          var username = "test"
+          var password="pass"
           const buffer_auth = Buffer.from(username + ':' + password);
           const base64 = buffer_auth.toString('base64');
           const axios_instance = axios.create({
