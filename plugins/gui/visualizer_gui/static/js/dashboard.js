@@ -9,18 +9,22 @@ export default {
         }
     }, 
     methods: {
-        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
-        min_training_mse(){
+        //creates an axios instance for basic authentication
+        createAxiosInstance() {
           var username = "test"
           var password="pass"
           const buffer_auth = buffer.Buffer.from(username + ':' + password);
           const b64 = buffer_auth.toString('base64');
-          const axios_instance = axios.create({
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Basic ${b64}`,
-              }
+          return axios.create({
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${b64}`,
+            }
           });
+        },
+        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
+        min_training_mse(){
+            const axios_instance = this.createAxiosInstance();
             // use the response of api request
             axios_instance.get('/min_training_mse')
             .then((response) => {
