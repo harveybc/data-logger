@@ -13,7 +13,7 @@ export default {
         min_training_mse(){
           var username = "test"
           var password="pass"
-          const buffer_auth = username + ':' + password;
+          const buffer_auth = buffer.Buffer.from(username + ':' + password);
           const b64 = buffer_auth.toString('base64');
           const axios_instance = axios.create({
               headers: {
