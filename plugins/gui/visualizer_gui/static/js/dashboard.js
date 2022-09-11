@@ -11,15 +11,18 @@ export default {
     methods: {
         // returns the fe_config.id for the minimum fe_training_error.mse for the current process
         min_training_mse(){
-            // use the response of api request
-            axios.get('/min_training_mse', {
-              params :{
-                auth: {
-                  username: 'test',
-                  password: 'pass'
-                }
+          username = "test"
+          password="pass"
+          const buffer_auth = Buffer.from(username + ':' + password);
+          const base64 = buffer_auth.toString('base64');
+          const axios_instance = axios.create({
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${base64data}`,
               }
-            })
+          });
+            // use the response of api request
+            axios_instance.get('/min_training_mse')
             .then((response) => {
               return response;
             }, (error) => {
