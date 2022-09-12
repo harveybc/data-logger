@@ -9,10 +9,8 @@ export default {
         }
     }, 
     methods: {
-        //creates an axios instance for basic authentication
-        createAxiosInstance() {
-          var username = "test"
-          var password="pass"
+        // returns an axios instance for basic authentication
+        axiosBasicAuth(username, password) {
           const buffer_auth = buffer.Buffer.from(username + ':' + password);
           const b64 = buffer_auth.toString('base64');
           return axios.create({
@@ -22,9 +20,10 @@ export default {
             }
           });
         },
-        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
+        // returns the minimum mse with an active config_id (do not include stopped processes)
+        // TODO: create a min mse trining and validation functions for inactive config_id
         min_training_mse(){
-            const axios_instance = this.createAxiosInstance();
+            const axios_instance = this.axiosBasicAuth("test", "pass");
             // use the response of api request
             axios_instance.get('/min_training_mse')
             .then((response) => {
