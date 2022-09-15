@@ -3,14 +3,14 @@
     "gui_plugin_config": {
         "dashboard": {
             "title": "Dashboard",
-            "box_0_title": "Training MSE",
-            "box_1_title": "Validation MSE",
-            "box_2_title": "Users",
-            "box_3_title": "My Processes",
-            "box_0_value": "min_training_mse()",
-            "box_1_value": "min_validation_mse()",
-            "box_2_value": "process_count_users()",
-            "box_3_value": "process_count()",
+            "box_0_title": "Best Online",
+            "box_1_title": "Training MSE",
+            "box_2_title": "Best Stored",
+            "box_3_title": "Validation MSE",
+            "box_0_value": "best_online()",
+            "box_1_value": "min_training_mse()",
+            "box_2_value": "best_config()",
+            "box_3_value": "min_validation_mse()",
             "rt_plot": {
                 "title": "Online Training MSE",
                 "height": "300px",
