@@ -77,13 +77,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route("/min_training_mse")
     @login_required
     def min_training_mse():
-        """ Returns the minimum training mse of the fe_training_error table. """
-
+        """ Returns the minimum training mse of the fe_training_error table that has an active config_id. """
         # table base class
         Base.prepare(db.engine, reflect=False)
         #perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(func.min(Base.classes.fe_training_error.mse)) 
+            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)

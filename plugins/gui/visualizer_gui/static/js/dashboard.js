@@ -21,7 +21,8 @@ export default {
           });
         },
         // returns the minimum mse with an active config_id (do not include stopped processes)
-        // TODO: create a min mse trining and validation functions for inactive config_id
+        // TODO: create a min mse training and validation functions for inactive config_id                                                                                                                                                                                                                                                                                                                                              
+
         min_training_mse(){
             const axios_instance = this.axiosBasicAuth("test", "pass");
             // use the response of api request
