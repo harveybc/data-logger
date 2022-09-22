@@ -41,7 +41,7 @@ export default {
         },
         // call request that returns the best mse from table fe_training_error that has config.active == true
         min_training_mse(){
-            const axios_instance = this.axiosBasicAuth("test", "pass");
+          axios_instance = axios_auth_instance();
             // use the response of api request
             axios_instance.get('/min_training_mse')
             .then((response) => {
@@ -51,13 +51,12 @@ export default {
               return 0;
             });        
         },
-        // returns the fe_config.id for the minimum fe_training_error.mse for the current process
-        min_validation_mse(){
-          // use the response of api request
-          axios.get('/min_validation_mse', {
-            params :{
-            }
-          })
+        // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
+        best_config() {
+          // setup authentication
+          axios_instance = axios_auth_instance();
+          // use the result of api request
+          axios_instance.get('/best_config')
           .then((response) => {
             return response;
           }, (error) => {
@@ -65,51 +64,18 @@ export default {
             return 0;
           });
         },
-       
-        // returns the number of users for the processes of the user
-        process_count_users() {
-          // use the result of api request
-          axios.get('/process_count_users', {
-              table: table
-            })
-            .then((response) => {
-              return response;
-              //console.log(response);
-            }, (error) => {
-              console.log(error);
-              return 0;
-            });
-        },
-        // returns the number of processes of the current user
-        process_count() {
-          // use the result of api request
-          axios.get('/process_count', {
-              table: table
-            })
-            .then((response) => {
-              return response;
-              //console.log(response);
-            }, (error) => {
-              console.log(error);
-              return 0;
-            });
-        },
-
-        // returns the number of rows for a given table and column
-        count_rows(table) {
-            // use the result of api request
-            axios.get('/count_rows', {
-                table: table
-              })
-              .then((response) => {
-                return response;
-                //console.log(response);
-              }, (error) => {
-                console.log(error);
-                return 0;
-              });
-        },
-        
+        // call request that returns the best mse from table fe_validation_error that has config.active == false
+        min_validation_mse(){
+          axios_instance = axios_auth_instance();
+          // use the response of api request
+          axios_instance.get('/min_validation_mse')
+          .then((response) => {
+            return response;
+          }, (error) => {
+            console.log(error);
+            return 0;
+          });        
+      },
         // define starting field values
         field_start_values(){
                 return {
