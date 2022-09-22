@@ -16,6 +16,12 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func
+import json
+
+Base = automap_base()
 
 def new_bp(plugin_folder, core_ep, store_ep, db):
 
@@ -57,7 +63,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/index.html", p_config = p_config_gui)
 
-
     @bp.route("/<int:pid>/trainingpoints")
     def get_points(pid):
         """Get the points to plot from the training_progress table and return them as JSON."""
@@ -72,12 +77,18 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route("/min_training_mse")
     @login_required
     def min_training_mse():
-        """ returns the fe_config.id for the minimum fe_training_error.mse for the current process"""
-        # TODO:  use visualizer plugin function instead of store ep function if possible
-        db = get_db()
-        # TODO: create an automap model for the training_progress table
-        process_list = current_app.config['FE'].ep_input.get_processes(current_user.id)
-        return render_template("/process/index.html", process_list = process_list)
+        """ Returns the minimum training mse of the fe_training_error table that has an active config_id. """
+        # table base class
+        Base.prepare(db.engine, reflect=False)
+        #perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        print(str(res))
+        return json.dumps(str(res.first()))
 
     @bp.route("/processes")
     @login_required
