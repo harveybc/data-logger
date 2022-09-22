@@ -20,9 +20,26 @@ export default {
             }
           });
         },
-        // returns the minimum mse with an active config_id (do not include stopped processes)
-        // TODO: create a min mse training and validation functions for inactive config_id                                                                                                                                                                                                                                                                                                                                              
-
+        // returns an axions instance with configured basic authentication
+        // TODO: change to use current user
+        axios_auth_instance(){
+          const axios_instance = this.axiosBasicAuth("test", "pass");
+          return axios_instance; 
+        },
+        // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+        best_online() {
+          // setup authentication
+          axios_instance = axios_auth_instance();
+          // use the result of api request
+          axios_instance.get('/best_online')
+          .then((response) => {
+            return response;
+          }, (error) => {
+            console.log(error);
+            return 0;
+          });
+        },
+        // call request that returns the best mse from table fe_training_error that has config.active == true
         min_training_mse(){
             const axios_instance = this.axiosBasicAuth("test", "pass");
             // use the response of api request
@@ -48,26 +65,7 @@ export default {
             return 0;
           });
         },
-        // returns the máximum value for a given table and column for the processes of the current user
-        user_column_max(username, table, column) {
-            // use the result of api request
-            axios.get('/user_column_max', {
-              //table: table,
-              //column: column
-              params : {
-                table: 'fe_training_error',
-                column: 'mse'
-              }    
-            })
-            .then((response) => {
-              return response;
-              //console.log(response);
-            }, (error) => {
-              console.log(error);
-              return 0;
-            });
-          
-        },
+       
         // returns the number of users for the processes of the user
         process_count_users() {
           // use the result of api request
