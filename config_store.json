@@ -92,7 +92,7 @@
                             { "name" : "mae" },
                             { "name" : "r2" },
                             {
-                                "name" : "control_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -104,7 +104,7 @@
                             { "name" : "mae" },
                             { "name" : "r2" },
                             {
-                                "name" : "control_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                         ]
@@ -115,7 +115,7 @@
                             { "name" : "original" },
                             { "name" : "predicted" },
                             { 
-                                "name" : "control_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                             
