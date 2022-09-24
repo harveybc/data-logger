@@ -63,32 +63,27 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/index.html", p_config = p_config_gui)
 
-    @bp.route("/<int:pid>/trainingpoints")
-    def get_points(pid):
-        """Get the points to plot from the training_progress table and return them as JSON."""
-        xy_points = get_xy_training(pid)
-        return jsonify(xy_points)
-
-    def get_xy_training(pid):
-        """ Returns the points to plot from the training_progress table. """
-        results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
-        return results
-
-    @bp.route("/min_training_mse")
+    # returns the config id for the best mse from table fe_training_error that has config.active == true
+    @bp.route("/best_online")
     @login_required
     def min_training_mse():
         """ Returns the minimum training mse of the fe_training_error table that has an active config_id. """
         # table base class
         Base.prepare(db.engine, reflect=False)
-        #perform query, the column classs names are configured in config_store.json
+        # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
+            # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
+            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).first()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
         print(str(res))
-        return json.dumps(str(res.first()))
+           
+    def get_xy_training(pid):
+        """ Returns the points to plot from the training_progress table. """
+        results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
+        return results
 
     @bp.route("/processes")
     @login_required
