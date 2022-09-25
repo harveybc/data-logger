@@ -54,10 +54,10 @@ class BasicAuthCore():
         _logger.info("Seeding initial data")
         from .models.seeds.user import seed as user_seed
         from .models.seeds.process_table import seed as process_table_seed
-
         user_seed(app,db)
         # seeds training_error data
         process_table_seed(app,db, "fe_training_error")
+        process_table_seed(app,db, "fe_config")
         
 
     def create_process(self, app, db, process):
