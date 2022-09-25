@@ -18,7 +18,7 @@ from flask import jsonify
 from app.app import load_plugin_config
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func
+from sqlalchemy import func, asc
 import json
 
 Base = automap_base()
@@ -73,12 +73,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         # perform query, the column classs names are configured in config_store.json
         try:
             # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
-            res = db.session.query(Base.classes.fe_training_error.config_id, func.min(Base.classes.fe_training_error.mse).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).all())
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
         print(str(res))
+        return jsonify(res["config_id"])
            
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
