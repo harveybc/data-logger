@@ -73,7 +73,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         # perform query, the column classs names are configured in config_store.json
         try:
             # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
-            res = db.session.query(Base.classes.fe_training_error.config_id, func.min(Base.classes.fe_training_error.mse)).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).all()
+            res = db.session.query(Base.classes.fe_training_error.config_id, func.min(Base.classes.fe_training_error.mse).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).all())
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
