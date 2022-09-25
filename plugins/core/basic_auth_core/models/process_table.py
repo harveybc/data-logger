@@ -40,7 +40,7 @@ class ProcessTable():
             if "unique" not in c: c["unique"] = False
             if "index" not in c: c["index"] = False
             if "default" not in c: c["default"] = {}
-            if "nullable" not in c: c["nullable"] = False
+            if "nullable" not in c: c["nullable"] = True
 
             if "primary_key" in c:
                 if c["primary_key"]:
