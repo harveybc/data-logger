@@ -93,7 +93,9 @@
                             { "name" : "r2" },
                             {
                                 "name" : "config_id",
-                                "col_type" : "Integer"
+                                "col_type" : "Integer",
+                                "foreign_key" : "fe_config.id"
+                                
                             }
                         ]
                     },
