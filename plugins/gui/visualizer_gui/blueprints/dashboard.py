@@ -67,13 +67,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route("/best_online")
     @login_required
     def min_training_mse():
-        """ Returns the minimum training mse of the fe_training_error table that has an active config_id. """
+        """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         # table base class
         Base.prepare(db.engine, reflect=False)
         # perform query, the column classs names are configured in config_store.json
         try:
             # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
-            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).first()
+            res = db.session.query(Base.classes.fe_training_error.config_id, func.min(Base.classes.fe_training_error.mse)).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).all()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
