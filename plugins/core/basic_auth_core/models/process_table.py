@@ -33,14 +33,15 @@ class ProcessTable():
         timestamp_found = False
         id_found = False
         for c in self.columns:
+            # generate the arguments for this column
+            if "col_type" not in c: c["col_type"] = "Float"
+            col_type = self.parse_sqlalchemy_column_type(c["col_type"])
             # assign default values to each column parameter if it does not exist 
             if "unique" not in c: c["unique"] = False
             if "index" not in c: c["index"] = False
             if "default" not in c: c["default"] = {}
             if "nullable" not in c: c["nullable"] = False
-            # generate the arguments for this column
-            if "col_type" not in c: c["col_type"] = "Float"
-            col_type = self.parse_sqlalchemy_column_type(c["col_type"])
+
             if "primary_key" in c:
                 if c["primary_key"]:
                     t_args.append(Column(c["name"], col_type, autoincrement=True, primary_key=c["primary_key"], nullable=False))
