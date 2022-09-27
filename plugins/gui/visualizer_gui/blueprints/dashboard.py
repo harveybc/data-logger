@@ -80,9 +80,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
             print("Error : " , error)
             res = { 'error_ca' : error}
         attr = getattr(res, "config_id")
-        print(str(attr))
-        print(jsonify(str(attr)))
-        return jsonify(str(attr))
+        return attr
            
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
