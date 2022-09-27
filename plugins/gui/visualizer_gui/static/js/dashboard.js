@@ -8,12 +8,22 @@ export default {
             status : 'Halted',
             _best_online: 1,
             _min_training_mse: 0.0,
-            _best_config:
+            _best_config:1,
             _min_validation_mse: 0.0
 
 
         }
     }, 
+    // initialize values
+    created() {
+        //this.get_process_list();
+        //this.get_process();
+        //this.get_status();
+        this._best_online = this.best_online();
+        this._min_training_mse = this.min_training_mse();
+        this._best_config = this.best_config();
+        this._min_validation_mse = this.min_validation_mse();
+    },  
     methods: {
         // returns an axios instance for basic authentication
         axiosBasicAuth(username, password) {
@@ -26,6 +36,7 @@ export default {
             }
           });
         },
+
         // returns an axions instance with configured basic authentication
         // TODO: change to use current user
         axios_auth_instance(){
@@ -93,5 +104,4 @@ export default {
         }
     },
     delimiters: ["|{", "}|"]
-   
 }
