@@ -6,10 +6,10 @@ export default {
             process_list: [0,1,2,3],
             process: 0,
             status : 'Halted',
-            _best_online: 1,
-            _min_training_mse: 0.0,
-            _best_config:1,
-            _min_validation_mse: 0.0
+            best_online_: 1,
+            min_training_mse_: 0.0,
+            best_config_ : 1,
+            min_validation_mse_ : 0.0
 
 
         }
@@ -19,10 +19,10 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        this._best_online = this.best_online();
-        this._min_training_mse = this.min_training_mse();
-        this._best_config = this.best_config();
-        this._min_validation_mse = this.min_validation_mse();
+        this.best_online_ = this.best_online();
+        this.min_training_mse_ = this.min_training_mse();
+        this.best_config_ = this.best_config();
+        this.min_validation_mse_ = this.min_validation_mse();
     },  
     methods: {
         // returns an axios instance for basic authentication
