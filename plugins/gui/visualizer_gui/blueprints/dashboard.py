@@ -16,6 +16,7 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
+from app.util import as_dict
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import func, asc
@@ -78,8 +79,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
-        print(str(res.config_id))
-        return jsonify(str(res.config_id))
+        print(str(as_dict(res.config_id)))
+        return jsonify(as_dict(res.config_id))
            
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
