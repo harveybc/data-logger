@@ -5,7 +5,13 @@ export default {
         return { 
             process_list: [0,1,2,3],
             process: 0,
-            status : 'Halted'
+            status : 'Halted',
+            _best_online: 1,
+            _min_training_mse: 0.0,
+            _best_config:
+            _min_validation_mse: 0.0
+
+
         }
     }, 
     methods: {
