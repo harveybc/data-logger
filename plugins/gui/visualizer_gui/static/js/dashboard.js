@@ -19,7 +19,7 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        this.best_online_ = parseInt(this.best_online());
+        this.best_online_ = this.best_online();
         this.min_training_mse_ = this.min_training_mse();
         this.best_config_ = this.best_config();
         this.min_validation_mse_ = this.min_validation_mse();
