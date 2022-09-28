@@ -51,6 +51,7 @@ export default {
           axios_instance.get('/best_online')
           .then((response) => {
             console.log(response.data);
+            this.best_online_ = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
