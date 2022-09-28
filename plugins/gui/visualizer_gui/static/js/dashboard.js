@@ -50,8 +50,7 @@ export default {
           // use the result of api request
           axios_instance.get('/best_online')
           .then((response) => {
-            console.log(response);
-            return response;
+            return response.dats;
           }, (error) => {
             console.log(error);
             return 0;

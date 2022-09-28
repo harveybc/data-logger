@@ -79,9 +79,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
-        print ("res = ", res)
         attr = getattr(res, "config_id")
-        print ("attr = ", attr)
         return str(attr)
            
     def get_xy_training(pid):
