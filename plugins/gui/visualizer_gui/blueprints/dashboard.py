@@ -85,19 +85,52 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     @bp.route("/best_config")
     @login_required
     def best_config():
-        """ Returns the config id for the best mse from table fe_validation_error that has config.active == true. """
+        """ Returns the config id for the best mse from table fe_validation_error that has config.active == false. """
         # table base class
         Base.prepare(db.engine, reflect=False)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_training_error.mse)).first()
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
         attr = getattr(res, "config_id")
         return str(attr)
+
+    @bp.route("/min_training_mse")
+    @login_required
+    def min_training_mse():
+        """ Returns the best mse from table fe_training_error that has config.active == true. """
+        # table base class
+        Base.prepare(db.engine, reflect=False)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first()
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        attr = getattr(res, "mse")
+        return str(attr)
            
+    @bp.route("/min_validation_mse")
+    @login_required
+    def min_validation_mse():
+        """ Returns the best mse from table fe_validation_error that has config.active == false. """
+        # table base class
+        Base.prepare(db.engine, reflect=False)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first()
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        attr = getattr(res, "mse")
+        return str(attr)
+    
+    
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
         results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
