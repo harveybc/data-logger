@@ -95,7 +95,6 @@
                                 "name" : "config_id",
                                 "col_type" : "Integer",
                                 "foreign_key" : "fe_config.id"
-                                
                             }
                         ]
                     },
@@ -107,7 +106,8 @@
                             { "name" : "r2" },
                             {
                                 "name" : "config_id",
-                                "col_type" : "Integer"
+                                "col_type" : "Integer",
+                                "foreign_key" : "fe_config.id"
                             }
                         ]
                     },
@@ -173,6 +173,23 @@
                                 "col_type" : "Integer"
                             }
                         ]
+                    },
+                    {
+                        "name": "drone_measurements",
+                        "columns": [
+                            ,
+                            {
+                                "name" : "grassland_id",
+                                "col_type" : "Integer",
+                                "foreign_key" : "grasslands.id"
+                            },
+
+                            { "name" : "distance_to_floor" },
+                            { "name" : "distance_to_plant" },
+                            { "name" : "coord_lat" },
+                            { "name" : "coord_long" },
+                            { "name" : "coord_alt" }
+                        ]
                     }
                 ]	
             },
@@ -199,6 +216,8 @@
                             { "name" : "hygrometer" },
                             { "name" : "co2_sensor" },
                             { "name" : "light_sensor" },
+                            { "name" : "barometer" },
+                            
                             {
                                 "name": "station_id",
                                 "col_type": "Integer" 
