@@ -165,10 +165,6 @@
                                 "col_type": "String" 
                             },
                             {
-                                "name": "station_id",
-                                "col_type": "Integer" 
-                            },
-                            {
                                 "name" : "config_id",
                                 "col_type" : "Integer"
                             }
@@ -176,19 +172,21 @@
                     },
                     {
                         "name": "drone_measurements",
-                        "columns": [
-                            ,
+                        "columns": [ 
                             {
                                 "name" : "grassland_id",
                                 "col_type" : "Integer",
                                 "foreign_key" : "grasslands.id"
                             },
-
                             { "name" : "distance_to_floor" },
                             { "name" : "distance_to_plant" },
                             { "name" : "coord_lat" },
                             { "name" : "coord_long" },
-                            { "name" : "coord_alt" }
+                            { "name" : "coord_alt" },
+                            {
+                                "name": "device_id",
+                                "col_type": "Integer" 
+                            }
                         ]
                     }
                 ]	
