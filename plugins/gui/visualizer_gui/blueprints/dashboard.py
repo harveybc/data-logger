@@ -70,7 +70,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     def best_online():
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         # table base class
-        Base.prepare(db.engine, reflect=False)
+        Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
             # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
@@ -87,7 +87,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     def best_config():
         """ Returns the config id for the best mse from table fe_validation_error that has config.active == false. """
         # table base class
-        Base.prepare(db.engine, reflect=False)
+        Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
@@ -103,7 +103,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     def min_training_mse():
         """ Returns the best mse from table fe_training_error that has config.active == true. """
         # table base class
-        Base.prepare(db.engine, reflect=False)
+        Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
@@ -119,7 +119,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     def min_validation_mse():
         """ Returns the best mse from table fe_validation_error that has config.active == false. """
         # table base class
-        Base.prepare(db.engine, reflect=False)
+        Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
