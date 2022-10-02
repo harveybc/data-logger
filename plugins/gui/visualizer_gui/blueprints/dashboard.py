@@ -33,7 +33,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     #@login_required
     def index():
         # read the data to be visualized using the using the Feature extractor instance, preinitialized in __init__.py with input and output plugins entry points.
-        # TODO: replace 0 in vis_data by process_id, obtained as the first process_id belonging to the current user.    
+        # TODO: replace 0 in vis_data by process_id, obtained as the first_or_404 process_id belonging to the current user.    
         # vis_data = current_app.config['FE'].ep_input.load_data(current_app.config['P_CONFIG'], 0)
         box= []
         #print("user_id = ", current_user.id)
@@ -74,7 +74,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         # perform query, the column classs names are configured in config_store.json
         try:
             # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
-            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first()
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
@@ -90,7 +90,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         Base.prepare(db.engine, reflect=False)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first()
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
@@ -106,7 +106,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         Base.prepare(db.engine, reflect=False)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first()
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
@@ -122,7 +122,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         Base.prepare(db.engine, reflect=False)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first()
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
