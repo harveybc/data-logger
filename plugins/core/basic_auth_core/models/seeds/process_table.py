@@ -27,8 +27,8 @@ def seed(app, db, table_name):
                 db.session.commit()
                 _logger.info("fe_training_error table seeded")        
             elif table_name == "fe_config":
-                tmp0 =  table_base(id=0, active=True)
-                tmp1 =  table_base(id=1, active=False)
+                tmp0 =  table_base(active=True)
+                tmp1 =  table_base( active=False)
                 db.session.add(tmp0)
                 db.session.add(tmp1)
                 db.session.commit()
