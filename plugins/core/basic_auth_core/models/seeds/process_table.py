@@ -18,9 +18,9 @@ def seed(app, db, table_name):
         # perform query
         try:
             if table_name == "fe_training_error":
-                tmp0 =  table_base(mse=0.540289623, mae=-0.909284882, r2=0.28373445, config_id=0)
-                tmp1 =  table_base(mse=0.453582689, mae=-0.808478663, r2=0.708722942, config_id=0)
-                tmp2 =  table_base(mse=0.540289623, mae=-0.675440952, r2=0.960191341, config_id=0)
+                tmp0 =  table_base(mse=0.540289623, mae=-0.909284882, r2=0.28373445, config_id=1)
+                tmp1 =  table_base(mse=0.453582689, mae=-0.808478663, r2=0.708722942, config_id=1)
+                tmp2 =  table_base(mse=0.540289623, mae=-0.675440952, r2=0.960191341, config_id=1)
                 db.session.add(tmp0)
                 db.session.add(tmp1)
                 db.session.add(tmp2)
@@ -34,9 +34,9 @@ def seed(app, db, table_name):
                 db.session.commit()
                 _logger.info("fe_config table seeded")
             elif table_name == "fe_validation_error":
-                tmp0 =  table_base(mse=0.540289623, mae=-0.909284882, r2=0.28373445, config_id=1)
-                tmp1 =  table_base(mse=0.453582689, mae=-0.808478663, r2=0.708722942, config_id=1)
-                tmp2 =  table_base(mse=0.540289623, mae=-0.675440952, r2=0.960191341, config_id=1)
+                tmp0 =  table_base(mse=0.540289623, mae=-0.909284882, r2=0.28373445, config_id=2)
+                tmp1 =  table_base(mse=0.453582689, mae=-0.808478663, r2=0.708722942, config_id=2)
+                tmp2 =  table_base(mse=0.540289623, mae=-0.675440952, r2=0.960191341, config_id=2)
                 db.session.add(tmp0)
                 db.session.add(tmp1)
                 db.session.add(tmp2)
