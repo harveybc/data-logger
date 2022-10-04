@@ -31,6 +31,7 @@
                 "tables": [
                     {
                         "name": "fe_config",
+
                         "columns": [
                             {
                                 "name": "max_iterations",
@@ -93,7 +94,6 @@
                             { "name" : "r2" },
                             {
                                 "name" : "config_id",
-                                "col_type" : "Integer",
                                 "foreign_key" : "fe_config.id"
                             }
                         ]
@@ -106,7 +106,6 @@
                             { "name" : "r2" },
                             {
                                 "name" : "config_id",
-                                "col_type" : "Integer",
                                 "foreign_key" : "fe_config.id"
                             }
                         ]
