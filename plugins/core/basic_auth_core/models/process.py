@@ -20,9 +20,9 @@ class Process(db.Model, BaseModel):
     user_id=Column(Integer, ForeignKey('user.id'), default=0)
 
     # relationships
-    users = relationship("User", back_populates='processes')
-    authorizations = relationship("Authorization", back_populates='processes')
-    logs = relationship("Log", back_populates='processes')
+    #users = relationship("User", back_populates='processes')
+    #authorizations = relationship("Authorization", back_populates='processes')
+    #logs = relationship("Log", back_populates='processes')
 
     def __repr__(self):
         return str(self.name)
