@@ -48,7 +48,7 @@ class ProcessTable():
                     pk_found = True
             if "foreign_key" in c:
                 if c["foreign_key"] != "none":
-                    t_args.append(Column(c["name"], col_type, ForeignKey(c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                    t_args.append(Column(c["name"], "Integer", ForeignKey(c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             if "primary_key" not in c and "foreign_key" not in c:
                 t_args.append(Column(c["name"], col_type, primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             if c["name"] == "timestamp":
