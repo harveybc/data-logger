@@ -29,8 +29,8 @@ class Authorization(db.Model, BaseModel):
     created=Column(String, default=str(datetime.now()))
     
     # relationships
-    users = relationship("User", back_populates='authorizations')
-    processes = relationship("Process", back_populates='authorizations')
+    #users = relationship("User", back_populates='authorizations')
+    #processes = relationship("Process", back_populates='authorizations')
 
     def __repr__(self):
         return str(self.name)
