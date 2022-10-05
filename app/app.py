@@ -12,8 +12,8 @@ from flask import current_app, g
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
-from app.util import load_plugin_config 
-from util import reflect_prepare
+from app.util import load_plugin_config, reflect_prepare
+
 #import prance
 
 db = SQLAlchemy()
