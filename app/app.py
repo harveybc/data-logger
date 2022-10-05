@@ -56,7 +56,8 @@ def create_app(app_config, data_logger):
     # initialize db with current app
     db.init_app(app.app)
     # initialize automap Base
-    reflect_prepare(db, Base)
+    #reflect_prepare(db, Base)
+    Base.prepare(db.engine)
     # initialize login manager
     login_manager.init_app(app.app)
     # get the output plugin template folder
