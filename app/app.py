@@ -19,7 +19,6 @@ from app.util import load_plugin_config, reflect_prepare
 db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()
-reflect_prepare(db, Base)
 
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
