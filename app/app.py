@@ -18,7 +18,7 @@ from app.util import load_plugin_config, reflect_prepare
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-Base = automap_base()
+
 
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
@@ -57,13 +57,14 @@ def create_app(app_config, data_logger):
     db.init_app(app.app)
     # initialize automap Base
     #reflect_prepare(db, Base)
+    Base = automap_base()
     Base.prepare(db.engine)
     # initialize login manager
     login_manager.init_app(app.app)
     # get the output plugin template folder
     plugin_folder = data_logger.gui_ep.template_path()
     # register the blueprints from the gui plugin
-    data_logger.gui_ep.register_blueprints(app.app, data_logger.core_ep, data_logger.store_ep, db)
+    data_logger.gui_ep.register_blueprints(app.app, data_logger.core_ep, data_logger.store_ep, db, Base)
     
     # create User model for login manager
     User = data_logger.core_ep.User
