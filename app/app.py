@@ -12,12 +12,14 @@ from flask import current_app, g
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 import base64
-from app.util import load_plugin_config
+from app.util import load_plugin_config 
+from util import reflect_prepare
 #import prance
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 Base = automap_base()
+reflect_prepare(db, Base)
 
 def create_app(app_config, data_logger):
     """ Create the Flask-Sqlalchemy app 
@@ -54,6 +56,9 @@ def create_app(app_config, data_logger):
     app.app.config.from_object(app_config)
     # initialize db with current app
     db.init_app(app.app)
+    # initialize automap Base
+    reflect_prepare(db, Base)
+    # initialize login manager
     login_manager.init_app(app.app)
     # get the output plugin template folder
     plugin_folder = data_logger.gui_ep.template_path()
