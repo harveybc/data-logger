@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, Numeric, PickleType, SmallInteger, String, Text, Time, Unicode, UnicodeText
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db, Base
+from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
