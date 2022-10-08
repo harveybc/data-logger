@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 Base = automap_base()
 
-# add the default user with id = 0 and username = test
+# seed init data for processes tables, the tablesmust be listed also in the seed_init_data
 def seed(app, db, table_name):
     with app.app_context():
         # sanitize the input string and limit its length
