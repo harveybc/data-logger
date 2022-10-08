@@ -10,7 +10,7 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 from .models.process_table import ProcessTable
-from .models.process_register_factory import ProcessRegisterFactory
+#from .models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
