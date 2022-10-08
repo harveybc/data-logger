@@ -50,7 +50,7 @@ export default {
           // use the result of api request
           axios_instance.get('/best_online')
           .then((response) => {
-            console.log(response.data);
+            //console.log(response.data);
             this.best_online_ = response.data;
             return response.data;
           }, (error) => {
@@ -64,7 +64,8 @@ export default {
             // use the response of api request
             axios_instance.get('/min_training_mse')
             .then((response) => {
-              return response;
+              this.min_training_mse_ = response.data;
+              return response.data;
             }, (error) => {
               console.log(error);
               return 0;
@@ -77,7 +78,8 @@ export default {
           // use the result of api request
           axios_instance.get('/best_config')
           .then((response) => {
-            return response;
+            this.best_config_ = response.data;
+            return response.data;
           }, (error) => {
             console.log(error);
             return 0;
@@ -89,7 +91,8 @@ export default {
           // use the response of api request
           axios_instance.get('/min_validation_mse')
           .then((response) => {
-            return response;
+            this.min_validation_mse_ = response.data;
+            return response.data;
           }, (error) => {
             console.log(error);
             return 0;
