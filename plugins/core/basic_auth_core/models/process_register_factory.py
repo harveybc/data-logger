@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData, Table, insert, update
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db, Base
+from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel

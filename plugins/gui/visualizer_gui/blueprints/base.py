@@ -12,7 +12,7 @@ from app.util import verify_pass
 import logging
 _logger = logging.getLogger(__name__)
 
-def new_bp(plugin_folder, core_ep, store_ep, db):
+def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     
     bp = Blueprint("base_bp", __name__, url_prefix='', template_folder=plugin_folder+"/templates", static_folder=plugin_folder+"/static")
     User = core_ep.User

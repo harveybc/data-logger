@@ -5,9 +5,25 @@ export default {
         return { 
             process_list: [0,1,2,3],
             process: 0,
-            status : 'Halted'
+            status : 'Halted',
+            best_online_: 1,
+            min_training_mse_: 0.0,
+            best_config_ : 1,
+            min_validation_mse_ : 0.0
+
+
         }
     }, 
+    // initialize values
+    created() {
+        //this.get_process_list();
+        //this.get_process();
+        //this.get_status();
+        this.best_online_ = this.best_online();
+        this.min_training_mse_ = this.min_training_mse();
+        this.best_config_ = this.best_config();
+        this.min_validation_mse_ = this.min_validation_mse();
+    },  
     methods: {
         // returns an axios instance for basic authentication
         axiosBasicAuth(username, password) {
@@ -20,6 +36,7 @@ export default {
             }
           });
         },
+
         // returns an axions instance with configured basic authentication
         // TODO: change to use current user
         axios_auth_instance(){
@@ -33,7 +50,9 @@ export default {
           // use the result of api request
           axios_instance.get('/best_online')
           .then((response) => {
-            return response;
+            //console.log(response.data);
+            this.best_online_ = response.data;
+            return response.data;
           }, (error) => {
             console.log(error);
             return 0;
@@ -45,7 +64,8 @@ export default {
             // use the response of api request
             axios_instance.get('/min_training_mse')
             .then((response) => {
-              return response;
+              this.min_training_mse_ = response.data;
+              return response.data;
             }, (error) => {
               console.log(error);
               return 0;
@@ -58,7 +78,8 @@ export default {
           // use the result of api request
           axios_instance.get('/best_config')
           .then((response) => {
-            return response;
+            this.best_config_ = response.data;
+            return response.data;
           }, (error) => {
             console.log(error);
             return 0;
@@ -70,7 +91,8 @@ export default {
           // use the response of api request
           axios_instance.get('/min_validation_mse')
           .then((response) => {
-            return response;
+            this.min_validation_mse_ = response.data;
+            return response.data;
           }, (error) => {
             console.log(error);
             return 0;
@@ -87,5 +109,4 @@ export default {
         }
     },
     delimiters: ["|{", "}|"]
-   
 }

@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, ForeignKey, MetaData, Table, BigInteger, Boolean, Date, DateTime, Enum, Float, Integer, Interval, LargeBinary, Numeric, PickleType, SmallInteger, String, Text, Time, Unicode, UnicodeText
 from flask_sqlalchemy import SQLAlchemy
-from app.app import db, Base
+from app.app import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from .base_model import BaseModel
@@ -33,21 +33,23 @@ class ProcessTable():
         timestamp_found = False
         id_found = False
         for c in self.columns:
+            # generate the arguments for this column
+            if "col_type" not in c: c["col_type"] = "Float"
+            col_type = self.parse_sqlalchemy_column_type(c["col_type"])
             # assign default values to each column parameter if it does not exist 
             if "unique" not in c: c["unique"] = False
             if "index" not in c: c["index"] = False
             if "default" not in c: c["default"] = {}
-            if "nullable" not in c: c["nullable"] = False
-            # generate the arguments for this column
-            if "col_type" not in c: c["col_type"] = "Float"
-            col_type = self.parse_sqlalchemy_column_type(c["col_type"])
+            if "nullable" not in c: c["nullable"] = True
             if "primary_key" in c:
                 if c["primary_key"]:
                     t_args.append(Column(c["name"], col_type, autoincrement=True, primary_key=c["primary_key"], nullable=False))
                     pk_found = True
             if "foreign_key" in c:
                 if c["foreign_key"] != "none":
-                    t_args.append(Column(c["name"], col_type, ForeignKey("p_schema." + c["foreign_key"]), unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
+                    col_type=self.parse_sqlalchemy_column_type("Integer")
+                    t_args.append(Column(c["name"], col_type, ForeignKey(c["foreign_key"]), nullable=False))
+                    rel_found = True
             if "primary_key" not in c and "foreign_key" not in c:
                 t_args.append(Column(c["name"], col_type, primary_key=False, unique=c["unique"], index=c["index"], default=c["default"], nullable=c["nullable"]))
             if c["name"] == "timestamp":
@@ -214,27 +216,4 @@ class ProcessTable():
             print("Error : " , error)
             return error
 
-    def column_max(self, table, column):
-        """ Returns the maximum of the selected field(column) belonging to the user_id from the specified table."""
-        db = get_db()
-        # user_id = self.get_user_id(username)
-        user_id = flask_login.current_user.get_id()
-        row = db.execute(
-            "SELECT t." + str(column) + ", p.id"
-            " FROM " + table + " t, process p, user u"
-            " WHERE t.process_id = p.id" +
-            " AND p.user_id = " + str(user_id) + 
-            " ORDER BY t." + column + " DESC LIMIT 1"
-        ).fetchone()
-        result = dict(row)        
-        return result
-
-    def get_count(self, table):
-        """Returns the count of rows in the specified table. """
-        db = get_db()
-        #user_id = self.get_user_id(username)
-        row = db.execute(
-            "SELECT COUNT(id) FROM " + table
-        ).fetchone() 
-        result = dict(row)        
-        return result
+   

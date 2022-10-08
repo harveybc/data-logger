@@ -16,14 +16,15 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
+from app.util import as_dict
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func
+from sqlalchemy import func, asc
 import json
 
-Base = automap_base()
 
-def new_bp(plugin_folder, core_ep, store_ep, db):
+
+def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("dashboard_bp", __name__, template_folder=plugin_folder+"/templates")
@@ -32,7 +33,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
     #@login_required
     def index():
         # read the data to be visualized using the using the Feature extractor instance, preinitialized in __init__.py with input and output plugins entry points.
-        # TODO: replace 0 in vis_data by process_id, obtained as the first process_id belonging to the current user.    
+        # TODO: replace 0 in vis_data by process_id, obtained as the first_or_404 process_id belonging to the current user.    
         # vis_data = current_app.config['FE'].ep_input.load_data(current_app.config['P_CONFIG'], 0)
         box= []
         #print("user_id = ", current_user.id)
@@ -63,32 +64,77 @@ def new_bp(plugin_folder, core_ep, store_ep, db):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/index.html", p_config = p_config_gui)
 
-    @bp.route("/<int:pid>/trainingpoints")
-    def get_points(pid):
-        """Get the points to plot from the training_progress table and return them as JSON."""
-        xy_points = get_xy_training(pid)
-        return jsonify(xy_points)
-
-    def get_xy_training(pid):
-        """ Returns the points to plot from the training_progress table. """
-        results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
-        return results
-
-    @bp.route("/min_training_mse")
+    # returns the config id for the best mse from table fe_training_error that has config.active == true
+    @bp.route("/best_online")
     @login_required
-    def min_training_mse():
-        """ Returns the minimum training mse of the fe_training_error table that has an active config_id. """
+    def best_online():
+        """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         # table base class
-        Base.prepare(db.engine, reflect=False)
-        #perform query, the column classs names are configured in config_store.json
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
+            # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
-        print(str(res))
-        return json.dumps(str(res.first()))
+        attr = getattr(res, "config_id")
+        return str(attr)
+
+    @bp.route("/best_config")
+    @login_required
+    def best_config():
+        """ Returns the config id for the best mse from table fe_validation_error that has config.active == false. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        attr = getattr(res, "config_id")
+        return str(attr)
+
+    @bp.route("/min_training_mse")
+    @login_required
+    def min_training_mse():
+        """ Returns the best mse from table fe_training_error that has config.active == true. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        attr = getattr(res, "mse")
+        return str(attr)
+           
+    @bp.route("/min_validation_mse")
+    @login_required
+    def min_validation_mse():
+        """ Returns the best mse from table fe_validation_error that has config.active == false. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_validation_error).join(Base.classes.fe_config, Base.classes.fe_validation_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == False).order_by(asc(Base.classes.fe_validation_error.mse)).first_or_404()
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}
+        attr = getattr(res, "mse")
+        return str(attr)
+    
+    
+    def get_xy_training(pid):
+        """ Returns the points to plot from the training_progress table. """
+        results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
+        return results
 
     @bp.route("/processes")
     @login_required

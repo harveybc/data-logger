@@ -31,6 +31,7 @@
                 "tables": [
                     {
                         "name": "fe_config",
+
                         "columns": [
                             {
                                 "name": "max_iterations",
@@ -92,8 +93,8 @@
                             { "name" : "mae" },
                             { "name" : "r2" },
                             {
-                                "name" : "control_id",
-                                "col_type" : "Integer"
+                                "name" : "config_id",
+                                "foreign_key" : "fe_config.id"
                             }
                         ]
                     },
@@ -104,8 +105,8 @@
                             { "name" : "mae" },
                             { "name" : "r2" },
                             {
-                                "name" : "control_id",
-                                "col_type" : "Integer"
+                                "name" : "config_id",
+                                "foreign_key" : "fe_config.id"
                             }
                         ]
                     },
@@ -115,7 +116,7 @@
                             { "name" : "original" },
                             { "name" : "predicted" },
                             { 
-                                "name" : "control_id",
+                                "name" : "config_id",
                                 "col_type" : "Integer"
                             }
                             
@@ -163,12 +164,27 @@
                                 "col_type": "String" 
                             },
                             {
-                                "name": "station_id",
-                                "col_type": "Integer" 
-                            },
-                            {
                                 "name" : "config_id",
                                 "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "drone_measurements",
+                        "columns": [ 
+                            {
+                                "name" : "grassland_id",
+                                "col_type" : "Integer",
+                                "foreign_key" : "grasslands.id"
+                            },
+                            { "name" : "distance_to_floor" },
+                            { "name" : "distance_to_plant" },
+                            { "name" : "coord_lat" },
+                            { "name" : "coord_long" },
+                            { "name" : "coord_alt" },
+                            {
+                                "name": "device_id",
+                                "col_type": "Integer" 
                             }
                         ]
                     }
@@ -197,6 +213,8 @@
                             { "name" : "hygrometer" },
                             { "name" : "co2_sensor" },
                             { "name" : "light_sensor" },
+                            { "name" : "barometer" },
+                            
                             {
                                 "name": "station_id",
                                 "col_type": "Integer" 

@@ -10,7 +10,7 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 from .models.process_table import ProcessTable
-from .models.process_register_factory import ProcessRegisterFactory
+#from .models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -54,10 +54,11 @@ class BasicAuthCore():
         _logger.info("Seeding initial data")
         from .models.seeds.user import seed as user_seed
         from .models.seeds.process_table import seed as process_table_seed
-
         user_seed(app,db)
         # seeds training_error data
         process_table_seed(app,db, "fe_training_error")
+        process_table_seed(app,db, "fe_validation_error")
+        process_table_seed(app,db, "fe_config")
         
 
     def create_process(self, app, db, process):
@@ -190,33 +191,4 @@ class BasicAuthCore():
         _logger.info("Data structure created")
         self.seed_init_data(app, db)
         _logger.info("Initial data seed done")
-        
-    def column_max(self, db, table, column):
-        """ Returns the maximum of the selected field(column) belonging to the user_id from the specified table. """
-        # sanitize the input string and limit its length
-        table_name = sanitize_str(table, 256)
-        column_name = sanitize_str(column, 256)
-        Base.prepare(db.engine, reflect=False)
-        # table base class
-        table_base_column = eval("Base.classes." + table_name + "." + column_name )
-        # perform query
-        try:
-            res = db.session.query(func.max(table_base_column)) 
-        except SQLAlchemyError as e:
-            error = str(e)
-            print("Error : " , error)
-            res = { 'error_ca' : error}
-        print(str(res))
-        return json.dumps(str(res.first()))
-
-    def get_count(self, table):
-        """Returns the count of rows in the specified table. """
-        db = get_db()
-        #user_id = self.get_user_id(username)
-        row = db.execute(
-            "SELECT COUNT(id) FROM " + table
-        ).fetchone() 
-        result = dict(row)        
-        return result
-            
-        
+                

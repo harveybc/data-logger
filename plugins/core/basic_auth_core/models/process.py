@@ -17,12 +17,13 @@ class Process(db.Model, BaseModel):
     description = Column(String, default="")
     tables=Column(String, server_default="[]")
     created=Column(String, default=str(datetime.now()))
-    user_id=Column(Integer, ForeignKey('user.id'), default=0)
+    user_id=Column(Integer, ForeignKey('user.id'), default=1)
 
     # relationships
-    users = relationship("User", back_populates='processes')
-    authorizations = relationship("Authorization", back_populates='processes')
-    logs = relationship("Log", back_populates='processes')
+    #process_user 
+    #children = relationship("Child", backref="parent")
+    process_authorizations = relationship("Authorization", backref='authorization_process')
+    process_logs = relationship("Log", backref='log_process')
 
     def __repr__(self):
         return str(self.name)

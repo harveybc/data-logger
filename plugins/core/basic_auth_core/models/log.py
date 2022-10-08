@@ -27,8 +27,8 @@ class Log(db.Model, BaseModel):
     
     
     # relationships
-    users = relationship("User", back_populates='logs')
-    processes = relationship("Process", back_populates='logs')
+    #users = relationship("User", back_populates='logs')
+    #processes = relationship("Process", back_populates='logs')
 
     def __repr__(self):
         return str(self.name)
