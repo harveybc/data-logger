@@ -152,7 +152,7 @@
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
                  <!-- Line chart -->
-              <div class="card card-primary card-outline">
+              <div class="card card-primary card-outline"  style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};">
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
@@ -169,7 +169,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="line-chart" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
+                  <div id="line-chart"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
