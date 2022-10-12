@@ -440,12 +440,14 @@
                 }
             })
             
-            var updateInterval = 1000 //Fetch data ever x milliseconds
+            var updateInterval = 1000 * {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+            //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
             function update() {
-                xy_points=getPerformanceData();
+                ///xy_points=getPerformanceData();
+                xy_points=getRandomData();
                 //total_points = xy_points.length;
-                var tmp = getRandomData();
+                //var tmp = getRandomData();
                 interactive_plot.setData([xy_points]);
                 
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
