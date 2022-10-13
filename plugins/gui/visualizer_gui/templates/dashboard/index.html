@@ -325,12 +325,6 @@
             return xy_points;
         }
         */
-       
-        /* get performance and data pairs from remote host */
-        function getPerformanceData(){
-            xy_points = getRandomData();
-            return xy_points;
-        }
 
         // when page finishes loading, sets the values to the ones from data
         $(document).ready(function () {
@@ -418,7 +412,7 @@
             // returns the last points from the best_online process
             function getPerformanceData() {
                 // get the data from the server
-                xy_points = 
+                xy_points = get_mse_list();
                 // Zip the generated y values with the x values
                 var res = []
                 for (var i = 0; i < data.length; ++i) {
@@ -429,7 +423,7 @@
             }
 
             // Interactive plot
-            var interactive_plot = $.plot('#interactive', [getRandomData()], {
+            var interactive_plot = $.plot('#interactive', [getPerformanceData()], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
@@ -449,8 +443,12 @@
                     show: true
                 },
                 xaxis: {
-                    show: true
+                    mode: "time", 
+                    timeformat:"%y/%m/%d %H:%M:%S"        
                 }
+                //  xaxis: {
+                //    show: true
+                //}
             })
             
             var updateInterval = 1000 * {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};

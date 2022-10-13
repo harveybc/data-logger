@@ -14,9 +14,7 @@
             "rt_plot": {
                 "title": "Online Training MSE",
                 "height": "300px",
-                "interval": 1,
-                "url": "http://localhost:5000/rt_plot?process=feature_extractor,table=training_error,column=mse,points=1000",
-                "callback": "rt_plot(url)"
+                "interval": 1
             },
             "val_plot": {
                 "title": "Validation MSE",
