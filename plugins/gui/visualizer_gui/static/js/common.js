@@ -18,11 +18,11 @@ function axios_auth_instance(){
   let axios_instance = this.axiosBasicAuth("test", "pass");
   return axios_instance; 
 }
-// returnsa a list of lists containing the last num_points, x,y = [date, mse] points for the best online process
+// returns a list of lists containing the last num_points, x,y = [date, mse] points for the best online process
 function get_mse_list(num_points){
   let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/min_training_mse')
+    axios_instance.get('/online_mse_list', { params: { max_points: num_points } })
     .then((response) => {
       this.min_training_mse_ = response.data;
       return response.data;
@@ -30,4 +30,4 @@ function get_mse_list(num_points){
       console.log(error);
       return 0;
     });        
-},
+}

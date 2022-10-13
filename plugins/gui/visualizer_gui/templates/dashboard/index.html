@@ -411,7 +411,7 @@
             
             // returns the last points from the best_online process
             function getPerformanceData() {
-                // get the data from the server
+                // get a list of lists containing the x,y = [date, mse] points for the best online process
                 xy_points = get_mse_list();
                 // Zip the generated y values with the x values
                 var res = []
