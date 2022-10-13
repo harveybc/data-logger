@@ -21,7 +21,7 @@
             "val_plot": {
                 "title": "Validation MSE",
                 "height": "200px",
-                "max_points": "500",
+                "max_points": "35",
                 "use_latest": true,
                 "data": "val_plot()"
             },

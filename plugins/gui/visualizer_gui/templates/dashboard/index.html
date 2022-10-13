@@ -385,7 +385,7 @@
              * Flot Interactive Chart
              * -----------------------
              */
-            var data = [], totalPoints = 35
+            var data = [], totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
             
             
             /* QUITAR */
@@ -415,6 +415,19 @@
                 return res
             }
             
+            // returns the last points from the best_online process
+            function getPerformanceData() {
+                // get the data from the server
+                xy_points = 
+                // Zip the generated y values with the x values
+                var res = []
+                for (var i = 0; i < data.length; ++i) {
+                    res.push([i, data[i]])
+                }
+
+                return res
+            }
+
             // Interactive plot
             var interactive_plot = $.plot('#interactive', [getRandomData()], {
                 grid: {
@@ -444,8 +457,8 @@
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
             function update() {
-                ///xy_points=getPerformanceData();
-                xy_points=getRandomData();
+                xy_points=getPerformanceData();
+                // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
                 interactive_plot.setData([xy_points]);

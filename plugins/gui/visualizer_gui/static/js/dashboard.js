@@ -37,7 +37,7 @@ export default {
           });
         },
 
-        // returns an axions instance with configured basic authentication
+        // returns an axios instance with configured basic authentication
         // TODO: change to use current user
         axios_auth_instance(){
           let axios_instance = this.axiosBasicAuth("test", "pass");
