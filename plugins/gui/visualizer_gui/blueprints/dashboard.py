@@ -130,9 +130,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "mse")
         return str(attr)
     
-    @bp.route("/onlne_mse_list")
+    @bp.route("/online_mse_list")
     @login_required
-    def onlne_mse_list():
+    def online_mse_list():
         """ Returns the best mse from table fe_training_error that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
