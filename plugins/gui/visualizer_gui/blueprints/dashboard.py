@@ -145,7 +145,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}        
-        return str(res)
+        return json.dumps([dict(r) for r in res])
     
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
