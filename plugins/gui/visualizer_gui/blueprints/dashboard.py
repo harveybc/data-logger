@@ -139,12 +139,14 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         try:
             res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
             best_online_config = getattr(res, "config_id")
-            res = db.session.query(Base.classes.fe_training_error.timestamp, Base.classes.fe_training_error.mse).filter(Base.classes.fe_training_error.config_id == best_online_config).order_by(desc(Base.classes.fe_training_error.timestamp)).limit(10).all()
+            res = db.session.query(Base.classes.fe_training_error).filter(Base.classes.fe_training_error.config_id == best_online_config).order_by(desc(Base.classes.fe_training_error.timestamp)).limit(10).all()
+            # convert to list of lists of timestamp and mse
+            res = [[row.timestamp, row.mse] for row in res]
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}        
-        return json.dumps([as_dict(r) for r in res])
+        return json.dumps(res)
     
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
