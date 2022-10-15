@@ -23,8 +23,6 @@ from sqlalchemy import func, asc, desc
 import json
 
 
-
-
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     # construct the data_logger blueprint using the plugin folder as template folder
@@ -146,7 +144,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}        
-        return json.dumps(as_dict(res))
+        return json.dumps([as_dict(r) for r in res])
     
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
