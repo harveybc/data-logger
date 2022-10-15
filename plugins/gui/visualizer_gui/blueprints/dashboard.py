@@ -139,7 +139,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         try:
             res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
             best_online_config = getattr(res, "config_id")
-            res = db.session.query(Base.classes.fe_training_error).filter(Base.classes.fe_training_error.config_id == best_online_config).order_by(desc(Base.classes.fe_training_error.timestamp)).limit(10).all()
+            res = db.session.query(Base.classes.fe_training_error.timestamp, Base.classes.fe_training_error.mse).filter(Base.classes.fe_training_error.config_id == best_online_config).order_by(desc(Base.classes.fe_training_error.timestamp)).limit(10).all()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
