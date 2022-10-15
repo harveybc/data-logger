@@ -24,7 +24,6 @@ function online_mse_list(num_points){
     // use the response of api request
     axios_instance.get('/online_mse_list', { params: { max_points: num_points } })
     .then((response) => {
-      this.min_training_mse_ = response.data;
       return response.data;
     }, (error) => {
       console.log(error);
