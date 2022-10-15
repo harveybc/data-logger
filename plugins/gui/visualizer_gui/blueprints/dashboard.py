@@ -132,7 +132,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     
     @bp.route("/onlne_mse_list")
     @login_required
-    def min_training_mse():
+    def onlne_mse_list():
         """ Returns the best mse from table fe_training_error that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
