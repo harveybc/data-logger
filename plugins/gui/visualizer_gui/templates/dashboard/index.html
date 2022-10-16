@@ -413,17 +413,17 @@
             function getPerformanceData() {
                 // get a list of lists containing the x,y = [date, mse] points for the best online process
                 xy_points = online_mse_list();
-                console.log(xy_points);
+                console.log("after:"+xy_points);
                 // Zip the generated y values with the x values
                 //var res = []
                 //for (var i = 0; i < data.length; ++i) {
                 //    res.push([i, data[i]])
                 //}
-                return JSON.parse(xy_points);
+                return xy_points;
             }
 
             // Interactive plot
-            var interactive_plot = $.plot('#interactive', [getPerformanceData()], {
+            var interactive_plot = $.plot('#interactive',[ |{ xy_points_ }| ], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
@@ -459,7 +459,7 @@
                 // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
-                interactive_plot.setData([xy_points]);
+                interactive_plot.setData([ |{ xy_points_ }| ]);
                 
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
                 // Since the axes don't change, we don't need to call plot.setupGrid()
