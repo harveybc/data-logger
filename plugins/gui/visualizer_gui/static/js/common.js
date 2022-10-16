@@ -25,7 +25,7 @@ function online_mse_list(num_points){
     axios_instance.get('/online_mse_list', { params: { max_points: num_points } })
     .then((response) => {
       console.log(response.data);
-      return JSON.parse(response.data);
+      return response.data;
     }, (error) => {
       console.log(error);
       return 0;
