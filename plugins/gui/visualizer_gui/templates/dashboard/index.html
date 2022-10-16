@@ -418,11 +418,11 @@
                 //for (var i = 0; i < data.length; ++i) {
                 //    res.push([i, data[i]])
                 //}
-                return xy_points
+                return JSON.parse(xy_points);
             }
 
             // Interactive plot
-            var interactive_plot = $.plot('#interactive', [getRandomData()], {
+            var interactive_plot = $.plot('#interactive', [getPerformanceData()], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
@@ -454,7 +454,7 @@
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
             function update() {
-                xy_points=getRandomData();
+                xy_points=getPerformanceata();
                 // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
