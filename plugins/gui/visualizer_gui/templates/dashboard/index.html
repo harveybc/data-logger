@@ -459,7 +459,8 @@
                 // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
-                //interactive_plot.setData([ |{ xy_points_ }| ]);
+                app.best_online();
+                interactive_plot.setData([ |{ xy_points_ }| ]);
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
                 // Since the axes don't change, we don't need to call plot.setupGrid()
                 //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
@@ -605,5 +606,4 @@
 <script type="module">
     import "/static/js/buffer-6.0.3.min.js"
     import MyModule from "/static/js/dashboard.js"
-    Vue.prototype.$interactive_plot = interactive_plot
 {% endblock module_javascript %}
