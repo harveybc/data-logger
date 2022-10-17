@@ -20,8 +20,6 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        interactive_plot.setData([xy_points_]);
-        interactive_plot.draw();
         this.best_online_ = this.best_online();
         this.min_training_mse_ = this.min_training_mse();
         this.best_config_ = this.best_config();
