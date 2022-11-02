@@ -19,9 +19,8 @@ from app.app import load_plugin_config
 from app.util import as_dict
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func, asc
+from sqlalchemy import func, asc, desc
 import json
-
 
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -130,6 +129,24 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "mse")
         return str(attr)
     
+    @bp.route("/online_mse_list")
+    @login_required
+    def online_mse_list():
+        """ Returns the best mse from table fe_training_error that has config.active == true. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
+            best_online_config = getattr(res, "config_id")
+            res = db.session.query(Base.classes.fe_training_error).filter(Base.classes.fe_training_error.config_id == best_online_config).order_by(desc(Base.classes.fe_training_error.timestamp)).limit(10).all()
+            # convert to list of lists of timestamp and mse
+            res = [[row.timestamp, row.mse] for row in res]
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("Error : " , error)
+            res = { 'error_ca' : error}        
+        return json.dumps(res)
     
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """

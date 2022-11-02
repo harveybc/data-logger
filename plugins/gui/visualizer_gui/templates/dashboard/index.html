@@ -148,11 +148,11 @@
           </div>
           <!-- /.row -->
         <!-- Main row -->
-        <div class="row">
+        <div class="row"  style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};">
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
                  <!-- Line chart -->
-              <div class="card card-primary card-outline">
+              <div class="card card-primary card-outline" >
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="far fa-chart-bar"></i>
@@ -169,7 +169,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div id="line-chart" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};"></div>
+                  <div id="line-chart"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -213,7 +213,7 @@
                         
                         <td><a href="/gui/process/|{process.id}|"> process.id</a></td>
 
-                        <td> |/{ get_max(process.id) }/|</td>
+                        <td> get_max(process.id)</td>
 
 
                         
@@ -325,19 +325,13 @@
             return xy_points;
         }
         */
-       
-        /* get performance and data pairs from remote host */
-        function getPerformanceData(){
-            xy_points = "{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}"
-            return xy_points;
-        }
 
         // when page finishes loading, sets the values to the ones from data
         $(document).ready(function () {
             // Calls getPerformanceData to get a JSON from singularity
-            xy_points=getPerformanceData();
+/*            xy_points=getRandomData();
             
-/*
+
             // Shows Help When button clicked
             $('#btn-trig').click(function () {
                 $('#helpModal').modal('show');
@@ -385,7 +379,7 @@
              * Flot Interactive Chart
              * -----------------------
              */
-            var data = [], totalPoints = 35
+            var data = [], totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
             
             
             /* QUITAR */
@@ -414,9 +408,22 @@
 
                 return res
             }
-            /*
+            
+            // returns the last points from the best_online process
+            function getPerformanceData() {
+                // get a list of lists containing the x,y = [date, mse] points for the best online process
+                xy_points = online_mse_list();
+                console.log("after:"+xy_points);
+                // Zip the generated y values with the x values
+                //var res = []
+                //for (var i = 0; i < data.length; ++i) {
+                //    res.push([i, data[i]])
+                //}
+                return xy_points;
+            }
+
             // Interactive plot
-            var interactive_plot = $.plot('#interactive', [getRandomData()], {
+            var interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
@@ -436,18 +443,24 @@
                     show: true
                 },
                 xaxis: {
-                    show: true
+                    mode: "time", 
+                    timeformat:"%y/%m/%d %H:%M:%S"        
                 }
+                //  xaxis: {
+                //    show: true
+                //}
             })
             
-            var updateInterval = 1000 //Fetch data ever x milliseconds
+            var updateInterval = 1000 * {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+            //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
             function update() {
-                xy_points=getPerformanceData();
+                xy_points=getPerformanceata();
+                // xy_points=getRandomData();
                 //total_points = xy_points.length;
-                var tmp = getRandomData();
-                interactive_plot.setData([xy_points]);
-                
+                //var tmp = getRandomData();
+                app.best_online();
+                interactive_plot.setData([ |{ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }| ]);
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
                 // Since the axes don't change, we don't need to call plot.setupGrid()
                 //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
@@ -475,11 +488,11 @@
       /*
       * LINE CHART
       * ----------
-      */
+     
       //LINE perform request to get original and predicted data using vue.js
 
 
-/*
+
       var   v_original = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/training"),
             v_predicted = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/validation")
 
@@ -593,5 +606,4 @@
 <script type="module">
     import "/static/js/buffer-6.0.3.min.js"
     import MyModule from "/static/js/dashboard.js"
-    
 {% endblock module_javascript %}

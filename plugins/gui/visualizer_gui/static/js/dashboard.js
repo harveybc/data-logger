@@ -3,6 +3,7 @@
 export default {
     data() {
         return { 
+            xy_points_: [],
             process_list: [0,1,2,3],
             process: 0,
             status : 'Halted',
@@ -37,7 +38,7 @@ export default {
           });
         },
 
-        // returns an axions instance with configured basic authentication
+        // returns an axios instance with configured basic authentication
         // TODO: change to use current user
         axios_auth_instance(){
           let axios_instance = this.axiosBasicAuth("test", "pass");

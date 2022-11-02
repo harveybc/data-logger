@@ -12,6 +12,8 @@
 <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Axios and Vue -->
 <script src="/static/assets/js/axios/axios.min.js"></script>
+<!-- common functions--> -->
+<script src="/static/js/common.js"></script>
 <!--  <script src="/static/assets/js/vue/vue.js"></script>  -->
 <script src="https://unpkg.com/vue@3"></script>
 
@@ -49,7 +51,7 @@
 <!-- Specific Page JS goes HERE  -->
 {% block module_javascript %}{% endblock module_javascript %} 
     const { createApp } = Vue
-    createApp(MyModule).mount('#main_content')
+    const app = createApp(MyModule).mount('#main_content')
 </script>
 </body>
 </html>
