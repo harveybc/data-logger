@@ -92,6 +92,10 @@
                             { "name" : "mse" },
                             { "name" : "mae" },
                             { "name" : "r2" },
+                            { "name" : "reward" },
+                            { "name" : "balance" },
+                            { "name" : "equity" },
+                            { "name" : "margin" },
                             {
                                 "name" : "config_id",
                                 "foreign_key" : "fe_config.id"
