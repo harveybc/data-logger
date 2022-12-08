@@ -81,6 +81,7 @@
                     {
                         "name": "gym_fx_data",
                         "columns": [
+                            { "name" : "starting_balance" },
                             { "name" : "reward" },
                             { "name" : "balance" },
                             { "name" : "equity" },
@@ -98,13 +99,25 @@
                     {
                         "name": "gym_fx_validation_plot",
                         "columns": [
-                            { "name" : "original" },
-                            { "name" : "predicted" },
-                            { 
-                                "name" : "config_id",
-                                "col_type" : "Integer"
-                            }
+                            { "name" : "reward" },
+                            { "name" : "balance" },
+                            { "name" : "equity" },
+                            { "name" : "score_v" },
+                            { "name" : "avg_score_v" },
+                            { "name" : "margin" },
                             
+                            { "name" : "action" },
+                            { "name" : "num_closes" },
+                            { "name" : "reward" },
+                            { "name" : "order_status" },
+                            
+                            { "name" : "tick_count" },
+                            { "name" : "tick_date" },
+                            
+                            {
+                                "name" : "config_id",
+                                "foreign_key" : "gym_fx_config.id"
+                            }
                         ]
                     }
                 ]
