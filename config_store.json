@@ -27,6 +27,89 @@
                 ]
             },
             {
+                "name": "gym_fx",
+                "tables": [
+                    {
+                        "name": "gym_fx_config",
+                        "columns": [
+                            {
+                                "name": "initial_capital",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "save_optimum",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "overwrite_optimum",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "preprocessor_params",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "feature_eng_params",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "active",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "restart",
+                                "col_type": "Boolean" 
+                            },
+                            {
+                                "name": "starting_model",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "training_dataset",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "validation_dataset",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name" : "status",
+                                "col_type" : "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gym_fx_data",
+                        "columns": [
+                            { "name" : "reward" },
+                            { "name" : "balance" },
+                            { "name" : "equity" },
+                            { "name" : "score" },
+                            { "name" : "score_v" },
+                            { "name" : "avg_score" },
+                            { "name" : "avg_score_v" },
+                            { "name" : "margin" },
+                            {
+                                "name" : "config_id",
+                                "foreign_key" : "gym_fx_config.id"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "gym_fx_validation_plot",
+                        "columns": [
+                            { "name" : "original" },
+                            { "name" : "predicted" },
+                            { 
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                            
+                        ]
+                    }
+                ]
+            },
+            {
                 "name": "feature_extractor",
                 "tables": [
                     {
