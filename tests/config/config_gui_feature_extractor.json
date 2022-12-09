@@ -7,17 +7,17 @@
             "box_1_title": "Training Score",
             "box_2_title": "Best Stored",
             "box_3_title": "Validation Score",
-            "box_0_value": "gymfx_best_online_",
-            "box_1_value": "gymfx_max_training_score_",
-            "box_2_value": "gymfx_best_config_",
-            "box_3_value": "gymfx_max_validation_score_",
+            "box_0_value": "best_online_",
+            "box_1_value": "min_training_mse_",
+            "box_2_value": "best_config_",
+            "box_3_value": "min_validation_mse_",
             "rt_plot": {
-                "title": "Online Training Score",
+                "title": "Online Training MSE",
                 "height": "300px",
                 "interval": 1
             },
             "val_plot": {
-                "title": "Validation Score",
+                "title": "Validation MSE",
                 "height": "200px",
                 "max_points": "35",
                 "use_latest": true,
