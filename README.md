@@ -50,7 +50,7 @@ For ease of use, a script for setting the environment variables and executing th
 
 * For Linux and Mac:
 
-> ./data_logger.sh
+> sh ./data_logger.sh
 
 * For Windows:
 
