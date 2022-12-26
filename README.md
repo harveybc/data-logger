@@ -29,7 +29,7 @@ On Linux use the .sh scripts, on Windows use the .bat scripts.
 1. Clone the GithHub repo:   
 > git clone https://github.com/harveybc/data-logger
 2. Change to the repo folder:
-> cd data_logger
+> cd data-logger
 3. Update pip
 > python -m pip install --upgrade pip
 4. Install requirements:
