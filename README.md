@@ -60,7 +60,7 @@ For ease of use, a script for setting the environment variables and executing th
 
 The Swagger UI Web interface provides API documentation and is installed by default at:
 
-[http://localhost:5000/ui](http://localhost:5000/ui)
+[http://localhost:60500/ui](http://localhost:5000/ui)
 
 It documents the parameters for each API endpoint configured in the core plugin and alows to test them with your own parameters.
 
