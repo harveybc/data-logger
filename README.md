@@ -37,7 +37,7 @@ On Linux use the .sh scripts, on Windows use the .bat scripts.
 5. Install python package:
 > python setup.py install
 6. Create a test database (use .\scripts\migrate.bat on windows):
-> ./scripts/migrate.sh
+> sh ./scripts/migrate.sh
 7. (Optional) Perform tests:
 > python setup.py test
 8. (Optional) Generate Sphinx Documentation:
