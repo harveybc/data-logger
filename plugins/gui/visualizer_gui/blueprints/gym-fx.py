@@ -34,14 +34,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def gym_fx():
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         if request.method == 'POST':
-        	
-        	#self.data_log(validation_score=v_score, avg_score_v=avg_score_v, training_score=score, avg_score=avg_score, info=info)
-	        validation_score = request.form['validation_scoreme']
-			avg_score_v = request.form['avg_score_v']
-			training_score = request.form[' training_score']
-			avg_score = request.form['avg_score']
-			info = request.form['info' ]
-	        db = get_db()
+            #self.data_log(validation_score=v_score, avg_score_v=avg_score_v, training_score=score, avg_score=avg_score, info=info 
+            validation_score = request.form['validation_scoreme']
+            avg_score_v = request.form['avg_score_v']
+            training_score = request.form[' training_score']
+            avg_score = request.form['avg_score']
+            info = request.form['info' ]
+            db = get_db()
 	        error = None
         # table base class
         #Base.prepare(db.engine) 
