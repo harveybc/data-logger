@@ -29,13 +29,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     bp = Blueprint("gym_fx_bp", __name__, template_folder=plugin_folder+"/templates")
     
     # returns the config id for the best mse from table fe_training_error that has config.active == true
-    @bp.route("/gym-fx")
+    @bp.route("/gym-fx/<config_id>")
     @login_required
-    def gym_fx():
+    def gym_fx(config_id):
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         if request.method == 'POST':
             #self.data_log(validation_score=v_score, avg_score_v=avg_score_v, training_score=score, avg_score=avg_score, info=info 
-            validation_score = request.form['validation_scoreme']
+            validation_score = request.form['validation_score']
             avg_score_v = request.form['avg_score_v']
             training_score = request.form[' training_score']
             avg_score = request.form['avg_score']
