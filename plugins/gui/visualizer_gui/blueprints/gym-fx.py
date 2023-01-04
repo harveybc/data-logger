@@ -35,7 +35,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def gym_fx(config_id):
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         if request.method == 'POST':
-<<<<<<< HEAD
             #self.data_log(validation_score=v_score, avg_score_v=avg_score_v, training_score=score, avg_score=avg_score, info=info 
             validation_score = request.form['validation_score']
             avg_score_v = request.form['avg_score_v']
@@ -44,8 +43,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             info = request.form['info' ]
             db = get_db()
 	        error = None
-=======
-
             # self.data_log(validation_score=v_score, avg_score_v=avg_score_v, training_score=score, avg_score=avg_score, info=info)
             validation_score = request.form['validation_scoreme']
             avg_score_v = request.form['avg_score_v']
@@ -54,7 +51,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             info = request.form['info']
             db = get_db()
             error = None
->>>>>>> branch 'dev' of https://github.com/harveybc/data-logger
         # table base class
         # Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
