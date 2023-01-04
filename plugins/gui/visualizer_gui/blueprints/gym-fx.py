@@ -30,7 +30,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                    template_folder=plugin_folder+"/templates")
 
     # returns the config id for the best mse from table fe_training_error that has config.active == true
-    @bp.route("/gym-fx/<config_id>")
+    @bp.route("/gym-fx/<config_id>", methods=['POST', 'GET'])
     @login_required
     def gym_fx(config_id):
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
