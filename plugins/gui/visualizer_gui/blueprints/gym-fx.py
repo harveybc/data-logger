@@ -1,4 +1,3 @@
-
 # this file contains the blueprint for the gym-fx data_logger process
 
 from flask import Blueprint
@@ -33,7 +32,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def gym_fx(config_id):
         if request.method == 'POST':
             """ Creates a new register using Automap Base. """
-        	gym_fx_class = Base.classes.gym_fx
+            gym_fx_class = Base.classes.gym_fx
             new_reg = gym-fx()
             new_reg.validation_score = request.form['validation_score']
             new_reg.avg_score_v = request.form['avg_score_v']
@@ -42,16 +41,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             info = request.form['info' ]
             db = get_db()
             error = None
-        # perform query, the column classs names are configured in config_store.json
-        try:
-            # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5)
-            #res = db.session.query(Base.classes.gym_fx).join(Base.classes.gym_fx_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(
+            # create new register
+            try:
                 Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
-        except SQLAlchemyError as e:
-            error = str(e)
-            print("Error : ", error)
-            res = {'error_ca': error}
-        attr = getattr(res, "config_id")
-
-        return str(attr)
+            except SQLAlchemyError as e:
+                error = str(e)
+                print("Error : ", error)
+                res = {'error_ca': error}
+            attr = getattr(res, "config_id")
+            return str(attr)
     return bp
