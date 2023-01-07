@@ -40,8 +40,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 new_reg.avg_score = request.form['avg_score']
                 new_reg.score_v = request.form['score_v']
                 new_reg.avg_score_v = request.form['avg_score_v']
+                #info = json.loads(request.form['info' ])
                 info = json.loads(request.form['info' ])
-                new_reg.reward = info['reward']
+                print("Info : ", info)
+				new_reg.reward = info['reward']
                 new_reg.balance = info['balance']
                 new_reg.equity = info['equity']
                 new_reg.margin = info['margin']
