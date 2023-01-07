@@ -34,7 +34,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             """ Creates a new register using Automap Base. """
             # create new register
             try:
-<<<<<<< HEAD
                 with app.app_context():
                     gym_fx_class = Base.classes.gy m_fx
                     new_reg = gym_fx_class()
@@ -51,7 +50,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     db = get_db()
                     error = None
                     db.session.add(new_reg)
-=======
                 gym_fx_class = Base.classes.gym_fx_data
                 new_reg = gym_fx_class()
                 new_reg.validation_score = request.form['validation_score']
@@ -63,7 +61,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 error = None
                 db.session.add(new_reg)
                 db.session.commit()
->>>>>>> branch 'dev' of https://github.com/harveybc/data-logger
             except SQLAlchemyError as e:
                 error = str(e)
                 print("Error : ", error)
