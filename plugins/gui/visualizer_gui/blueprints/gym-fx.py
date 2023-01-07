@@ -34,7 +34,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             """ Creates a new register using Automap Base. """
             # create new register
             try:
-                gym_fx_class = Base.classes.gym_fx
+                gym_fx_class = Base.classes.gym_fx_data
                 new_reg = gym_fx_class()
                 new_reg.validation_score = request.form['validation_score']
                 new_reg.avg_score_v = request.form['avg_score_v']
