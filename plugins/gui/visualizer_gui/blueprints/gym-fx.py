@@ -57,7 +57,4 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             except SQLAlchemyError as e:
                 error = str(e)
                 print("Error : ", error)
-                res = {'error_ca': error}
-            attr = getattr(res, "config_id")
-            return str(attr)
     return bp
