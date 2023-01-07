@@ -19,6 +19,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import func, asc, desc
 import json
+from sqlalchemy.orm import Session
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
@@ -36,6 +37,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             try:
                 gym_fx_class = Base.classes.gym_fx_data
                 new_reg = gym_fx_class()
+                session = Session(db.engine)
                 new_reg.score = request.form['score']                
                 new_reg.avg_score = request.form['avg_score']
                 new_reg.score_v = request.form['score_v']
