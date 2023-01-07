@@ -32,18 +32,19 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def gym_fx(config_id):
         if request.method == 'POST':
             """ Creates a new register using Automap Base. """
-            gym_fx_class = Base.classes.gym_fx
-            new_reg = gym-fx()
-            new_reg.validation_score = request.form['validation_score']
-            new_reg.avg_score_v = request.form['avg_score_v']
-            new_reg.training_score = request.form[' training_score']
-            new_reg.avg_score = request.form['avg_score']
-            info = request.form['info' ]
-            db = get_db()
-            error = None
             # create new register
             try:
-                Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
+                with app.app_context():
+                    gym_fx_class = Base.classes.gy m_fx
+                    new_reg = gym_fx_class()
+                    new_reg.validation_score = request.form['validation_score']
+                    new_reg.avg_score_v = request.form['avg_score_v']
+                    new_reg.training_score = request.form[' training_score']
+                    new_reg.avg_score = request.form['avg_score']
+                    info = request.form['info' ]
+                    db = get_db()
+                    error = None
+                    db.session.add(new_reg)
             except SQLAlchemyError as e:
                 error = str(e)
                 print("Error : ", error)
