@@ -45,6 +45,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     db = get_db()
                     error = None
                     db.session.add(new_reg)
+                    db.session.commit()
             except SQLAlchemyError as e:
                 error = str(e)
                 print("Error : ", error)
