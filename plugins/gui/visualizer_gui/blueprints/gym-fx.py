@@ -36,7 +36,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             try:
                 gym_fx_class = Base.classes.gym_fx_data
                 new_reg = gym_fx_class()
-                new_reg['score'] = request.form['score']                
+                new_reg.score = request.form['score']                
                 new_reg.avg_score = request.form['avg_score']
                 new_reg.score_v = request.form[' score_v']
                 new_reg.avg_score_v = request.form['avg_score_v']
