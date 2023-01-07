@@ -26,7 +26,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     # construct the gym-fx blueprint using the plugin folder as template folder
     bp = Blueprint("gym_fx_bp", __name__,
                    template_folder=plugin_folder+"/templates")
-
+    database = db
     # create the blueprint for the post and get methods
     @bp.route("/gym-fx/<config_id>", methods=['POST', 'GET'])
     @login_required
@@ -37,7 +37,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             try:
                 gym_fx_class = Base.classes.gym_fx_data
                 new_reg = gym_fx_class()
-                session = Session(db.engine)
+                session = Session(database.engine)
                 new_reg.score = request.form['score']                
                 new_reg.avg_score = request.form['avg_score']
                 new_reg.score_v = request.form['score_v']
