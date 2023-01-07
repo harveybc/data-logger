@@ -103,8 +103,7 @@
                             { "name" : "equity" },
                             { "name" : "score_v" },
                             { "name" : "avg_score_v" },
-                            { "name" : "margin" },
-                            
+                            { "name" : "margin" },                        
                             { "name" : "action" },
                             { "name" : "num_closes" },
                             { "name" : "reward" },
