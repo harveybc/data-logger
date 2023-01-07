@@ -35,7 +35,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             # create new register
             try:
                 with app.app_context():
-                    gym_fx_class = Base.classes.gy m_fx
+                    gym_fx_class = Base.classes.gym_fx
                     new_reg = gym_fx_class()
                     new_reg.validation_score = request.form['validation_score']
                     new_reg.avg_score_v = request.form['avg_score_v']
