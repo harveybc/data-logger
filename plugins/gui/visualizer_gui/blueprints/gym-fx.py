@@ -49,7 +49,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 #new_reg.balance = info['balance']
                 #new_reg.equity = info['equity']
                 #new_reg.margin = info['margin']
-                #new_reg.config_id = config_id
+                new_reg.config_id = config_id
                 db = get_db()
                 error = None
                 session.add(new_reg)
