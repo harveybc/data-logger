@@ -58,5 +58,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 error = str(e)
                 print("Error : ", error)
                 new_reg = error
-            return new_reg
+                return new_reg
+            return as_dict(new_reg)
     return bp
