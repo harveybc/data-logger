@@ -37,12 +37,16 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 with app.app_context():
                     gym_fx_class = Base.classes.gy m_fx
                     new_reg = gym_fx_class()
-                    new_reg.validation_score = request.form['validation_score']
+                    new_reg.score = request.form['score_v']
                     new_reg.avg_score_v = request.form['avg_score_v']
-                    new_reg.score = request.form[' training_score']
+                    new_reg.score_v = request.form[' training_score']
                     new_reg.avg_score = request.form['avg_score']
                     info = json.loads(request.form['info' ])
                     new_reg.reward = info['reward']
+                    new_reg.balance = info['balance']
+                    new_reg.equity = info['equity']
+                    new_reg.margin = info['margin']
+                    new_reg.config_id = config_id
                     db = get_db()
                     error = None
                     db.session.add(new_reg)
