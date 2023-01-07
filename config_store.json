@@ -85,7 +85,7 @@
                             { "name" : "balance" },
                             { "name" : "equity" },
                             { "name" : "score" },
-                            { "name" : "score_v" },
+                            { "name" : "score_v" }, 
                             { "name" : "avg_score" },
                             { "name" : "avg_score_v" },
                             { "name" : "margin" },
