@@ -81,11 +81,12 @@
                     {
                         "name": "gym_fx_data",
                         "columns": [
+                            { "name" : "starting_balance" },
                             { "name" : "reward" },
                             { "name" : "balance" },
                             { "name" : "equity" },
                             { "name" : "score" },
-                            { "name" : "score_v" }, 
+                            { "name" : "score_v" },
                             { "name" : "avg_score" },
                             { "name" : "avg_score_v" },
                             { "name" : "margin" },
@@ -98,18 +99,21 @@
                     {
                         "name": "gym_fx_validation_plot",
                         "columns": [
-                            { "name" : "reward" },                            
+                            { "name" : "reward" },
                             { "name" : "balance" },
                             { "name" : "equity" },
                             { "name" : "score_v" },
                             { "name" : "avg_score_v" },
-                            { "name" : "margin" },                        
+                            { "name" : "margin" },
+                            
                             { "name" : "action" },
                             { "name" : "num_closes" },
                             { "name" : "reward" },
-                            { "name" : "order_status" },                            
+                            { "name" : "order_status" },
+                            
                             { "name" : "tick_count" },
-                            { "name" : "tick_date" },                            
+                            { "name" : "tick_date" },
+                            
                             {
                                 "name" : "config_id",
                                 "foreign_key" : "gym_fx_config.id"
@@ -217,6 +221,179 @@
                                 "col_type" : "Integer"
                             }
                             
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Grasslands",
+                "tables": [ 	
+                    {
+                        "name": "grasslands_config",
+                        "columns": [
+                            {
+                                "name": "description",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "device_config",
+                                "col_type": "String" 
+                            }
+                        ]
+                    },
+                    {
+                        "name": "grasslands",
+                        "columns": [
+                            { "name" : "area_ha"},
+                            {
+                                "name": "quality",
+                                "col_type": "Integer" 
+                            },
+                            { "name" : "height" },
+                            { "name" : "leaves" },
+                            { "name" : "stolons" },
+                            { "name" : "internode" },
+                            { "name" : "kg_ha" },
+                            { "name" : "total_capacity" },
+                            { "name" : "used_capacity" },
+                            { "name" : "seed_composition"},
+                            { "name" : "days_from_rotation"},
+                            { "name" : "days_to_rotation"},
+                            { "name" : "last_fertilization"},
+                            {
+                                "name": "last_fertilization_details",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "drone_measurements",
+                        "columns": [ 
+                            {
+                                "name" : "grassland_id",
+                                "col_type" : "Integer",
+                                "foreign_key" : "grasslands.id"
+                            },
+                            { "name" : "distance_to_floor" },
+                            { "name" : "distance_to_plant" },
+                            { "name" : "coord_lat" },
+                            { "name" : "coord_long" },
+                            { "name" : "coord_alt" },
+                            {
+                                "name": "device_id",
+                                "col_type": "Integer" 
+                            }
+                        ]
+                    }
+                ]	
+            },
+            {
+                "name": "IoT",
+                "tables": [ 	
+                    {
+                        "name": "iot_config",
+                        "columns": [
+                            {
+                                "name": "description",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "device_config",
+                                "col_type": "String" 
+                            }
+                        ]
+                    }, 	
+                    {
+                        "name": "iot_greenhouses",
+                        "columns": [
+                            { "name" : "thermometer" },
+                            { "name" : "hygrometer" },
+                            { "name" : "co2_sensor" },
+                            { "name" : "light_sensor" },
+                            { "name" : "barometer" },
+                            
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "iot_weather_stations",
+                        "columns": [
+                            { "name" : "thermometer" },
+                            { "name" : "hygrometer" } ,
+                            { "name" : "barometer" },
+                            { "name" : "anemometer" },
+                            { "name" : "pluviometer" },
+                            { "name" : "co2_sensor" },
+                            { "name" : "light_sensor" },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "iot_cattle",
+                        "columns": [
+                            { "name" : "weight" },
+                            { "name" : "bcs" },
+                            { "name" : "last_heat_days" },
+                            { "name" : "last_served_days" },
+                            { "name" : "consecutive_services" },
+                            { "name" : "pregnant" },
+                            { "name" : "pregnancy_count" },
+                            { "name" : "abort_count" },
+                            {
+                                "name": "cow_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "iot_milking_system",
+                        "columns": [
+                            { "name" : "production" },
+                            { "name" : "duration" },
+                            {
+                                "name": "cow_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name": "station_id",
+                                "col_type": "Integer" 
+                            },
+                            {
+                                "name" : "config_id",
+                                "col_type" : "Integer"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "iot_cooling_tanks",
+                        "columns": [
+                            { "name" : "level_sensor" }
                         ]
                     }
                 ]

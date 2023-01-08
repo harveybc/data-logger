@@ -37,7 +37,7 @@ On Linux use the .sh scripts, on Windows use the .bat scripts.
 5. Install python package:
 > python setup.py install
 6. Create a test database (use .\scripts\migrate.bat on windows):
-> ./scripts/migrate.sh
+> sh ./scripts/migrate.sh
 7. (Optional) Perform tests:
 > python setup.py test
 8. (Optional) Generate Sphinx Documentation:
@@ -50,7 +50,7 @@ For ease of use, a script for setting the environment variables and executing th
 
 * For Linux and Mac:
 
-> ./data_logger.sh
+> sh ./data_logger.sh
 
 * For Windows:
 
@@ -60,7 +60,7 @@ For ease of use, a script for setting the environment variables and executing th
 
 The Swagger UI Web interface provides API documentation and is installed by default at:
 
-[http://localhost:5000/ui](http://localhost:5000/ui)
+[http://localhost:60500/ui](http://localhost:5000/ui)
 
 It documents the parameters for each API endpoint configured in the core plugin and alows to test them with your own parameters.
 
