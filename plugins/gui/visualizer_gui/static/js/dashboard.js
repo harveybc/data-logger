@@ -45,14 +45,14 @@ export default {
           return axios_instance; 
         },
         // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
-        best_online() {
+        gymfx_best_online_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/best_online')
+          axios_instance.get('/gymfx_best_online_')
           .then((response) => {
             //console.log(response.data);
-            this.best_online_ = response.data;
+            this.gymfx_best_online_ = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
