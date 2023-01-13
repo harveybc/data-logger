@@ -64,9 +64,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         return render_template("/dashboard/index.html", p_config = p_config_gui)
 
     # returns the config id for the best mse from table fe_training_error that has config.active == true
-    @bp.route("/best_online")
+    @bp.route("/gymfx_best_online_")
     @login_required
-    def best_online():
+    def gymfx_best_online_():
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
