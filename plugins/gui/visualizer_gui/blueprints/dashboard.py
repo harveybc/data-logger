@@ -66,14 +66,14 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     # returns the config id for the best mse from table fe_training_error that has config.active == true
     @bp.route("/gymfx_best_online_")
     @login_required
-    def gymfx_best_online_():
+    def best_online():
         """ Returns the config id for the best mse from table fe_training_error that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            # res = db.session.query(func.min(Base.classes.fe_training_error.mse)).filter_by('some name', id = 5) 
-            res = db.session.query(Base.classes.fe_training_error).join(Base.classes.fe_config, Base.classes.fe_training_error.config_id == Base.classes.fe_config.id).filter(Base.classes.fe_config.active == True).order_by(asc(Base.classes.fe_training_error.mse)).first_or_404()
+            # query for the maximum reward from the gym_fx_data table for the config_id whose gymfx_config.active == True
+            max_reward = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(asc(Base.classes.gym_fx_data.reward)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
