@@ -20,10 +20,10 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        this.best_online_ = this.gymfx_best_online_();
-        this.min_training_mse_ = this.min_training_mse();
-        this.best_config_ = this.best_config();
-        this.min_validation_mse_ = this.min_validation_mse();
+        this.gymfx_best_online_ = this.gymfx_best_online_();
+        this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
+        this.gymfx_best_config_ = this.gymfx_best_config_();
+        this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
     },  
     methods: {
         // returns an axios instance for basic authentication
@@ -45,14 +45,14 @@ export default {
           return axios_instance; 
         },
         // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
-        gymfx_best_online_() {
+        best_online() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gymfx_best_online_')
+          axios_instance.get('/best_online')
           .then((response) => {
             //console.log(response.data);
-            this.gymfx_best_online_ = response.data;
+            this.best_online_ = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
