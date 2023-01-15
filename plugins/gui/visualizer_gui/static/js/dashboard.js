@@ -40,7 +40,7 @@ export default {
 
         // returns an axios instance with configured basic authentication
         // TODO: change to use current user
-        axios_auth_instance(){
+        gymfx_best_online_(){
           let axios_instance = this.axiosBasicAuth("test", "pass");
           return axios_instance; 
         },
@@ -60,7 +60,7 @@ export default {
           });
         },
         // call request that returns the best mse from table fe_training_error that has config.active == true
-        min_training_mse(){
+        gymfx_max_training_score_(){
           let axios_instance = this.axios_auth_instance();
             // use the response of api request
             axios_instance.get('/min_training_mse')
@@ -73,7 +73,7 @@ export default {
             });        
         },
         // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        best_config() {
+        gymfx_best_config_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
@@ -87,7 +87,7 @@ export default {
           });
         },
         // call request that returns the best mse from table fe_validation_error that has config.active == false
-        min_validation_mse(){
+        gymfx_max_validation_score_(){
           let axios_instance = this.axios_auth_instance();
           // use the response of api request
           axios_instance.get('/min_validation_mse')
