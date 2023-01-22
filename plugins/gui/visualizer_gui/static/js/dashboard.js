@@ -48,7 +48,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gym_fx_best_online')
+          axios_instance.get('/gym_fx_best_online_')
           .then((response) => {
             //console.log(response.data);
             this.best_online_ = response.data;
@@ -62,7 +62,7 @@ export default {
         gymfx_max_training_score_(){
           let axios_instance = this.axios_auth_instance();
             // use the response of api request
-            axios_instance.get('/gymfx_max_training_score')
+            axios_instance.get('/gymfx_max_training_score_')
             .then((response) => {
               this.min_training_mse_ = response.data;
               return response.data;
@@ -76,7 +76,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gymfx_best_config')
+          axios_instance.get('/gymfx_best_config_')
           .then((response) => {
             this.best_config_ = response.data;
             return response.data;
@@ -89,7 +89,7 @@ export default {
         gymfx_max_validation_score_(){
           let axios_instance = this.axios_auth_instance();
           // use the response of api request
-          axios_instance.get('/gymfx_max_validation_score')
+          axios_instance.get('/gymfx_max_validation_score_')
           .then((response) => {
             this.min_validation_mse_ = response.data;
             return response.data;
