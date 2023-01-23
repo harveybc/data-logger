@@ -20,10 +20,10 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        this.best_online_ = this.best_online();
-        this.min_training_mse_ = this.min_training_mse();
-        this.best_config_ = this.best_config();
-        this.min_validation_mse_ = this.min_validation_mse();
+        this.gymfx_best_online_ = this.gymfx_best_online_();
+        this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
+        this.gymfx_best_config_ = this.gymfx_best_config_();
+        this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
     },  
     methods: {
         // returns an axios instance for basic authentication
@@ -37,7 +37,6 @@ export default {
             }
           });
         },
-
         // returns an axios instance with configured basic authentication
         // TODO: change to use current user
         axios_auth_instance(){
@@ -45,11 +44,11 @@ export default {
           return axios_instance; 
         },
         // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
-        best_online() {
+        gymfx_best_online_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/best_online')
+          axios_instance.get('/gym_fx_best_online_')
           .then((response) => {
             //console.log(response.data);
             this.best_online_ = response.data;
@@ -60,10 +59,10 @@ export default {
           });
         },
         // call request that returns the best mse from table fe_training_error that has config.active == true
-        min_training_mse(){
+        gymfx_max_training_score_(){
           let axios_instance = this.axios_auth_instance();
             // use the response of api request
-            axios_instance.get('/min_training_mse')
+            axios_instance.get('/gymfx_max_training_score_')
             .then((response) => {
               this.min_training_mse_ = response.data;
               return response.data;
@@ -73,11 +72,11 @@ export default {
             });        
         },
         // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        best_config() {
+        gymfx_best_config_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/best_config')
+          axios_instance.get('/gymfx_best_config_')
           .then((response) => {
             this.best_config_ = response.data;
             return response.data;
@@ -87,10 +86,10 @@ export default {
           });
         },
         // call request that returns the best mse from table fe_validation_error that has config.active == false
-        min_validation_mse(){
+        gymfx_max_validation_score_(){
           let axios_instance = this.axios_auth_instance();
           // use the response of api request
-          axios_instance.get('/min_validation_mse')
+          axios_instance.get('/gymfx_max_validation_score_')
           .then((response) => {
             this.min_validation_mse_ = response.data;
             return response.data;
