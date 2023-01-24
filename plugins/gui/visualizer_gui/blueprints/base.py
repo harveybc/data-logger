@@ -129,6 +129,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     @bp.errorhandler(404)
     def not_found_error(error):
+        print("Error : " , str(error))
         return render_template("error_pages/page-404.html"), 404
 
     @bp.errorhandler(500)
