@@ -73,15 +73,15 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         # perform query, the column classs names are configured in config_store.json
         try:
             # query for the maximum reward from the gym_fx_data table for the config_id whose gymfx_config.active == True
-            max_reward = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
+            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
             print("SQLAlchemyError : " , error)
-            res = { 'error_ca' : error}
+            return 0
         except Exception as e:
             error = str(e)
             print("Error : " , error)
-            res = { 'error_ca' : error}
+            return 0
         attr = getattr(res, "config_id")
         return str(attr)
     
