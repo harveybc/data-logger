@@ -76,6 +76,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             max_reward = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
+            print("SQLAlchemyError : " , error)
+            res = { 'error_ca' : error}
+        except Exception as e:
+            error = str(e)
             print("Error : " , error)
             res = { 'error_ca' : error}
         attr = getattr(res, "config_id")
