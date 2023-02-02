@@ -42,6 +42,20 @@ def seed(app, db, table_name):
                 db.session.add(tmp2)
                 db.session.commit()
                 _logger.info("fe_validation_error table seeded") 
+            elif table_name == "gym_fx_config":
+                tmp0 =  table_base(initial_capital=10000, active=-True)
+                tmp1 =  table_base(initial_capital=1000, active=-True)
+                db.session.add(tmp0)
+                db.session.add(tmp1)
+                db.session.commit()
+                _logger.info("gym_fx_config table seeded") 
+            elif table_name == "gym_fx_data":
+                tmp0 =  table_base(score=10000, score_v=9000, config_id=-1)
+                tmp1 =  table_base(score=1000, score_v=900, config_id=-2)
+                db.session.add(tmp0)
+                db.session.add(tmp1)
+                db.session.commit()
+                _logger.info("gym_fx_data table seeded") 
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
