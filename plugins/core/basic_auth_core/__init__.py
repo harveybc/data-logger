@@ -59,8 +59,8 @@ class BasicAuthCore():
         process_table_seed(app,db, "fe_training_error")
         process_table_seed(app,db, "fe_validation_error")
         process_table_seed(app,db, "fe_config")
-        process_table_seed(app,db, "fe_gym_fx_data")
-        process_table_seed(app,db, "fe_gym_fx_config")
+        process_table_seed(app,db, "gym_fx_data")
+        process_table_seed(app,db, "gym_fx_config")
 
         
 
