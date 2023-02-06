@@ -60,16 +60,16 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return new_reg
             return as_dict(new_reg)
     
-    # returns the config id for the best mse from table gym_fx_data that has config.active == true
+    # returns the config id for the best score from table gym_fx_data that has config.active == true
     @bp.route('/gymfx_best_online_')
     @login_required
     def gymfx_best_online_():
-        """ Returns the config id for the best mse from table gym_fx_data that has config.active == true. """
+        """ Returns the config id for the best score from table gym_fx_data that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            # query for the maximum reward from the gym_fx_data table for the config_id whose gymfx_config.active == True
+            # query for the maximum score from the gym_fx_data table for the config_id whose gymfx_config.active == True
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
         except SQLAlchemyError as e:
             error = str(e)
@@ -85,17 +85,17 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/gymfx_max_training_score_")
     @login_required
     def gymfx_max_training_score_():
-        """ Returns the best mse from table gym_fx_data that has config.active == true. """
+        """ Returns the best score from table gym_fx_data that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
-        except SQLAlchemyError as e:
+        except Exception as e:
             error = str(e)
             print("Error : " , error)
-            res = { 'error_ca' : error}
-        attr = getattr(res, "mse")
+            return error
+        attr = getattr(res, "score")
         return str(attr)
 
     @bp.route("/gymfx_best_config_")
@@ -107,10 +107,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
-        except SQLAlchemyError as e:
+        except Exception as e:
             error = str(e)
             print("Error : " , error)
-            res = { 'error_ca' : error}
+            return error
         attr = getattr(res, "config_id")
         return str(attr)
            
@@ -123,11 +123,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         # perform query, the column classs names are configured in config_store.json
         try:
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
-        except SQLAlchemyError as e:
+        except Exception as e:
             error = str(e)
             print("Error : " , error)
-            res = { 'error_ca' : error}
-        attr = getattr(res, "mse")
+            return error
+        attr = getattr(res, "score")
         return str(attr)
     
     @bp.route("/online_mse_list")
