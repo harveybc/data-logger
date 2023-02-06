@@ -44,7 +44,7 @@ def seed(app, db, table_name):
                 _logger.info("fe_validation_error table seeded") 
             elif table_name == "gym_fx_config":
                 tmp0 =  table_base(initial_capital=10000, active=True)
-                tmp1 =  table_base(initial_capital=1000, active=True)
+                tmp1 =  table_base(initial_capital=1000, active=False)
                 db.session.add(tmp0)
                 db.session.add(tmp1)
                 db.session.commit()
