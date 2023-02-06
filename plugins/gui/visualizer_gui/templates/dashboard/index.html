@@ -400,7 +400,7 @@
             function getPerformanceData() {
                 // get a list of lists containing the x,y = [date, mse] points for the best online process
                 xy_points = online_mse_list();
-                console.log("after:"+xy_points);
+                console.log("after:" + xy_points); 
                 // Zip the generated y values with the x values
                 //var res = []
                 //for (var i = 0; i < data.length; ++i) {
@@ -442,7 +442,7 @@
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
             function update() {
-                xy_points=getPerformanceata();
+                xy_points=getPerformanceData();
                 // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
