@@ -14,7 +14,8 @@
             "rt_plot": {
                 "title": "Online Training Score",
                 "height": "300px",
-                "interval": 1
+                "interval": 1,
+                "num_points" : 100
             },
             "val_plot": {
                 "title": "Validation Score",
