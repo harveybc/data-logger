@@ -134,8 +134,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @login_required
     def gymfx_val_plot_():
         """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
-        # table base class
-        #Base.prepare(db.engine)
+        args = request.args
+        num_points = args.get("num_points", default=100, type=int)
+        
         # perform query, the column classs names are configured in config_store.json
         try:
             best = int(gymfx_best_online_())
