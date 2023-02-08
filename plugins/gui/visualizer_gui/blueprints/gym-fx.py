@@ -98,10 +98,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "score")
         return str(attr)
 
-    @bp.route("/gymfx_best_config_")
+    @bp.route("/gymfx_best_offline_")
     @login_required
-    def gymfx_best_config_():
-        """ Returns the config id for the best mse from table gym_fx_data that has config.active == false. """
+    def gymfx_best_offline_():
+        """ Returns the config id for the best score from table gym_fx_data that has config.active == false. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
@@ -117,7 +117,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/gymfx_max_validation_score_")
     @login_required
     def gymfx_max_validation_score_():
-        """ Returns the best mse from table gym_fx_data that has config.active == false. """
+        """ Returns the best score_v from table gym_fx_data that has config.active == false. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
@@ -130,22 +130,20 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "score")
         return str(attr)
     
-    @bp.route("/online_mse_list")
+    @bp.route("/gymfx_online_plot_")
     @login_required
-    def online_mse_list():
-        """ Returns the best mse from table gym_fx_data that has config.active == true. """
+    def gymfx_val_plot_():
+        """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(asc(Base.classes.gym_fx_data.mse)).first_or_404()
-            best_online_config = getattr(res, "config_id")
-            res = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_data.config_id == best_online_config).order_by(desc(Base.classes.gym_fx_data.timestamp)).limit(10).all()
-            # convert to list of lists of timestamp and mse
-            res = [[row.timestamp, row.mse] for row in res]
-        except SQLAlchemyError as e:
+            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.id)).first_or_404()
+        except Exception as e:
             error = str(e)
             print("Error : " , error)
-            res = { 'error_ca' : error}        
-        return json.dumps(res)
+            return error
+        attr = getattr(res, "score")
+        return str(attr)
+
     return bp
