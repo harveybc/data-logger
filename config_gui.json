@@ -9,7 +9,7 @@
             "box_3_title": "Validation Score",
             "box_0_value": "gymfx_best_online_",
             "box_1_value": "gymfx_max_training_score_",
-            "box_2_value": "gymfx_best_config_",
+            "box_2_value": "gymfx_best_offline_",
             "box_3_value": "gymfx_max_validation_score_",
             "rt_plot": {
                 "title": "Online Training Score",
