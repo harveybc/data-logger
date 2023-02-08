@@ -4,6 +4,7 @@ export default {
     data() {
         return { 
             xy_points_: [],
+            points: [],
             process_list: [0,1,2,3],
             process: 0,
             status : 'Halted',
@@ -97,7 +98,21 @@ export default {
             console.log(error);
             return 0;
           });        
-      },
+        },
+        // call request that returnsvalues for real time training monitoring
+        gymfx_online_plot_() {
+          // setup authentication
+          let axios_instance = this.axios_auth_instance();
+          // use the result of api request
+          axios_instance.get('/gymfx_online_plot_')
+          .then((response) => {
+            this.xy_points = response.data;
+            return response.data;
+          }, (error) => {
+            console.log(error);
+            return 0;
+          });
+        },
         // define starting field values
         field_start_values(){
                 return {

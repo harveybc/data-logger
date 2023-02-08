@@ -136,16 +136,20 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
         args = request.args
         num_points = args.get("num_points", default=100, type=int)
-        
+
         # perform query, the column classs names are configured in config_store.json
         try:
             best = int(gymfx_best_online_())
-            res = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_config.active == False, config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
+            points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_config.active == False, config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
+            res = []
+            count = 0
+            for p in points:
+                res.append([count, p.score])
+                count += 1
         except Exception as e:
             error = str(e)
             print("Error : " , error)
             return error
-        attr = getattr(res, "score")
-        return str(attr)
+        return str(res)
 
     return bp

@@ -366,7 +366,7 @@
              * Flot Interactive Chart
              * -----------------------
              */
-            var data = [], totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+            var data = [], totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
             
             
             /* QUITAR */
@@ -399,7 +399,7 @@
             // returns the last points from the best_online process
             function getPerformanceData() {
                 // get a list of lists containing the x,y = [date, mse] points for the best online process
-                xy_points = online_mse_list();
+                xy_points = gymfx_online_plot_();
                 console.log("after:" + xy_points); 
                 // Zip the generated y values with the x values
                 //var res = []
@@ -446,7 +446,7 @@
                 // xy_points=getRandomData();
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
-                app.best_online();
+                // app.best_online();
                 interactive_plot.setData([ "|{ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }|" ]);
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
                 // Since the axes don't change, we don't need to call plot.setupGrid()
