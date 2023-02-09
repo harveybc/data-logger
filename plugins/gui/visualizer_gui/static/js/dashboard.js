@@ -18,6 +18,7 @@ export default {
     }, 
     components: {
       'my-component': { 
+        template: '#my-template',
           data: function() {
             return {
               xy_points : this.xy_points 
