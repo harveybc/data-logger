@@ -18,25 +18,26 @@ export default {
     }, 
     components: {
       'my-component': { 
-        data: function() {
-          return {
-            xy_points : this.xy_points 
+          data: function() {
+            return {
+              xy_points : this.xy_points 
+            }
+          },
+          methods: {
+            // call request that returnsvalues for real time training monitoring
+            gymfx_online_plot_() {
+            // setup authentication
+            let axios_instance = this.axios_auth_instance();
+            // use the result of api request
+            axios_instance.get('/gymfx_online_plot_')
+            .then((response) => {
+              this.xy_points = response.data;
+              return response.data;
+            }, (error) => {
+              console.log(error);
+              return 0;
+            });
           }
-        },
-        methods: {
-          // call request that returnsvalues for real time training monitoring
-          gymfx_online_plot_() {
-          // setup authentication
-          let axios_instance = this.axios_auth_instance();
-          // use the result of api request
-          axios_instance.get('/gymfx_online_plot_')
-          .then((response) => {
-            this.xy_points = response.data;
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });
         }
       }
     },
