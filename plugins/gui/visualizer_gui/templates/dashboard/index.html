@@ -400,7 +400,7 @@
             function getPerformanceData() {
                 // get a list of lists containing the x,y = [date, mse] points for the best online process
                 xy_points = [];
-                window.app.gymfx_online_plot_().then((result) => {
+                app.gymfx_online_plot_().then((result) => {
                   xy_points = window.app.xy_points;
                 })
                 console.log("after:" + xy_points); 
