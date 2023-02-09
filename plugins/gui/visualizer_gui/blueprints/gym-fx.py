@@ -140,7 +140,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         # perform query, the column classs names are configured in config_store.json
         try:
             best = int(gymfx_best_online_())
-            points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_config.active == True, config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
+            points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_config.config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
             res = []
             count = 0
             for p in points:
