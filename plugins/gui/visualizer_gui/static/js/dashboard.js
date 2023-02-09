@@ -25,6 +25,7 @@ export default {
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
         this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
+        this.gymfx_online_plot_ = this.gymfx_online_plot_();
     },  
     methods: {
         // returns an axios instance for basic authentication
@@ -73,7 +74,7 @@ export default {
             });        
         },
         // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        gymfx_best_offline_() {
+        async gymfx_best_offline_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
