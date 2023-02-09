@@ -73,11 +73,11 @@ export default {
             });        
         },
         // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        gymfx_best_config_() {
+        gymfx_best_offline_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gymfx_best_config_')
+          axios_instance.get('/gymfx_best_offline_')
           .then((response) => {
             this.best_config_ = response.data;
             return response.data;
