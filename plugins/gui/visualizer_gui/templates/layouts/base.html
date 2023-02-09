@@ -43,15 +43,18 @@
 
 </div>
 <!-- ./wrapper -->
-
+<script>
+    const { createApp } = Vue
+        window.app = createApp(MyModule).mount('#main_content')
+</script>
+    
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
 
 <!-- Specific Page JS goes HERE  -->
 {% block module_javascript %}{% endblock module_javascript %} 
-    const { createApp } = Vue
-    window.app = createApp(MyModule).mount('#main_content')
+    
 </script>
 </body>
 </html>
