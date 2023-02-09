@@ -48,7 +48,7 @@
     import "/static/js/buffer-6.0.3.min.js"
     import MyModule from "/static/js/dashboard.js"
     const { createApp } = Vue
-    vm = createApp(MyModule).mount('#main_content')
+    createApp(MyModule).mount('#main_content')
 </script>
 <my-component ref="vue_component"></my-component>
 <!-- Specific Page JS goes HERE  -->
