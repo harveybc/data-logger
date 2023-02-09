@@ -47,14 +47,13 @@
     const { createApp } = Vue
         window.app = createApp(MyModule).mount('#main_content')
 </script>
-    
+<script type="module">
+    import "/static/js/buffer-6.0.3.min.js"
+    import MyModule from "/static/js/dashboard.js"
+</script>    
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
 
-<!-- Specific Page JS goes HERE  -->
-{% block module_javascript %}{% endblock module_javascript %} 
-    
-</script>
 </body>
 </html>
