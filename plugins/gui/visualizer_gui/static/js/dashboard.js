@@ -23,7 +23,7 @@ export default {
         //this.get_status();
         this.gymfx_best_online_ = this.gymfx_best_online_();
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
-        this.gymfx_best_config_ = this.gymfx_best_config_();
+        this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
     },  
     methods: {
