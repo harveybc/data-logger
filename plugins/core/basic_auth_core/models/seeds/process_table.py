@@ -52,6 +52,7 @@ def seed(app, db, table_name):
             elif table_name == "gym_fx_data":
                 tmp0 =  table_base(score=10000, score_v=9000, config_id=1)
                 tmp1 =  table_base(score=1000, score_v=900, config_id=2)
+                tmp1 =  table_base(score=1200, score_v=9900, config_id=1)
                 db.session.add(tmp0)
                 db.session.add(tmp1)
                 db.session.commit()
