@@ -40,7 +40,7 @@
         <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-
+    <my-component ref="vue_component"></my-component>
 </div>
 <!-- ./wrapper -->
 
@@ -50,7 +50,7 @@
     const { createApp } = Vue
     createApp(MyModule).mount('#main_content')
 </script>
-<my-component ref="vue_component"></my-component>
+
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
