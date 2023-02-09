@@ -16,6 +16,7 @@ export default {
 
         }
     }, 
+    components: { 'my-component': myComponent },
     // initialize values
     created() {
         //this.get_process_list();
