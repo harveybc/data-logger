@@ -16,7 +16,30 @@ export default {
 
         }
     }, 
-    components: { 'my-component': myComponent },
+    components: {
+      'my-component': { 
+        data: function() {
+          return {
+            xy_points : this.xy_points 
+          }
+        },
+        methods: {
+          // call request that returnsvalues for real time training monitoring
+          gymfx_online_plot_() {
+          // setup authentication
+          let axios_instance = this.axios_auth_instance();
+          // use the result of api request
+          axios_instance.get('/gymfx_online_plot_')
+          .then((response) => {
+            this.xy_points = response.data;
+            return response.data;
+          }, (error) => {
+            console.log(error);
+            return 0;
+          });
+        }
+      }
+    },
     // initialize values
     created() {
         //this.get_process_list();
@@ -26,7 +49,7 @@ export default {
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
         this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
-        this.gymfx_online_plot_ = this.gymfx_online_plot_();
+        //this.gymfx_online_plot_ = this.gymfx_online_plot_();
     },  
     methods: {
         // returns an axios instance for basic authentication
@@ -75,7 +98,7 @@ export default {
             });        
         },
         // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        async gymfx_best_offline_() {
+        gymfx_best_offline_() {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
@@ -100,20 +123,6 @@ export default {
             console.log(error);
             return 0;
           });        
-        },
-        // call request that returnsvalues for real time training monitoring
-        gymfx_online_plot_() {
-          // setup authentication
-          let axios_instance = this.axios_auth_instance();
-          // use the result of api request
-          axios_instance.get('/gymfx_online_plot_')
-          .then((response) => {
-            this.xy_points = response.data;
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });
         },
         // define starting field values
         field_start_values(){
