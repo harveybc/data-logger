@@ -21,7 +21,7 @@ export default {
         template: '#my-template',
           data: function() {
             return {
-              xy_points : this.xy_points 
+              xy_points : this.$parent.xy_points 
             }
           },// initialize values
           created() {
@@ -30,17 +30,17 @@ export default {
           methods: {
             // call request that returnsvalues for real time training monitoring
             gymfx_online_plot_() {
-            // setup authentication
-            let axios_instance = this.axios_auth_instance();
-            // use the result of api request
-            axios_instance.get('/gymfx_online_plot_')
-            .then((response) => {
-              this.xy_points = response.data;
-              return response.data;
-            }, (error) => {
-              console.log(error);
-              return 0;
-            });
+              // setup authentication
+              let axios_instance = this.$parent.axios_auth_instance();
+              // use the result of api request
+              axios_instance.get('/gymfx_online_plot_')
+              .then((response) => {
+                this.$parent.xy_points = response.data;
+                return response.data;
+              }, (error) => {
+                console.log(error);
+                return 0;
+              });
           }
         }
       }
