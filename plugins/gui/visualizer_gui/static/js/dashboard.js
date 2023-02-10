@@ -23,7 +23,10 @@ export default {
             return {
               xy_points : this.xy_points 
             }
-          },
+          },// initialize values
+          created() {
+              this.gymfx_online_plot_ = this.gymfx_online_plot_();
+          },  
           methods: {
             // call request that returnsvalues for real time training monitoring
             gymfx_online_plot_() {
