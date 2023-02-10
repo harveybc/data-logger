@@ -315,7 +315,11 @@
 
         // when page finishes loading, sets the values to the ones from data
         $(document).ready(function () {
-            // Calls getPerformanceData to get a JSON from singularity
+          xy_points = [];
+                window.vm.$refs.vue_component.gymfx_online_plot_().then((result) => {
+                  xy_points = window.vm.$refs.vue_component.xy_points;
+                })
+                console.log("after:" + xy_points); 
 /*            xy_points=getRandomData();
             
 
@@ -450,7 +454,7 @@
                 //total_points = xy_points.length;
                 //var tmp = getRandomData();
                 // app.best_online();
-                interactive_plot.setData([ "|{ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }|" ]);
+                interactive_plot.setData(xy_points);
                 //document.getElementById("testFrame").innerHTML = xy_points.toString();
                 // Since the axes don't change, we don't need to call plot.setupGrid()
                 //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
