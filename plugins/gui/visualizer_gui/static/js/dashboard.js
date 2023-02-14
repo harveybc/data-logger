@@ -12,30 +12,12 @@ export default {
             min_training_mse_: 0.0,
             best_config_ : 1,
             min_validation_mse_ : 0.0
-
-
         }
     }, 
     mounted() {
       this.gymfx_online_plot_ = this.gymfx_online_plot_();
+      this.xy_points_ = JSON.parse(this.gymfx_online_plot_);
       console.log("after:" + xy_points); 
-    },
-    components: {
-      'my-component': { 
-        template: '#my-template',
-          data: function() {
-            return {
-              xy_points : this.$parent.xy_points 
-            }
-          },// initialize values
-          created() {
-              
-          },  
-          methods: {
-            // call request that returnsvalues for real time training monitoring
-            
-        }
-      }
     },
     // initialize values
     created() {
