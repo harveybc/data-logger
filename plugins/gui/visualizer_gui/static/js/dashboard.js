@@ -17,11 +17,9 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         //console.log(response.data);
-        this.xy_points_ = JSON.parse(response.data);
-        return this.xy_points_;
+        this.xy_points_ = response.data;
       }, (error) => {
         console.log(error);
-        return 0;
       });
       
       console.log("after:" + this.xy_points); 
