@@ -18,11 +18,12 @@ export default {
       this.gymfx_online_plot_().then((response) => {
         //console.log(response.data);
         this.xy_points_ = response.data;
+        console.log("after:" + this.xy_points); 
       }, (error) => {
         console.log(error);
       });
       
-      console.log("after:" + this.xy_points); 
+      
     },
     // initialize values
     created() {
