@@ -105,7 +105,7 @@ export default {
         },
         gymfx_online_plot_() {
           // setup authentication
-          let axios_instance = this.$parent.axios_auth_instance();
+          let axios_instance = this.axios_auth_instance();
           // use the result of api request
           axios_instance.get('/gymfx_online_plot_')
           .then((response) => {
