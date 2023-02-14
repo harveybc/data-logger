@@ -15,8 +15,7 @@ export default {
         }
     }, 
     mounted() {
-      this.gymfx_online_plot_ = this.gymfx_online_plot_();
-      this.xy_points_ = JSON.parse(this.gymfx_online_plot_);
+      this.xy_points_ = JSON.parse(this.gymfx_online_plot_());
       console.log("after:" + xy_points); 
     },
     // initialize values
@@ -28,7 +27,7 @@ export default {
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
         this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
-        this.gymfx_online_plot_ = this.gymfx_online_plot_();
+        //this.gymfx_online_plot_ = this.gymfx_online_plot_();
     },  
     methods: {
         // returns an axios instance for basic authentication
