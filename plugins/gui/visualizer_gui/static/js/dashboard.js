@@ -16,6 +16,10 @@ export default {
 
         }
     }, 
+    mounted() {
+      this.gymfx_online_plot_ = this.gymfx_online_plot_();
+      console.log("after:" + xy_points); 
+    },
     components: {
       'my-component': { 
         template: '#my-template',
@@ -25,23 +29,11 @@ export default {
             }
           },// initialize values
           created() {
-              this.gymfx_online_plot_ = this.gymfx_online_plot_();
+              
           },  
           methods: {
             // call request that returnsvalues for real time training monitoring
-            gymfx_online_plot_() {
-              // setup authentication
-              let axios_instance = this.$parent.axios_auth_instance();
-              // use the result of api request
-              axios_instance.get('/gymfx_online_plot_')
-              .then((response) => {
-                this.$parent.xy_points = response.data;
-                return response.data;
-              }, (error) => {
-                console.log(error);
-                return 0;
-              });
-          }
+            
         }
       }
     },
@@ -54,7 +46,7 @@ export default {
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
         this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
-        //this.gymfx_online_plot_ = this.gymfx_online_plot_();
+        this.gymfx_online_plot_ = this.gymfx_online_plot_();
     },  
     methods: {
         // returns an axios instance for basic authentication
@@ -129,8 +121,21 @@ export default {
             return 0;
           });        
         },
-        // define starting field values
-        field_start_values(){
+        gymfx_online_plot_() {
+          // setup authentication
+          let axios_instance = this.$parent.axios_auth_instance();
+          // use the result of api request
+          axios_instance.get('/gymfx_online_plot_')
+          .then((response) => {
+            this.$parent.xy_points = response.data;
+            return response.data;
+          }, (error) => {
+            console.log(error);
+            return 0;
+          });
+      },
+      // define starting field values
+      field_start_values(){
                 return {
                 count:0
             }
