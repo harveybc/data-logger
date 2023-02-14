@@ -15,6 +15,14 @@ export default {
         }
     }, 
     mounted() {
+      this.gymfx_online_plot_().then((response) => {
+        //console.log(response.data);
+        this.xy_points_ = JSON.parse(response.data);
+        return this.xy_points_;
+      }, (error) => {
+        console.log(error);
+        return 0;
+      });
       this.xy_points_ = JSON.parse(this.gymfx_online_plot_());
       console.log("after:" + xy_points); 
     },
