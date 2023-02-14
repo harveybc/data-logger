@@ -23,8 +23,8 @@ export default {
         console.log(error);
         return 0;
       });
-      this.xy_points_ = JSON.parse(this.gymfx_online_plot_());
-      console.log("after:" + xy_points); 
+      
+      console.log("after:" + this.xy_points); 
     },
     // initialize values
     created() {
@@ -114,14 +114,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gymfx_online_plot_')
-          .then((response) => {
-            this.xy_points =  JSON.parse(response.data);
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });
+          return axios_instance.get('/gymfx_online_plot_');
       },
       // define starting field values
       field_start_values(){
