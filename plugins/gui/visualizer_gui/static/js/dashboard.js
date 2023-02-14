@@ -116,7 +116,7 @@ export default {
           // use the result of api request
           axios_instance.get('/gymfx_online_plot_')
           .then((response) => {
-            this.$parent.xy_points = response.data;
+            this.xy_points =  JSON.parse(response.data);
             return response.data;
           }, (error) => {
             console.log(error);
