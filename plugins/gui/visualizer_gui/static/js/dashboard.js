@@ -30,14 +30,72 @@ export default {
           xy_points = window.vm.$refs.vue_component.xy_points;
         })
         console.log("after:" + xy_points); 
-        // Zip the generated y values with the x values
-        //var res = []
-        //for (var i = 0; i < data.length; ++i) {
-        //    res.push([i, data[i]])
-        //}
         return xy_points;
     }
       
+    // Interactive plot
+            var interactive_plot = $.plot('#interactive',[ [] ], {
+                grid: {
+                    borderColor: '#f3f3f3',
+                    borderWidth: 1,
+                    tickColor: '#f3f3f3'
+                },
+                series: {
+                    shadowSize: 0, // Drawing is faster without shadows
+                    color: '#3c8dbc'
+                },
+                lines: {
+                    fill: true, // Converts the line chart to area chart
+                    color: '#3c8dbc'
+                },
+                yaxis: {
+                    min : 0.0,
+                    max : 0.5,
+                    show: true
+                },
+                xaxis: {
+                    mode: "time", 
+                    timeformat:"%y/%m/%d %H:%M:%S"        
+                }
+                //  xaxis: {
+                //    show: true
+                //}
+            })
+            
+            var updateInterval = 1000 * window.interval;
+            //Fetch data ever x milliseconds
+            var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
+            function update() {
+                xy_points=getPerformanceData();
+                // xy_points=getRandomData();
+                //total_points = xy_points.length;
+                //var tmp = getRandomData();
+                // app.best_online();
+                interactive_plot.setData(xy_points);
+                //document.getElementById("testFrame").innerHTML = xy_points.toString();
+                // Since the axes don't change, we don't need to call plot.setupGrid()
+                //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
+                interactive_plot.draw();
+                if (realtime === 'on')
+                    setTimeout(update, updateInterval);
+            }
+            //INITIALIZE REALTIME DATA FETCHING
+            if (realtime === 'on') {
+                update()
+            }
+            //REALTIME TOGGLE
+            $('#realtime .btn').click(function () {
+                if ($(this).data('toggle') === 'on') {
+                    realtime = 'on'
+                } else {
+                    realtime = 'off'
+                }
+                update()
+            })
+            /*
+             * END INTERACTIVE CHART
+             */
+
     },
     // initialize values
     created() {
