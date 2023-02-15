@@ -22,7 +22,21 @@ export default {
       }, (error) => {
         console.log(error);
       });
-      
+       // returns the last points from the best_online process
+       function getPerformanceData() {
+        // get a list of lists containing the x,y = [date, mse] points for the best online process
+        xy_points = [];
+        window.vm.$refs.vue_component.gymfx_online_plot_().then((result) => {
+          xy_points = window.vm.$refs.vue_component.xy_points;
+        })
+        console.log("after:" + xy_points); 
+        // Zip the generated y values with the x values
+        //var res = []
+        //for (var i = 0; i < data.length; ++i) {
+        //    res.push([i, data[i]])
+        //}
+        return xy_points;
+    }
       
     },
     // initialize values
