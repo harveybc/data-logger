@@ -56,7 +56,7 @@ export default {
 
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
-           
+           /*
             function update() {
                 gymfx_online_plot_().then((response) => {
                   this.xy_points_ = response.data;
