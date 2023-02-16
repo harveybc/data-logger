@@ -32,7 +32,7 @@ export default {
         console.log("after:" + xy_points); 
         return xy_points;
     }
-      
+      /*
     // Interactive plot
             var interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
@@ -92,7 +92,7 @@ export default {
                 }
                 update()
             })
-            /*
+            
              * END INTERACTIVE CHART
              */
 
