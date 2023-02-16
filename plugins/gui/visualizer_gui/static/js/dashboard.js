@@ -67,7 +67,7 @@ export default {
               }
 
             }
-            
+            /*
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
                 if ($(this).data('toggle') === 'on') {
