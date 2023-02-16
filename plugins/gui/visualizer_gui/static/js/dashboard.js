@@ -76,10 +76,15 @@ export default {
                   console.log(error);
                 });
             }
-/*
+
             //INITIALIZE REALTIME DATA FETCHING
             if (realtime === 'on') {
-                update()
+              try {
+                update();
+              } catch (e) {  
+                console.log(e);
+              }
+
             }
             /*
             //REALTIME TOGGLE
