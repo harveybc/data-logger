@@ -17,14 +17,14 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         //console.log(response.data);
-        xy_points_ = response.data;
+        this.xy_points_ = response.data;
         console.log("after:" + this.xy_points_); 
       }, (error) => {
         console.log(error);
       });
           
     // Interactive plot
-          interactive_plot = $.plot('#interactive',[ [] ], {
+          var interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
