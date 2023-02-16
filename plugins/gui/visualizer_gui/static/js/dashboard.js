@@ -17,14 +17,14 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         //console.log(response.data);
-        this.xy_points_ = response.data;
-        console.log("after:" + this.xy_points); 
+        xy_points_ = response.data;
+        console.log("after:" + this.xy_points_); 
       }, (error) => {
         console.log(error);
       });
           
     // Interactive plot
-            var interactive_plot = $.plot('#interactive',[ [] ], {
+          interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
@@ -57,30 +57,11 @@ export default {
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
            
-            function update() {
-                gymfx_online_plot_().then((response) => {
-                  this.xy_points_ = response.data;
-                  console.log("update:" + this.xy_points_); 
-                  try {
-                    var xy_points = JSON.parse(this.xy_points_);
-                    interactive_plot.setData(xy_points);
-                    //Since the axes don't change, we don't need to call plot.setupGrid()
-                    interactive_plot.draw();
-                  } catch (e) {
-                    console.log(e);
-                  } 
-                  
-                  if (realtime === 'on')
-                      setTimeout(update, updateInterval);
-                }, (error) => {
-                  console.log(error);
-                });
-            }
-
+            
             //INITIALIZE REALTIME DATA FETCHING
             if (realtime === 'on') {
               try {
-                update();
+                this.update();
               } catch (e) {  
                 console.log(e);
               }
@@ -94,7 +75,7 @@ export default {
                 } else {
                     realtime = 'off'
                 }
-                update()
+                this.update()
             })
             /*
              * END INTERACTIVE CHART
@@ -191,6 +172,26 @@ export default {
           // use the result of api request
           return axios_instance.get('/gymfx_online_plot_');
       },
+      update() {
+          this.gymfx_online_plot_().then((response) => {
+              this.xy_points_ = response.data;
+              console.log("update:" + this.xy_points_); 
+            try {
+              var xy_points = JSON.parse(this.xy_points_);
+              this.interactive_plot.setData(xy_points);
+              //Since the axes don't change, we don't need to call plot.setupGrid()
+              this.interactive_plot.draw();
+            } catch (e) {
+              console.log(e);
+            }  
+          
+            if (realtime === 'on')
+            setTimeout( () => {this.update();}, updateInterval);
+          }, (error) => {
+            console.log(error);
+          });
+    },
+
       // define starting field values
       field_start_values(){
                 return {
