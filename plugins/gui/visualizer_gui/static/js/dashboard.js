@@ -60,10 +60,16 @@ export default {
             function update() {
                 gymfx_online_plot_().then((response) => {
                   this.xy_points_ = response.data;
-                  console.log("update:" + this.xy_points); 
-                  interactive_plot.setData(xy_points);
-                // Since the axes don't change, we don't need to call plot.setupGrid()
-                interactive_plot.draw();
+                  console.log("update:" + this.xy_points_); 
+                  try {
+                    var xy_points = JSON.parse(this.xy_points_);
+                    interactive_plot.setData(xy_points);
+                    //Since the axes don't change, we don't need to call plot.setupGrid()
+                    interactive_plot.draw();
+                  } catch (e) {
+                    console.log(e);
+                  } 
+                  
                   if (realtime === 'on')
                       setTimeout(update, updateInterval);
                 }, (error) => {
