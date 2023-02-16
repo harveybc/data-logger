@@ -66,7 +66,7 @@ export default {
 
             //Fetch data ever x milliseconds
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
-             /*
+           
             function update() {
                 xy_points=getPerformanceData();
                 // xy_points=getRandomData();
@@ -81,6 +81,8 @@ export default {
                 if (realtime === 'on')
                     setTimeout(update, updateInterval);
             }
+
+              /*
             //INITIALIZE REALTIME DATA FETCHING
             if (realtime === 'on') {
                 update()
