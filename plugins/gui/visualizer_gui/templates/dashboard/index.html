@@ -284,8 +284,10 @@
        app.config.globalProperties.window = window
         /* get the x,y data for plotting from a result of a request as JSON from a text resposne*/
         var last_response;
+        /*
         var xy_points = [];
-/*        function getPoints(res_text){   
+
+       function getPoints(res_text){   
             // JSON parse res_text as last response 
             last_response = JSON.parse(res_text);
             var str = JSON.stringify(lan '&' st_response, 2); // spacing level = 2
