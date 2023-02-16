@@ -22,17 +22,7 @@ export default {
       }, (error) => {
         console.log(error);
       });
-       // returns the last points from the best_online process
-       function getPerformanceData() {
-        // get a list of lists containing the x,y = [date, mse] points for the best online process
-        xy_points = [];
-        window.vm.$refs.vue_component.gymfx_online_plot_().then((result) => {
-          xy_points = window.vm.$refs.vue_component.xy_points;
-        })
-        console.log("after:" + xy_points); 
-        return xy_points;
-    }
-     
+          
     // Interactive plot
             var interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
@@ -68,21 +58,19 @@ export default {
             var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
            
             function update() {
-                xy_points=getPerformanceData();
-                // xy_points=getRandomData();
-                //total_points = xy_points.length;
-                //var tmp = getRandomData();
-                // app.best_online();
-                interactive_plot.setData(xy_points);
-                //document.getElementById("testFrame").innerHTML = xy_points.toString();
+                gymfx_online_plot_().then((response) => {
+                  this.xy_points_ = response.data;
+                  console.log("update:" + this.xy_points); 
+                  interactive_plot.setData(xy_points);
                 // Since the axes don't change, we don't need to call plot.setupGrid()
-                //document.getElementById("otherTestFrame").innerHTML = tmp.toString();
                 interactive_plot.draw();
-                if (realtime === 'on')
-                    setTimeout(update, updateInterval);
+                  if (realtime === 'on')
+                      setTimeout(update, updateInterval);
+                }, (error) => {
+                  console.log(error);
+                });
             }
 
-              /*
             //INITIALIZE REALTIME DATA FETCHING
             if (realtime === 'on') {
                 update()
@@ -97,7 +85,7 @@ export default {
                 }
                 update()
             })
-            
+            /*
              * END INTERACTIVE CHART
              */
 
