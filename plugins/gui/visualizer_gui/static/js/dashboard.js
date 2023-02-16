@@ -76,7 +76,7 @@ export default {
                   console.log(error);
                 });
             }
-
+/*
             //INITIALIZE REALTIME DATA FETCHING
             if (realtime === 'on') {
                 update()
