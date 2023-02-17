@@ -17,8 +17,8 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         console.log("before:" + response.data);
-        this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
-        console.log("after:" + this.xy_points_); 
+        this.xy_points_ = JSON.parse(response.data);
+        console.log("after:" +  JSON.stringify(this.xy_points_)); 
       }, (error) => {
         console.log(error);
       });
@@ -170,7 +170,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          return axios_instance.get('/gymfx_online_plot_', {responseType: 'text',      transformResponse: []})
+          return axios_instance.get('/gymfx_online_plot_', {responseType: 'text',  transformResponse: []})
         },
 
       // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
@@ -185,7 +185,7 @@ export default {
           this.gymfx_online_plot_().then((response) => {
             console.log("before:" + response.data);
               this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
-              console.log("update:" + this.xy_points_); 
+              console.log("update:" + JSON.stringify(this.xy_points_)); 
             try {
               this.interactive_plot.setData(this.xy_points_);
               //Since the axes don't change, we don't need to call plot.setupGrid()
