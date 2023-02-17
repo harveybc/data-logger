@@ -17,7 +17,7 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         console.log("before:" + response.data);
-        this.xy_points_ = this.transform_plot_data(response.data);
+        this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
         console.log("after:" + this.xy_points_); 
       }, (error) => {
         console.log(error);
@@ -184,7 +184,7 @@ export default {
       update() {
           this.gymfx_online_plot_().then((response) => {
             console.log("before:" + response.data);
-              this.xy_points_ = this.transform_plot_data(response.data);
+              this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
               console.log("update:" + this.xy_points_); 
             try {
               this.interactive_plot.setData(this.xy_points_);
