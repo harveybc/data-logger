@@ -183,18 +183,17 @@ export default {
         return xy_points;
       },
       update() {
-          this.gymfx_online_plot_().then((response) => {
+          that.gymfx_online_plot_().then((response) => {
             console.log("before:" + response.data);
-              this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
-              console.log("update:" + JSON.stringify(this.xy_points_)); 
+            that.xy_points_ = that.transform_plot_data(JSON.parse(response.data));
+              console.log("update:" + JSON.stringify(that.xy_points_)); 
             try {
-              this.interactive_plot.setData(this.xy_points_);
+              that.interactive_plot.setData(that.xy_points_);
               //Since the axes don't change, we don't need to call plot.setupGrid()
-              this.interactive_plot.draw();
+              that.interactive_plot.draw();
             } catch (e) {
               console.log(e);
             }  
-            var that = this;
             if (realtime === 'on')
             setTimeout  (function () { that.update();}, 1000);
           }, (error) => {
