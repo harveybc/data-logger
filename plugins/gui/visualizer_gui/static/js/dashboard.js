@@ -57,11 +57,11 @@ export default {
             //Fetch data ever x milliseconds
             this.realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
            
-            
+            var that = this;
             //INITIALIZE REALTIME DATA FETCHING
             if (this.realtime === 'on') {
               try {
-                this.update();
+                that.update();
               } catch (e) {  
                 console.log(e);
               }
@@ -71,11 +71,11 @@ export default {
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
                 if ($(this).data('toggle') === 'on') {
-                  this.realtime = 'on'
+                  that.realtime = 'on'
                 } else {
-                  this.realtime = 'off'
+                  that.realtime = 'off'
                 }
-                this.update()
+                that.update()
             })
             /*
              * END INTERACTIVE CHART
