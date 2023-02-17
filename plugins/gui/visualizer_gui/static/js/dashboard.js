@@ -69,16 +69,17 @@ export default {
               }
 
             }
-            
+            var that = this;
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
-                if ($(that).data('toggle') === 'on') {
-                  that.realtime = 'on'
+                if ($(this).data('toggle') === 'on') {
+                  this.realtime = 'on'
+                  this.update()
                 } else {
-                  that.realtime = 'off'
+                  this.realtime = 'off'
                 }
-                that.update()
-            })
+                
+            }.bind(this))
             /*
              * END INTERACTIVE CHART
              */
@@ -196,9 +197,8 @@ export default {
             } catch (e) {
               console.log(e);
             }  
-            var that = this;
             if (this.realtime === 'on')
-            setTimeout  (function () { that.update();}, 1000);
+            setTimeout  (function () { this.update();}.bind(this), 1000);
           }, (error) => {
             console.log(error);
           });
