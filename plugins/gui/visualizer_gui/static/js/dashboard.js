@@ -61,7 +61,7 @@ export default {
             //INITIALIZE REALTIME DATA FETCHING
             if (this.realtime === 'on') {
               try {
-                that.update();
+                this.update();
               } catch (e) {  
                 console.log(e);
               }
@@ -71,9 +71,9 @@ export default {
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
                 if ($(that).data('toggle') === 'on') {
-                  this.realtime = 'on'
+                  that.realtime = 'on'
                 } else {
-                  this.realtime = 'off'
+                  that.realtime = 'off'
                 }
                 that.update()
             })
