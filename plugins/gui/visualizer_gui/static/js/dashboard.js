@@ -172,7 +172,10 @@ export default {
           // use the result of api request
           return axios_instance.get('/gymfx_online_plot_',
             {
-              transformResponse: [this.transform_plot_data(data)],
+              transformResponse: [
+                (data) => {
+                  return transform_plot_data(data);
+                }]
             }
           );
       },
