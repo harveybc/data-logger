@@ -52,14 +52,14 @@ export default {
                 //}
             })
             
-            var updateInterval = 1000 * window.interval;
+            this.updateInterval = 1000 * window.interval;
 
             //Fetch data ever x milliseconds
-            var realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
+            this.realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
            
             
             //INITIALIZE REALTIME DATA FETCHING
-            if (realtime === 'on') {
+            if (this.realtime === 'on') {
               try {
                 this.update();
               } catch (e) {  
@@ -67,13 +67,13 @@ export default {
               }
 
             }
-            /*
+            
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
                 if ($(this).data('toggle') === 'on') {
-                    realtime = 'on'
+                  this.realtime = 'on'
                 } else {
-                    realtime = 'off'
+                  this.realtime = 'off'
                 }
                 this.update()
             })
@@ -195,7 +195,7 @@ export default {
             }  
           
             if (realtime === 'on')
-            setTimeout( () => {this.update();}, updateInterval);
+            setTimeout( () => {this.update();}, this.updateInterval);
           }, (error) => {
             console.log(error);
           });
