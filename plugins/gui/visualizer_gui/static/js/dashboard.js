@@ -70,7 +70,7 @@ export default {
             
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
-                if ($(this).data('toggle') === 'on') {
+                if ($(that).data('toggle') === 'on') {
                   that.realtime = 'on'
                 } else {
                   that.realtime = 'off'
