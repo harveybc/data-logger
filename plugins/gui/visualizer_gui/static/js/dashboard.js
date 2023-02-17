@@ -170,7 +170,19 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          return axios_instance.get('/gymfx_online_plot_');
+          return axios_instance.get('/gymfx_online_plot_',
+            {
+              transformResponse: [this.transform_plot_data(data)],
+            }
+          );
+      },
+      // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
+      transform_plot_data(response_data) {  
+        let xy_points = [];
+        for (let i = 0; i < response_data.length; i++) {
+          xy_points.push([response_data[i].x, response_data[i].y]);
+        }
+        return xy_points;
       },
       update() {
           this.gymfx_online_plot_().then((response) => {
