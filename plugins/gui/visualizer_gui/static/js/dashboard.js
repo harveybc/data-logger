@@ -24,7 +24,7 @@ export default {
       });
           
     // Interactive plot
-          var interactive_plot = $.plot('#interactive',[ [] ], {
+        this.interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
                     borderColor: '#f3f3f3',
                     borderWidth: 1,
