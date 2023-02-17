@@ -17,7 +17,7 @@ export default {
     mounted() {
       this.gymfx_online_plot_().then((response) => {
         //console.log(response.data);
-        this.xy_points_ = response.data;
+        this.xy_points_ = JSON.parse(response.data);
         console.log("after:" + this.xy_points_); 
       }, (error) => {
         console.log(error);
@@ -174,11 +174,10 @@ export default {
       },
       update() {
           this.gymfx_online_plot_().then((response) => {
-              this.xy_points_ = response.data;
+              this.xy_points_ = JSON.parse(response.data);
               console.log("update:" + this.xy_points_); 
             try {
-              var xy_points = JSON.parse(this.xy_points_);
-              this.interactive_plot.setData(xy_points);
+              this.interactive_plot.setData(this.xy_points);
               //Since the axes don't change, we don't need to call plot.setupGrid()
               this.interactive_plot.draw();
             } catch (e) {
