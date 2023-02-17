@@ -24,7 +24,8 @@ export default {
       }, (error) => {
         console.log(error);
       });
-          
+      
+
     // Interactive plot
         this.interactive_plot = $.plot('#interactive',[ [] ], {
                 grid: {
@@ -73,13 +74,12 @@ export default {
             //REALTIME TOGGLE
             $('#realtime .btn').click(function () {
                 if ($(this).data('toggle') === 'on') {
-                  this.realtime = 'on'
-                  this.update()
+                  that.realtime = 'on'
+                  that.update()
                 } else {
-                  this.realtime = 'off'
-                }
-                
-            }.bind(this))
+                  that.realtime = 'off'
+                }     
+            })
             /*
              * END INTERACTIVE CHART
              */
