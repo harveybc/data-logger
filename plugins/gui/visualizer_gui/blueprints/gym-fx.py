@@ -80,7 +80,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         attr = getattr(res, "config_id")
-        return str(attr)
+        return json.dumps(attr)
     
     @bp.route("/gymfx_max_training_score_")
     @login_required
@@ -96,7 +96,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         attr = getattr(res, "score")
-        return str(attr)
+        return json.dumps(attr)
 
     @bp.route("/gymfx_best_offline_")
     @login_required
@@ -112,7 +112,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         attr = getattr(res, "config_id")
-        return str(attr)
+        return json.dumps(attr)
            
     @bp.route("/gymfx_max_validation_score_")
     @login_required
@@ -128,11 +128,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         attr = getattr(res, "score")
-        return str(attr)
+        return json.dumps(attr)
     
     @bp.route("/gymfx_online_plot_")
     @login_required
-    def gymfx_val_plot_():
+    def gymfx_online_plot_():
         """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
         args = request.args
         num_points = args.get("num_points", default=100, type=int)
@@ -151,6 +151,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             error = str(e)
             print("Error : " , error)
             return error
-        return str(res)
+        return json.dumps(res)
 
     return bp
