@@ -170,7 +170,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          return axios_instance.get('/gymfx_online_plot_', {responseType: 'text'});
+          return axios_instance.get('/gymfx_online_plot_', {responseType: 'json'});
       },
       update() {
           this.gymfx_online_plot_().then((response) => {
