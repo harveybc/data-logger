@@ -195,7 +195,7 @@ export default {
             }  
             var that = this;
             if (realtime === 'on')
-            setTimeout(function () { that.update();}, this.updateInterval);
+            setTimeout  (function () { that.update();}, 1000);
           }, (error) => {
             console.log(error);
           });
