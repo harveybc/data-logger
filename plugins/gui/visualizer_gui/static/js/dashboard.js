@@ -116,7 +116,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          axios_instance.get('/gymfx_best_online_', {responseType: 'text'})
+          axios_instance.get('/gymfx_best_online_')
           .then((response) => {
             //console.log(response.data);
             this.best_online_ = response.data;
@@ -170,7 +170,7 @@ export default {
           // setup authentication
           let axios_instance = this.axios_auth_instance();
           // use the result of api request
-          return axios_instance.get('/gymfx_online_plot_')
+          return axios_instance.get('/gymfx_online_plot_', {responseType: 'text'})
         },
 
       // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
