@@ -174,7 +174,7 @@ export default {
             {
               transformResponse: [
                 (data) => {
-                  return transform_plot_data(data);
+                  return this.transform_plot_data(data);
                 }]
             }
           );
