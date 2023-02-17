@@ -91,7 +91,8 @@ export default {
         this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
         this.gymfx_best_offline_ = this.gymfx_best_offline_();
         this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
-        //this.gymfx_online_plot_ = this.gymfx_online_plot_();
+        this.gymfx_online_plot_ = this.gymfx_online_plot_();
+        this.update = this.update();
     },  
     methods: {
         // returns an axios instance for basic authentication
