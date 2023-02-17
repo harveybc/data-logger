@@ -145,7 +145,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             res = []
             count = 0
             for p in points:
-                res.append([count, p.score])
+                res.append({"x":count, "y":p.score})
                 count += 1
         except Exception as e:
             error = str(e)
