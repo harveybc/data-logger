@@ -184,6 +184,10 @@ export default {
         let xy_points = [];
         let min=0;
         let max=1;
+        let prev_min = this.plot_min;
+        let prev_max = this.plot_max;
+
+
         for (let i = 0; i < response_data.length; i++) {
           if (response_data[i].y > max) {
             max = response_data[i].y;
@@ -193,6 +197,14 @@ export default {
           }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
+        if ((prev_min != min) || (prev_max != max)) {
+          this.interactive_plot.getOptions().yaxis[0].min = this.plot_min;
+          this.interactive_plot.getOptions().yaxis[0].max = this.plot_max;
+          this.interactive_plot.setupGrid();
+          this.interactive_plot.draw();
+        }
+
+
         this.plot_max = max;
         this.plot_min = min;
         return xy_points;
