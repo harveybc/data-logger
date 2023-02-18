@@ -204,7 +204,7 @@ export default {
             
           this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
           this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-          this.interactive_plot.getAxes().xaxis.options.min = x_max-100;
+          this.interactive_plot.getAxes().xaxis.options.min = x_max-10;
           this.interactive_plot.getAxes().xaxis.options.max = x_max;
           this.interactive_plot.setupGrid();
           this.interactive_plot.draw();
