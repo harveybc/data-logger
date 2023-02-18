@@ -195,12 +195,15 @@ export default {
           }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
+        max_x = xy_points[xy_points.length - 1][0];
         //if ((prev_min != min) || (prev_max != max)) {
           try{
             console.log("update yaxis");
             
           this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
           this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
+          this.interactive_plot.getAxes().xaxis.options.min = max_x-100;
+          this.interactive_plot.getAxes().xaxis.options.max = max_x;
           this.interactive_plot.setupGrid();
           this.interactive_plot.draw();
           
