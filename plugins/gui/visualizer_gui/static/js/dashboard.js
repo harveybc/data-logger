@@ -16,7 +16,7 @@ export default {
             plot_min : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
-            interactive_plot: null
+            interactive_plot: 1
         }
     }, 
     mounted() {
