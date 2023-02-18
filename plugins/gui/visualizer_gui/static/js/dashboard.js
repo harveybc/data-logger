@@ -8,10 +8,10 @@ export default {
             process_list: [0,1,2,3],
             process: 0,
             status : 'Halted',
-            best_online_: 1,
-            min_training_mse_: 0.0,
-            best_config_ : 1,
-            min_validation_mse_ : 0.0,
+            gymfx_best_online: 1,
+            gymfx_max_training_score: 0.0,
+            gymfx_best_offline : 1,
+            gymfx_max_validation_score : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on' //If == to on then fetch data every x seconds. else stop fetching
         }
