@@ -50,13 +50,13 @@ export default {
             max : this.plot_max,
             show: true
         },
-        xaxis: {
-            mode: "time", 
-            timeformat:"%y/%m/%d %H:%M:%S"        
+        //xaxis: {
+         //   mode: "time", 
+          //  timeformat:"%y/%m/%d %H:%M:%S"        
+      //  }
+          xaxis: {
+            show: true
         }
-        //  xaxis: {
-        //    show: true
-        //}
     })
 
       
