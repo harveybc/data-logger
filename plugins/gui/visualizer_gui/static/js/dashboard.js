@@ -12,6 +12,8 @@ export default {
             gymfx_max_training_score: 0.0,
             gymfx_best_offline : 1,
             gymfx_max_validation_score : 0.0,
+            plot_max : 1.0,
+            plot_min : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on' //If == to on then fetch data every x seconds. else stop fetching
         }
@@ -42,8 +44,8 @@ export default {
                     color: '#3c8dbc'
                 },
                 yaxis: {
-                    min : 0.0,
-                    max : 0.5,
+                    min : this.plot_min,
+                    max : this.plot_max,
                     show: true
                 },
                 xaxis: {
@@ -180,9 +182,19 @@ export default {
       // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
       transform_plot_data(response_data) {  
         let xy_points = [];
+        let min=0;
+        let max=1;
         for (let i = 0; i < response_data.length; i++) {
+          if (response_data[i].y > max) {
+            max = response_data[i].y;
+          }
+          if (response_data[i].y < min) {
+            min = response_data[i].y;
+          }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
+        this.plot_max = max;
+        this.plot_min = min;
         return xy_points;
       },
       update() {
