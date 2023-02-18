@@ -184,7 +184,7 @@ export default {
         let max=1;
         let prev_min = this.plot_min;
         let prev_max = this.plot_max;
-
+        let x_max = 0;
 
         for (let i = 0; i < response_data.length; i++) {
           if (response_data[i].y > max) {
@@ -193,17 +193,19 @@ export default {
           if (response_data[i].y < min) {
             min = response_data[i].y;
           }
+          if (response_data[i].x > x_max) {
+            x_max = response_data[i].x;
+          }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
-       let max_x = xy_points[xy_points.length - 1][0];
         //if ((prev_min != min) || (prev_max != max)) {
           try{
             console.log("update yaxis");
             
           this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
           this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-          this.interactive_plot.getAxes().xaxis.options.min = max_x-100;
-          this.interactive_plot.getAxes().xaxis.options.max = max_x;
+          this.interactive_plot.getAxes().xaxis.options.min = x_max-100;
+          this.interactive_plot.getAxes().xaxis.options.max = x_max;
           this.interactive_plot.setupGrid();
           this.interactive_plot.draw();
           
