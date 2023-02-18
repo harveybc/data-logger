@@ -198,8 +198,9 @@ export default {
         //if ((prev_min != min) || (prev_max != max)) {
           try{
             console.log("update yaxis");
-          this.interactive_plot.getOptions().yaxis[0].min = this.plot_min;
-          this.interactive_plot.getOptions().yaxis[0].max = this.plot_max;
+            
+          this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
+          this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
           this.interactive_plot.setupGrid();
           this.interactive_plot.draw();
           
