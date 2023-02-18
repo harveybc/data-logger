@@ -198,10 +198,15 @@ export default {
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
         if ((prev_min != min) || (prev_max != max)) {
+          try{
           this.interactive_plot.getOptions().yaxis[0].min = this.plot_min;
           this.interactive_plot.getOptions().yaxis[0].max = this.plot_max;
           this.interactive_plot.setupGrid();
           this.interactive_plot.draw();
+          }
+          catch(e){
+            console.log(e);
+          }
         }
 
 
