@@ -198,7 +198,7 @@ export default {
           }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
-        if ((prev_min != min) || (prev_max != max)) {
+        //if ((prev_min != min) || (prev_max != max)) {
           try{
             console.log("update yaxis");
           this.interactive_plot.getOptions().yaxis[0].min = this.plot_min;
@@ -210,7 +210,7 @@ export default {
           catch(e){
             console.log(e);
           }
-        }
+        //}
 
 
         this.plot_max = max;
