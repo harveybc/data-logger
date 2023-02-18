@@ -195,7 +195,7 @@ export default {
           }
           xy_points.push([response_data[i].x, response_data[i].y]);
         }
-        max_x = xy_points[xy_points.length - 1][0];
+       let max_x = xy_points[xy_points.length - 1][0];
         //if ((prev_min != min) || (prev_max != max)) {
           try{
             console.log("update yaxis");
