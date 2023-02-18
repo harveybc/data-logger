@@ -90,10 +90,10 @@ export default {
         //this.get_process_list();
         //this.get_process();
         //this.get_status();
-        this.gymfx_best_online_ = this.gymfx_best_online_();
-        this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
-        this.gymfx_best_offline_ = this.gymfx_best_offline_();
-        this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
+        this.gymfx_best_online_();
+        this.gymfx_max_training_score_();
+        this.gymfx_best_offline_();
+        this.gymfx_max_validation_score_();
         //this.gymfx_online_plot_ = this.gymfx_online_plot_();
         //this.update = this.update();
     },  
@@ -123,7 +123,7 @@ export default {
           axios_instance.get('/gymfx_best_online_')
           .then((response) => {
             //console.log(response.data);
-            this.best_online_ = response.data;
+            this.gymfx_best_online = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
@@ -136,7 +136,7 @@ export default {
             // use the response of api request
             axios_instance.get('/gymfx_max_training_score_')
             .then((response) => {
-              this.min_training_mse_ = response.data;
+              this.gymfx_max_training_score = response.data;
               return response.data;
             }, (error) => {
               console.log(error);
@@ -150,7 +150,7 @@ export default {
           // use the result of api request
           axios_instance.get('/gymfx_best_offline_')
           .then((response) => {
-            this.best_config_ = response.data;
+            this.gymfx_best_offline = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
@@ -163,7 +163,7 @@ export default {
           // use the response of api request
           axios_instance.get('/gymfx_max_validation_score_')
           .then((response) => {
-            this.min_validation_mse_ = response.data;
+            this.gymfx_max_validation_score = response.data;
             return response.data;
           }, (error) => {
             console.log(error);
