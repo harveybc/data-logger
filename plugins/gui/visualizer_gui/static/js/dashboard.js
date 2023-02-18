@@ -16,7 +16,37 @@ export default {
             plot_min : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
-            interactive_plot: 1
+            updateInterval : 1000 * window.interval,
+            //Fetch data ever x milliseconds
+            realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
+           // Interactive plot
+            interactive_plot : $.plot('#interactive',[ [] ], {
+          grid: {
+              borderColor: '#f3f3f3',
+              borderWidth: 1,
+              tickColor: '#f3f3f3'
+          },
+          series: {
+              shadowSize: 0, // Drawing is faster without shadows
+              color: '#3c8dbc'
+          },
+          lines: {
+              fill: true, // Converts the line chart to area chart
+              color: '#3c8dbc'
+          },
+          yaxis: {
+              min : this.plot_min,
+              max : this.plot_max,
+              show: true
+          },
+          xaxis: {
+              mode: "time", 
+              timeformat:"%y/%m/%d %H:%M:%S"        
+          }
+          //  xaxis: {
+          //    show: true
+          //}
+      })
         }
     }, 
     mounted() {
@@ -29,40 +59,7 @@ export default {
       });
       
 
-    // Interactive plot
-        this.interactive_plot = $.plot('#interactive',[ [] ], {
-                grid: {
-                    borderColor: '#f3f3f3',
-                    borderWidth: 1,
-                    tickColor: '#f3f3f3'
-                },
-                series: {
-                    shadowSize: 0, // Drawing is faster without shadows
-                    color: '#3c8dbc'
-                },
-                lines: {
-                    fill: true, // Converts the line chart to area chart
-                    color: '#3c8dbc'
-                },
-                yaxis: {
-                    min : this.plot_min,
-                    max : this.plot_max,
-                    show: true
-                },
-                xaxis: {
-                    mode: "time", 
-                    timeformat:"%y/%m/%d %H:%M:%S"        
-                }
-                //  xaxis: {
-                //    show: true
-                //}
-            })
-            
-            this.updateInterval = 1000 * window.interval;
-
-            //Fetch data ever x milliseconds
-            this.realtime = 'on' //If == to on then fetch data every x seconds. else stop fetching
-           
+      
             var that = this;
             //INITIALIZE REALTIME DATA FETCHING
             if (this.realtime === 'on') {
