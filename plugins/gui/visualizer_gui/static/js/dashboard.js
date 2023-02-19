@@ -12,7 +12,7 @@ export default {
             gymfx_max_training_score: 0.0,
             gymfx_best_offline : 1,
             gymfx_max_validation_score : 0.0,
-            plot_max : 10000.0,
+            plot_max : 100,
             plot_min : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
