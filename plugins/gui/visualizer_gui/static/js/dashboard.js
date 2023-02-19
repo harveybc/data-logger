@@ -17,8 +17,8 @@ export default {
             //Fetch data ever x milliseconds
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
             updateInterval : 1000 * window.interval,
-            //Fetch data ever x milliseconds
-            realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
+            data_ :[],
+            totalPoints : 10
            
         }
     }, 
@@ -31,7 +31,7 @@ export default {
         console.log(error);
       });
       // Interactive plot
-      this.interactive_plot = $.plot('#interactive',[ { data : this.xy_points_ } ], {
+      this.interactive_plot = $.plot('#interactive',[ { data : this.getRandomData()} ], {
         grid: {
             borderColor: '#f3f3f3',
             borderWidth: 1,
@@ -228,7 +228,7 @@ export default {
               console.log("update:" + JSON.stringify(this.xy_points_)); 
             try {
               //this.interactive_plot.setData(this.xy_points_);
-              this.interactive_plot.setData([[0,1200.0],[1,10000.0]]);
+              this.interactive_plot.setData([getRandomData()]);
               //Since the axes don't change, we don't need to call plot.setupGrid()
               this.interactive_plot.draw();
             } catch (e) {
@@ -240,7 +240,37 @@ export default {
             console.log(error);
           });
     },
+    
 
+    getRandomData() {
+
+  if (this.data_.length > 0) {
+    this.data = this.data.slice(1)
+  }
+
+  // Do a random walk
+  while (this.data.length < totalPoints) {
+
+    var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
+        y    = prev + Math.random() * 10 - 5
+
+    if (y < 0) {
+      y = 0
+    } else if (y > 100) {
+      y = 100
+    }
+
+    this.data.push(y)
+  }
+
+  // Zip the generated y values with the x values
+  var res = []
+  for (var i = 0; i < this.data.length; ++i) {
+    res.push([i, this.data[i]])
+  }
+
+  return res
+},
       // define starting field values
       field_start_values(){
                 return {
