@@ -227,7 +227,8 @@ export default {
               this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
               console.log("update:" + JSON.stringify(this.xy_points_)); 
             try {
-              this.interactive_plot.setData(this.xy_points_);
+              //this.interactive_plot.setData(this.xy_points_);
+              this.interactive_plot.setData([[0,1200.0],[1,10000.0]]);
               //Since the axes don't change, we don't need to call plot.setupGrid()
               this.interactive_plot.draw();
             } catch (e) {
