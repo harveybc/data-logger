@@ -12,7 +12,7 @@ export default {
             gymfx_max_training_score: 0.0,
             gymfx_best_offline : 1,
             gymfx_max_validation_score : 0.0,
-            plot_max : 100,
+            plot_max : 10000,
             plot_min : 0.0,
             //Fetch data ever x milliseconds
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
@@ -31,7 +31,7 @@ export default {
         console.log(error);
       });
       // Interactive plot
-      this.interactive_plot = $.plot('#interactive',[ { data : this.getRandomData()} ], {
+      this.interactive_plot = $.plot('#interactive',[ { data : this.xy_points_ } ], {
         grid: {
             borderColor: '#f3f3f3',
             borderWidth: 1,
@@ -228,7 +228,7 @@ export default {
               console.log("update:" + JSON.stringify(this.xy_points_)); 
             try {
               //this.interactive_plot.setData(this.xy_points_);
-              this.interactive_plot.setData([this.getRandomData()]);
+              this.interactive_plot.setData([this.xy_points_]);
               //Since the axes don't change, we don't need to call plot.setupGrid()
               this.interactive_plot.draw();
             } catch (e) {
