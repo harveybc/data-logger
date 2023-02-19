@@ -38,13 +38,14 @@ export default {
             tickColor: '#f3f3f3'
         },
         series: {
-            shadowSize: 0, // Drawing is faster without shadows
-            color: '#3c8dbc'
-        },
-        lines: {
-            fill: true, // Converts the line chart to area chart
-            color: '#3c8dbc'
-        },
+            shadowSize: 1, // Drawing is faster without shadows
+            color: '#3c8dbc',
+            lines: {
+              line_width: 2,
+              fill: true, // Converts the line chart to area chart
+              show: true
+            }
+       },
         yaxis: {
             min : this.plot_min,
             max : this.plot_max,
