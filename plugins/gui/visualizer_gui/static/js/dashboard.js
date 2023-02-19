@@ -249,7 +249,7 @@ export default {
   }
 
   // Do a random walk
-  while (this.data.length < totalPoints) {
+  while (this.data.length < this.totalPoints) {
 
     var prev = this.data.length > 0 ? this.data[this.data.length - 1] : 50,
         y    = prev + Math.random() * 10 - 5
