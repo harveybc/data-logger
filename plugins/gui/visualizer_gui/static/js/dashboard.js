@@ -31,7 +31,7 @@ export default {
         console.log(error);
       });
       // Interactive plot
-      this.interactive_plot = $.plot('#interactive',[ [] ], {
+      this.interactive_plot = $.plot('#interactive',[ { data : this.xy_points_ } ], {
         grid: {
             borderColor: '#f3f3f3',
             borderWidth: 1,
