@@ -85,6 +85,106 @@ export default {
              * END INTERACTIVE CHART
              */
 
+             /*-----------
+              * LINE CHART
+              * ----------*/
+            
+              //LINE perform request to get original and predicted data using vue.js
+
+
+
+              var   v_original = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/training"),
+              v_predicted = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/validation")
+
+        var original = [],
+            predicted = []
+
+        var max_points = "{{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }}"
+        var use_latest = true
+
+        // setup the first and the last index of the arrays to be plotted
+        var  first=0, last=max_points
+        if (last>(v_original.length)) {
+            last=v_original.length
+        }
+
+        // TODO: Posible error por mal cálculo del first
+        if (use_latest){
+          last = v_original.length
+          first = last - max_points
+          if (first<0) {
+              first=0
+          }
+        }
+
+        // prepare plotted arrays    
+        for (var i = first; i < last; i++) {
+          original.push([i, v_original[i]])
+          original.push([i, v_predicted[i]])
+        }
+
+        var line_data1 = {
+          data : original,
+          color: '#3c8dbc'
+        }
+
+        var line_data2 = {
+          data : predicted,
+          color: '#00c0ef'
+        }
+
+        $.plot('#line-chart', [line_data1, line_data2], {
+          grid  : {
+            hoverable  : true,
+            borderColor: '#f3f3f3',
+            borderWidth: 1,
+            tickColor  : '#f3f3f3'
+          },
+          series: {
+            shadowSize: 0,
+            lines     : {
+              show: true
+            },
+            points    : {
+              show: true
+            }
+          },
+          lines : {
+            fill : false,
+            color: ['#3c8dbc', '#f56954']
+          },
+          yaxis : {
+            show: true
+          },
+          xaxis : {
+            show: true
+          }
+        })
+        //Initialize tooltip on hover
+        $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+          position: 'absolute',
+          display : 'none',
+          opacity : 0.8
+        }).appendTo('body')
+        $('#line-chart').bind('plothover', function (event, pos, item) {
+
+          if (item) {
+            var x = item.datapoint[0].toFixed(2),
+                y = item.datapoint[1].toFixed(2)
+
+            $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
+              .css({
+                top : item.pageY + 5,
+                left: item.pageX + 5
+              })
+              .fadeIn(200)
+          } else {
+            $('#line-chart-tooltip').hide()
+          }
+
+        })
+        /* END LINE CHART */
+
     },
     // initialize values
     created() {
@@ -242,35 +342,7 @@ export default {
     },
     
 
-    getRandomData() {
-
-  if (this.data_.length > 0) {
-    this.data_ = this.data_.slice(1)
-  }
-
-  // Do a random walk
-  while (this.data_.length < this.totalPoints) {
-
-    var prev = this.data_.length > 0 ? this.data_[this.data_.length - 1] : 50,
-        y    = prev + Math.random() * 10 - 5
-
-    if (y < 0) {
-      y = 0
-    } else if (y > 100) {
-      y = 100
-    }
-
-    this.data_.push(y)
-  }
-
-  // Zip the generated y values with the x values
-  var res = []
-  for (var i = 0; i < this.data_.length; ++i) {
-    res.push([i, this.data_[i]])
-  }
-
-  return res
-},
+     
       // define starting field values
       field_start_values(){
                 return {
