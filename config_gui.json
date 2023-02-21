@@ -19,7 +19,7 @@
             },
             "val_plot": {
                 "title": "Validation Score",
-                "height": "200px",
+                "height": "150px",
                 "max_points": "35",
                 "use_latest": true,
                 "data": "val_plot()"
