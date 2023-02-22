@@ -152,5 +152,28 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         return json.dumps(res)
+    
+    @bp.route("/gymfx_validation_plot")
+    @login_required
+    def gymfx_validation_plot_():
+        """ Returns a json with arrays for the columns balance,equity,margin,reward from the gym_fx_data table for thebest prcess with config_id.active== True. """
+        args = request.args
+        num_points = args.get("num_points", default=1920, type=int)
+        
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            best = int(gymfx_best_online_())
+            print("best : " , best)
+            points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_data.config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
+            res = []
+            count = 0
+            for p in points:
+                res.append({"x":count, "y":p.score})
+                count += 1
+        except Exception as e:
+            error = str(e)
+            print("Error : " , error)
+            return error
+        return json.dumps(res)
 
     return bp
