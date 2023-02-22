@@ -164,11 +164,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             best = int(gymfx_best_offline_())
             print("best_offline : " , best)
             points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_data.config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
-            
+            res = list(map(as_dict, points))
         except Exception as e:
             error = str(e)
             print("Error : " , error)
             return error
-        return json.dumps(points.__dict__)
+        return json.dumps(res)
 
     return bp
