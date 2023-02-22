@@ -153,7 +153,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         return json.dumps(res)
     
-    @bp.route("/gymfx_validation_plot")
+    @bp.route("/gymfx_validation_plot_")
     @login_required
     def gymfx_validation_plot_():
         """ Returns a json with the initial capital and arrays for the columns order_status, tick_date, balance, equity,margin,reward from the gym_fx_data table for thebest prcess with config_id.active== True. """
