@@ -106,7 +106,6 @@
                             { "name" : "margin" },                        
                             { "name" : "action" },
                             { "name" : "num_closes" },
-                            { "name" : "reward" },
                             { "name" : "order_status" },                            
                             { "name" : "tick_count" },
                             { "name" : "tick_date" },                            
