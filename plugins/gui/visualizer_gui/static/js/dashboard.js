@@ -120,7 +120,7 @@ export default {
         // prepare plotted arrays    
         for (var i = first; i < last; i++) {
           original.push([i, v_original[i]])
-          original.push([i, v_predicted[i]])
+          predicted.push([i, v_predicted[i]])
         }
 
         var line_data1 = {
