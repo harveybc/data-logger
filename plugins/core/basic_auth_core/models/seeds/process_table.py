@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 Base = automap_base()
 
 with warnings.catch_warnings():
-    warnings.simplefilter("ignore", category=sa_exc.SAWarning)
+    #warnings.simplefilter("ignore", category=sa_exc.SAWarning)
 
 
     # seed init data for processes tables, the tablesmust be listed also in the seed_init_data
