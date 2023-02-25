@@ -17,6 +17,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from copy import deepcopy
 from app.util import sanitize_str
 from sqlalchemy import func
+import warnings
 
 Base = automap_base()
 
@@ -118,9 +119,11 @@ class BasicAuthCore():
                 new_table = ProcessTable(**table)
                 new_table.table.create(db.engine)
                 #update metadata and tables
-                db.Model.metadata.reflect(bind=db.engine)
-                # reflect the tables
-                Base.prepare(db.engine, reflect=False)
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    db.Model.metadata.reflect(bind=db.engine)
+                    # reflect the tables
+                    Base.prepare(db.engine, reflect=False)
     
     def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """

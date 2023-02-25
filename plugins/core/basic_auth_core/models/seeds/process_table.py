@@ -4,7 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import logging
 from app.util import sanitize_str
 import warnings
-from sqlalchemy import exc as sa_exc
+
 _logger = logging.getLogger(__name__)
 
 Base = automap_base()
