@@ -57,9 +57,7 @@ class BasicAuthCore():
         from .models.seeds.process_table import seed as process_table_seed
         user_seed(app,db)
         # seeds training_error data
-        process_table_seed(app,db, "fe_training_error")
-        process_table_seed(app,db, "fe_validation_error")
-        process_table_seed(app,db, "fe_config")
+        process_table_seed(app,db, "gym_fx_validation_plot")
         process_table_seed(app,db, "gym_fx_data")
         process_table_seed(app,db, "gym_fx_config")
 
