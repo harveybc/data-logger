@@ -81,24 +81,16 @@ export default {
                   that.realtime = 'off'
                 }     
             })
-            /*
-             * END INTERACTIVE CHART
-             */
+        /*
+          * END INTERACTIVE CHART
+          */
 
-             /*-----------
-              * LINE CHART
-              * ----------*/
-            
-              //LINE perform request to get original and predicted data using vue.js
-
-
-
-              var   v_original = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/training"),
-              v_predicted = getXY("/ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}/validation")
-
-        var original = [],
-            predicted = []
-
+        /*-----------
+        * LINE CHART
+        * ----------*/
+      
+        //Flot Line plot for the balance, equity and order_status vs date for the gym_fx_validation table's best reward_v config_id registers
+       
         var max_points = "{{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }}"
         var use_latest = true
 
