@@ -18,7 +18,8 @@ export default {
             realtime : 'on', //If == to on then fetch data every x seconds. else stop fetching
             updateInterval : 1000 * window.interval,
             data_ :[],
-            totalPoints : 10
+            totalPoints : 10,
+            val_plot_num_points : window.val_plot_num_points
            
         }
     }, 
