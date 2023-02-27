@@ -369,9 +369,14 @@ export default {
       catch (e) {
         console.log(e);
       }
-      this.plot_max = max;
-      this.plot_min = min;
-      return xy_points;
+      //this.plot_max = max;
+      //this.plot_min = min;
+      return {
+        timestamps : timestamps,
+        xy_balance : xy_balance,
+        xy_equity : xy_equity,
+        xy_order_status : xy_order_status
+      };
     },
     
     // update the interactive plot
