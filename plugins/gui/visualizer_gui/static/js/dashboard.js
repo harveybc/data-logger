@@ -12,8 +12,10 @@ export default {
       gymfx_max_training_score: 0.0,
       gymfx_best_offline: 1,
       gymfx_max_validation_score: 0.0,
-      plot_max: 10000,
       plot_min: 0.0,
+      plot_max: 10000,
+      v_plot_min: 0,
+      v_plot_max: 10000,
       //Fetch data ever x milliseconds
       realtime: 'on', //If == to on then fetch data every x seconds. else stop fetching
       updateInterval: 1000 * window.interval,
@@ -97,13 +99,7 @@ export default {
 
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
-      console.log("before:" + response.data);
       this.data_ = JSON.parse(response.data);
-      console.log("after:" + JSON.stringify(this.data_));
-
-
-
-
       // setup the first and the last index of the arrays to be plotted
       var first = 0, last = max_points
       if (last > (v_original.length)) {
@@ -320,18 +316,119 @@ export default {
         this.interactive_plot.getAxes().xaxis.options.max = x_max;
         this.interactive_plot.setupGrid();
         this.interactive_plot.draw();
-
       }
       catch (e) {
         console.log(e);
       }
-      //}
-
-
       this.plot_max = max;
       this.plot_min = min;
       return xy_points;
     },
+    // This function updates the interactive plot with new data and update the plot axises
+    transform_validation_plot_data(response_data) {
+      let timestamps = [];
+      let xy_balance = [];
+      let xy_equity = [];
+      let xy_order_status = [];
+      let y_min = 0;
+      let y_max = 1;
+      let prev_y_min = this.v_plot_min;
+      let prev_y_max = this.v_plot_max;
+      let x_max = 0;
+      // calculate the js timestamps from the tick_date column
+      for (let i = 0; i < response_data.length; i++) {
+        let date = new Date(response_data[i].tick_date);
+        timestamps.push(date.getTime());
+        xy_balance.push([timestamps[i], response_data[i].balance]);
+        xy_equity.push([timestamps[i], response_data[i].equity]);
+        xy_order_status.push([timestamps[i], response_data[i].order_status]);
+        if (response_data[i].balance > y_max) {
+          y_max = response_data[i].balance;
+        }
+        if (response_data[i].balance < y_min) {
+          y_min = response_data[i].balance;
+        }
+        if (response_data[i].equity > y_max) {
+          y_max = response_data[i].equity;
+        }
+        if (response_data[i].equity < y_min) {
+          y_min = response_data[i].equity;
+        }
+
+      }
+
+
+      for (let i = 0; i < response_data.length; i++) {
+        if (response_data[i].y > max) {
+          max = response_data[i].y;
+        }
+        if (response_data[i].y < min) {
+          min = response_data[i].y;
+        }
+        if (response_data[i].x > x_max) {
+          x_max = response_data[i].x;
+        }
+
+        xy_points.push([response_data[i].x, response_data[i].y]);
+      }
+      //if ((prev_min != min) || (prev_max != max)) {
+      try {
+        console.log("update yaxis");
+
+        this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
+        this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
+        this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+        this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.interactive_plot.setupGrid();
+        this.interactive_plot.draw();
+      }
+      catch (e) {
+        console.log(e);
+      }
+      this.plot_max = max;
+      this.plot_min = min;
+      return xy_points;
+    },
+    // This function updates the validation plot with new data and update the plot axises
+    transform_validation_plot_data(response_data) {
+      let xy_points = [];
+      let min = 0;
+      let max = 1;
+      let prev_min = this.plot_min;
+      let prev_max = this.plot_max;
+      let x_max = 0;
+
+      for (let i = 0; i < response_data.length; i++) {
+        if (response_data[i].y > max) {
+          max = response_data[i].y;
+        }
+        if (response_data[i].y < min) {
+          min = response_data[i].y;
+        }
+        if (response_data[i].x > x_max) {
+          x_max = response_data[i].x;
+        }
+        xy_points.push([response_data[i].x, response_data[i].y]);
+      }
+      //if ((prev_min != min) || (prev_max != max)) {
+      try {
+        console.log("update yaxis");
+
+        this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
+        this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
+        this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+        this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.interactive_plot.setupGrid();
+        this.interactive_plot.draw();
+      }
+      catch (e) {
+        console.log(e);
+      }
+      this.plot_max = max;
+      this.plot_min = min;
+      return xy_points;
+    },
+    // update the interactive plot
     update() {
       this.gymfx_online_plot_().then((response) => {
         this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
