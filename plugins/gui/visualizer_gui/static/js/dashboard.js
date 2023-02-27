@@ -131,7 +131,8 @@ export default {
         color: '#00c0ef'
       }
 
-      $.plot('#line-chart', [line_data1, line_data2], {
+      // validation line plot
+      this.validation_plot = $.plot('#line-chart', [line_data1, line_data2], {
         grid: {
           hoverable: true,
           borderColor: '#f3f3f3',
@@ -341,6 +342,7 @@ export default {
         timestamps.push(date.getTime());
         xy_balance.push([timestamps[i], response_data[i].balance]);
         xy_equity.push([timestamps[i], response_data[i].equity]);
+        // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
         xy_order_status.push([timestamps[i], response_data[i].order_status]);
         if (response_data[i].balance > y_max) {
           y_max = response_data[i].balance;
@@ -354,33 +356,15 @@ export default {
         if (response_data[i].equity < y_min) {
           y_min = response_data[i].equity;
         }
-
-      }
-
-
-      for (let i = 0; i < response_data.length; i++) {
-        if (response_data[i].y > max) {
-          max = response_data[i].y;
-        }
-        if (response_data[i].y < min) {
-          min = response_data[i].y;
-        }
-        if (response_data[i].x > x_max) {
-          x_max = response_data[i].x;
-        }
-
-        xy_points.push([response_data[i].x, response_data[i].y]);
       }
       //if ((prev_min != min) || (prev_max != max)) {
       try {
-        console.log("update yaxis");
-
-        this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
-        this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-        this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
-        this.interactive_plot.getAxes().xaxis.options.max = x_max;
-        this.interactive_plot.setupGrid();
-        this.interactive_plot.draw();
+        this.validation_plot.getAxes().yaxis.options.min = this.plot_min;
+        this.validation_plot.getAxes().yaxis.options.max = this.plot_max;
+        //this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+        //this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.validation_plot.setupGrid();
+        this.validation_plot.draw();
       }
       catch (e) {
         console.log(e);
@@ -389,45 +373,7 @@ export default {
       this.plot_min = min;
       return xy_points;
     },
-    // This function updates the validation plot with new data and update the plot axises
-    transform_validation_plot_data(response_data) {
-      let xy_points = [];
-      let min = 0;
-      let max = 1;
-      let prev_min = this.plot_min;
-      let prev_max = this.plot_max;
-      let x_max = 0;
-
-      for (let i = 0; i < response_data.length; i++) {
-        if (response_data[i].y > max) {
-          max = response_data[i].y;
-        }
-        if (response_data[i].y < min) {
-          min = response_data[i].y;
-        }
-        if (response_data[i].x > x_max) {
-          x_max = response_data[i].x;
-        }
-        xy_points.push([response_data[i].x, response_data[i].y]);
-      }
-      //if ((prev_min != min) || (prev_max != max)) {
-      try {
-        console.log("update yaxis");
-
-        this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
-        this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-        this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
-        this.interactive_plot.getAxes().xaxis.options.max = x_max;
-        this.interactive_plot.setupGrid();
-        this.interactive_plot.draw();
-      }
-      catch (e) {
-        console.log(e);
-      }
-      this.plot_max = max;
-      this.plot_min = min;
-      return xy_points;
-    },
+    
     // update the interactive plot
     update() {
       this.gymfx_online_plot_().then((response) => {
