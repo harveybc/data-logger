@@ -99,7 +99,10 @@ export default {
 
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
-      this.data_ = JSON.parse(response.data);
+      plot_data = JSON.parse(response.data);
+      // prepare the data
+      this.data_ = this.transform_validation_plot_data(plot_data)
+
       // setup the first and the last index of the arrays to be plotted
       var first = 0, last = max_points
       if (last > (v_original.length)) {
@@ -333,9 +336,7 @@ export default {
       let xy_order_status = [];
       let y_min = 0;
       let y_max = 1;
-      let prev_y_min = this.v_plot_min;
-      let prev_y_max = this.v_plot_max;
-      let x_max = 0;
+      
       // calculate the js timestamps from the tick_date column
       for (let i = 0; i < response_data.length; i++) {
         let date = new Date(response_data[i].tick_date);
