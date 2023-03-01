@@ -109,7 +109,7 @@
         <!-- Left col -->
         <section class="col-lg-6 connectedSortable">
           <!-- Interactive chart -->
-          <div class="card card-primary card-outline">
+          <div class="card card-primary card-outline" style="height: {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['height'] }};">
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
@@ -124,7 +124,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-body" style="height: {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['height'] }};">
+            <div class="card-body">
               <div id="interactive"></div>
             </div>
             <!-- /.card-body-->
@@ -135,7 +135,7 @@
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-6 connectedSortable">
         <!-- Line chart -->
-          <div class="card card-primary card-outline">
+          <div class="card card-primary card-outline"  style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};">
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
@@ -150,7 +150,7 @@
                 </button>
               </div>
             </div>
-            <div class="card-body" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};">
+            <div class="card-body">
               <div id="line-chart"></div>
             </div>
             <!-- /.card-body-->
