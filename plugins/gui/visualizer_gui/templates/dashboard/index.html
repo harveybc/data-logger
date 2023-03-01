@@ -105,7 +105,7 @@
         <!-- ./col -->
       </div>
       <!-- Main row -->
-      <div class="row" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['height'] }};">
+      <div class="row">
         <!-- Left col -->
         <section class="col-lg-6 connectedSortable">
           <!-- Interactive chart -->
@@ -130,22 +130,17 @@
             <!-- /.card-body-->
           </div>
           <!-- /.card -->
-
-          
-
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-6 connectedSortable">
-
-          <!-- Line chart -->
+        <!-- Line chart -->
           <div class="card card-primary card-outline">
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
                 {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: best_process)
               </h3>
-          
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -160,27 +155,16 @@
             </div>
             <!-- /.card-body-->
           </div>
-          <!-- /.card -->
-
-
-
-          
+          <!-- /.card -->  
         </section>
         <!-- right col -->
- 
-        
         <!-- TABLE: LATEST PROCESSES -->
-          
       </div>
       <!-- /.row -->
-
       <b>Input Plugin</b>:{{ p_config['input_plugin'] }}, <b>Output Plugin</b>:{{ p_config['output_plugin'] }}
-
     </div><!-- /.container-fluid -->
-
   </section>
   <!-- /.content -->
-
 </div>
 {% endblock content %}
 
