@@ -100,7 +100,7 @@ export default {
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
       plot_data = JSON.parse(response.data);
-      // prepare the data
+      // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
 
       // setup the first and the last index of the arrays to be plotted
@@ -336,7 +336,7 @@ export default {
       let xy_order_status = [];
       let y_min = 0;
       let y_max = 1;
-      
+
       // calculate the js timestamps from the tick_date column
       for (let i = 0; i < response_data.length; i++) {
         let date = new Date(response_data[i].tick_date);
@@ -373,13 +373,42 @@ export default {
       //this.plot_max = max;
       //this.plot_min = min;
       return {
-        timestamps : timestamps,
-        xy_balance : xy_balance,
-        xy_equity : xy_equity,
-        xy_order_status : xy_order_status
+        timestamps: timestamps,
+        xy_balance: xy_balance,
+        xy_equity: xy_equity,
+        xy_order_status: xy_order_status
       };
     },
-    
+        // helper for returning the order status color areas for the validation plot
+    order_status_areas(axes) {
+      var markings = [];
+      // for each this.data_.xy_order_status[i][1], create a region red if thre order status is -1 and green if 1
+      var from = 0; 
+      var color = "#4f4f4f";
+      for (var i = 1; i < this.data_.xy_order_status.length; ++i) {   
+        var x = this.data_.xy_order_status[i][0];
+        // sell order when order_status == -1
+        if (i > 0 && this.data_.xy_order_status[i][1] == -1 && this.data_.xy_order_status[i-1][1] == 0) {
+          from = x;
+        }
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == -1) {
+          to = x;
+          color = "#ff4f4f";
+          markings.push({ xaxis: { from: from, to: to }, color: color });
+        }
+        // buy order when order_status == 1
+        if (i > 0 && this.data_.xy_order_status[i][1] == 1 && this.data_.xy_order_status[i - 1][1] == 0) {
+          from = x;
+        }
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == 1) {
+          to = x;
+          color = "#4f4fff";
+          markings.push({ xaxis: { from: from, to: to }, color: color });
+        }
+      }       
+      return markings;
+    },
+
     // update the interactive plot
     update() {
       this.gymfx_online_plot_().then((response) => {
@@ -399,6 +428,7 @@ export default {
         console.log(error);
       });
     },
+
 
 
 
