@@ -102,7 +102,7 @@ export default {
       plot_data = JSON.parse(response.data);
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
-
+      
       // setup the first and the last index of the arrays to be plotted
       var first = 0, last = max_points
       if (last > (v_original.length)) {
