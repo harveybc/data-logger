@@ -103,90 +103,71 @@ export default {
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
       
-      // setup the first and the last index of the arrays to be plotted
-      var first = 0, last = max_points
-      if (last > (v_original.length)) {
-        last = v_original.length
-      }
-
-      // TODO: Posible error por mal cálculo del first
-      if (use_latest) {
-        last = v_original.length
-        first = last - max_points
-        if (first < 0) {
-          first = 0
-        }
-      }
-
-      // prepare plotted arrays    
-      for (var i = first; i < last; i++) {
-        original.push([i, v_original[i]])
-        predicted.push([i, v_predicted[i]])
-      }
-
-      var line_data1 = {
-        data: original,
-        color: '#3c8dbc'
-      }
-
-      var line_data2 = {
-        data: predicted,
-        color: '#00c0ef'
-      }
-
-      // validation line plot
-      this.validation_plot = $.plot('#line-chart', [line_data1, line_data2], {
+      var options = {
+        xaxis: {
+          mode: "time",
+          timeBase: "milliseconds",
+          tickLength: 5,
+          gridLines: false
+        },
+        selection: {
+          mode: "x"
+        },
         grid: {
-          hoverable: true,
-          borderColor: '#f3f3f3',
-          borderWidth: 1,
-          tickColor: '#f3f3f3'
-        },
+          markings: weekendAreas
+        }
+      };
+
+      var plot = $.plot("#placeholder", [d], options);
+
+      var overview = $.plot("#overview", [d], {
         series: {
-          shadowSize: 0,
           lines: {
-            show: true
+            show: true,
+            lineWidth: 1
           },
-          points: {
-            show: true
-          }
-        },
-        lines: {
-          fill: false,
-          color: ['#3c8dbc', '#f56954']
-        },
-        yaxis: {
-          show: true
+          shadowSize: 0
         },
         xaxis: {
-          show: true
+          ticks: [],
+          mode: "time"
+        },
+        yaxis: {
+          ticks: [],
+          min: 0,
+          autoScaleMargin: 0.1
+        },
+        selection: {
+          mode: "x"
         }
-      })
-      //Initialize tooltip on hover
-      $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-        position: 'absolute',
-        display: 'none',
-        opacity: 0.8
-      }).appendTo('body')
-      $('#line-chart').bind('plothover', function (event, pos, item) {
-
-        if (item) {
-          var x = item.datapoint[0].toFixed(2),
-            y = item.datapoint[1].toFixed(2)
-
-          $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-            .css({
-              top: item.pageY + 5,
-              left: item.pageX + 5
-            })
-            .fadeIn(200)
-        } else {
-          $('#line-chart-tooltip').hide()
-        }
-      }, (error) => {
-        console.log(error);
       });
 
+      // now connect the two
+
+      $("#placeholder").bind("plotselected", function (event, ranges) {
+
+        // do the zooming
+        $.each(plot.getXAxes(), function (_, axis) {
+          var opts = axis.options;
+          opts.min = ranges.xaxis.from;
+          opts.max = ranges.xaxis.to;
+        });
+        plot.setupGrid();
+        plot.draw();
+        plot.clearSelection();
+
+        // don't fire event on the overview to prevent eternal loop
+
+        overview.setSelection(ranges, true);
+      });
+
+      $("#overview").bind("plotselected", function (event, ranges) {
+        plot.setSelection(ranges);
+      });
+
+      // Add the Flot version string to the footer
+
+      $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
     /* END LINE CHART */
 
