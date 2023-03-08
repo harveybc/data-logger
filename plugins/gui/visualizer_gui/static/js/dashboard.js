@@ -114,13 +114,13 @@ export default {
           mode: "x"
         },
         grid: {
-          markings: weekendAreas
+          markings: this.order_status_areas
         }
       };
 
-      var plot = $.plot("#placeholder", [d], options);
+      var plot = $.plot("#val_placeholder", [d], options);
 
-      var overview = $.plot("#overview", [d], {
+      var overview = $.plot("#val_overview", [d], {
         series: {
           lines: {
             show: true,
@@ -144,7 +144,7 @@ export default {
 
       // now connect the two
 
-      $("#placeholder").bind("plotselected", function (event, ranges) {
+      $("#val_placeholder").bind("plotselected", function (event, ranges) {
 
         // do the zooming
         $.each(plot.getXAxes(), function (_, axis) {
@@ -161,13 +161,12 @@ export default {
         overview.setSelection(ranges, true);
       });
 
-      $("#overview").bind("plotselected", function (event, ranges) {
+      $("#val_overview").bind("plotselected", function (event, ranges) {
         plot.setSelection(ranges);
       });
 
       // Add the Flot version string to the footer
-
-      $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+      //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
     /* END LINE CHART */
 
