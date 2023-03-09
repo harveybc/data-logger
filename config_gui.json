@@ -13,13 +13,14 @@
             "box_3_value": "gymfx_max_validation_score",
             "rt_plot": {
                 "title": "Online Training Score",
-                "height": "180px",
+                "height": "380px",
                 "interval": 2,
                 "num_points" : 10
             },
             "val_plot": {
                 "title": "Validation Score",
-                "height": "180px",
+                "plot_height": "280px",
+                "overview_height": "100px",
                 "max_points": "35",
                 "use_latest": true,
                 "data": "val_plot()"
