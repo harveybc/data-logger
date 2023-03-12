@@ -142,12 +142,11 @@
                 {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: best_process)
               </h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
+                Real time
+                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                  <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                </div>
               </div>
             </div>
             <div class="card-body" >
