@@ -119,9 +119,9 @@ export default {
         }
       };
 
-      var plot = $.plot("#val_placeholder", [d], options);
+      var plot = $.plot("#placeholder", [d], options);
 
-      var overview = $.plot("#val_overview", [d], {
+      var overview = $.plot("#overview", [d], {
         series: {
           lines: {
             show: true,
@@ -145,7 +145,7 @@ export default {
 
       // now connect the two
 
-      $("#val_placeholder").bind("plotselected", function (event, ranges) {
+      $("#placeholder").bind("plotselected", function (event, ranges) {
 
         // do the zooming
         $.each(plot.getXAxes(), function (_, axis) {
@@ -162,7 +162,7 @@ export default {
         overview.setSelection(ranges, true);
       });
 
-      $("#val_overview").bind("plotselected", function (event, ranges) {
+      $("#overview").bind("plotselected", function (event, ranges) {
         plot.setSelection(ranges);
       });
 
