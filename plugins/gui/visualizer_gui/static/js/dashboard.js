@@ -118,9 +118,9 @@ export default {
         }
       };
 
-      var plot = $.plot("#val_placeholder", [d], options);
+      var plot = $.plot("#val_placeholder", [this.data_.xy_equity], options);
 
-      var overview = $.plot("#val_overview", [d], {
+      var overview = $.plot("#val_overview", [this.data_.xy_equity], {
         series: {
           lines: {
             show: true,
