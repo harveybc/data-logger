@@ -29,7 +29,58 @@
 <link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
 <!-- summernote -->
 <link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+<style>
+  .demo-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+}
 
+fieldset {
+		display: block;
+		-webkit-margin-start: 2px;
+		-webkit-margin-end: 2px;
+		-webkit-padding-before: 0.35em;
+		-webkit-padding-start: 0.75em;
+		-webkit-padding-end: 0.75em;
+		-webkit-padding-after: 0.625em;
+		min-width: -webkit-min-content;
+		border-width: 2px;
+		border-style: groove;
+		border-color: threedface;
+		border-image: initial;
+		padding: 10px;
+}
+
+.legend {
+		display: block;
+		-webkit-padding-start: 2px;
+		-webkit-padding-end: 2px;
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+		padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+}
+
+.legendLayer .background {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(0, 0, 0, 0.85);
+    stroke-width: 1;
+}
+
+input[type="radio"] {
+		margin-top: -1px;
+		vertical-align: middle;
+}
+
+.tickLabel {
+	line-height: 1.1;
+}
+</style>
 
 {% endblock stylesheets %}
 
@@ -150,8 +201,8 @@
               </div>
             </div>
             <div class="card-body" >
-                <div id="placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
-                <div id="overview" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
+                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+                <div id="overview"  class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
             </div>
             <!-- /.card-body-->
           </div>
