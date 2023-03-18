@@ -45,6 +45,11 @@
 </div>
 <!-- ./wrapper -->
 
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}  
+
+
 <script type="module">
     import "/static/js/buffer-6.0.3.min.js"
     import MyModule from "/static/js/dashboard.js"
@@ -53,10 +58,6 @@
     vm.mount('#main_content')
     vm.config.globalProperties.window = window  
 </script>
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}  
-
 
 </body>
 </html>
