@@ -1,8 +1,10 @@
 // dashboard vue Module implementation
-
+import $ from "jquery";
 export default {
+
   data() {
     return {
+
       xy_points_: [],
       points: [],
       process_list: [0, 1, 2, 3],
@@ -26,6 +28,7 @@ export default {
     }
   },
   mounted() {
+
     this.gymfx_online_plot_().then((response) => {
       console.log("before:" + response.data);
       this.xy_points_ = JSON.parse(response.data);
