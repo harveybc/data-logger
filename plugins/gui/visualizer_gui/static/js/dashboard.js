@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted() {
-    var $ = require('jquery')
+    
     this.gymfx_online_plot_().then((response) => {
       console.log("before:" + response.data);
       this.xy_points_ = JSON.parse(response.data);
