@@ -1,5 +1,5 @@
 // dashboard vue Module implementation
-import $ from 'jquery';
+
 export default {
   
   data() {
