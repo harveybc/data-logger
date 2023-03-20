@@ -49,9 +49,11 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
-
+<script>
+        import $ from "jquery";
+</script>
 <script type="module">
-    import $ from "jquery";
+
     import "/static/js/buffer-6.0.3.min.js"
     import MyModule from "/static/js/dashboard.js"
     const { createApp } = Vue
