@@ -1,5 +1,5 @@
 // dashboard vue Module implementation
-import $ from "jquery";
+import "/static/assets/plugins/jquery/jquery-3.6.4.min.js";
 export default {
   
   data() {
