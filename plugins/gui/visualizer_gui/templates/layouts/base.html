@@ -56,8 +56,8 @@
     import MyModule from "/static/js/dashboard.js"
     const { createApp } = Vue
     var vm = createApp(MyModule)
-    vm.mount('#main_content')
     vm.config.globalProperties.window = window  
+    vm.mount('#main_content') 
 </script>
 
 </body>
