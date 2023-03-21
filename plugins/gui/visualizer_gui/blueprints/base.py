@@ -31,10 +31,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         #_logger.info("static favicon folder: "+plugin_folder+"/static/favicon/"+path)
         return send_from_directory(plugin_folder+"/static/favicon.ico",  path)
 
-
-
-
-
     ### static javascript files for gui plugin blueprints
     @bp.route('/static/js/<path:path>')
     def js_assets(path):
@@ -129,6 +125,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     @bp.errorhandler(404)
     def not_found_error(error):
+        print("Error : " , str(error))
         return render_template("error_pages/page-404.html"), 404
 
     @bp.errorhandler(500)

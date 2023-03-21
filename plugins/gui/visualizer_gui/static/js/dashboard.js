@@ -1,112 +1,348 @@
 // dashboard vue Module implementation
 
 export default {
-    data() {
-        return { 
-            xy_points_: [],
-            process_list: [0,1,2,3],
-            process: 0,
-            status : 'Halted',
-            best_online_: 1,
-            min_training_mse_: 0.0,
-            best_config_ : 1,
-            min_validation_mse_ : 0.0
+  
+  data() {
+    return {
 
+      xy_points_: [],
+      points: [],
+      process_list: [0, 1, 2, 3],
+      process: 0,
+      status: 'Halted',
+      gymfx_best_online: 1,
+      gymfx_max_training_score: 0.0,
+      gymfx_best_offline: 1,
+      gymfx_max_validation_score: 0.0,
+      plot_min: 0.0,
+      plot_max: 10000,
+      v_plot_min: 0,
+      v_plot_max: 10000,
+      //Fetch data ever x milliseconds
+      realtime: 'on', //If == to on then fetch data every x seconds. else stop fetching
+      updateInterval: 1000 * window.interval,
+      data_: [],
+      totalPoints: 10,
+      val_plot_num_points: window.val_plot_num_points
 
-        }
-    }, 
-    // initialize values
-    created() {
-        //this.get_process_list();
-        //this.get_process();
-        //this.get_status();
-        this.gymfx_best_online_ = this.gymfx_best_online_();
-        this.gymfx_max_training_score_ = this.gymfx_max_training_score_();
-        this.gymfx_best_config_ = this.gymfx_best_config_();
-        this.gymfx_max_validation_score_ = this.gymfx_max_validation_score_();
-    },  
-    methods: {
-        // returns an axios instance for basic authentication
-        axiosBasicAuth(username, password) {
-          let buffer_auth = buffer.Buffer.from(username + ':' + password);
-          let b64 = buffer_auth.toString('base64');
-          return axios.create({
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Basic ${b64}`,
-            }
-          });
-        },
-        // returns an axios instance with configured basic authentication
-        // TODO: change to use current user
-        axios_auth_instance(){
-          let axios_instance = this.axiosBasicAuth("test", "pass");
-          return axios_instance; 
-        },
-        // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
-        gymfx_best_online_() {
-          // setup authentication
-          let axios_instance = this.axios_auth_instance();
-          // use the result of api request
-          axios_instance.get('/gym_fx_best_online_')
-          .then((response) => {
-            //console.log(response.data);
-            this.best_online_ = response.data;
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });
-        },
-        // call request that returns the best mse from table fe_training_error that has config.active == true
-        gymfx_max_training_score_(){
-          let axios_instance = this.axios_auth_instance();
-            // use the response of api request
-            axios_instance.get('/gymfx_max_training_score_')
-            .then((response) => {
-              this.min_training_mse_ = response.data;
-              return response.data;
-            }, (error) => {
-              console.log(error);
-              return 0;
-            });        
-        },
-        // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
-        gymfx_best_config_() {
-          // setup authentication
-          let axios_instance = this.axios_auth_instance();
-          // use the result of api request
-          axios_instance.get('/gymfx_best_config_')
-          .then((response) => {
-            this.best_config_ = response.data;
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });
-        },
-        // call request that returns the best mse from table fe_validation_error that has config.active == false
-        gymfx_max_validation_score_(){
-          let axios_instance = this.axios_auth_instance();
-          // use the response of api request
-          axios_instance.get('/gymfx_max_validation_score_')
-          .then((response) => {
-            this.min_validation_mse_ = response.data;
-            return response.data;
-          }, (error) => {
-            console.log(error);
-            return 0;
-          });        
+    }
+  },
+  mounted() {
+    
+    this.gymfx_online_plot_().then((response) => {
+      console.log("before:" + response.data);
+      this.xy_points_ = JSON.parse(response.data);
+      console.log("after:" + JSON.stringify(this.xy_points_));
+    }, (error) => {
+      console.log(error);
+    });
+    // Interactive plot
+    this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
+      grid: {
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        tickColor: '#f3f3f3'
       },
-        // define starting field values
-        field_start_values(){
-                return {
-                count:0
-            }
-        },
-        get_value(a,b,c){
-            return 0
+      series: {
+        shadowSize: 1, // Drawing is faster without shadows
+        color: '#3c8dbc',
+        lines: {
+          line_width: 2,
+          fill: true, // Converts the line chart to area chart
+          show: true
         }
+      },
+      yaxis: {
+        min: this.plot_min,
+        max: this.plot_max,
+        show: true
+      },
+      //xaxis: {
+      //   mode: "time", 
+      //  timeformat:"%y/%m/%d %H:%M:%S"        
+      //  }
+      xaxis: {
+        show: true
+      }
+    })
+
+
+    var that = this;
+    //INITIALIZE REALTIME DATA FETCHING
+    if (this.realtime === 'on') {
+      try {
+        this.update();
+      } catch (e) {
+        console.log(e);
+      }
+
+    }
+    var that = this;
+    //REALTIME TOGGLE
+    $('#realtime .btn').click(function () {
+      if ($(this).data('toggle') === 'on') {
+        that.realtime = 'on'
+        that.update()
+      } else {
+        that.realtime = 'off'
+      }
+    })
+    /*
+      * END INTERACTIVE CHART
+      */
+
+   
+  },
+  // initialize values
+  created() {
+    //this.get_process_list();
+    //this.get_process();
+    //this.get_status();
+    this.gymfx_best_online_();
+    this.gymfx_max_training_score_();
+    this.gymfx_best_offline_();
+    this.gymfx_max_validation_score_();
+    //this.gymfx_online_plot_ = this.gymfx_online_plot_();
+    //this.update = this.update();
+  },
+  methods: {
+    // returns an axios instance for basic authentication
+    axiosBasicAuth(username, password) {
+      let buffer_auth = buffer.Buffer.from(username + ':' + password);
+      let b64 = buffer_auth.toString('base64');
+      return axios.create({
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${b64}`,
+        }
+      });
     },
-    delimiters: ["|{", "}|"]
+    // returns an axios instance with configured basic authentication
+    // TODO: change to use current user
+    axios_auth_instance() {
+      let axios_instance = this.axiosBasicAuth("test", "pass");
+      return axios_instance;
+    },
+    // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+    gymfx_best_online_() {
+      // setup authentication
+      let axios_instance = this.axios_auth_instance();
+      // use the result of api request
+      axios_instance.get('/gymfx_best_online_')
+        .then((response) => {
+          //console.log(response.data);
+          this.gymfx_best_online = response.data;
+          return response.data;
+        }, (error) => {
+          console.log(error);
+          return 0;
+        });
+    },
+    // call request that returns the best mse from table fe_training_error that has config.active == true
+    gymfx_max_training_score_() {
+      let axios_instance = this.axios_auth_instance();
+      // use the response of api request
+      axios_instance.get('/gymfx_max_training_score_')
+        .then((response) => {
+          this.gymfx_max_training_score = response.data;
+          return response.data;
+        }, (error) => {
+          console.log(error);
+          return 0;
+        });
+    },
+    // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
+    gymfx_best_offline_() {
+      // setup authentication
+      let axios_instance = this.axios_auth_instance();
+      // use the result of api request
+      axios_instance.get('/gymfx_best_offline_')
+        .then((response) => {
+          this.gymfx_best_offline = response.data;
+          return response.data;
+        }, (error) => {
+          console.log(error);
+          return 0;
+        });
+    },
+    // call request that returns the best mse from table fe_validation_error that has config.active == false
+    gymfx_max_validation_score_() {
+      let axios_instance = this.axios_auth_instance();
+      // use the response of api request
+      axios_instance.get('/gymfx_max_validation_score_')
+        .then((response) => {
+          this.gymfx_max_validation_score = response.data;
+          return response.data;
+        }, (error) => {
+          console.log(error);
+          return 0;
+        });
+    },
+    gymfx_online_plot_() {
+      // setup authentication
+      let axios_instance = this.axios_auth_instance();
+      // use the result of api request
+      return axios_instance.get('/gymfx_online_plot_', { responseType: 'text', transformResponse: [] })
+    },
+    gymfx_validation_plot_() {
+      // setup authentication
+      let axios_instance = this.axios_auth_instance();
+      // use the result of api request
+      return axios_instance.get('/gymfx_validation_plot_', { responseType: 'text', transformResponse: [] })
+    },
+
+    // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
+    transform_plot_data(response_data) {
+      let xy_points = [];
+      let min = 0;
+      let max = 1;
+      let prev_min = this.plot_min;
+      let prev_max = this.plot_max;
+      let x_max = 0;
+
+      for (let i = 0; i < response_data.length; i++) {
+        if (response_data[i].y > max) {
+          max = response_data[i].y;
+        }
+        if (response_data[i].y < min) {
+          min = response_data[i].y;
+        }
+        if (response_data[i].x > x_max) {
+          x_max = response_data[i].x;
+        }
+        xy_points.push([response_data[i].x, response_data[i].y]);
+      }
+      //if ((prev_min != min) || (prev_max != max)) {
+      try {
+        console.log("update yaxis");
+
+        this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
+        this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
+        this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+        this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.interactive_plot.setupGrid();
+        this.interactive_plot.draw();
+      }
+      catch (e) {
+        console.log(e);
+      }
+      this.plot_max = max;
+      this.plot_min = min;
+      return xy_points;
+    },
+    // This function updates the interactive plot with new data and update the plot axises
+    transform_validation_plot_data(response_data) {
+      let timestamps = [];
+      let xy_balance = [];
+      let xy_equity = [];
+      let xy_order_status = [];
+      let y_min = 0;
+      let y_max = 1;
+
+      // calculate the js timestamps from the tick_date column
+      for (let i = 0; i < response_data.length; i++) {
+        let date = new Date(response_data[i].tick_date);
+        timestamps.push(date.getTime());
+        xy_balance.push([timestamps[i], response_data[i].balance]);
+        xy_equity.push([timestamps[i], response_data[i].equity]);
+        // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
+        xy_order_status.push([timestamps[i], response_data[i].order_status]);
+        if (response_data[i].balance > y_max) {
+          y_max = response_data[i].balance;
+        }
+        if (response_data[i].balance < y_min) {
+          y_min = response_data[i].balance;
+        }
+        if (response_data[i].equity > y_max) {
+          y_max = response_data[i].equity;
+        }
+        if (response_data[i].equity < y_min) {
+          y_min = response_data[i].equity;
+        }
+      }
+      //if ((prev_min != min) || (prev_max != max)) {
+      try {
+        this.validation_plot.getAxes().yaxis.options.min = this.plot_min;
+        this.validation_plot.getAxes().yaxis.options.max = this.plot_max;
+        //this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+        //this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.validation_plot.setupGrid();
+        this.validation_plot.draw();
+      }
+      catch (e) {
+        console.log(e);
+      }
+      //this.plot_max = max;
+      //this.plot_min = min;
+      return {
+        timestamps: timestamps,
+        xy_balance: xy_balance,
+        xy_equity: xy_equity,
+        xy_order_status: xy_order_status
+      };
+    },
+        // helper for returning the order status color areas for the validation plot
+    order_status_areas(axes) {
+      var markings = [];
+      // for each this.data_.xy_order_status[i][1], create a region red if thre order status is -1 and green if 1
+      var from = 0; 
+      var color = "#4f4f4f";
+      for (var i = 1; i < this.data_.xy_order_status.length; ++i) {   
+        var x = this.data_.xy_order_status[i][0];
+        // sell order when order_status == -1
+        if (i > 0 && this.data_.xy_order_status[i][1] == -1 && this.data_.xy_order_status[i-1][1] == 0) {
+          from = x;
+        }
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == -1) {
+          to = x;
+          color = "#ff4f4f";
+          markings.push({ xaxis: { from: from, to: to }, color: color });
+        }
+        // buy order when order_status == 1
+        if (i > 0 && this.data_.xy_order_status[i][1] == 1 && this.data_.xy_order_status[i - 1][1] == 0) {
+          from = x;
+        }
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == 1) {
+          to = x;
+          color = "#4f4fff";
+          markings.push({ xaxis: { from: from, to: to }, color: color });
+        }
+      }       
+      return markings;
+    },
+
+    // update the interactive plot
+    update() {
+      this.gymfx_online_plot_().then((response) => {
+        this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
+        console.log("update:" + JSON.stringify(this.xy_points_));
+        try {
+          //this.interactive_plot.setData(this.xy_points_);
+          this.interactive_plot.setData([this.xy_points_]);
+          //Since the axes don't change, we don't need to call plot.setupGrid()
+          this.interactive_plot.draw();
+        } catch (e) {
+          console.log(e);
+        }
+        if (this.realtime === 'on')
+          setTimeout(function () { this.update(); }.bind(this), 1000);
+      }, (error) => {
+        console.log(error);
+      });
+    },
+
+
+
+
+    // define starting field values
+    field_start_values() {
+      return {
+        count: 0
+      }
+    },
+    get_value(a, b, c) {
+      return 0
+    }
+  },
+  delimiters: ["|{", "}|"]
 }

@@ -7,18 +7,20 @@
             "box_1_title": "Training Score",
             "box_2_title": "Best Stored",
             "box_3_title": "Validation Score",
-            "box_0_value": "gymfx_best_online_",
-            "box_1_value": "gymfx_max_training_score_",
-            "box_2_value": "gymfx_best_config_",
-            "box_3_value": "gymfx_max_validation_score_",
+            "box_0_value": "gymfx_best_online",
+            "box_1_value": "gymfx_max_training_score",
+            "box_2_value": "gymfx_best_offline",
+            "box_3_value": "gymfx_max_validation_score",
             "rt_plot": {
                 "title": "Online Training Score",
-                "height": "300px",
-                "interval": 1
+                "height": "380px",
+                "interval": 2,
+                "num_points" : 10
             },
             "val_plot": {
                 "title": "Validation Score",
-                "height": "200px",
+                "plot_height": "280px",
+                "overview_height": "100px",
                 "max_points": "35",
                 "use_latest": true,
                 "data": "val_plot()"
