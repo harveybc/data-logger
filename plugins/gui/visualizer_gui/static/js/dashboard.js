@@ -117,8 +117,8 @@ export default {
     };
     //console.log("befoplot 1:" + response.data);
     this.validation_plot = $.plot("#placeholder", [d], options);
-    var plot = this.validation_plot
-    var overview = $.plot("#overview", [d], {
+    var plot = this.validation_plot;
+    this.overview = $.plot("#overview", [d], {
       
       series: {
         lines: {
@@ -140,6 +140,7 @@ export default {
         mode: "x"
       }
     });
+    overview = this.overview;
 
 
     // get the data from the server
@@ -149,6 +150,18 @@ export default {
       this.data_ = this.transform_validation_plot_data(plot_data)
 
       // TODO: update validation_plot_data and options.grid.markings function
+      try {
+          //this.interactive_plot.setData(this.xy_points_);
+          this.validation_plot.setData([this.xy_points_]);
+          this.overview.setData([this.xy_points_]);
+          plot = this.validation_plot;
+          overview = this.overview;
+          //Since the axes don't change, we don't need to call plot.setupGrid()
+          this.validation_plot.draw();
+          this.overview.draw();
+        } catch (e) {
+          console.log(e);
+        }
       // now connect the two
 
       $("#placeholder").bind("plotselected", function (event, ranges) {
