@@ -116,9 +116,10 @@ export default {
       }
     };
     //console.log("befoplot 1:" + response.data);
-    var plot = $.plot("#placeholder", [d], options);
-
+    this.validation_plot = $.plot("#placeholder", [d], options);
+    var plot = this.validation_plot
     var overview = $.plot("#overview", [d], {
+      
       series: {
         lines: {
           show: true,
