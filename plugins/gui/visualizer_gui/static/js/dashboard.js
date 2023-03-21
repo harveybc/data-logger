@@ -115,7 +115,7 @@ export default {
         markings: this.order_status_areas
       }
     };
-    console.log("befoplot 1:" + response.data);
+    //console.log("befoplot 1:" + response.data);
     var plot = $.plot("#placeholder", [d], options);
 
     var overview = $.plot("#overview", [d], {
