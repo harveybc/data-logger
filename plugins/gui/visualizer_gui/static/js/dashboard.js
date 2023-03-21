@@ -1,7 +1,5 @@
 // dashboard vue Module implementation
-global.jQuery = require('jquery');
-var $ = global.jQuery;
-window.$ = $;
+
 export default {
   
   data() {
