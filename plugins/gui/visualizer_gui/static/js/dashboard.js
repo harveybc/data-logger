@@ -112,7 +112,7 @@ export default {
         mode: "x"
       },
       grid: {
-        markings: this.order_status_areas
+        //markings: this.order_status_areas
       }
     };
     //console.log("befoplot 1:" + response.data);
@@ -147,7 +147,7 @@ export default {
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
 
-      // TODO: update validation_plot_data 
+      // TODO: update validation_plot_data and options.grid.markings function
       // now connect the two
 
       $("#placeholder").bind("plotselected", function (event, ranges) {
