@@ -368,6 +368,7 @@ export default {
       var markings = [];
       // for each this.data_.xy_order_status[i][1], create a region red if thre order status is -1 and green if 1
       var from = 0; 
+      var to = 0;
       var color = "#4f4f4f";
       for (var i = 1; i < this.data_.xy_order_status.length; ++i) {   
         var x = this.data_.xy_order_status[i][0];
