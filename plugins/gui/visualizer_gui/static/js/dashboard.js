@@ -142,7 +142,6 @@ export default {
     });
     overview = this.overview;
 
-
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
@@ -154,7 +153,7 @@ export default {
           //this.interactive_plot.setData(this.xy_points_);
           this.validation_plot.setData([this.data_.xy_equity]);
           this.overview.setData([this.data_.xy_equity]);
-          this.validation_plot.options.grid.markings = this.order_status_areas
+          this.validation_plot.getOptions().grid.markings = this.order_status_areas
           plot = this.validation_plot;
           overview = this.overview;
           //Since the axes don't change, we don't need to call plot.setupGrid()
