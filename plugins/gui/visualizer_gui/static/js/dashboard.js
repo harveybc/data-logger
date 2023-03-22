@@ -152,8 +152,8 @@ export default {
       // TODO: update validation_plot_data and options.grid.markings function
       try {
           //this.interactive_plot.setData(this.xy_points_);
-          this.validation_plot.setData([this.xy_points_]);
-          this.overview.setData([this.xy_points_]);
+          this.validation_plot.setData([this.data_.xy_equity]);
+          this.overview.setData([this.data_.xy_equity]);
           plot = this.validation_plot;
           overview = this.overview;
           //Since the axes don't change, we don't need to call plot.setupGrid()
