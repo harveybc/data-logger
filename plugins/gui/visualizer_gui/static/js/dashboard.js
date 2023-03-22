@@ -157,6 +157,7 @@ export default {
           plot = this.validation_plot;
           overview = this.overview;
           //Since the axes don't change, we don't need to call plot.setupGrid()
+        this.validation_plot.setupGrid();
           this.validation_plot.draw();
           this.overview.draw();
         } catch (e) {
@@ -360,8 +361,8 @@ export default {
       }
       //if ((prev_min != min) || (prev_max != max)) {
       try {
-        this.validation_plot.getAxes().yaxis.options.min = this.plot_min;
-        this.validation_plot.getAxes().yaxis.options.max = this.plot_max;
+        this.validation_plot.getAxes().yaxis.options.min = y_min;
+        this.validation_plot.getAxes().yaxis.options.max = y_max;
         //this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
         //this.interactive_plot.getAxes().xaxis.options.max = x_max;
         this.validation_plot.setupGrid();
