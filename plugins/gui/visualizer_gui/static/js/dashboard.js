@@ -145,9 +145,10 @@ export default {
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
+      console.log("plot_data = " + plot_data);
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
-      console.log("this.data_.xy_equity" + this.data_.xy_equity);
+      console.log("this.data_.xy_equity = " + this.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
           //this.interactive_plot.setData(this.xy_points_);
