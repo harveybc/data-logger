@@ -147,7 +147,7 @@ export default {
       var plot_data = JSON.parse(response.data);
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data)
-      console.log("befoplot 2:" + this.data_);
+      console.log("this.data_.xy_equity" + this.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
           //this.interactive_plot.setData(this.xy_points_);
