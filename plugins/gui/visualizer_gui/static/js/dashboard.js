@@ -341,12 +341,12 @@ export default {
 
       // calculate the js timestamps from the tick_date column
       for (let i = 0; i < response_data.length; i++) {
-        let date = new Date(response_data[i].tick_date);
-        timestamps.push(date.getTime());
-        xy_balance.push([timestamps[i], response_data[i].balance]);
-        xy_equity.push([timestamps[i], response_data[i].equity]);
+        
+        timestamps.push(response_data[i].tick_date);
+        xy_balance.push([response_data[i].tick_date, response_data[i].balance]);
+        xy_equity.push([response_data[i].tick_date, response_data[i].equity]);
         // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
-        xy_order_status.push([timestamps[i], response_data[i].order_status]);
+        xy_order_status.push([response_data[i].tick_date, response_data[i].order_status]);
         if (response_data[i].balance > y_max) {
           y_max = response_data[i].balance;
         }
