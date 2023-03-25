@@ -338,7 +338,9 @@ export default {
       let xy_order_status = [];
       let y_min = 0;
       let y_max = 1;
-
+      // TODO: change when loading timestamps from csv
+      let x_max = response_data.length;
+      let x_min = 0;
       // calculate the js timestamps from the tick_date column
       for (let i = 0; i < response_data.length; i++) {
         
@@ -364,8 +366,8 @@ export default {
       try {
         this.validation_plot.getAxes().yaxis.options.min = y_min;
         this.validation_plot.getAxes().yaxis.options.max = y_max;
-        //this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
-        //this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.interactive_plot.getAxes().xaxis.options.min = x_min;
+        this.interactive_plot.getAxes().xaxis.options.max = x_max;
         this.validation_plot.setupGrid();
         this.validation_plot.draw();
       }
