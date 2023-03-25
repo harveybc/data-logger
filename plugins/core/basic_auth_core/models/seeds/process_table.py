@@ -49,6 +49,9 @@ def seed(app, db, table_name):
                     db.session.add(tmp0)
                     db.session.add(tmp1)
                     db.session.add(tmp2)
+                    db.session.add(tmp3)
+                    db.session.add(tmp4)
+                    
                     db.session.commit()
                     _logger.info("gym_fx_validation_plot table seeded") 
             except SQLAlchemyError as e:
