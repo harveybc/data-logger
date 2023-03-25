@@ -343,12 +343,19 @@ export default {
       let x_min = 0;
       // calculate the js timestamps from the tick_date column
       for (let i = 0; i < response_data.length; i++) {
-        
-        timestamps.push(response_data[i].tick_date);
-        xy_balance.push([response_data[i].tick_date, response_data[i].balance]);
-        xy_equity.push([response_data[i].tick_date, response_data[i].equity]);
+        // calculate minimum and maximum x values from response_data[i].tick_timestamp
+        if (response_data[i].tick_timestamp > x_max) {
+          x_max = response_data[i].tick_timestamp;
+        }
+        if (response_data[i].tick_timestamp < x_min) {
+          x_min = response_data[i].tick_timestamp;
+        }
+
+        timestamps.push(response_data[i].tick_timestamp);
+        xy_balance.push([response_data[i].tick_timestamp, response_data[i].balance]);
+        xy_equity.push([response_data[i].tick_timestamp, response_data[i].equity]);
         // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
-        xy_order_status.push([response_data[i].tick_date, response_data[i].order_status]);
+        xy_order_status.push([response_data[i].tick_timestamp, response_data[i].order_status]);
         if (response_data[i].balance > y_max) {
           y_max = response_data[i].balance;
         }
@@ -366,8 +373,8 @@ export default {
       try {
         this.validation_plot.getAxes().yaxis.options.min = y_min;
         this.validation_plot.getAxes().yaxis.options.max = y_max;
-        this.interactive_plot.getAxes().xaxis.options.min = x_min;
-        this.interactive_plot.getAxes().xaxis.options.max = x_max;
+        this.validation_plot.getAxes().xaxis.options.min = x_min;
+        this.validation_plot.getAxes().xaxis.options.max = x_max;
         this.validation_plot.setupGrid();
         this.validation_plot.draw();
       }
