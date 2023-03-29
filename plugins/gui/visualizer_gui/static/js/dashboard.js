@@ -371,12 +371,20 @@ export default {
       }
       //if ((prev_min != min) || (prev_max != max)) {
       try {
+        // set validation plot borders
         this.validation_plot.getAxes().yaxis.options.min = y_min;
         this.validation_plot.getAxes().yaxis.options.max = y_max;
         this.validation_plot.getAxes().xaxis.options.min = x_min;
         this.validation_plot.getAxes().xaxis.options.max = x_max;
         this.validation_plot.setupGrid();
         this.validation_plot.draw();
+        // set validation plot overview borders
+        this.overview.getAxes().yaxis.options.min = y_min;
+        this.overview.getAxes().yaxis.options.max = y_max;
+        this.overview.getAxes().xaxis.options.min = x_min;
+        this.overview.getAxes().xaxis.options.max = x_max;
+        this.overview.setupGrid();
+        this.overview.draw();
       }
       catch (e) {
         console.log(e);
