@@ -140,7 +140,7 @@ export default {
         mode: "x"
       }
     });
-    overview = this.overview;
+    var overview = this.overview;
 
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
