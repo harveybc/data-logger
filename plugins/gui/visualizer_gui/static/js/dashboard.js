@@ -71,7 +71,7 @@ export class Dashboard {
     var that = this;
     //REALTIME TOGGLE
     $('#realtime .btn').click(function () {
-      if ($(this).data('toggle') === 'on') {
+      if ($(that).data('toggle') === 'on') {
         that.realtime = 'on'
         that.update()
       } else {
@@ -132,9 +132,9 @@ export class Dashboard {
       }
     });
     var overview = this.overview;
-    var that = this;
+    
     // get the data from the server
-    this.gymfx_validation_plot_().then((response) => {
+    that.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
       
       console.log("plot_data = " + plot_data);
