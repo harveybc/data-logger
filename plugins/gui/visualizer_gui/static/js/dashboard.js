@@ -158,7 +158,7 @@ export default {
           plot = this.validation_plot;
           overview = this.overview;
           //Since the axes don't change, we don't need to call plot.setupGrid()
-        this.validation_plot.setupGrid();
+          this.validation_plot.setupGrid();
           this.validation_plot.draw();
           this.overview.draw();
         } catch (e) {
@@ -166,7 +166,7 @@ export default {
         }
       // now connect the two
 
-      $("#placeholder").bind("plotselected", function (event, ranges) {
+      $("#placeholder").on("plotselected", function (event, ranges) {
 
         // do the zooming
         $.each(plot.getXAxes(), function (_, axis) {
@@ -183,7 +183,7 @@ export default {
         overview.setSelection(ranges, true);
       });
 
-      $("#overview").bind("plotselected", function (event, ranges) {
+      $("#overview").on("plotselected", function (event, ranges) {
         plot.setSelection(ranges);
       });
 
