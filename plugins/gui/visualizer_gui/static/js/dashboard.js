@@ -142,13 +142,13 @@ export class Dashboard {
       console.log("this.data_.xy_equity = " + this.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
-          //this.interactive_plot.setData(this.xy_points_);
+          // this.interactive_plot.setData(this.xy_points_);
           this.validation_plot.setData([this.data_.xy_equity]);
           this.overview.setData([this.data_.xy_equity]);
           this.validation_plot.getOptions().grid.markings = this.order_status_areas
           plot = this.validation_plot;
           overview = this.overview;
-          //Since the axes don't change, we don't need to call plot.setupGrid()
+          // Since the axes don't change, we don't need to call plot.setupGrid()
           this.validation_plot.setupGrid();
           this.validation_plot.draw();
           this.overview.draw();
