@@ -132,10 +132,11 @@ export class Dashboard {
       }
     });
     var overview = this.overview;
-
+    var that = this;
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
+      this = that;
       console.log("plot_data = " + plot_data);
       // prepare the data  
       this.data_ = this.transform_validation_plot_data(plot_data);
