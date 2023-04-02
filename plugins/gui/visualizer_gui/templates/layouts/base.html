@@ -25,11 +25,12 @@
 
 <!-- Bootstrap 4 -->
 <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Axios -->
+<!-- Axios and Vue -->
 <script src="/static/assets/js/axios/axios.min.js"></script>
 <!-- common functions --> 
 <script src="/static/js/common.js"></script>
-
+<!--  <script src="/static/assets/js/vue/vue.js"></script>  -->
+<script src="https://unpkg.com/vue@3"></script>
 
 
 <title>
@@ -64,7 +65,13 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
+<script type="module">
 
+    import "/static/js/buffer-6.0.3.min.js"
+    
+    import Dashboard from "/static/js/dashboard.js"
+    
+</script>
 
 </body>
 </html>
