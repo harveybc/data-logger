@@ -1,5 +1,5 @@
 // dashboard vue Module implementation
-export default class Dashboard {
+export class Dashboard {
   constructor() {
       this.xy_points_= [],
       this.points= [],
