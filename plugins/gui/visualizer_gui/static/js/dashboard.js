@@ -136,24 +136,24 @@ export class Dashboard {
     // get the data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
-      this = that;
+      
       console.log("plot_data = " + plot_data);
       // prepare the data  
-      this.data_ = this.transform_validation_plot_data(plot_data);
-      console.log("this.data_.xy_equity = " + this.data_.xy_equity);
+      that.data_ = that.transform_validation_plot_data(plot_data);
+      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
-          // this.interactive_plot.setData(this.xy_points_);
-          this.validation_plot.setData([this.data_.xy_equity]);
-          this.overview.setData([this.data_.xy_equity]);
-          this.validation_plot.getOptions().grid.markings = this.order_status_areas;
-          
-          plot = this.validation_plot;
-          overview = this.overview;
+          // that.interactive_plot.setData(that.xy_points_);
+          that.validation_plot.setData([that.data_.xy_equity]);
+          that.overview.setData([that.data_.xy_equity]);
+          that.validation_plot.getOptions().grid.markings = that.order_status_areas;
+
+          plot = that.validation_plot;
+          overview = that.overview;
           // Since the axes don't change, we don't need to call plot.setupGrid()
-          this.validation_plot.setupGrid();
-          this.validation_plot.draw();
-          this.overview.draw();
+          that.validation_plot.setupGrid();
+          that.validation_plot.draw();
+          that.overview.draw();
       } catch (e) {
         console.log(e);
       }
