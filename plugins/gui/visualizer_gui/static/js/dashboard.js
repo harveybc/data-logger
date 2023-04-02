@@ -147,7 +147,7 @@ export default {
       var plot_data = JSON.parse(response.data);
       console.log("plot_data = " + plot_data);
       // prepare the data  
-      this.data_ = this.transform_validation_plot_data(plot_data)
+      this.data_ = this.transform_validation_plot_data(plot_data);
       console.log("this.data_.xy_equity = " + this.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
@@ -161,32 +161,30 @@ export default {
           this.validation_plot.setupGrid();
           this.validation_plot.draw();
           this.overview.draw();
+          // now connect the two
+          $("#placeholder").on("plotselected", function (event, ranges) {
+            console.log("plotselected");
+            // do the zooming
+            $.each(plot.getXAxes(), function (_, axis) {
+              var opts = axis.options;
+              opts.min = ranges.xaxis.from;
+              opts.max = ranges.xaxis.to;
+            });
+            plot.setupGrid();
+            plot.draw();
+            plot.clearSelection();
+            // don't fire event on the overview to prevent eternal loop
+            overview.setSelection(ranges, true);
+          });
+
+          $("#overview").on("plotselected", function (event, ranges) {
+            console.log("plotselected");
+            plot.setSelection(ranges);
+          });
         } catch (e) {
           console.log(e);
         }
-      
-      // now connect the two
-      $("#placeholder").on("plotselected", function (event, ranges) {
-        console.log("plotselected");
-        // do the zooming
-        $.each(plot.getXAxes(), function (_, axis) {
-          var opts = axis.options;
-          opts.min = ranges.xaxis.from;
-          opts.max = ranges.xaxis.to;
-        });
-        plot.setupGrid();
-        plot.draw();
-        plot.clearSelection();
-
-        // don't fire event on the overview to prevent eternal loop
-
-        overview.setSelection(ranges, true);
-      });
-
-      $("#overview").on("plotselected", function (event, ranges) {
-        console.log("plotselected");
-        plot.setSelection(ranges);
-      });
+        
 
       // Add the Flot version string to the footer
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
@@ -316,7 +314,6 @@ export default {
       //if ((prev_min != min) || (prev_max != max)) {
       try {
         console.log("update yaxis");
-
         this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
         this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
         this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
