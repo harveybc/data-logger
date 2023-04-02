@@ -167,7 +167,7 @@ export default {
       // now connect the two
 
       $("#placeholder").on("plotselected", function (event, ranges) {
-
+        console.log("plotselected");
         // do the zooming
         $.each(plot.getXAxes(), function (_, axis) {
           var opts = axis.options;
@@ -184,6 +184,7 @@ export default {
       });
 
       $("#overview").on("plotselected", function (event, ranges) {
+        console.log("plotselected");
         plot.setSelection(ranges);
       });
 
