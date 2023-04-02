@@ -161,29 +161,9 @@ export default {
           this.validation_plot.setupGrid();
           this.validation_plot.draw();
           this.overview.draw();
-          // now connect the two
-          $("#placeholder").on("plotselected", function (event, ranges) {
-            console.log("plotselected");
-            // do the zooming
-            $.each(plot.getXAxes(), function (_, axis) {
-              var opts = axis.options;
-              opts.min = ranges.xaxis.from;
-              opts.max = ranges.xaxis.to;
-            });
-            plot.setupGrid();
-            plot.draw();
-            plot.clearSelection();
-            // don't fire event on the overview to prevent eternal loop
-            overview.setSelection(ranges, true);
-          });
-
-          $("#overview").on("plotselected", function (event, ranges) {
-            console.log("plotselected");
-            plot.setSelection(ranges);
-          });
-        } catch (e) {
-          console.log(e);
-        }
+      } catch (e) {
+        console.log(e);
+      }
         
 
       // Add the Flot version string to the footer

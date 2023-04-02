@@ -267,6 +267,26 @@ input[type="radio"] {
   var val_plot_num_points = {{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }};
   // when page finishes loading, sets the values to the ones from data
   $(document).ready(function () {
+    // now connect the two
+    $("#placeholder").on("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      // do the zooming
+      $.each(plot.getXAxes(), function (_, axis) {
+        var opts = axis.options;
+        opts.min = ranges.xaxis.from;
+        opts.max = ranges.xaxis.to;
+      });
+      $("#placeholder").setupGrid();
+      $("#placeholder").draw();
+      $("#placeholder").clearSelection();
+      // don't fire event on the overview to prevent eternal loop
+      overview.setSelection(ranges, true);
+    });
+
+    $("#overview").bind("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      $("#placeholder").setSelection(ranges);
+    });
 
 
     /*
