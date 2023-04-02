@@ -1,35 +1,26 @@
 // dashboard vue Module implementation
-
-export default {
-  
-  data() {
-    return {
-
-      xy_points_: [],
-      points: [],
-      process_list: [0, 1, 2, 3],
-      process: 0,
-      status: 'Halted',
-      gymfx_best_online: 1,
-      gymfx_max_training_score: 0.0,
-      gymfx_best_offline: 1,
-      gymfx_max_validation_score: 0.0,
-      plot_min: 0.0,
-      plot_max: 10000,
-      v_plot_min: 0,
-      v_plot_max: 10000,
+class Dashboard {
+  constructor() {
+      this.xy_points_= [],
+      this.points= [],
+      this.process_list= [0, 1, 2, 3],
+      this.process= 0,
+      this.status= 'Halted',
+      this.gymfx_best_online= 1,
+      this.gymfx_max_training_score= 0.0,
+      this.gymfx_best_offline= 1,
+      this.gymfx_max_validation_score= 0.0,
+      this.plot_min= 0.0,
+      this.plot_max= 10000,
+      this.v_plot_min= 0,
+      this.v_plot_max= 10000,
       //Fetch data ever x milliseconds
-      realtime: 'on', //If == to on then fetch data every x seconds. else stop fetching
-      updateInterval: 1000 * window.interval,
-      data_: [],
-      totalPoints: 10,
-      val_plot_num_points: window.val_plot_num_points
-
-    }
-  },
-  mounted() {
-    
-    this.gymfx_online_plot_().then((response) => {
+      this.realtime= 'on', //If == to on then fetch data every x seconds. else stop fetching
+      this.updateInterval= 1000 * window.interval,
+      this.data_= [],
+      this.totalPoints= 10,
+      this.val_plot_num_points= window.val_plot_num_points
+      this.gymfx_online_plot_().then((response) => {
       console.log("before:" + response.data);
       this.xy_points_ = JSON.parse(response.data);
       console.log("after:" + JSON.stringify(this.xy_points_));
@@ -169,22 +160,31 @@ export default {
       // Add the Flot version string to the footer
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
-    /* END LINE CHART */
+    // now connect the two
+    $("#placeholder").bind("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      // do the zooming
+      $.each(plot.getXAxes(), function (_, axis) {
+        var opts = axis.options;
+        opts.min = ranges.xaxis.from;
+        opts.max = ranges.xaxis.to;
+      });
+      $("#placeholder").setupGrid();
+      $("#placeholder").draw();
+      $("#placeholder").clearSelection();
+      // don't fire event on the overview to prevent eternal loop
+      overview.setSelection(ranges, true);
+    });
 
-  },
-  // initialize values
-  created() {
-    //this.get_process_list();
-    //this.get_process();
-    //this.get_status();
-    this.gymfx_best_online_();
-    this.gymfx_max_training_score_();
-    this.gymfx_best_offline_();
-    this.gymfx_max_validation_score_();
-    //this.gymfx_online_plot_ = this.gymfx_online_plot_();
-    //this.update = this.update();
-  },
-  methods: {
+    $("#overview").bind("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      $("#placeholder").setSelection(ranges);
+    });
+
+    /* END LINE CHART */
+    //$("body").on("mouseover-highlight", this.onMouseover)    
+
+  }
     // returns an axios instance for basic authentication
     axiosBasicAuth(username, password) {
       let buffer_auth = buffer.Buffer.from(username + ':' + password);
@@ -195,13 +195,13 @@ export default {
           'Authorization': `Basic ${b64}`,
         }
       });
-    },
+    }
     // returns an axios instance with configured basic authentication
     // TODO: change to use current user
     axios_auth_instance() {
       let axios_instance = this.axiosBasicAuth("test", "pass");
       return axios_instance;
-    },
+    }
     // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
     gymfx_best_online_() {
       // setup authentication
@@ -216,7 +216,7 @@ export default {
           console.log(error);
           return 0;
         });
-    },
+    }
     // call request that returns the best mse from table fe_training_error that has config.active == true
     gymfx_max_training_score_() {
       let axios_instance = this.axios_auth_instance();
@@ -229,7 +229,7 @@ export default {
           console.log(error);
           return 0;
         });
-    },
+    }
     // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
     gymfx_best_offline_() {
       // setup authentication
@@ -243,7 +243,7 @@ export default {
           console.log(error);
           return 0;
         });
-    },
+    }
     // call request that returns the best mse from table fe_validation_error that has config.active == false
     gymfx_max_validation_score_() {
       let axios_instance = this.axios_auth_instance();
@@ -256,19 +256,19 @@ export default {
           console.log(error);
           return 0;
         });
-    },
+    }
     gymfx_online_plot_() {
       // setup authentication
       let axios_instance = this.axios_auth_instance();
       // use the result of api request
       return axios_instance.get('/gymfx_online_plot_', { responseType: 'text', transformResponse: [] })
-    },
+    }
     gymfx_validation_plot_() {
       // setup authentication
       let axios_instance = this.axios_auth_instance();
       // use the result of api request
       return axios_instance.get('/gymfx_validation_plot_', { responseType: 'text', transformResponse: [] })
-    },
+    }
 
     // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
     transform_plot_data(response_data) {
@@ -307,7 +307,7 @@ export default {
       this.plot_max = max;
       this.plot_min = min;
       return xy_points;
-    },
+    }
     // This function updates the interactive plot with new data and update the plot axises
     transform_validation_plot_data(response_data) {
       let timestamps = [];
@@ -375,7 +375,7 @@ export default {
         xy_equity: xy_equity,
         xy_order_status: xy_order_status
       };
-    },
+    }
         // helper for returning the order status color areas for the validation plot
     order_status_areas(axes) {
       var markings = [];
@@ -405,7 +405,7 @@ export default {
         }
       }       
       return markings;
-    },
+    }
 
     // update the interactive plot
     update() {
@@ -425,7 +425,7 @@ export default {
       }, (error) => {
         console.log(error);
       });
-    },
+    }
 
 
 
@@ -435,10 +435,9 @@ export default {
       return {
         count: 0
       }
-    },
+    }
     get_value(a, b, c) {
       return 0
     }
-  },
-  delimiters: ["|{", "}|"]
-}
+  }
+
