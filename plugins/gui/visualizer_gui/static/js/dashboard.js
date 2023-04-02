@@ -184,7 +184,8 @@ export class Dashboard {
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
-
+    this.order_status_areas = this.order_status_areas.bind(this); 
+    
   }
 
   // helper for returning the order status color areas for the validation plot
