@@ -1,26 +1,27 @@
 // dashboard vue Module implementation
 export class Dashboard {
+  xy_points_ = [];
+  points = [];
+  process_list = [0, 1, 2, 3];
+  process = 0;
+  status = 'Halted';
+  gymfx_best_online = 1;
+  gymfx_max_training_score = 0.0;
+  gymfx_best_offline = 1;
+  gymfx_max_validation_score = 0.0;
+  plot_min = 0.0;
+  plot_max = 10000;
+  v_plot_min = 0;
+  v_plot_max = 10000;
+  //Fetch data ever x milliseconds
+  realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
+  updateInterval = 1000 * window.interval;
+  data_ = [];
+  totalPoints = 10;
+  val_plot_num_points = window.val_plot_num_points
+
   constructor() {
-    this.xy_points_ = [],
-      this.points = [],
-      this.process_list = [0, 1, 2, 3],
-      this.process = 0,
-      this.status = 'Halted',
-      this.gymfx_best_online = 1,
-      this.gymfx_max_training_score = 0.0,
-      this.gymfx_best_offline = 1,
-      this.gymfx_max_validation_score = 0.0,
-      this.plot_min = 0.0,
-      this.plot_max = 10000,
-      this.v_plot_min = 0,
-      this.v_plot_max = 10000,
-      //Fetch data ever x milliseconds
-      this.realtime = 'on', //If == to on then fetch data every x seconds. else stop fetching
-      this.updateInterval = 1000 * window.interval,
-      this.data_ = [],
-      this.totalPoints = 10,
-      this.val_plot_num_points = window.val_plot_num_points
-    this.gymfx_online_plot_().then((response) => {
+        this.gymfx_online_plot_().then((response) => {
       console.log("before:" + response.data);
       this.xy_points_ = JSON.parse(response.data);
       console.log("after:" + JSON.stringify(this.xy_points_));
@@ -193,8 +194,8 @@ export class Dashboard {
     var from = 0;
     var to = 0;
     var color = "#4f4f4f";
-    var that = this;
-    for (var i = 1; i < that.data_.xy_order_status.length; ++i) {
+
+    for (var i = 1; i < this.data_.xy_order_status.length; ++i) {
       var x = that.data_.xy_order_status[i][0];
       // sell order when order_status == -1
       if (i > 0 && that.data_.xy_order_status[i][1] == -1 && that.data_.xy_order_status[i - 1][1] == 0) {
