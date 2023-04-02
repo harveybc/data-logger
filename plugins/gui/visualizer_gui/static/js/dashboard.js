@@ -162,7 +162,7 @@ export class Dashboard {
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
     // now connect the two
-    $("#placeholder").bind("plotselected", function (event, ranges) {
+    $("#placeholder").on("plotselected", function (event, ranges) {
       console.log("plotselected");
       // do the zooming
       $.each(plot.getXAxes(), function (_, axis) {
@@ -177,7 +177,7 @@ export class Dashboard {
       overview.setSelection(ranges, true);
     });
 
-    $("#overview").bind("plotselected", function (event, ranges) {
+    $("#overview").on("plotselected", function (event, ranges) {
       console.log("plotselected");
       $("#placeholder").setSelection(ranges);
     });
