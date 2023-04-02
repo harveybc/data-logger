@@ -164,8 +164,8 @@ export default {
         } catch (e) {
           console.log(e);
         }
+      
       // now connect the two
-
       $("#placeholder").on("plotselected", function (event, ranges) {
         console.log("plotselected");
         // do the zooming
