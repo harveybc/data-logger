@@ -71,7 +71,7 @@ export class Dashboard {
     var that = this;
     //REALTIME TOGGLE
     $('#realtime .btn').click(function () {
-      if ($(that).data('toggle') === 'on') {
+      if ($(this).data('toggle') === 'on') {
         that.realtime = 'on'
         that.update()
       } else {
@@ -132,28 +132,26 @@ export class Dashboard {
       }
     });
     var overview = this.overview;
-    
+
     // get the data from the server
-    that.gymfx_validation_plot_().then((response) => {
+    this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
-      
       console.log("plot_data = " + plot_data);
       // prepare the data  
-      that.data_ = that.transform_validation_plot_data(plot_data);
-      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
+      this.data_ = this.transform_validation_plot_data(plot_data);
+      console.log("this.data_.xy_equity = " + this.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       try {
-          // that.interactive_plot.setData(that.xy_points_);
-          that.validation_plot.setData([that.data_.xy_equity]);
-          that.overview.setData([that.data_.xy_equity]);
-          that.validation_plot.getOptions().grid.markings = that.order_status_areas;
-
-          plot = that.validation_plot;
-          overview = that.overview;
+          // this.interactive_plot.setData(this.xy_points_);
+          this.validation_plot.setData([this.data_.xy_equity]);
+          this.overview.setData([this.data_.xy_equity]);
+          this.validation_plot.getOptions().grid.markings = this.order_status_areas
+          plot = this.validation_plot;
+          overview = this.overview;
           // Since the axes don't change, we don't need to call plot.setupGrid()
-          that.validation_plot.setupGrid();
-          that.validation_plot.draw();
-          that.overview.draw();
+          this.validation_plot.setupGrid();
+          this.validation_plot.draw();
+          this.overview.draw();
       } catch (e) {
         console.log(e);
       }
@@ -385,22 +383,22 @@ export class Dashboard {
       var from = 0; 
       var to = 0;
       var color = "#4f4f4f";
-      for (var i = 1; i < that.data_.xy_order_status.length; ++i) {   
-        var x = that.data_.xy_order_status[i][0];
+      for (var i = 1; i < this.data_.xy_order_status.length; ++i) {   
+        var x = this.data_.xy_order_status[i][0];
         // sell order when order_status == -1
-        if (i > 0 && that.data_.xy_order_status[i][1] == -1 && that.data_.xy_order_status[i-1][1] == 0) {
+        if (i > 0 && this.data_.xy_order_status[i][1] == -1 && this.data_.xy_order_status[i-1][1] == 0) {
           from = x;
         }
-        if (i > 0 && that.data_.xy_order_status[i][1] == 0 && that.data_.xy_order_status[i - 1][1] == -1) {
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == -1) {
           to = x;
           color = "#ff4f4f";
           markings.push({ xaxis: { from: from, to: to }, color: color });
         }
         // buy order when order_status == 1
-        if (i > 0 && that.data_.xy_order_status[i][1] == 1 && that.data_.xy_order_status[i - 1][1] == 0) {
+        if (i > 0 && this.data_.xy_order_status[i][1] == 1 && this.data_.xy_order_status[i - 1][1] == 0) {
           from = x;
         }
-        if (i > 0 && that.data_.xy_order_status[i][1] == 0 && that.data_.xy_order_status[i - 1][1] == 1) {
+        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == 1) {
           to = x;
           color = "#4f4fff";
           markings.push({ xaxis: { from: from, to: to }, color: color });
