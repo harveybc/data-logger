@@ -268,7 +268,7 @@ input[type="radio"] {
   // when page finishes loading, sets the values to the ones from data
   $(document).ready(function () {
     // now connect the two
-    $("#placeholder").on("plotselected", function (event, ranges) {
+    $("#placeholder").bind("plotselected", function (event, ranges) {
       console.log("plotselected");
       // do the zooming
       $.each(plot.getXAxes(), function (_, axis) {
