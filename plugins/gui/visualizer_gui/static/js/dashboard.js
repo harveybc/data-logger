@@ -49,6 +49,9 @@ export class Dashboard {
         max: this.plot_max,
         show: true
       },
+      selection: {
+        mode: "x"
+      },
       //xaxis: {
       //   mode: "time", 
       //  timeformat:"%y/%m/%d %H:%M:%S"        
