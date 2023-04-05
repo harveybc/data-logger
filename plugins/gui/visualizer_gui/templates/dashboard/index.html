@@ -201,11 +201,9 @@ input[type="radio"] {
               </div>
             </div>
             <div class="card-body" >
-              <div id="placeholder" class="demo-placeholder"
-                style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
-              <div id="overview" class="demo-placeholder"
-                style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>
-                </div>
+                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+                <div id="overview"  class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
+            </div>
             <!-- /.card-body-->
           </div>
           <!-- /.card -->  
@@ -216,7 +214,6 @@ input[type="radio"] {
       <!-- /.row -->
       <b>Input Plugin</b>:{{ p_config['input_plugin'] }}, <b>Output Plugin</b>:{{ p_config['output_plugin'] }}
     </div><!-- /.container-fluid -->
-    
   </section>
   <!-- /.content -->
 </div>
@@ -228,6 +225,24 @@ input[type="radio"] {
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 
+<script src="/static/assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+
+<script src="/static/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="/static/assets/plugins/moment/moment.min.js"></script>
+<script src="/static/assets/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/assets/js/adminlte.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/static/assets/js/demo.js"></script>
+
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="/static/assets/plugins/flot-old/jquery.flot.resize.min.js"></script>
+
+
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/static/assets/js/pages/dashboard.js"></script>
+<script src="/static/assets/plugins/summernote/summernote-bs4.min.js"></script>
 
 <script>
 
