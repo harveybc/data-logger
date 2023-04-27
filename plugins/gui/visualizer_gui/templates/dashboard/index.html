@@ -201,8 +201,7 @@ input[type="radio"] {
               </div>
             </div>
             <div class="card-body" >
-                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
-                <div id="overview"  class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
+                      
             </div>
             <!-- /.card-body-->
           </div>
@@ -217,6 +216,11 @@ input[type="radio"] {
   </section>
   <!-- /.content -->
 </div>
+<div id="placeholder" class="demo-placeholder"
+  style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+<div id="overview" class="demo-placeholder"
+  style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>
+  
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
