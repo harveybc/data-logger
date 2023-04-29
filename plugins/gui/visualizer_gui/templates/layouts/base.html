@@ -39,22 +39,9 @@
 
 </head>
 <body class="hold-transition {% block body_class %}{% endblock body_class %}">
-<div class="wrapper" id="main_content">
-
-    {% include 'includes/navigation.html' %}
-
-    {% include 'includes/sidebar.html' %}
 
     {% block content %}{% endblock content %}
 
-    {% include 'includes/footer.html' %}
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-</div>
 <!-- ./wrapper -->
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
