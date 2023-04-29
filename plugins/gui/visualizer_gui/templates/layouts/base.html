@@ -20,7 +20,7 @@
     <script language="javascript" type="text/javascript" src="/static/assets/plugins/flot/jquery.flot.hover.js"></script>
     <script language="javascript" type="text/javascript" src="/static/assets/plugins/flot/jquery.flot.touch.js"></script>
     <script language="javascript" type="text/javascript" src="/static/assets/plugins/flot/jquery.flot.time.js"></script>
-    <script language="javascript" type="text/javascript" src="/static/assets/plugins/flot/jquery.flot.selection.js"></script>
+
     
 <!-- Bootstrap 4 -->
 <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -39,9 +39,22 @@
 
 </head>
 <body class="hold-transition {% block body_class %}{% endblock body_class %}">
+<div class="wrapper" id="main_content">
+
+    {% include 'includes/navigation.html' %}
+
+    {% include 'includes/sidebar.html' %}
 
     {% block content %}{% endblock content %}
 
+    {% include 'includes/footer.html' %}
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
 <!-- ./wrapper -->
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
