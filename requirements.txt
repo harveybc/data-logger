@@ -2,6 +2,7 @@ flask
 flask_login
 flask-migrate
 flask_wtf
+sqlalchemy<2.0
 flask-sqlalchemy==2.*
 email_validator
 python-decouple
