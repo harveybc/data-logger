@@ -1,4 +1,4 @@
-flask
+flask==2.2.3 
 flask_login
 flask-migrate
 flask_wtf
