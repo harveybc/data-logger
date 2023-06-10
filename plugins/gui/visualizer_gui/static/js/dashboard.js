@@ -179,7 +179,7 @@ export class Dashboard {
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
     this.order_status_areas = this.order_status_areas.bind(this); 
-    
+
     // now connect the two
     $("#placeholder").on("plotselected", function (event, ranges) {
       console.log("plotselected");
@@ -200,7 +200,7 @@ export class Dashboard {
       console.log("plotselected");
       $("#placeholder").setSelection(ranges);
     });
-    console.log($("#placeholder").getData());
+    //console.log($("#placeholder").getData());
 
   }
 
