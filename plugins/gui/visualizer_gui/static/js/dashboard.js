@@ -60,25 +60,30 @@ export class Dashboard {
         show: true
       }
     })
-
+    
 
     var that = this;
     //INITIALIZE REALTIME DATA FETCHING
     if (this.realtime === 'on') {
+      console.log("realtime on");
       try {
         this.update();
       } catch (e) {
         console.log(e);
       }
-
+    }
+    else {
+      console.log("realtime off");
     }
     var that = this;
     //REALTIME TOGGLE
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
+        console.log("realtime on");
         that.realtime = 'on'
         that.update()
       } else {
+        console.log("realtime off");
         that.realtime = 'off'
       }
     })
@@ -175,6 +180,28 @@ export class Dashboard {
     //$("body").on("mouseover-highlight", this.onMouseover)    
     this.order_status_areas = this.order_status_areas.bind(this); 
     
+    // now connect the two
+    $("#placeholder").on("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      // do the zooming
+      $.each(plot.getXAxes(), function (_, axis) {
+        var opts = axis.options;
+        opts.min = ranges.xaxis.from;
+        opts.max = ranges.xaxis.to;
+      });
+      $("#placeholder").setupGrid();
+      $("#placeholder").draw();
+      $("#placeholder").clearSelection();
+      // don't fire event on the overview to prevent eternal loop
+      overview.setSelection(ranges, true);
+    });
+
+    $("#overview").on("plotselected", function (event, ranges) {
+      console.log("plotselected");
+      $("#placeholder").setSelection(ranges);
+    });
+    console.log($("#placeholder").getData());
+
   }
 
   // helper for returning the order status color areas for the validation plot
