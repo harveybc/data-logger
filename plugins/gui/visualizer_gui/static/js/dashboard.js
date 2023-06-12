@@ -180,27 +180,6 @@ export class Dashboard {
     //$("body").on("mouseover-highlight", this.onMouseover)    
     this.order_status_areas = this.order_status_areas.bind(this); 
 
-    // now connect the two
-    $("#placeholder").on("plotselected", function (event, ranges) {
-      console.log("plotselected");
-      // do the zooming
-      $.each(plot.getXAxes(), function (_, axis) {
-        var opts = axis.options;
-        opts.min = ranges.xaxis.from;
-        opts.max = ranges.xaxis.to;
-      });
-      $("#placeholder").setupGrid();
-      $("#placeholder").draw();
-      $("#placeholder").clearSelection();
-      // don't fire event on the overview to prevent eternal loop
-      overview.setSelection(ranges, true);
-    });
-
-    $("#overview").on("plotselected", function (event, ranges) {
-      console.log("plotselected");
-      $("#placeholder").setSelection(ranges);
-    });
-    //console.log($("#placeholder").getData());
 
   }
 
