@@ -225,14 +225,14 @@ export class Dashboard {
         markings.push({ xaxis: { from: from_blue, to: to_blue }, color: color });
       }
       // no order when order_status == 0 (white color)
-      //if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] != 0) {
-      //  from_white = x;
-      //} 
-      //if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
-      //  to = x;
-      //  color = "#4f4fff";
-      //  markings.push({ xaxis: { from: from, to: to }, color: color });
-      //}
+      if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] != 0) {
+        from_white = x;
+      } 
+      if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
+        to = x;
+        color = "#4f4fff";
+        markings.push({ xaxis: { from: from, to: to }, color: color });
+      }
       
     }
     return markings;
