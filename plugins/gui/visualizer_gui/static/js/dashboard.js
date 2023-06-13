@@ -229,9 +229,9 @@ export class Dashboard {
         from_white = x;
       } 
       if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
-        to = x;
-        color = "#4f4fff";
-        markings.push({ xaxis: { from: from, to: to }, color: color });
+        to_white = x;
+        color = "#ffffff";
+        markings.push({ xaxis: { from: from_white, to: to_white }, color: color });
       }
       
     }
