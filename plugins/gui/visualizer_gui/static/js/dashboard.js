@@ -212,7 +212,7 @@ export class Dashboard {
       }
       if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == -1) {
         to_red = x;
-        color = "#ff4f4f";
+        color = "#ff8f8f";
         markings.push({ xaxis: { from: from_red, to: to_red }, color: color });
       }
       // buy order when order_status == 1 (blue color)
@@ -221,7 +221,7 @@ export class Dashboard {
       }
       if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == 1) {
         to_blue = x;
-        color = "#4f4fff";
+        color = "#8f8fff";
         markings.push({ xaxis: { from: from_blue, to: to_blue }, color: color });
       }
       // no order when order_status == 0 (white color)
