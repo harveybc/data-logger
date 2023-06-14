@@ -233,7 +233,6 @@ export class Dashboard {
         color = "#ffffff";
         markings.push({ xaxis: { from: from_white, to: to_white }, color: color });
       }
-      
     }
     return markings;
   }
