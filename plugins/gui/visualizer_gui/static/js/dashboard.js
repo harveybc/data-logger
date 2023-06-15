@@ -170,14 +170,12 @@ export class Dashboard {
     this.order_status_areas = this.order_status_areas.bind(this); 
 
     // now connect the two
+    $("#placeholder").off("click");
+
     $("#placeholder").bind("plotclick", function (event, pos, item) {
       //plot.clearSelection();
       console.log("plotckick");
     }); 
-    $("#placeholder").bind("click", function (event, pos, item) {
-      //plot.clearSelection();
-      console.log("click");
-    });
     $("#placeholder").off("plotselected");
     $("#placeholder").on("plotselected", function (event, ranges) {
       console.log("plotselected");
@@ -195,10 +193,7 @@ export class Dashboard {
     });
 
 
-    $("#overview").bind("click", function (event, pos, item) {
-      //plot.clearSelection();
-      console.log("click");
-    });
+    $("#overview").off("click");
     $("#overview").bind("plotclick", function (event, pos, item) {
       //plot.clearSelection();
       console.log("plotclick");
