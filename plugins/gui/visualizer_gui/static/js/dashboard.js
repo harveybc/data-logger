@@ -172,6 +172,9 @@ export class Dashboard {
     // now connect the two
     $("#placeholder").bind("plotclick", function (event, pos, item) {
       plot.clearSelection();
+    }); 
+    $("#placeholder").bind("click", function (event, pos, item) {
+      plot.clearSelection();
     });
     $("#placeholder").off("plotselected");
     $("#placeholder").on("plotselected", function (event, ranges) {
@@ -190,9 +193,13 @@ export class Dashboard {
     });
 
 
+    $("#overview").bind("click", function (event, pos, item) {
+      plot.clearSelection();
+    });
     $("#overview").bind("plotclick", function (event, pos, item) {
       plot.clearSelection();
     });
+
     $("#overview").off("plotselected");
 
     $("#overview").on("plotselected", function (event, ranges) {
