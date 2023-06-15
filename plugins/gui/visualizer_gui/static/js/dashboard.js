@@ -170,6 +170,9 @@ export class Dashboard {
     this.order_status_areas = this.order_status_areas.bind(this); 
 
     // now connect the two
+    $("#placeholder").bind("plotclick", function (event, pos, item) {
+      plot.clearSelection();
+    });
     $("#placeholder").off("plotselected");
     $("#placeholder").on("plotselected", function (event, ranges) {
       console.log("plotselected");
@@ -184,6 +187,11 @@ export class Dashboard {
       $("#placeholder").clearSelection();
       // don't fire event on the overview to prevent eternal loop
       overview.setSelection(ranges, true);
+    });
+
+
+    $("#overview").bind("plotclick", function (event, pos, item) {
+      plot.clearSelection();
     });
     $("#overview").off("plotselected");
 
