@@ -170,8 +170,7 @@ export class Dashboard {
     this.order_status_areas = this.order_status_areas.bind(this); 
 
     // now connect the two
-    
-    $("#placeholder").on("plotselected", function (event, ranges) {
+    $(document).on('plotselected', '#placeholder', function (event, ranges) {
       console.log("plotselected");
       // do the zooming
     /*  
@@ -187,8 +186,8 @@ export class Dashboard {
       overview.setSelection(ranges, true);
       */
     });
-   
-    $("#overview").on("plotselected", function (event, ranges) {
+
+    $(document).on('plotselected', '#overview', function (event, ranges) {
       console.log("plotselected");
       //$("#placeholder").setSelection(ranges);
     });
