@@ -175,7 +175,7 @@ export class Dashboard {
     $(document).on('plotselected', '#placeholder', function (event, ranges) {
       console.log("plotselected");
       // do the zooming
-    /*  
+      
       $.each(plot.getXAxes(), function (_, axis) {
         var opts = axis.options;
         opts.min = ranges.xaxis.from;
@@ -186,12 +186,12 @@ export class Dashboard {
       $("#placeholder").clearSelection();
       // don't fire event on the overview to prevent eternal loop
       overview.setSelection(ranges, true);
-      */
+      
     });
 
     $(document).on('plotselected', '#overview', function (event, ranges) {
       console.log("plotselected");
-      //$("#placeholder").setSelection(ranges);
+      $("#placeholder").setSelection(ranges);
     });
     console.log(plot.getData());
     
