@@ -192,7 +192,7 @@ export class Dashboard {
       console.log("plotselected");
       //$("#placeholder").setSelection(ranges);
     });
-    console.log($("#placeholder").getData());
+    console.log(plot.getData());
     
   }
 
