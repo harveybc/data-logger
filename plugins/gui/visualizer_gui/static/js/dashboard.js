@@ -173,24 +173,22 @@ export class Dashboard {
 
     // now connect the two
     $(document).on('plotselected', '#placeholder', function (event, ranges) {
-      console.log("plotselected");
       // do the zooming
-      
       $.each(plot.getXAxes(), function (_, axis) {
         var opts = axis.options;
         opts.min = ranges.xaxis.from;
         opts.max = ranges.xaxis.to;
       });
-      $("#placeholder").setupGrid();
-      $("#placeholder").draw();
-      $("#placeholder").clearSelection();
+      plot.setupGrid();
+      plot.draw();
+      plot.clearSelection();
       // don't fire event on the overview to prevent eternal loop
       overview.setSelection(ranges, true);
     });
 
     $(document).on('plotselected', '#overview', function (event, ranges) {
       console.log("plotselected");
-      $("#placeholder").setSelection(ranges);
+      plot.setSelection(ranges);
     });
     console.log(plot.getData());
   }
