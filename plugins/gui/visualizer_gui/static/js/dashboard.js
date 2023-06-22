@@ -186,7 +186,6 @@ export class Dashboard {
       $("#placeholder").clearSelection();
       // don't fire event on the overview to prevent eternal loop
       overview.setSelection(ranges, true);
-      
     });
 
     $(document).on('plotselected', '#overview', function (event, ranges) {
@@ -194,7 +193,6 @@ export class Dashboard {
       $("#placeholder").setSelection(ranges);
     });
     console.log(plot.getData());
-    
   }
 
   // helper for returning the order status color areas for the validation plot
