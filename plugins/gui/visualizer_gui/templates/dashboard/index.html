@@ -186,7 +186,7 @@ input[type="radio"] {
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-6">
         <!-- Line chart -->
-          <div>
+          <div class="card card-primary card-outline">
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
@@ -230,7 +230,7 @@ input[type="radio"] {
 
 <script>
 
-  // Gets data from controller
+  // Gets data from controller5
   var interval = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
   var data = [];
   var totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
