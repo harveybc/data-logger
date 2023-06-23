@@ -99,7 +99,7 @@ input[type="radio"] {
             <div class="inner">
               <!-- box[0] data -->
               <h3>{{ p_config['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
-              <h2> |{ {{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }} }|</h2>
+              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}">00</h2>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -115,7 +115,7 @@ input[type="radio"] {
             <div class="inner">
               <!-- box[1] data -->
               <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
-              <h2> |{ {{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }} }|</h2>
+              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }}">00</h2>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -130,7 +130,7 @@ input[type="radio"] {
             <div class="inner">
               <!-- box[2] data -->
               <h3>{{ p_config['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
-              <h2> |{ {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} }|</h2>
+              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }}">00</h2>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -145,7 +145,7 @@ input[type="radio"] {
             <div class="inner">
               <!-- box[3] data -->
               <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-              <h2> |{ {{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }} }|</h2>
+              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }}">00</h2>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -190,7 +190,7 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
-                {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: |{ {{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }} }| )
+                {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: <b id="{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }}_plot">00</b> )
               </h3>
               <div class="card-tools">
                 Real time
@@ -311,8 +311,6 @@ input[type="radio"] {
                       <td><a href="/gui/process/|{process.id}|"> process.id</a></td>
         
                       <td> get_max(process.id)</td>
-        
-        
         
                       <td>
                         <span v-if="status === 'Halted'" class="badge badge-danger"> status</span>
