@@ -26,12 +26,11 @@
                 "data": "val_plot()"
             },
             "val_list": {
-                "title": "Validation Transactions",
+                "title": "Validation Trades",
                 "col_0_title": "ID",
                 "col_1_title": "Type",
-                "col_2_title": "CloseDate",
-                "col_3_title": "Profit",
-                "col_4_title": "Balance",
+                "col_2_title": "Prof",
+                "col_3_title": "Bal",
                 "data": "process_list()"
             },
             "process_list": {
