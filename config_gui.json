@@ -25,10 +25,20 @@
                 "use_latest": true,
                 "data": "val_plot()"
             },
-            "process_list":{
+            "val_list": {
+                "title": "Validation Transactions",
+                "col_0_title": "ID",
+                "col_1_title": "Type",
+                "col_2_title": "CloseDate",
+                "col_3_title": "Profit",
+                "col_4_title": "Balance",
+                "data": "process_list()"
+            },
+            "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
-                "col_2_title": "name",
+                "col_1_title": "name",
+                "col_2_title": "Score",
                 "data": "process_list()"
             }
         }
