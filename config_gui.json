@@ -31,7 +31,7 @@
                 "col_1_title": "Type",
                 "col_2_title": "Prof",
                 "col_3_title": "Bal",
-                "data": "process_list()"
+                "data": "val_list()"
             },
             "process_list": {
                 "title": "List of Processes",

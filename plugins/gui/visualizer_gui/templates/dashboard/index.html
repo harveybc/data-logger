@@ -210,11 +210,11 @@ input[type="radio"] {
         </section>
         <!-- right col -->
  
-        <section class="col-lg-6 connectedSortable">
+        <section class="col-lg-6 ">
 
 
           <!-- TABLE: VALIDATION OPERATIONS -->
-          <div class="card">
+          <div class="card card-primary card-outline">
             <div class="card-header">
               <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['val_list']['title'] }}</h3>
 
@@ -241,9 +241,10 @@ input[type="radio"] {
                   </thead>
                   <tbody id="val_list">
                     <tr>
-                      <!-- TODO: Generate each row as this one from javascript -->
-                      <td><a href="/gui/process/|{process.id}|"> process.id</a></td>
-                      <td> get_max(process.id)</td>
+                      <!-- id, type, profit balance -->
+                      <!-- TODO: Generate each row as this one from javascript, by appending to val_list tbody element-->
+                      <td>0</td>
+                      <td>0</td>
                       <td>
                         <span v-if="status === 'Halted'" class="badge badge-danger"> status</span>
                         <span v-else-if="status === 'Training'" class="badge badge-warning">"> status</span>
@@ -261,8 +262,7 @@ input[type="radio"] {
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New Process</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Processes</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All</a>
             </div>
             <!-- /.card-footer -->
           </div>
@@ -272,7 +272,7 @@ input[type="radio"] {
         
         <section class="col-lg-6 connectedSortable">      
           <!-- TABLE: LATEST PROCESSES -->
-          <div class="card">
+          <div class="card card-primary card-outline">
             <div class="card-header">
               <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
         
@@ -324,7 +324,7 @@ input[type="radio"] {
             <!-- /.card-body -->
             <div class="card-footer clearfix">
               <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New Process</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Processes</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All</a>
             </div>
             <!-- /.card-footer -->
           </div>
