@@ -170,23 +170,5 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             print("Error : " , error)
             return error
         return json.dumps(res)
-    
-    @bp.route("/gymfx_validation_list_")
-    @login_required
-    def gymfx_validation_list_():
-        """ Returns a json with the initial capital and arrays for the columns order_status, tick_date, balance, equity,margin,reward from the gym_fx_data table for thebest prcess with config_id.active== True. """
-        args = request.args
-        num_points = args.get("config_id", default=1, type=int)
-        # perform query, the column classs names are configured in config_store.json
-        try:
-            best = int(gymfx_best_offline_())
-            print("best_offline : " , best)
-            points = db.session.query(Base.classes.gym_fx_validation_plot).filter(Base.classes.gym_fx_validation_plot.config_id == best ).order_by(desc(Base.classes.gym_fx_validation_plot.id)).limit(num_points).all()
-            res = list(map(as_dict, points))
-        except Exception as e:
-            error = str(e)
-            print("Error : " , error)
-            return error
-        return json.dumps(res)
 
     return bp

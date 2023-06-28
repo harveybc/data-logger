@@ -362,8 +362,8 @@ export class Dashboard {
     this.plot_min = min;
     return xy_points;
   }
-  //TODO: update to update also validation list
-  // This function updates the interactive plot with new data and update the plot axises
+  
+  // This function updates the validation table and interactive plot with new data and update the plot axises
   transform_validation_plot_data(response_data) {
     let timestamps = [];
     let xy_balance = [];
