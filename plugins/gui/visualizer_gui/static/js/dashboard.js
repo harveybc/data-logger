@@ -191,6 +191,8 @@ export class Dashboard {
       plot.setSelection(ranges);
     });
     console.log(plot.getData());
+    this.val_list_update();
+    this.process_list_update();
   }
 
   // helper for returning the order status color areas for the validation plot
@@ -450,6 +452,24 @@ export class Dashboard {
     });
   }
 
+  // update the validation list
+  val_list_update(config_id) {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    axios_instance.get('/gymfx_val_list/'+config_id)
+      .then((response) => {
+        this.gymfx_best_offline = response.data;
+        return response.data;
+      }, (error) => {
+        console.log(error);
+        return 0;
+      });
+  }
+
+  // update the processes list
+  process_list_update() {
+  }
 
 
 

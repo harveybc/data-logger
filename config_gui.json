@@ -22,23 +22,21 @@
                 "plot_height": "280px",
                 "overview_height": "100px",
                 "max_points": "35",
-                "use_latest": true,
-                "data": "val_plot()"
+                "use_latest": true
+
             },
             "val_list": {
                 "title": "Validation Trades",
                 "col_0_title": "ID",
                 "col_1_title": "Type",
                 "col_2_title": "Prof",
-                "col_3_title": "Bal",
-                "data": "val_list()"
+                "col_3_title": "Bal"
             },
             "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
                 "col_1_title": "name",
-                "col_2_title": "Score",
-                "data": "process_list()"
+                "col_2_title": "Score"
             }
         }
     }
