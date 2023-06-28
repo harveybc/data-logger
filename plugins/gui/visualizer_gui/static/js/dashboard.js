@@ -362,6 +362,7 @@ export class Dashboard {
     this.plot_min = min;
     return xy_points;
   }
+  //TODO: update to update also validation list
   // This function updates the interactive plot with new data and update the plot axises
   transform_validation_plot_data(response_data) {
     let timestamps = [];
@@ -451,27 +452,6 @@ export class Dashboard {
       console.log(error);
     });
   }
-
-  // update the validation list
-  val_list_update(config_id) {
-    // setup authentication
-    let axios_instance = this.axios_auth_instance();
-    // use the result of api request
-    axios_instance.get('/gymfx_val_list/'+config_id)
-      .then((response) => {
-        this.gymfx_best_offline = response.data;
-        return response.data;
-      }, (error) => {
-        console.log(error);
-        return 0;
-      });
-  }
-
-  // update the processes list
-  process_list_update() {
-  }
-
-
 
   // define starting field values
   field_start_values() {
