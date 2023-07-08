@@ -366,6 +366,9 @@ export class Dashboard {
   // This function updates the validation table and interactive plot with new data and update the plot axises
   transform_validation_plot_data(response_data) {
     let timestamps = [];
+    let op_type = [];
+    let op_profit = [];
+
     let xy_balance = [];
     let xy_equity = [];
     let xy_order_status = [];
@@ -384,7 +387,11 @@ export class Dashboard {
         x_min = response_data[i].tick_timestamp;
       }
 
+      // TODO: add op type and profit arrays\
+
       timestamps.push(response_data[i].tick_timestamp);
+      op_type.push(response_data[i].op_type);
+      op_profit.push(response_data[i].op_profit);
       xy_balance.push([response_data[i].tick_timestamp, response_data[i].balance]);
       xy_equity.push([response_data[i].tick_timestamp, response_data[i].equity]);
       // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
