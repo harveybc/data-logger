@@ -23,7 +23,6 @@
                 "overview_height": "100px",
                 "max_points": "35",
                 "use_latest": true
-
             },
             "val_list": {
                 "title": "Validation Trades",
