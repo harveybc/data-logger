@@ -1,3 +1,4 @@
+{
     "gui_plugin": "visualizer_gui",
     "gui_plugin_config": {
         "dashboard": {
