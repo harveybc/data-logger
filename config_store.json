@@ -101,7 +101,7 @@
                             { "name" : "reward" },                            
                             { "name" : "balance" },
                             { "name" : "equity" },
-                            { "name" : "score_v" },
+                            { "name" : "score_v" }, 
                             { "name" : "avg_score_v" },
                             { "name" : "margin" },                        
                             { "name" : "action" },

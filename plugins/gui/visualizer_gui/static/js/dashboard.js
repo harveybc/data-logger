@@ -147,6 +147,10 @@ export class Dashboard {
       that.data_ = that.transform_validation_plot_data(plot_data);
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
+      // for each that.data_ append to val_list tbody element
+      that.val_list_update();      
+
+
       try {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
@@ -387,8 +391,6 @@ export class Dashboard {
         x_min = response_data[i].tick_timestamp;
       }
 
-      // TODO: add op type and profit arrays\
-
       timestamps.push(response_data[i].tick_timestamp);
       op_type.push(response_data[i].op_type);
       op_profit.push(response_data[i].op_profit);
@@ -459,6 +461,26 @@ export class Dashboard {
       console.log(error);
     });
   }
+
+val_list_update() {
+  var prev_num_closes = 0;
+  for (i in this.data_) {
+    if (i.num_closes > prev_num_closes) {
+      prev_num_closes = i.num_closes;
+      document.getElementById("val_list")
+        .innerHTML += `
+        <tr>
+          <!-- id, balance, reward, date -->
+          <td>${i.num_closes}</td>
+          <td>${i.balance}</td>
+          <td>${i.reward}</td>
+          <td>${i.tick_timestamp}</td>
+        </tr>
+        `
+    }
+  }
+
+}
 
   // define starting field values
   field_start_values() {

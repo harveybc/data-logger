@@ -1,4 +1,3 @@
-{
     "gui_plugin": "visualizer_gui",
     "gui_plugin_config": {
         "dashboard": {
@@ -26,10 +25,9 @@
             },
             "val_list": {
                 "title": "Validation Trades",
-                "col_0_title": "ID",
-                "col_1_title": "Type",
-                "col_2_title": "Prof",
-                "col_3_title": "Bal"
+                "col_0_title": "Bal",
+                "col_1_title": "Rew",
+                "col_2_title": "Date"
             },
             "process_list": {
                 "title": "List of Processes",
