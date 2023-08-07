@@ -196,7 +196,7 @@ export class Dashboard {
     });
     console.log(plot.getData());
     this.val_list_update();
-    this.process_list_update();
+    //this.process_list_update();
   }
 
   // helper for returning the order status color areas for the validation plot
@@ -464,7 +464,7 @@ export class Dashboard {
 
 val_list_update() {
   var prev_num_closes = 0;
-  for (i in this.data_) {
+  for (var i in this.data_) {
     if (i.num_closes > prev_num_closes) {
       prev_num_closes = i.num_closes;
       document.getElementById("val_list")
