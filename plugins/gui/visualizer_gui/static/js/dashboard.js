@@ -195,7 +195,7 @@ export class Dashboard {
       plot.setSelection(ranges);
     });
     console.log(plot.getData());
-    this.val_list_update();
+    //this.val_list_update();
     //this.process_list_update();
   }
 
@@ -464,6 +464,7 @@ export class Dashboard {
 
 val_list_update() {
   var prev_num_closes = 0;
+  console.log("val_list_update");
   for (var i in this.data_) {
     if (i.num_closes > prev_num_closes) {
       prev_num_closes = i.num_closes;
