@@ -148,7 +148,7 @@ export class Dashboard {
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody element
-      that.val_list_update();      
+      that.val_list_update(that.data_);      
 
 
       try {
@@ -462,11 +462,11 @@ export class Dashboard {
     });
   }
 
-val_list_update() {
+val_list_update(data_) {
   var prev_num_closes = 0;
   var close_list ="";
   console.log("val_list_update");
-  for (var i in this.data_) {
+  for (var i in data_) {
     if (i.num_closes > prev_num_closes) {
       prev_num_closes = i.num_closes;
       close_list += `
