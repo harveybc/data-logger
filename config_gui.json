@@ -27,8 +27,8 @@
             "val_list": {
                 "title": "Validation Trades",
                 "col_0_title": "ID",
-                "col_1_title": "Bal",
-                "col_2_title": "Rew",
+                "col_1_title": "Balance",
+                "col_2_title": "Reward",
                 "col_3_title": "Date"
             },
             "process_list": {
