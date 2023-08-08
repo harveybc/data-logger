@@ -240,21 +240,7 @@ input[type="radio"] {
                     </tr>
                   </thead>
                   <tbody id="val_list">
-                    <tr>
-                      <!-- id, type, profit balance -->
-                      <!-- TODO: Generate each row as this one from javascript, by appending to val_list tbody element-->
-                      <td>0</td>
-                      <td>0</td>
-                      <td>
-                        <span v-if="status === 'Halted'" class="badge badge-danger"> status</span>
-                        <span v-else-if="status === 'Training'" class="badge badge-warning">"> status</span>
-                        <span v-else-if="status === 'Validation'" class="badge badge-warning">"> status</span>
-                        <span v-else class="badge badge-success">"> status</span>
-                      </td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20"> process.creaded_at</div>
-                      </td>
-                    </tr>
+                    
                   </tbody>
                 </table>
               </div>
