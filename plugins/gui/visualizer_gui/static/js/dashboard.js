@@ -464,12 +464,12 @@ export class Dashboard {
 
 val_list_update() {
   var prev_num_closes = 0;
+  var close_list ="";
   console.log("val_list_update");
   for (var i in this.data_) {
     if (i.num_closes > prev_num_closes) {
       prev_num_closes = i.num_closes;
-      document.getElementById("val_list")
-        .innerHTML += `
+      close_list += `
         <tr>
           <!-- id, balance, reward, date -->
           <td>${i.num_closes}</td>
@@ -477,10 +477,11 @@ val_list_update() {
           <td>${i.reward}</td>
           <td>${i.tick_timestamp}</td>
         </tr>
-        `
+        `;
     }
   }
-
+  document.getElementById("val_list")
+    .innerHTML += close_list;
 }
 
   // define starting field values
