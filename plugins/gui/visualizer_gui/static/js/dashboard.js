@@ -466,16 +466,16 @@ val_list_update(data_) {
   var prev_num_closes = 0;
   var close_list ="";
   console.log("val_list_update");
-  for (var i in data_) {
-    if (i.num_closes > prev_num_closes) {
-      prev_num_closes = i.num_closes;
+  for (let i = 0; i < data_.length; i++) {
+    if (data_[i].num_closes > prev_num_closes) {
+      prev_num_closes = data_[i].num_closes;
       close_list += `
         <tr>
           <!-- id, balance, reward, date -->
-          <td>${i.num_closes}</td>
-          <td>${i.balance}</td>
-          <td>${i.reward}</td>
-          <td>${i.tick_timestamp}</td>
+          <td>${data_[i].num_closes}</td>
+          <td>${data_[i].balance}</td>
+          <td>${data_[i].reward}</td>
+          <td>${data_[i].tick_timestamp}</td>
         </tr>
         `;
     }
