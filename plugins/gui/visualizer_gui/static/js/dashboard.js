@@ -471,7 +471,7 @@ val_list_update(data_) {
     if (data_[i].num_closes != prev_num_closes) {
       console.log("i");
       prev_num_closes = data_[i].num_closes;
-      close_list.concat(`
+      close_list += (`
         <tr>
           <!-- id, balance, reward, date -->
           <td>${data_[i].num_closes}</td>
