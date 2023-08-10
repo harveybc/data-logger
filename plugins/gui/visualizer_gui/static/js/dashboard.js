@@ -147,15 +147,8 @@ export class Dashboard {
       that.data_ = that.transform_validation_plot_data(plot_data);
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
-      var num_rows = plot_data.length;
-      var start = 0;
-      if (plot_data.length < 8) {
-        num_rows = plot_data.length;
-      } else {
-        num_rows = 8;
-
-      } 
-      that.val_list_update(plot_data.slice(start,num_rows));      
+      // for each that.data_ a ppend to val_list tbody elementz
+      that.val_list_update(0,8,plot_data);      
 
 
       try {
@@ -469,24 +462,25 @@ export class Dashboard {
     });
   }
 
-val_list_update(data_) {
+val_list_update(start, num_rows, data_) {
   var prev_num_closes = 0;
   var close_list ="";
-  console.log("val_list_update.data_=", data_);
-  for (let i = 0; i < data_.length; i++) {
-    
+  var row_count = 0;
+  for (let i = start; i < data_.length; i++) {
     if (data_[i].num_closes != prev_num_closes) {
-      console.log("i");
-      prev_num_closes = data_[i].num_closes;
-      close_list += (`
-        <tr>
-          <!-- id, balance, reward, date -->
-          <td>${data_[i].num_closes}</td>
-          <td>${data_[i].balance}</td>
-          <td>${data_[i].reward}</td>
-          <td>${data_[i].tick_timestamp}</td>
-        </tr>
-        `);
+      row_count++;
+      if (row_count <= num_rows) {
+        prev_num_closes = data_[i].num_closes;
+        close_list += (`
+          <tr>
+            <!-- id, balance, reward, date -->
+            <td>${data_[i].num_closes}</td>
+            <td>${data_[i].balance}</td>
+            <td>${data_[i].reward}</td>
+            <td>${data_[i].tick_timestamp}</td>
+          </tr>
+          `);
+      }
     }
   }
   document.getElementById("val_list")
