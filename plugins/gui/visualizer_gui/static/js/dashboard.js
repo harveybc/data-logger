@@ -468,7 +468,7 @@ val_list_update(data_) {
   console.log("val_list_update.data_=", data_);
   for (let i = 0; i < data_.length; i++) {
     
-    if (data_[i].num_closes > prev_num_closes) {
+    if (data_[i].num_closes != prev_num_closes) {
       console.log("i");
       prev_num_closes = data_[i].num_closes;
       close_list.concat(`
