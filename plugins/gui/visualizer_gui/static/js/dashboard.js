@@ -147,10 +147,15 @@ export class Dashboard {
       that.data_ = that.transform_validation_plot_data(plot_data);
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
+      var num_rows = plot_data.length;
+      var start = 0;
       if (plot_data.length < 8) {
         num_rows = plot_data.length;
+      } else {
+        num_rows = 8;
+
       } 
-      that.val_list_update(plot_data.slice(0,num_rows));      
+      that.val_list_update(plot_data.slice(start,num_rows));      
 
 
       try {
