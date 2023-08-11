@@ -462,6 +462,10 @@ export class Dashboard {
     });
   }
 
+// updates the validation list table
+// params: start: the starting index of the data_ array
+//         num_rows: the number of rows to be added to the table
+//         data_: the data array
 val_list_update(start, num_rows, data_) {
   var prev_num_closes = 0;
   var close_list ="";
@@ -486,6 +490,33 @@ val_list_update(start, num_rows, data_) {
   document.getElementById("val_list")
     .innerHTML += close_list;
 }
+
+  val_list_update(start, num_rows, data_) {
+    var prev_num_closes = 0;
+    var close_list = "";
+    var row_count = 0;
+    for (let i = start; i < data_.length; i++) {
+      if (data_[i].num_closes != prev_num_closes) {
+        row_count++;
+        if (row_count <= num_rows) {
+          prev_num_closes = data_[i].num_closes;
+          close_list += (`
+          <tr>
+            <!-- id, balance, reward, date -->
+            <td>${data_[i].num_closes}</td>
+            <td>${data_[i].balance}</td>
+            <td>${data_[i].reward}</td>
+            <td>${data_[i].tick_timestamp}</td>
+          </tr>
+          `);
+        }
+      }
+    }
+    document.getElementById("val_list")
+      .innerHTML += close_list;
+  }
+
+
 
   // define starting field values
   field_start_values() {
