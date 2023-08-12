@@ -179,8 +179,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            # query for the maximum score from the gym_fx_data table for the config_id whose gymfx_config.active == True
-            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
+            # query for the different gym_fx_config.id where gym_fx_config.active == True
+            res = db.session.query(Base.classes.gym_fx_config).filter(Base.classes.gym_fx_config.active == True).all()             
         except SQLAlchemyError as e:
             error = str(e)
             print("SQLAlchemyError : " , error)
@@ -189,7 +189,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             error = str(e)
             print("Error : " , error)
             return error
-        attr = getattr(res, "config_id")
-        return json.dumps(attr)
+        
+        return json.dumps(res)
 
     return bp
