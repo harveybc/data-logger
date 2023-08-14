@@ -17,7 +17,8 @@ from app.app import load_plugin_config
 from app.util import as_dict
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func, asc, desc
+from sqlalchemy import  asc, desc
+from sqlalchemy.sql.expression  import func
 import json
 from sqlalchemy.orm import Session
 
@@ -179,8 +180,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            # query for the different gym_fx_config.id where gym_fx_config.active == True
-            res = db.session.query(Base.classes.gym_fx_config).filter(Base.classes.gym_fx_config.active == True).all()             
+            # query for the different gym_fx_config.id and max validation score where gym_fx_config.active == True
+            res = db.session.query(Base.classes.gym_fx_config)\
+                .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id) and (Base.classes.gym_fx_data.score_v == func.max(Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id)))\
+                .filter(Base.classes.gym_fx_config.active == True).all()             
         except SQLAlchemyError as e:
             error = str(e)
             print("SQLAlchemyError : " , error)
@@ -189,7 +192,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             error = str(e)
             print("Error : " , error)
             return error
-        
-        return json.dumps(res)
+        res_list = []
+        for r in res:
+            res_list.append(r.id)
+        return json.dumps(attr)
 
     return bp
