@@ -15,6 +15,7 @@ from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
 from app.util import as_dict
+from app.util import error_f
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import  asc, desc
@@ -80,7 +81,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
@@ -96,7 +97,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "score")
         return json.dumps(attr)
@@ -111,8 +112,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         try:
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
         except Exception as e:
+            # TODO: use some form of error management to ease tracing of errors
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
@@ -128,7 +130,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "score")
         return json.dumps(attr)
@@ -152,7 +154,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 count += 1
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         return json.dumps(res)
     
@@ -164,13 +166,14 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         num_points = args.get("num_points", default=1000, type=int)
         # perform query, the column classs names are configured in config_store.json
         try:
+            #TODO: verify errror in here
             best = int(gymfx_best_offline_())
             print("best_offline : " , best)
             points = db.session.query(Base.classes.gym_fx_validation_plot).filter(Base.classes.gym_fx_validation_plot.config_id == best ).order_by(asc(Base.classes.gym_fx_validation_plot.id)).limit(num_points).all()
             res = list(map(as_dict, points))
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         return json.dumps(res)
     
@@ -192,7 +195,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         res_list = []
         for r in res:
