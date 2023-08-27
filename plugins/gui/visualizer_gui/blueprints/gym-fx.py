@@ -110,11 +110,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
         try:
-            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).order_by(asc(Base.classes.gym_fx_config.active )).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
+            res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
         except Exception as e:
             # TODO: use some form of error management to ease tracing of errors
             error = str(e)
-            print("Error : " ,error_f(error))
+            print("Error : No inactive (finished) registers ingym_fx_xonfig table to search for their validation plot. " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
