@@ -191,7 +191,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             # query for the different gym_fx_config.id and max validation score where gym_fx_config.active == True
             res = db.session.query(Base.classes.gym_fx_config.id.label("id"), Base.classes.gym_fx_config.active.label("active"), func.max(Base.classes.gym_fx_data.score_v).label("max"))\
                 .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id))\
-                .filter(Base.classes.gym_fx_config.active == True).group_by(Base.classes.gym_fx_data.config_id).all()             
+                .group_by(Base.classes.gym_fx_data.config_id).all()             
         except SQLAlchemyError as e:
             error = str(e)
             print("SQLAlchemyError : " , error)
