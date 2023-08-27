@@ -26,9 +26,11 @@ def seed(app, db, table_name):
             try:
                 if table_name == "gym_fx_config":
                     tmp0 =  table_base(initial_capital=10000, active=True)
-                    tmp1 =  table_base(initial_capital=1000, active=False)
+                    tmp1 =  table_base(initial_capital=1000, active=True)
+                    tmp2 =  table_base(initial_capital=9000, active=False)
                     db.session.add(tmp0)
                     db.session.add(tmp1)
+                    db.session.add(tmp2)
                     db.session.commit()
                     _logger.info("gym_fx_data table seeded") 
                 elif table_name == "gym_fx_data":

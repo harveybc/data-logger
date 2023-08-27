@@ -194,7 +194,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         res_list = []
         for r in res:
-            res_list.append(r)
+            res_list.append(r.__dict__)
         return json.dumps(res_list)
 
     return bp
