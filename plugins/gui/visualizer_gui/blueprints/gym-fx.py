@@ -181,9 +181,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         # perform query, the column classs names are configured in config_store.json
         try:
             # query for the different gym_fx_config.id and max validation score where gym_fx_config.active == True
-            res = db.session.query(Base.classes.gym_fx_config)\
-                .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id) and (Base.classes.gym_fx_data.score_v == func.max(Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id)))\
-                .filter(Base.classes.gym_fx_config.active == True).all()             
+            res = db.session.query(Base.classes.gym_fx_config, func.max(Base.classes.gym_fx_data.score_v))\
+                .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id))\
+                .filter(Base.classes.gym_fx_config.active == True).group_by(Base.classes.gym_fx_data.config_id).all()             
         except SQLAlchemyError as e:
             error = str(e)
             print("SQLAlchemyError : " , error)
