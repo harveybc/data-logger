@@ -172,6 +172,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         return json.dumps(res)
     
+    def row2dict(row):
+        d = {}
+        for column in row.__table__.columns:
+            d[column.name] = str(getattr(row, column.name))
+        return d
+
     @bp.route('/gymfx_process_list_')
     @login_required
     def gymfx_process_list_():
@@ -194,7 +200,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         res_list = []
         for r in res:
-            res_list.append(r.__dict__)
+            res_list.append(row2dict(r))
         return json.dumps(res_list)
 
     return bp
