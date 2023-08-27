@@ -174,12 +174,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         return json.dumps(res)
     
-    def row2dict(obj):
-        return {
-            c.key: getattr(obj, c.key)
-            for c in inspect(obj).mapper.column_attrs
-        }
-
     @bp.route('/gymfx_process_list_')
     @login_required
     def gymfx_process_list_():
