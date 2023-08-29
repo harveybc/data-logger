@@ -114,7 +114,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         except Exception as e:
             # TODO: use some form of error management to ease tracing of errors
             error = str(e)
-            print("Error : No inactive (finished) registers ingym_fx_xonfig table to search for their validation plot. " ,error_f(error))
+            print("Error : No inactive (finished) registers in gym_fx_config table to search for their validation plot. " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
