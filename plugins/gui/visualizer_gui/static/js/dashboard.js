@@ -139,7 +139,7 @@ export class Dashboard {
     });
     var overview = this.overview;
 
-    // get the data from the server
+    // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
       console.log("plot_data = " + plot_data);
@@ -149,7 +149,6 @@ export class Dashboard {
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
-
 
       try {
         // that.interactive_plot.setData(that.xy_points_);
@@ -170,6 +169,15 @@ export class Dashboard {
       // Add the Flot version string to the footer
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
+
+    // get gymfx_process_list data from the server
+    this.gymfx_process_list_().then((response) => {
+      var process_list = JSON.parse(response.data);
+      console.log("process_list = " + process_list);
+      that.process_list_update(0, 8, process_list);
+    })
+
+
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
