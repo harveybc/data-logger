@@ -280,28 +280,10 @@ input[type="radio"] {
                       <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
                       <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
                       <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
                     </tr>
                   </thead>
                   <tbody  id="process_list">
-                    <tr v-for="process in process_list">
-        
-                      |{ get_value(process.id, 'control', 'status') }|
-        
-                      <td><a href="/gui/process/|{process.id}|"> process.id</a></td>
-        
-                      <td> get_max(process.id)</td>
-        
-                      <td>
-                        <span v-if="status === 'Halted'" class="badge badge-danger"> status</span>
-                        <span v-else-if="status === 'Training'" class="badge badge-warning">"> status</span>
-                        <span v-else-if="status === 'Validation'" class="badge badge-warning">"> status</span>
-                        <span v-else class="badge badge-success">"> status</span>
-                      </td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20"> process.creaded_at</div>
-                      </td>
-                    </tr>
+                    
                   </tbody>
                 </table>
               </div>

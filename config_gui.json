@@ -34,8 +34,8 @@
             "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
-                "col_1_title": "name",
-                "col_2_title": "Score"
+                "col_1_title": "Score",
+                "col_2_title": "Status"
             }
         }
     }
