@@ -329,11 +329,19 @@ export class Dashboard {
     // use the result of api request
     return axios_instance.get('/gymfx_online_plot_', { responseType: 'text', transformResponse: [] })
   }
+
   gymfx_validation_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
     return axios_instance.get('/gymfx_validation_plot_', { responseType: 'text', transformResponse: [] })
+  }
+
+  gymfx_process_list_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    return axios_instance.get('/gymfx_process_list_', { responseType: 'text', transformResponse: [] })
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
