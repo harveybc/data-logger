@@ -46,7 +46,7 @@ def seed(app, db, table_name):
                     # TODO: add reward, num_closes
                     tmp0 =  table_base(balance=10000, equity=10000, order_status= 0, reward=0, num_closes=0, config_id=3, tick_timestamp=0)
                     tmp1 =  table_base(balance=10000, equity=13000, order_status= 1, reward=0, num_closes=0 ,config_id=3, tick_timestamp=1)
-                    tmp2 =  table_base(balance=12000, equity=12000, order_status= 0, reward=2000, nxzsum_closes=1 ,config_id=3, tick_timestamp=2)
+                    tmp2 =  table_base(balance=12000, equity=12000, order_status= 0, reward=2000, num_closes=1 ,config_id=3, tick_timestamp=2)
                     tmp3 =  table_base(balance=12000, equity=7000, order_status= -1, reward=0, num_closes=1 ,config_id=3, tick_timestamp=3)
                     tmp4 =  table_base(balance=8000, equity=6000, order_status= 0, reward=-2000, num_closes=2,config_id=3, tick_timestamp=4)
                     tmp5 =  table_base(balance=9000, equity=8000, order_status= -1, reward=0, num_closes=2 ,config_id=3, tick_timestamp=5)
