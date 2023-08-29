@@ -4,6 +4,7 @@
 import hashlib, binascii, os
 import json
 from sqlalchemy.ext.automap import automap_base
+from inspect import currentframe, getframeinfo
 
 def sanitize_str(insecure_str, max_len):
     """ Limits a string's length and removes insecure characters from it.
@@ -95,3 +96,8 @@ def verify_pass(provided_password, stored_password):
                                   100000)
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
+
+# format error messages by preceding the filename and line number to the error message
+def error_f(msg):
+    cf = currentframe()
+    return "File \"" + getframeinfo(cf.f_back).filename + "\", line " + str(cf.f_back.f_lineno) + " : " + msg  

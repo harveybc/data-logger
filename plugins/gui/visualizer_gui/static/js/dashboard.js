@@ -139,7 +139,7 @@ export class Dashboard {
     });
     var overview = this.overview;
 
-    // get the data from the server
+    // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = JSON.parse(response.data);
       console.log("plot_data = " + plot_data);
@@ -147,6 +147,9 @@ export class Dashboard {
       that.data_ = that.transform_validation_plot_data(plot_data);
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
+      // for each that.data_ a ppend to val_list tbody elementz
+      that.val_list_update(0,8,plot_data);      
+
       try {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
@@ -166,6 +169,15 @@ export class Dashboard {
       // Add the Flot version string to the footer
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
+
+    // get gymfx_process_list data from the server
+    this.gymfx_process_list_().then((response) => {
+      var process_list = JSON.parse(response.data);
+      console.log("process_list = " + process_list);
+      that.process_list_update(0, 8, process_list);
+    })
+
+
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
@@ -191,6 +203,8 @@ export class Dashboard {
       plot.setSelection(ranges);
     });
     console.log(plot.getData());
+    //this.val_list_update();
+    //this.process_list_update();
   }
 
   // helper for returning the order status color areas for the validation plot
@@ -315,11 +329,19 @@ export class Dashboard {
     // use the result of api request
     return axios_instance.get('/gymfx_online_plot_', { responseType: 'text', transformResponse: [] })
   }
+
   gymfx_validation_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
     return axios_instance.get('/gymfx_validation_plot_', { responseType: 'text', transformResponse: [] })
+  }
+
+  gymfx_process_list_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    return axios_instance.get('/gymfx_process_list_', { responseType: 'text', transformResponse: [] })
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
@@ -360,9 +382,13 @@ export class Dashboard {
     this.plot_min = min;
     return xy_points;
   }
-  // This function updates the interactive plot with new data and update the plot axises
+  
+  // This function updates the validation table and interactive plot with new data and update the plot axises
   transform_validation_plot_data(response_data) {
     let timestamps = [];
+    let op_type = [];
+    let op_profit = [];
+
     let xy_balance = [];
     let xy_equity = [];
     let xy_order_status = [];
@@ -382,6 +408,8 @@ export class Dashboard {
       }
 
       timestamps.push(response_data[i].tick_timestamp);
+      op_type.push(response_data[i].op_type);
+      op_profit.push(response_data[i].op_profit);
       xy_balance.push([response_data[i].tick_timestamp, response_data[i].balance]);
       xy_equity.push([response_data[i].tick_timestamp, response_data[i].equity]);
       // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
@@ -450,6 +478,66 @@ export class Dashboard {
     });
   }
 
+  // updates the validation list table
+  // params: start: the starting index of the data_ array
+  //         num_rows: the number of rows to be added to the table
+  //         data_: the data array
+  val_list_update(start, num_rows, data_) {
+    var prev_num_closes = 0;
+    var close_list ="";
+    var row_count = 0;
+    for (let i = start; i < data_.length; i++) {
+      if (data_[i].num_closes != prev_num_closes) {
+        row_count++;
+        if (row_count <= num_rows) {
+          prev_num_closes = data_[i].num_closes;
+          close_list += (`
+            <tr>
+              <!-- id, balance, reward, date -->
+              <td>${data_[i].num_closes}</td>
+              <td>${data_[i].balance}</td>
+              <td>${data_[i].reward}</td>
+              <td>${data_[i].tick_timestamp}</td>
+            </tr>
+            `);
+        }
+      }
+    }
+    document.getElementById("val_list")
+      .innerHTML += close_list;
+  }
+
+  // updates the validation list table
+  // params: start: the starting index of the data_ array
+  //         num_rows: the number of rows to be added to the table
+  //         data_: the data array
+  process_list_update(start, num_rows, data_) {
+    var prev_num_closes = 0;
+    var process_list = "";
+    var row_count = 0;
+    for (let i = start; i < data_.length; i++) {
+      var active_str = ""
+      if (data_[i].active) {
+        active_str = '<span class="badge badge-danger">Stopped</span>'
+      }
+      else{
+        active_str = '<span class="badge badge-success">Active</span>'
+      }
+
+      process_list += (`
+      <tr>
+        <!-- id, max, active -->
+        <td>${data_[i].id}</td>
+        <td>${data_[i].max}</td>
+        <td>${active_str}</td>
+        
+      </tr>
+      `);
+    }
+
+    document.getElementById("process_list")
+      .innerHTML += process_list;
+  }
 
 
 

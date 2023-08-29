@@ -15,11 +15,15 @@ from flask import current_app
 from flask import jsonify
 from app.app import load_plugin_config
 from app.util import as_dict
+from app.util import error_f
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func, asc, desc
+from sqlalchemy import  asc, desc
+from sqlalchemy.sql.expression  import func
 import json
 from sqlalchemy.orm import Session
+from sqlalchemy import inspect
+
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
@@ -77,7 +81,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
@@ -93,7 +97,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == True).order_by(desc(Base.classes.gym_fx_data.score)).first_or_404()
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "score")
         return json.dumps(attr)
@@ -108,8 +112,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         try:
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
         except Exception as e:
+            # TODO: use some form of error management to ease tracing of errors
             error = str(e)
-            print("Error : " , error)
+            print("Error : No inactive (finished) registers in gym_fx_config table to search for their validation plot. " ,error_f(error))
             return error
         attr = getattr(res, "config_id")
         return json.dumps(attr)
@@ -125,7 +130,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             res = db.session.query(Base.classes.gym_fx_data).join(Base.classes.gym_fx_config, Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id).filter(Base.classes.gym_fx_config.active == False).order_by(desc(Base.classes.gym_fx_data.score_v)).first_or_404()
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         attr = getattr(res, "score")
         return json.dumps(attr)
@@ -149,7 +154,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 count += 1
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         return json.dumps(res)
     
@@ -161,14 +166,40 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         num_points = args.get("num_points", default=1000, type=int)
         # perform query, the column classs names are configured in config_store.json
         try:
+            #TODO: verify errror in here
             best = int(gymfx_best_offline_())
             print("best_offline : " , best)
-            points = db.session.query(Base.classes.gym_fx_validation_plot).filter(Base.classes.gym_fx_validation_plot.config_id == best ).order_by(desc(Base.classes.gym_fx_validation_plot.id)).limit(num_points).all()
+            points = db.session.query(Base.classes.gym_fx_validation_plot).filter(Base.classes.gym_fx_validation_plot.config_id == best ).order_by(asc(Base.classes.gym_fx_validation_plot.id)).limit(num_points).all()
             res = list(map(as_dict, points))
         except Exception as e:
             error = str(e)
-            print("Error : " , error)
+            print("Error : " ,error_f(error))
             return error
         return json.dumps(res)
+    
+    @bp.route('/gymfx_process_list_')
+    @login_required
+    def gymfx_process_list_():
+        """ TODO: Returns a list of processes in the gym_fx_data that has config.active == true. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            # query for the different gym_fx_config.id and max validation score where gym_fx_config.active == True
+            res = db.session.query(Base.classes.gym_fx_config.id.label("id"), Base.classes.gym_fx_config.active.label("active"), func.max(Base.classes.gym_fx_data.score_v).label("max"))\
+                .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id))\
+                .group_by(Base.classes.gym_fx_data.config_id).all()             
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("SQLAlchemyError : " , error)
+            return error
+        except Exception as e:
+            error = str(e)
+            print("Error : " ,error_f(error))
+            return error
+        res_list = []
+        for r in res:
+            res_list.append({'id':r.id, 'max': r.max, 'active': r.active})
+        return json.dumps(res_list)
 
     return bp

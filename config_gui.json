@@ -22,14 +22,20 @@
                 "plot_height": "280px",
                 "overview_height": "100px",
                 "max_points": "35",
-                "use_latest": true,
-                "data": "val_plot()"
+                "use_latest": true
             },
-            "process_list":{
+            "val_list": {
+                "title": "Validation Trades",
+                "col_0_title": "ID",
+                "col_1_title": "Balance",
+                "col_2_title": "Reward",
+                "col_3_title": "Date"
+            },
+            "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
-                "col_2_title": "name",
-                "data": "process_list()"
+                "col_1_title": "Score",
+                "col_2_title": "Status"
             }
         }
     }
