@@ -32,11 +32,12 @@ def seed(app, db, table_name):
                     db.session.add(tmp1)
                     db.session.add(tmp2)
                     db.session.commit()
-                    _logger.info("gym_fx_data table seeded") 
+                    _logger.info("gym_fx_config table seeded") 
                 elif table_name == "gym_fx_data":
                     tmp0 =  table_base(score=10000, score_v=9001, config_id=1)
                     tmp1 =  table_base(score=1000, score_v=900, config_id=2)
                     tmp2 =  table_base(score=1200, score_v=9900, config_id=1)
+                    tmp3 =  table_base(score=1300, score_v=9700, config_id=3)
                     db.session.add(tmp0)
                     db.session.add(tmp1)
                     db.session.add(tmp2)
@@ -68,7 +69,6 @@ def seed(app, db, table_name):
                     db.session.add(tmp9)
                     db.session.add(tmp10)
                     db.session.add(tmp11)
-                    
                     db.session.commit()
                     _logger.info("gym_fx_validation_plot table seeded") 
             except SQLAlchemyError as e:
