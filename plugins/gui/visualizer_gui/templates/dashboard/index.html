@@ -283,7 +283,7 @@ input[type="radio"] {
                       <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_3_title'] }}</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody  id="process_list">
                     <tr v-for="process in process_list">
         
                       |{ get_value(process.id, 'control', 'status') }|

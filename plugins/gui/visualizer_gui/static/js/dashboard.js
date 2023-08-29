@@ -497,27 +497,30 @@ export class Dashboard {
   //         data_: the data array
   process_list_update(start, num_rows, data_) {
     var prev_num_closes = 0;
-    var close_list = "";
+    var process_list = "";
     var row_count = 0;
     for (let i = start; i < data_.length; i++) {
-      if (data_[i].num_closes != prev_num_closes) {
-        row_count++;
-        if (row_count <= num_rows) {
-          prev_num_closes = data_[i].num_closes;
-          close_list += (`
-          <tr>
-            <!-- id, balance, reward, date -->
-            <td>${data_[i].num_closes}</td>
-            <td>${data_[i].balance}</td>
-            <td>${data_[i].reward}</td>
-            <td>${data_[i].tick_timestamp}</td>
-          </tr>
-          `);
-        }
+      var active_str = ""
+      if (data_[i].active) {
+        active_str = '<span class="badge badge-danger">Stopped</span>'
       }
+      else{
+        active_str = '<span class="badge badge-success">Active</span>'
+      }
+
+      process_list += (`
+      <tr>
+        <!-- id, max, active -->
+        <td>${data_[i].id}</td>
+        <td>${data_[i].max}</td>
+        <td>${active_str}</td>
+        
+      </tr>
+      `);
     }
-    document.getElementById("val_list")
-      .innerHTML += close_list;
+
+    document.getElementById("process_list")
+      .innerHTML += process_list;
   }
 
 
