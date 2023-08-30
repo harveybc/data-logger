@@ -16,18 +16,29 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from flask import request
+from app.app import load_plugin_config
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     # construct the data_logger blueprint using the plugin folder as template folder
     bp = Blueprint("user_bp", __name__, template_folder=plugin_folder+"/templates")
 
-    @bp.route("/views/users")
+    @bp.route("/dashboard/users")
     #@login_required
     def user_index():
         """Show the users index."""
-        user_list = core_ep.User.real_all()
-        return render_template("../"/"user/index.html", user_list = user_list)
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/users.html", p_config = p_config_gui)
+    
+    @bp.route("/dashboard/authorization")
+    #@login_required
+    def authorization_index():
+        """Show the users index."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/authorization.html", p_config = p_config_gui)
+    
 
     @bp.route("/views/user/create", methods=["GET"])
     @login_required
