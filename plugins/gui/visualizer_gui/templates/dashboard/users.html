@@ -1,0 +1,184 @@
+{% extends "layouts/base.html" %}
+<!-- uses Jinja (preload) and Vue (postload)-->
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS and JS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+<style>
+  .demo-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+}
+
+fieldset {
+		display: block;
+		-webkit-margin-start: 2px;
+		-webkit-margin-end: 2px;
+		-webkit-padding-before: 0.35em;
+		-webkit-padding-start: 0.75em;
+		-webkit-padding-end: 0.75em;
+		-webkit-padding-after: 0.625em;
+		min-width: -webkit-min-content;
+		border-width: 2px;
+		border-style: groove;
+		border-color: threedface;
+		border-image: initial;
+		padding: 10px;
+}
+
+.legend {
+		display: block;
+		-webkit-padding-start: 2px;
+		-webkit-padding-end: 2px;
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+		padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+}
+
+.legendLayer .background {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(0, 0, 0, 0.85);
+    stroke-width: 1;
+}
+
+input[type="radio"] {
+		margin-top: -1px;
+		vertical-align: middle;
+}
+
+.tickLabel {
+	line-height: 1.1;
+}
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content-wrapper" style="height:100% !important; min-height:100% !important;">
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid" id="main_content">
+      <!-- Main row -->
+      <div class="row">
+        <section class="col-lg-6 connectedSortable">      
+          <!-- TABLE: USERS -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">{{ p_config['gui_plugin_config']['users']['title'] }}</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
+                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
+                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
+                      <!-- TODO: Botones de edit, view y delete -->
+                      <!-- TODO: Paginación -->
+                    </tr>
+                  </thead>
+                  <tbody  id="process_list">
+                    
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New User</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </section>
+        <!-- right col -->
+      </div>
+      <!-- /.row -->
+      <b>Storage Plugin</b>:{{ p_config['store_plugin'] }}, <b>GUI Plugin</b>:{{ p_config['gui_plugin'] }}
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+
+
+<script>
+  // Gets data from controller5
+  var interval = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+  var data = [];
+  var totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
+  var val_plot_num_points = {{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }};
+  // when page finishes loading, sets the values to the ones from data
+
+
+   
+  $(document).ready(function () {
+
+    /*
+        })
+        
+        * Custom Label formatter
+        * ----------------------
+        */
+    function labelFormatter(label, series) {
+      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+        + label
+        + '<br>'
+        + Math.round(series.percent) + '%</div>'
+    }
+  })
+
+</script>
+{% endblock javascripts %}

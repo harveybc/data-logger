@@ -37,6 +37,21 @@
                 "col_1_title": "Score",
                 "col_2_title": "Status"
             }
+        },
+        "users": {
+            "title": "Users",
+            "process_list": {
+                "title": "List of Users",
+                "col_0_title": "ID",
+                "col_1_title": "Username",
+                "col_2_title": "Admin"
+            }
+        },
+        "authorization": {
+            "title": "Authorization (Access Permissions)",
+            "process_list": {
+                "title": "List of Permissions per User"
+            }
         }
     }
 }
