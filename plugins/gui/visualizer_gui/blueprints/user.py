@@ -39,7 +39,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/authorization.html", p_config = p_config_gui)
     
-
     @bp.route("/views/user/create", methods=["GET"])
     @login_required
     def user_create_view():
