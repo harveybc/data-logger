@@ -34,11 +34,43 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/dashboard/authorization")
     #@login_required
     def authorization_index():
-        """Show the users index."""
+        """Show the authorization index."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/authorization.html", p_config = p_config_gui)
     
+    @bp.route("/dashboard/processes")
+    #@login_required
+    def processes_index():
+        """Show the processes list."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/processes.html", p_config = p_config_gui)
+    
+    @bp.route("/dashboard/plots")
+    #@login_required
+    def plots_index():
+        """Show the plot list."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/plots.html", p_config = p_config_gui)
+    
+    @bp.route("/dashboard/training")
+    #@login_required
+    def authorization_index():
+        """Show the training stats."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/training.html", p_config = p_config_gui)
+
+    @bp.route("/dashboard/validation")
+    #@login_required
+    def authorization_index():
+        """Show the training stats."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/training.html", p_config = p_config_gui)
+
     @bp.route("/views/user/create", methods=["GET"])
     @login_required
     def user_create_view():

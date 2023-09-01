@@ -57,7 +57,7 @@
                                 "col_type": "Boolean" 
                             },
                             {
-                                "name": "restart",
+                                "name": "paused",
                                 "col_type": "Boolean" 
                             },
                             {
