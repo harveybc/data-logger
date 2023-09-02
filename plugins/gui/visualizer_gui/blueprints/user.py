@@ -66,10 +66,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/dashboard/validation")
     #@login_required
     def authorization_index():
-        """Show the training stats."""
+        """Show the validation stats."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
-        return render_template("/dashboard/training.html", p_config = p_config_gui)
+        return render_template("/dashboard/validation.html", p_config = p_config_gui)
 
     @bp.route("/views/user/create", methods=["GET"])
     @login_required
