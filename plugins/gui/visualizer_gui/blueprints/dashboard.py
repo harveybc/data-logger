@@ -63,6 +63,29 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/index.html", p_config = p_config_gui)
 
+    @bp.route("/dashboard/plots")
+    #@login_required
+    def plots_index():
+        """Show the plot list."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/plots.html", p_config = p_config_gui)
+    
+    @bp.route("/dashboard/training")
+    #@login_required
+    def authorization_index():
+        """Show the training stats."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/training.html", p_config = p_config_gui)
+
+    @bp.route("/dashboard/validation")
+    #@login_required
+    def authorization_index():
+        """Show the validation stats."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/validation.html", p_config = p_config_gui)
     
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
