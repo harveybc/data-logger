@@ -73,7 +73,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     
     @bp.route("/dashboard/training")
     #@login_required
-    def authorization_index():
+    def training_index():
         """Show the training stats."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
@@ -81,7 +81,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     @bp.route("/dashboard/validation")
     #@login_required
-    def authorization_index():
+    def validation_index():
         """Show the validation stats."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
