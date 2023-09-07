@@ -1,20 +1,20 @@
-Manifiesto Socialista Tecnológico
+Manifiesto Del Movimiento Social Tecnológico
 
-La evolución social y económica ha demostrado que el socialialismo actual, puede mejorar y es momento de que todos los espíritus libres, 
+La evolución social y económica ha demostrado que el socialialismo actual, puede mejorar y el capitalismo también, es momento de que todos los espíritus libres, 
 de corazón desinteresado, que buscan la supervivencia a largo plazo de la humanidad y que todos los seres humanos tengan 
-felicidad y satizfagan todas sus necesidades, acepten que el socialismo también debe evolucionar.
+felicidad y satizfagan todas sus necesidades, acepten que el gobierno humano también deben evolucionar.
 
-El nuevo socialismo debe adoptar la tecnología y no buscar el poder político, para convertirse en un movimiento global
+El nuevo sistema debe adoptar la tecnología y no buscar el poder político, para convertirse en un movimiento global
 que combata la innegable inequidad e injusticia que existe en el mundo.
 
-El nuevo socialismo debe ser un movimiento que busque la felicidad de todos los seres humanos, sin importar su raza, sexo, orientación sexual o nacionalidad.
+El nuevo sistema debe ser un movimiento que busque la felicidad de todos los seres humanos, sin importar su raza, sexo, orientación sexual o nacionalidad.
 
 Debido a que grandes empresas han tomado el control de la política y la política tiene el control del desarrollo tecnológico, 
 la tecnología se ha centralizado en manos de unos pocos y se ha utilizado para el beneficio de ellos, en lugar de
 utilizarse para el beneficio de todos los seres humanos, creando prohibiciones en el área de Inteligencia 
 Artificial para obtener una potencial ventaja insuperable de empresas privadas que pueden saltarse las restricciones políticas para el resto de la población.
 
-Por tanto en este manifiesto, se propone la creación de un nuevo movimiento social, que se llamará "Socialismo Tecnológico",
+Por tanto en este manifiesto, se propone la creación de un nuevo movimiento social, que se llamará "Movimiento Social Tecnológico",
 que busca la felicidad de todos los seres humanos, mediante el uso de la tecnología fuera del control de la política y de
 las grandes empresas.
 
@@ -34,8 +34,8 @@ estar de acuerdo con él, ya que la tarea de hacer públicas las intenciones de 
 los gobiernos de todo el mundo teman perder su poder controlado por seres humanos que pueden ser superados en su toma de decisiones
 por Inteligencia Artificial General.
 
-Si decides participar, la única forma es colaborar activamente en la difusión, diseño, desarrollo open source y el despliegue de esta red descentralizada
-para configuración, evaluación, trazabilidad y entrenamiento descentralizado buscando el objetivo de la "Singularidad Tecnológica", seguro hay algo para tí.
+Si se decide participar, la única forma es colaborar activamente en la difusión, diseño, desarrollo open source y el despliegue de esta red descentralizada
+para configuración, evaluación, trazabilidad y entrenamiento descentralizado buscando el objetivo de la "Singularidad Tecnológica".
 
 
 
