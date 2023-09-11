@@ -40,7 +40,7 @@
         },
         "users": {
             "title": "Users",
-            "process_list": {
+            "users_list": {
                 "title": "List of Users",
                 "col_0_title": "ID",
                 "col_1_title": "Username",
