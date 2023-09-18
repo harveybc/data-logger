@@ -29,7 +29,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Show the users index."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
-        return render_template("/dashboard/users.html", p_config = p_config_gui)
+        return render_template("/user/index.html", p_config = p_config_gui)
     
     @bp.route("/dashboard/authorization")
     #@login_required
