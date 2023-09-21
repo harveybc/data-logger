@@ -21,9 +21,9 @@ export class Users {
   val_plot_num_points = window.val_plot_num_points
 
   constructor() {
-        this.gymfx_online_plot_().then((response) => {
+    this.gymfx_users_list_().then((response) => {
       console.log("before:" + response.data);
-      this.xy_points_ = JSON.parse(response.data);
+      this.xy_points_ = JSON.parse(response.data); 
       console.log("after:" + JSON.stringify(this.xy_points_));
     }, (error) => {
       console.log(error);
@@ -49,8 +49,22 @@ export class Users {
     return axios_instance;
   }
 
+  gymfx_users_list_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    axios_instance.get('/users_list_')
+      .then((response) => {
+        //console.log(response.data);
+        that.gymfx_users = response.data;
+        return response.data;
+      }, (error) => {
+        console.log(error);
+        return 0;
+      });
+  }
 
-  process_list_update(start, num_rows, data_) {
+  users_list_update(start, num_rows, data_) {
     var prev_num_closes = 0;
     var process_list = "";
     var row_count = 0;

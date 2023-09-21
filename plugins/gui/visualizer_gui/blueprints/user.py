@@ -59,6 +59,32 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         user_list = current_app.config['FE'].ep_input.get_user_by_username(username)
         return render_template("../"/"user/detail.html", user_list =  user_list, username = username)
 
+    @bp.route('/users_list_')
+    @login_required
+    def gymfx_process_list_():
+        """ TODO: Returns a list of processes in the gym_fx_data that has config.active == true. """
+        # table base class
+        #Base.prepare(db.engine)
+        # perform query, the column classs names are configured in config_store.json
+        try:
+            # query for the different gym_fx_config.id and max validation score where gym_fx_config.active == True
+            res = db.session.query(Base.classes.gym_fx_config.id.label("id"), Base.classes.gym_fx_config.active.label("active"), func.max(Base.classes.gym_fx_data.score_v).label("max"))\
+                .join(Base.classes.gym_fx_data, (Base.classes.gym_fx_data.config_id == Base.classes.gym_fx_config.id))\
+                .group_by(Base.classes.gym_fx_data.config_id).all()             
+        except SQLAlchemyError as e:
+            error = str(e)
+            print("SQLAlchemyError : " , error)
+            return error
+        except Exception as e:
+            error = str(e)
+            print("Error : " ,error_f(error))
+            return error
+        res_list = []
+        for r in res:
+            res_list.append({'id':r.id, 'max': r.max, 'active': r.active})
+        return json.dumps(res_list)
+
+
     @bp.route("/views/user/<int:id>/update", methods=("GET", "POST"))
     @login_required
     def update(id):
