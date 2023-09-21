@@ -21,10 +21,9 @@ export class Users {
   val_plot_num_points = window.val_plot_num_points
 
   constructor() {
-    this.gymfx_users_list_().then((response) => {
-      console.log("before:" + response.data);
-      this.xy_points_ = JSON.parse(response.data); 
-      console.log("after:" + JSON.stringify(this.xy_points_));
+    this.users_list_().then((response) => {
+      this.data_ = JSON.parse(response.data); 
+      this.users_list_update(0, this.data_);
     }, (error) => {
       console.log(error);
     });
@@ -49,7 +48,7 @@ export class Users {
     return axios_instance;
   }
 
-  gymfx_users_list_() {
+  users_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
@@ -64,26 +63,18 @@ export class Users {
       });
   }
 
-  users_list_update(start, num_rows, data_) {
-    var prev_num_closes = 0;
-    var process_list = "";
-    var row_count = 0;
+  users_list_update(start, data_) {
+    var users_list = "";
     for (let i = start; i < data_.length; i++) {
-      var active_str = ""
-      if (data_[i].active) {
-        active_str = '<span class="badge badge-danger">Stopped</span>'
-      }
-      else{
-        active_str = '<span class="badge badge-success">Active</span>'
-      }
-
-      process_list += (`
+      users_list += (`
       <tr>
         <!-- id, max, active -->
         <td>${data_[i].id}</td>
-        <td>${data_[i].max}</td>
-        <td>${active_str}</td>
-        
+        <td>${data_[i].username}</td>
+        <td>${data_[i].admin}</td>
+        <td><a href="/users/edit/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-pen-to-square"></i></a></td>
+        <td><a href="/users/view/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-eye"></i></a></td>
+        <td><a href="/users/delete/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-trash"></i></a></td>
       </tr>
       `);
     }

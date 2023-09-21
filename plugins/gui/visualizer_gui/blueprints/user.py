@@ -17,6 +17,10 @@ from flask import current_app
 from flask import jsonify
 from flask import request
 from app.app import load_plugin_config
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func, asc, desc
+import json
+from app.util import error_f
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
@@ -61,8 +65,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     @bp.route('/users_list_')
     @login_required
-    def gymfx_process_list_():
-        """ TODO: Returns a list of processes in the gym_fx_data that has config.active == true. """
+    def users_list_():
+        """ Returns a list of users """
         # table base class
         #Base.prepare(db.engine)
         # perform query, the column classs names are configured in config_store.json
