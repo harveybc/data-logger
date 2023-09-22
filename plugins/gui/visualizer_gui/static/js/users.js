@@ -52,14 +52,7 @@ export class Users {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/users_list_')
-      .then((response) => {
-        //console.log(response.data);
-        return response.data;
-      }, (error) => {
-        console.log(error);
-        return 0;
-      });
+    return axios_instance.get('/users_list_', { responseType: 'text', transformResponse: [] })
   }
 
   users_list_update(start, data_) {
