@@ -71,7 +71,7 @@ export class Users {
       `);
     }
 
-    document.getElementById("process_list")
+    document.getElementById("users_list")
       .innerHTML += process_list;
   }
 
