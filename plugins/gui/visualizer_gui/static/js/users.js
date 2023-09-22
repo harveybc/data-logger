@@ -72,7 +72,7 @@ export class Users {
     }
 
     document.getElementById("users_list")
-      .innerHTML += process_list;
+      .innerHTML += users_list;
   }
 
 
