@@ -64,7 +64,7 @@ export class Users {
   }
 
   users_list_update(start, data_) {
-    var users_list = "";s
+    var users_list = "";
     for (let i = start; i < data_.length; i++) {
       users_list += (`
       <tr>
