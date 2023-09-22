@@ -55,7 +55,6 @@ export class Users {
     axios_instance.get('/users_list_')
       .then((response) => {
         //console.log(response.data);
-        that.gymfx_users = response.data;
         return response.data;
       }, (error) => {
         console.log(error);
