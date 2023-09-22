@@ -64,7 +64,7 @@ export class Users {
         <td>${data_[i].id}</td>
         <td>${data_[i].username}</td>
         <td>${data_[i].admin}</td>
-        <td><a href="/users/edit/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-pen-to-square"></i></a></td>
+        <td><a href="/users/edit/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-pen"></i></a></td>
         <td><a href="/users/view/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-eye"></i></a></td>
         <td><a href="/users/delete/${data_[i].id}" class="btn btn-sm btn-info"><i class="nav-icon fas fa-trash"></i></a></td>
       </tr>
