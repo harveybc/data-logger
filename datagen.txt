@@ -1,0 +1,13 @@
+Title: 
+Synthetic Data Generator
+
+Abstract:
+This document contains the design of a system 
+for generaring synthetic data to be used for 
+training an automated trading agent. The data 
+to be generated is either financial timeseries 
+generated from financial calendar events 
+timeseries or financial calendar events  
+timeseries from LLM parsed news sources.
+
+Introduction:
