@@ -1,29 +1,82 @@
 Title: 
 Synthetic Data Generator
 
-Abstract:
-This document contains the design of a system 
-for generaring synthetic data to be used for 
-training an automated trading agent. The data 
-to be generated is either financial timeseries 
-generated from financial calendar events 
-timeseries or financial calendar events  
-timeseries from LLM parsed news sources.
+1. Abstract:
 
-Introduction:
-please make a theoretical framework document, that includes sections and subsections of the topics of knowledge for the behaviour and structure of each component of the system described in the following text:
+Synthetic market data timeseries may be used for training automated trading agents. Since historical training data is limited, 
+this document proposes the design of a system for generaring synthetic data by using an intermediate layer of financial events
+timeseries that can be used to generate synthetic market data timeseries on which trading agents can be trained.
+
+The financial events outcomes timeseries are extracted from the news using LLM(Large Language Model) technology, to be used
+on live trading and during validation of an automated trading agent, while this event outcomes can be randomized under certain constraints
+to generate synthetic market timeseries for agent training.
+
+This project evaluates the suitability of this approach for automated trading agents training, and compares it with other 
+synthetic data generation techniques for the same purpose.
+
+2. Introduction:
+
+The limited quantity of historical market data for a financial asset may be a limitation for the process of training
+automated training agents, many techniques allow to generate new data using feature engineering or other thecniques, 
+but an unlimited quantity of data that can be generated at will and that behaves reallistically, is desirable to avoid 
+overfitting. 
+
+In this document, the design of a system is presented, its function is to generate
+synthetic data tailored for the training of an automated trading agent. In the approch used here, this data generation 
+process involves two  
+different components: financial timeseries generator from financial calendar events, and financial calendar 
+events timeseries generator from parsed news sources using a LLM (Large Language Model). 
+
+The financial calendar events generator component, allows to use the events as an intermediate layer of information
+that can be used to generate timeseries data that can be used to train an automated trading agent.
+
+The objective of this project is to evaluate the suitability of this intermediate layer in generating synthetic market data
+from randomized financial event outcomes. The measurement of this suitability is made by testing with real data the
+the following 3 automated training agents: 
+- one trained with only real data
+- a second one trained with synthetic data using the proposed approach
+- a third one trained with synthetic data generated with state-of-the-art techniques.
+
+Since the configuration of both components and the trading agent
+optimization processes are suceptible to affect the suitability of this technique, the system to make the tests 
+has a flexible and configurable software architecture.
+
+This system has plugin-based architecture, which allows for configurable news sources and 
+financial calendar scraping and parsing methods.
+
+The unique aspect of this system lies in its objective not to replicate a timeseries exactly, but to capture and emulate 
+its general behavior. This approach ensures that the trading agent operates within realistic simulations during 
+reinforcement learning training, 
+offering an environment that closely mimics the complexities and nuances of real-world financial markets.
+
+Central to this system's development is the implementation of a robust test-driven methodology, which will be applied 
+rigorously from the initial design phase to the final implementation. Every aspect of this system's development process 
+will be automated or assisted by state-of-the-art AI coding and documentation tools. This commitment to automated testing 
+and AI-driven development ensures the highest levels of reliability, efficiency, and precision in all phases of the project, 
+setting the stage for quality software, shorter development times, lower total costs and less bugs or delays during measurements.
+
+3. Objectives 
+
+The general objective is the measurement of the trading efficiency on real data, of an automatic trading agent, that has 
+been trained on synthetic data and compare it with: an agent that has been trained only on historical data and one that
+uses the state-of-the-art synthetic market data generation for training.
 
 
-In this comprehensive document, we present the intricate design of a cutting-edge system engineered with a plug-in based architecture, facilitating flexibility and extensibility. The system's core functionality revolves around generating synthetic data tailored for the training of an automated trading agent. This data generation process involves two essential components: financial timeseries, which are derived from financial calendar events, and financial calendar events timeseries sourced from meticulously parsed news sources using the LLM (Language Model) technology. 
 
-One of the key innovations of this system is its plugin-based architecture, which allows for configurable news sources and financial calendar scraping and parsing methods. This modular design enables users to adapt and customize the system to their specific needs, making it highly versatile.
+3.1
+4. Scope
+5. Methodology
 
-The unique aspect of this system lies in its objective not to replicate a timeseries exactly, but to capture and emulate its general behavior. This approach ensures that the trading agent operates within realistic simulations, offering a training environment that closely mimics the complexities and nuances of real-world financial markets.
 
-Central to this system's development is the implementation of a robust test-driven methodology, which will be applied rigorously from the initial design phase to the final implementation. Every aspect of this system's development process will be automated or assisted by state-of-the-art AI coding and documentation tools. This commitment to automated testing and AI-driven development ensures the highest levels of reliability, efficiency, and precision in all phases of the project, setting the stage for groundbreaking advancements in the fusion of artificial intelligence with financial data generation and trading agent training, particularly through the plugin-based architecture, which enhances adaptability and functionality.
+
+
+
+
+
+
+
 
 Doc:
-Certainly, here's a theoretical framework document for the system, organized into sections and subsections, detailing the behavior and structure of each component, including the usage of a built-in Python plug-in system:
 
 ---
 
