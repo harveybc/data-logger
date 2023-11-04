@@ -61,9 +61,14 @@ The general objective is the measurement of the trading efficiency on real data,
 been trained on synthetic data and compare it with: an agent that has been trained only on historical data and one that
 uses the state-of-the-art synthetic market data generation for training.
 
+In the following subsections, the specific objectives are described.
+3.1 Get user requirements, design module diagram and acceptation tests for these requirements.
+3.2 Get application requirements, design allocation diagram and system tests.
+3.3 Perform modular design, create component-connector diagram and integration tests.
+3.4 Perform individual module design, module logic diagram and unit tests.
+3.5 Implement modules to pass all unit, integration, system and acceptation tests.
 
 
-3.1
 4. Scope
 5. Methodology
 
