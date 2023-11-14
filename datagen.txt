@@ -72,16 +72,17 @@ In sections 3.1 to 3.3, the specific objectives are described.
 3.3 To use state-of the-art AI tools during design and implementation for: documentation, code, tests and automation tasks.
 
 4. Scope
-Make a software and tests but only using reinforcement learning and compare with similar data generators using the same techniques.
-
+Make a software and tests for synthetic data generation with an intermediate financial events layer, using 
+reinforcement learning for parameter/topology search and compare with similar data generators using the same techniques for 
+parameter/topology search.
 
 5. Methodology
-with the steps documented in sections 3.2.1 to 3.2.5.
-3.13.1 Get user requirements, design module diagram and acceptation tests for these requirements.
-3.13.2 Get application requirements, design allocation diagram and system tests.
-3.13.3 Perform modular design, create component-connector diagram and integration tests.
-3.13.4 Perform individual module design, module logic diagram and unit tests.
-3.13.5 Implement modules to pass all unit, integration, system and acceptation tests.
+The steps in sections 5.1 to 5.5 were used during design and implementation of the system required to fullfill the proposed objectives and scope.
+5.1 Get user requirements, design module diagram and acceptation tests for these requirements.
+5.2 Get application requirements, design allocation diagram and system tests.
+5.3 Perform modular design, create component-connector diagram and integration tests.
+5.4 Perform individual module design, module logic diagram and unit tests.
+5.5 Implement modules to pass all unit, integration, system and acceptation tests.
 
 
 
