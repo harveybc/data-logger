@@ -47,13 +47,13 @@ financial calendar scraping and parsing methods.
 The unique aspect of this system lies in its objective not to replicate a timeseries exactly, but to capture and emulate 
 its general behavior. This approach ensures that the trading agent operates within realistic simulations during 
 reinforcement learning training, 
-offering an environment that closely mimics the complexities and nuances of real-world financial markets.
+offering an environment that closely mimics the complexities of real-world financial markets.
 
 Central to this system's development is the implementation of a robust test-driven methodology, which will be applied 
-rigorously from the initial design phase to the final implementation. Every aspect of this system's development process 
-will be automated or assisted by state-of-the-art AI coding and documentation tools. This commitment to automated testing 
-and AI-driven development ensures the highest levels of reliability, efficiency, and precision in all phases of the project, 
-setting the stage for quality software, shorter development times, lower total costs and less bugs or delays during measurements.
+rigorously from the initial design phase to the final implementation. This system's development process 
+will be partly automated or assisted by state-of-the-art AI coding and documentation tools. This commitment to the 
+test-driven development methodology and AI-assisted development ensures acceptable levels of quality in all phases of 
+the project, looking to obtain shorter development times, better documentation, lower total costs and less bugs or delays.
 
 3. Objectives 
 
@@ -72,22 +72,134 @@ In sections 3.1 to 3.3, the specific objectives are described.
 3.3 To use state-of the-art AI tools during design and implementation for: documentation, code, tests and automation tasks.
 
 4. Scope
+
 Make a software and tests for synthetic data generation with an intermediate financial events layer, using 
-reinforcement learning for parameter/topology search and compare with similar data generators using the same techniques for 
+reinforcement learning for parameter/topology search and compare with state-of-the-art data generators using the same techniques for 
 parameter/topology search.
 
 5. Methodology
+
 The steps in sections 5.1 to 5.5 were used during design and implementation of the system required to fullfill the proposed objectives and scope.
-5.1 Get user requirements, design module diagram and acceptation tests for these requirements.
-5.2 Get application requirements, design allocation diagram and system tests.
-5.3 Perform modular design, create component-connector diagram and integration tests.
-5.4 Perform individual module design, module logic diagram and unit tests.
-5.5 Implement modules to pass all unit, integration, system and acceptation tests.
+5.1 Get user requirements, design module diagram and acceptation tests for these requirements (section 6).
+5.2 Get application requirements, design allocation diagram and system tests (section 7).
+5.3 Perform modular design, create component-connector diagram and integration tests (section 8).
+5.4 Perform individual module design, module logic diagram and unit tests (section 9).
+5.5 Implement modules to pass all unit, integration, system and acceptation tests, in the aforementioned order.
 
+6. User requirements
 
+This section documents the process of defining the expected system functionality and features (section 6.1), producing 
+tests to be passed by the system implementation (section 6.2) and the design of the software architecture of such system
+starting with the identification of components and relations in a module diagram that will be the base of the design, being 
+complemented in following sections with the allocation, component-connector and module logic diagrams. 
 
+6.1 Requirement descriptions
 
+The requirements from the point of view of the user that interacts with the software are documented in sections 6.1.1 to 
+6.1.9, these are high level descriptions of how the software will be used to generate an intermediate dataset of financial
+event outcomes from news sources and from it generate synthetic market data, and measure the 
+performance of automated trading agents trained on synthetic data to compare their performance with agents trained on 
+real market data in a simulation with real (non-synthetic) validation market data, also describes the different modes of use, 
+including training data generators, training agents, customizably randomizing the event outcome dataset to produce
+additional training data to verify if the agent's performance trading in real validation data increases with the increment
+of synthetic training data, check if there is a limit for the quantity of synthetic data that improves the performance
+(if it is improved at all).
 
+6.1.1 Financial News Scraping and Parsing
+The system must provide a UI/CLI for users to input and modify financial news sources, scrape news articles, identify key 
+financial information, and parse this into a structured format.
+
+6.1.2 Financial Calendar Events Scraping and Parsing
+Users must be able to scrape and parse financial calendar events from specified online sources through the UI/CLI. The 
+system should accurately extract event details like date, nature of the event, and expected impact.
+
+6.1.3 Financial Calendar Events Generation
+The system should allow users to generate financial calendar events from the parsed news data, providing a user-friendly 
+interface for initiating and monitoring this process.
+
+6.1.4 Synthetic Market Data Generation
+Users must be able to use the generated financial calendar events to create synthetic market data timeseries. The system 
+should offer parameters for users to customize how these events influence the synthetic data.
+
+6.1.5 Trading Agent Training and Validation
+The system should provide functionality for users to train automated trading agents using the generated synthetic market
+ data. It must also allow for the validation of these agents with real market data, offering comparative analytics through the UI/CLI.
+
+6.1.6 Performance Measurement and Comparison
+Users must have the capability to measure and compare the trading efficiency of agents trained on synthetic data against 
+those trained on historical data. The system should present these comparisons in an understandable format.
+
+6.1.7 Randomization of Financial Event Outcomes
+The system must allow users to randomize the outcomes of financial events within realistic constraints to generate diverse
+ synthetic market timeseries. Users should be able to define the degree and nature of randomization through the UI/CLI.
+
+6.1.8 Incremental Data Training Performance Analysis
+The system should enable users to incrementally increase the amount of synthetic training data used for training agents and 
+analyze their performance on real validation data. The system must track and display how performance metrics evolve with increasing synthetic data volumes.
+
+6.1.9 Comparison with State-of-the-Art Synthetic Data Generators
+The system must facilitate the comparison of trading agents trained on synthetic data generated by this system with those 
+trained using synthetic data from state-of-the-art synthetic data generators. This comparison should help assess the 
+effectiveness of the synthetic data produced by the system in terms of trading agent performance.
+
+6.2 Acceptance Tests
+Sections 6.2.1 to 6.2.10 show the acceptance test objective, procedure and acceptance criteria for each user requirement 
+from section 6.1
+
+6.2.1 Testing Configuration of News Sources (Aligned with 6.1.1)
+Test Objective: Ensure the system's capability to input, store, and modify financial news sources.
+Procedure: Input and modify multiple news sources through the UI/CLI.
+Acceptance Criteria: The system should accept, store, and allow modification of news sources without errors.
+
+6.2.2 Testing News Scraping and Parsing Functionality (Aligned with 6.1.1)
+Test Objective: Verify the accuracy and completeness of the system's news scraping and parsing functionality.
+Procedure: Activate news scraping for various sources and examine the output for accuracy and completeness.
+Acceptance Criteria: The system accurately scrapes and parses key financial information from the news sources.
+
+6.2.3 Financial Calendar Events Scraping and Parsing (Aligned with 6.1.2)
+Test Objective: Confirm the system's ability to scrape and parse financial calendar events accurately.
+Procedure: Scrape and parse financial calendar events from specified sources and compare with actual event data.
+Acceptance Criteria: The system correctly extracts details like date, event type, and anticipated impact.
+
+6.2.4 Financial Calendar Events Generation (Aligned with 6.1.3)
+Test Objective: Ensure that the system can correctly generate financial calendar events from parsed news data.
+Procedure: Generate financial calendar events using parsed news data and validate the output.
+Acceptance Criteria: Generated events should align with the parsed news data.
+
+6.2.5 Synthetic Market Data Generation (Aligned with 6.1.4)
+Test Objective: Verify the system's ability to generate realistic synthetic market data from financial calendar events.
+Procedure: Generate synthetic market data using financial calendar events and analyze the data.
+Acceptance Criteria: Synthetic data exhibits realistic market trends and logical responses to simulated events.
+
+6.2.6 Trading Agent Training and Validation (Aligned with 6.1.5)
+Test Objective: Confirm the effectiveness of the system in training and validating trading agents with synthetic and real 
+market data.
+Procedure: Train a trading agent using synthetic data, then validate it with real market data.
+Acceptance Criteria: Agent shows successful learning with synthetic data and valid performance against real market data.
+
+6.2.7 Performance Measurement and Comparison (Aligned with 6.1.6)
+Test Objective: Assess the system's capability to measure and compare the efficiency of trading agents trained on different 
+data sets.
+Procedure: Measure the performance of agents trained with synthetic data and compare with those trained on historical data.
+Acceptance Criteria: Clear differentiation in performance metrics between agents trained on different data sets.
+
+6.2.8 Randomization of Financial Event Outcomes (Aligned with 6.1.7)
+Test Objective: Test the system's ability to effectively randomize financial event outcomes.
+Procedure: Randomize financial event outcomes and generate synthetic market data.
+Acceptance Criteria: Each dataset displays unique characteristics while maintaining realistic market conditions.
+
+6.2.9 Incremental Data Training Performance Analysis (Aligned with 6.1.8)
+Test Objective: Evaluate the system's functionality in analyzing trading agent performance with increasing volumes of 
+synthetic data.
+Procedure: Incrementally increase synthetic data volume for training agents and assess performance on real validation data.
+Acceptance Criteria: System tracks and displays performance changes with increased synthetic data, identifying trends and saturation points.
+
+6.2.10 Comparison with State-of-the-Art Synthetic Data Generators (Aligned with 6.1.9)
+Test Objective: Evaluate the comparative effectiveness of the synthetic data generated by this system against data from 
+state-of-the-art synthetic data generators in training trading agents.
+Procedure: Train trading agents using synthetic data generated by this system and separately with data from established 
+synthetic data generators. Compare their performance.
+Acceptance Criteria: The difference on performance should be documented, may it be lower or higher than using state-of-the-art data generators.
 
 
 
