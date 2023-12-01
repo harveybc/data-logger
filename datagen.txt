@@ -491,5 +491,48 @@ Integration: All tests are integrated into the GitLab CI/CD pipeline.
 Documentation: Detailed documentation of each test case using Confluence, linked to JIRA for issue tracking.
 Reporting: Automated test reports generated and reviewed post-execution, with any failures triggering issue creation in JIRA.
 
+8.3 Component-Connector Diagram
+Overview
+The Component-Connector Diagram for the Synthetic Data Generator System is designed to offer a comprehensive and clear representation of the system's architecture, focusing on the interactions between various components and connectors. It is organized to clearly depict data flow, module interactions, and system scalability.
+The updated Component-Connector Diagram is a dynamic, informative, and user-friendly tool. It integrates color coding for clear group delineation, standardized shapes for components, well-defined connectors with annotations, interactive elements, and accessibility considerations.
+
+Structure of the Diagram
+Group Areas (Colored Background Rectangles):
+
+Each subsystem or group in the system is represented by a large rectangle with a distinct background color.
+Color coding examples: Blue for 'Data Acquisition', Green for 'Data Processing', Yellow for 'Trading Agents', Pink for 'User Interface'.
+Components (Small Rectangles within Groups):
+
+Within each group, smaller rectangles represent individual components like News Scraper, Event Generator, and Trading Agent Management Microservices.
+These rectangles are uniformly sized within each group but may vary between groups to indicate complexity.
+Connectors (Lines and Arrows):
+
+Connectors between components are depicted using lines with arrowheads to show the direction of data flow or interactions.
+Solid lines represent synchronous interactions, while dashed lines indicate asynchronous interactions.
+Interactive Elements and Accessibility:
+
+The digital version includes interactive elements like hover-over descriptions and clickable links.
+The diagram uses a color-blind friendly palette supplemented with patterns or symbols for key elements.
+Performance Metrics and Real-Time Data:
+
+Where applicable, performance metrics are linked to components in the diagram for live monitoring.
+This feature is particularly useful for ongoing system performance evaluation.
+Legend and Glossary:
+
+A comprehensive legend is included, explaining the color codes, shapes, line types, and arrowheads.
+A glossary is provided for technical terms and acronyms used in the diagram.
+Scalability Indicators:
+
+Points of potential scalability are marked with symbols and specific criteria, like maximum load capacity or response time under load.
+Layered Information:
+
+The diagram features toggleable layers for different detail levels: overview, data flow, security, etc.
+Each layer focuses on different aspects of the system architecture.
+Annotations and Documentation:
+
+Detailed annotations explain the role and functionality of each component and the nature of their interactions.
+Links to external documentation offer further details.
+
+
 
 
