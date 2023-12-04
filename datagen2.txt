@@ -529,6 +529,49 @@ Annotations and Documentation:
 Detailed annotations explain the role and functionality of each component and the nature of their interactions.
 Links to external documentation offer further details.
 
+9. Individual module design
+
+This section documents the individual module design for each component, module logic diagrams and unit tests.
+
+9.1 Trader Interface (Presentation Layer)
+Allows traders to analyze market data and evaluate trading agents.
+
+9.2 Optimizer Interface (Presentation Layer)
+Enables optimizers to input and test optimization algorithms.
+
+9.3 System Administrator Interface (Presentation Layer)
+Offers tools for system management and monitoring.
+
+9.4 Event Generator (Business Logic Layer)
+Processes financial news into market events.
+
+9.5 Market Data Generator (Business Logic Layer) 
+Generates synthetic market data based on event inputs.
+
+9.6 Trading Agent Management Microservices (Business Logic Layer) 
+Incorporates services for Configuration, Training, Evaluation, and Deployment.
+
+9.7 Performance Analyzer (Business Logic Layer) 
+Analyzes trading strategies and agent performance.
+
+9.3 Data Layer Modules
+
+News Scraper: Gathers financial news from various sources.
+News Parser: Transforms raw news data into a structured format.
+Data Storage: Manages the storage and retrieval of all system data​​.
+
+9.2 Unit Tests 
+
+10. Implementation
+
+10.1 Components
+
+10.2 Integration?
+
+10.3 System? 
+
+10.1 Application?
+
 
 
 
