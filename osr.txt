@@ -1,14 +1,10 @@
 Title: 
-Synthetic Data Generator
+Osiris Assistant Platform
 
 1. Abstract:
-
-This document delineates the comprehensive framework and operational paradigm of a Synthetic Data Generator system, specifically conceptualized for the financial sector's unique requirements. The cornerstone of this system lies in its innovative use of Large Language Model (LLM) technology, which is intricately employed for parsing financial news and subsequent generation of financial events. These events form the basis for the creation of synthetic market timeseries, a pivotal element in the system's functionality.
-
-Central to the system is the Trader Interface, meticulously crafted to facilitate the simulation of trading strategies, leveraging automated agents. These agents are uniquely trained on an integration of both real and synthetic data, providing a versatile and dynamic platform for strategy optimization. This novel approach primarily aims to enhance the agents' adaptability and performance in scenarios that closely emulate the complex nature of real-world financial markets.
-
-This system's design is underpinned by a robust, test-driven development methodology, bolstered by AI-assisted coding and documentation tools. This strategic approach ensures not only high-quality development but also efficient testing phases and optimized resource utilization. The architecture is scalable and flexible, adept at handling varying loads and accommodating functional updates seamlessly. A key emphasis is placed on user experience, with the system offering an intuitive and efficient environment for both traders and data scientists, thereby facilitating comprehensive strategy simulations and analyses.
-
+A hardware and software open source platform for wearable, higly customizable, personal assistants is presented. Starting from the 
+search of the state-of-the-art in hardware and software platforms for sending, audio, video, text and sensor data to be remotely 
+processed and the methods for showing the response from the remote.
 
 2. Introduction:
 
