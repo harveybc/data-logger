@@ -165,7 +165,6 @@ export class Dashboard {
         console.log(e);
       }
 
-
       // Add the Flot version string to the footer
       //$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
     })
@@ -176,8 +175,6 @@ export class Dashboard {
       console.log("process_list = " + process_list);
       that.process_list_update(0, 8, process_list);
     })
-
-
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
@@ -251,6 +248,7 @@ export class Dashboard {
     }
     return markings;
   }
+
   // returns an axios instance for basic authentication
   axiosBasicAuth(username, password) {
     let buffer_auth = buffer.Buffer.from(username + ':' + password);
@@ -262,12 +260,14 @@ export class Dashboard {
       }
     });
   }
+
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
   axios_auth_instance() {
     let axios_instance = this.axiosBasicAuth("test", "pass");
     return axios_instance;
   }
+
   // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   gymfx_best_online_() {
     // setup authentication
@@ -283,6 +283,7 @@ export class Dashboard {
         return 0;
       });
   }
+
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
@@ -296,6 +297,7 @@ export class Dashboard {
         return 0;
       });
   }
+
   // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
   gymfx_best_offline_() {
     // setup authentication
@@ -310,6 +312,7 @@ export class Dashboard {
         return 0;
       });
   }
+
   // call request that returns the best mse from table fe_validation_error that has config.active == false
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
@@ -323,6 +326,7 @@ export class Dashboard {
         return 0;
       });
   }
+
   gymfx_online_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();

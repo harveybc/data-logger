@@ -97,7 +97,7 @@ input[type="radio"] {
           <!-- TABLE: USERS -->
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">{{ p_config['gui_plugin_config']['users']['title'] }}</h3>
+              <h3 class="card-title">{{ p_config['gui_plugin_config']['authorization']['title'] }}</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -113,16 +113,24 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_0_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_1_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_2_title'] }}</th>
-                      <th>Edit</th>
-                      <th>View</th>
-                      <th>Delete</th>
+                      <th>id</th>
+                      <th>user_id</th>
+                      <th>process_id</th>
+                      <th>table</th>
+                      <th>read_all</th>
+                      <th>read</th>
+                      <th>create</th>
+                      <th>update</th>
+                      <th>delete</th>
+                      <th>table_crud</th>
+                      <th>process_crud</th>
+                      <th>priority</th>
+                      <th>created</th>
+                      <!-- TODO: Botones de edit, view y delete -->
                       <!-- TODO: Paginación -->
                     </tr>
                   </thead>
-                  <tbody  id="users_list">
+                  <tbody  id="process_list">
                     
                   </tbody>
                 </table>
@@ -131,7 +139,7 @@ input[type="radio"] {
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New User</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New Authorization</a>
             </div>
             <!-- /.card-footer -->
           </div>
@@ -149,14 +157,6 @@ input[type="radio"] {
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-<script type="module">
-
-  import "/static/js/buffer-6.0.3.min.js"
-  import { Users } from "/static/js/users.js"
-  var users = new Users();
-</script>
-
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -165,13 +165,18 @@ input[type="radio"] {
 
 
 <script>
-
+  // Gets data from controller5
+  var interval = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+  var data = [];
+  var totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
+  var val_plot_num_points = {{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }};
   // when page finishes loading, sets the values to the ones from data
 
+
+   
   $(document).ready(function () {
     // sets the menu highlight
-    $('#menu-admin').addClass('menu-open');
-    $('#menu-users').addClass('active');
+    $('#menu-plots').addClass('active');
     /*
         })
         
