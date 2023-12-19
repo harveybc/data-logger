@@ -104,9 +104,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     #@login_required
     def log_index():
         """Show the logs index."""
-        process_list = current_app.config['FE'].ep_input.get_processes(
-            current_user.id)
-        return render_template("/process/log.html", process_list=process_list)
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/process/log.html", p_config = p_config_gui)
 
     @bp.route("/process/<pid>")
     @login_required
