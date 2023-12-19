@@ -87,6 +87,14 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         p_config_gui = p_config["gui"]
         return render_template("/dashboard/validation.html", p_config = p_config_gui)
     
+    @bp.route("/dashboard/logs")
+    #@login_required
+    def log_index():
+        """Show the logs index."""
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/dashboard/log.html", p_config=p_config_gui)
+
     def get_xy_training(pid):
         """ Returns the points to plot from the training_progress table. """
         results = current_app.config['FE'].ep_input.get_column_by_pid("training_progress", "mse", pid )
@@ -100,13 +108,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             current_user.id)
         return render_template("/process/index.html", process_list=process_list)
 
-    @bp.route("/dashboard/logs")
-    #@login_required
-    def log_index():
-        """Show the logs index."""
-        p_config = load_plugin_config()
-        p_config_gui = p_config["gui"]
-        return render_template("/process/log.html", p_config = p_config_gui)
+ 
 
     @bp.route("/process/<pid>")
     @login_required
