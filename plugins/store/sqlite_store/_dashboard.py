@@ -131,6 +131,13 @@ def get_processes(self, uid):
     print("get_processes.res = ", res)
     return res
 
+def get_configs(self, pid):
+    """ Returns a list of  pid, """
+    #res = self.get_columns("id,name,description,created", "process", "user_id=" + str(uid))
+    res = self.get_columns("*", "gym_fx_config", "process_id=" + str(pid))
+    print("get_processes.res = ", res)
+    return res
+
 def get_process_by_pid(self, pid):
     res = self.get_columns("id,name,description,model_link,training_data_link,validation_data_link,created,user_id", "process", "id=" + str(pid) )
     return res

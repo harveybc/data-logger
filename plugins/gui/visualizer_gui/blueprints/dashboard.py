@@ -108,8 +108,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             current_user.id)
         return render_template("/process/index.html", process_list=process_list)
 
- 
-
     @bp.route("/process/<pid>")
     @login_required
     def process_detail(pid):
@@ -117,31 +115,13 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         process_list = current_app.config['FE'].ep_input.get_process_by_pid(pid)
         return render_template("/process/detail.html", process_list = process_list, pid = pid)
 
-    def get_post(id, check_author=True):
-        """Get a post and its author by id.
-
-        Checks that the id exists and optionally that the current user is
-        the author.
-
-        :param id: id of post to get
-        :param check_author: require the current user to be the author
-        :return: the post with author information
-        :raise 404: if a post with the given id doesn't exist
-        :raise 403: if the current user isn't the author
-        """
-        results = (
-            get_db()
-            .execute(
-                "SELECT p.id, title, body, created, author_id, username"
-                " FROM post p JOIN user u ON p.author_id = u.id"
-                " WHERE p.id = ?",
-                (id,),
-            )
-            .fetchone()
-        )
-        # verify if the query returned no results
-        if results is None:
-            abort(404, "Post id {id} doesn't exist.")
-        return results
+    @bp.route("/dashboard/configs")
+    @login_required
+    def process_index():
+        """Show the processes index."""
+        #TODO: USE NEW GET CONFIGS FUNCTION
+        process_list = current_app.config['FE'].ep_input.get_configs(
+            current_user.id)
+        return render_template("/configs/index.html", process_list=process_list)
 
     return bp
