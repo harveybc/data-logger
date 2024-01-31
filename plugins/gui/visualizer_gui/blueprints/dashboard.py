@@ -119,11 +119,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     #@login_required
     def configs_index():
         """Show the processes index."""
-        #TODO: USE NEW GET CONFIGS FUNCTION
-        keylist = list(current_app.config.keys())
-        print(keylist)
-        process_list = current_app.config['FE'].ep_input.get_configs(
-            current_user.id)
-        return render_template("/configs/index.html", process_list=process_list)
+        p_config = load_plugin_config()
+        p_config_gui = p_config["gui"]
+        return render_template("/configs/index.html", p_config=p_config_gui)
 
     return bp
