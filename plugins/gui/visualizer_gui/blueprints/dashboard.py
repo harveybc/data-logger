@@ -117,7 +117,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     @bp.route("/dashboard/configs")
     @login_required
-    def process_index():
+    def configs_index():
         """Show the processes index."""
         #TODO: USE NEW GET CONFIGS FUNCTION
         process_list = current_app.config['FE'].ep_input.get_configs(
