@@ -158,7 +158,12 @@ input[type="radio"] {
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<script>
+<script type="module">
+  import { Configs } from "/static/js/configs.js"
+  var dashboard = new Dashboard();
+</script>
+
+<script >
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 
@@ -177,7 +182,7 @@ input[type="radio"] {
    
   $(document).ready(function () {
     // sets the menu highlight
-    $('#menu-processes').addClass('active');
+    $('#menu-coonfigs').addClass('active');
     /*
         })
         
