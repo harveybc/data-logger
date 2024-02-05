@@ -86,6 +86,8 @@ export class Configs {
         
         <td>${active_str}</td>
         <td>${data_[i].initial_capital}</td>
+        <td>${data_[i].paused}</td>
+        <td>${data_[i].status}</td>
       </tr>
       `);
     }
