@@ -109,7 +109,7 @@ def ProcessRegisterFactory(table_param, BaseAutoMap):
             # TODO: filter by column,value
             # TODO: validate if the table is in the process tables array
             table_name = sanitize_str(table_param, 256)
-            register_model = eval("this.Base.classes." + table_name)
+            register_model = eval("Base.classes." + table_name)
             # perform query
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
