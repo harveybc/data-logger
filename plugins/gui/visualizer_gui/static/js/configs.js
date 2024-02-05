@@ -57,7 +57,7 @@ export class Configs {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/gymfx_configs_list_', { responseType: 'text', transformResponse: [] })
+    return axios_instance.get('/configs/gymfx_configs_list_', { responseType: 'text', transformResponse: [] })
   }
 
   

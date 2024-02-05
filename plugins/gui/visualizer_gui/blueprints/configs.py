@@ -30,7 +30,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     #@login_required
     def gymfx_configs_list():
         """returns the configs list as a text, from the core plugin"""
-        configs_list = current_app.config['FE'].ep_input.get_configs()
+        configs_list = core_ep.ConfigsController.read_all(Base)
         return configs_list
 
     @bp.route("/views/configs")
