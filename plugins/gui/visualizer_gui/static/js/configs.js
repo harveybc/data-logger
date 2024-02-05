@@ -89,8 +89,8 @@ export class Configs {
         <td>${data_[i].paused}</td>
         <td>${data_[i].status}</td>
         <td>
-          <a href="/configs/view/${data_[i].id}"><i class="fas fa-eye"></i></a>
-          <a href="/configs/update/${data_[i].id}"><i class="fas fa-pen"></i></a>
+          <a href="/configs/view/${data_[i].id}"><i class="fas fa-eye"></i></a>&nbsp
+          <a href="/configs/update/${data_[i].id}"><i class="fas fa-pen"></i></a>&nbsp
           <a href="/configs/delete/${data_[i].id}"><i class="fas fa-trash"></i></a>
         
         </td>
