@@ -26,34 +26,14 @@ from ..models.authorization import Authorization
 from ..models.process_table import ProcessTable
 from ..models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
-from ..controllers.common import as_dict, is_num
+from .common import as_dict, is_num
 from functools import wraps
 from flask import (current_app)
 from flask import request
 
-def authorization_required(func):
-    """ This decoration indicates that the decorated function should verify if the current user is authorized for the current request.
-
-        Args:
-        func (function): The function to be decorated
-
-        Returns:
-        res (dict): func if the user is authorized, login_manager.unauthorized() 
-    """
-    @wraps(func)
-    @login_required
-    def decorated_view(*args, **kwargs):
-        if is_authorized(*args, **kwargs):
-            return func(*args, **kwargs)
-        else:
-            return current_app.login_manager.unauthorized()
-    return decorated_view
-
-from ..controllers.log import log_required
-
-@authorization_required
-@log_required
-def create(body):
+#@authorization_required
+#@log_required
+def create(body, Base):
     """ Create a register in db based on a json from a request's body parameter.
 
         Args:
@@ -63,7 +43,8 @@ def create(body):
         res (dict): the newly created register.
     """
     # instantiate user with the body dict as kwargs
-    new = Authorization(**body)
+    ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
+    new = ConfigsModel(**body)
     # create new flask-sqlalchemy session
     db.session.add(new)
     try:
@@ -77,7 +58,7 @@ def create(body):
         return error
     # test if the new user was created 
     try:
-        res = Authorization.query.filter_by(id=new_id).one()
+        res = ConfigsModel.query.filter_by(id=new_id).one()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         print("Error: ", error)
@@ -85,8 +66,8 @@ def create(body):
     # return register as dict
     return as_dict(res)
 
-@authorization_required
-def read(authorization_id):
+#@authorization_required
+def read(authorization_id, Base):
     """ Performs a query log register.
 
         Args:
@@ -95,17 +76,18 @@ def read(authorization_id):
         Returns:
         res (dict): the requested  register.
     """
+    ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
     try:
-        res = as_dict(Authorization.query.filter_by(id=authorization_id).one())
+        res = as_dict(ConfigsModel.read(id=authorization_id))
     except SQLAlchemyError as e:
         error = str(e)
         print("Error : " , error)
         return error 
     return res
 
-@authorization_required
-@log_required
-def update(authorization_id, body):
+#@authorization_required
+#@log_required
+def update(authorization_id, body, Base):
     """ Update a register in db based on a json from a request's body parameter.
 
         Args:
@@ -116,8 +98,9 @@ def update(authorization_id, body):
         res (dict): the updated register
     """
      # query the existing register
+    ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
     try:
-        process_model = Authorization.query.filter_by(id=authorization_id).one()
+        process_model = ConfigsModel.read(id=authorization_id)
         for property, value in body.items():
             setattr(process_model, property, value)
     except SQLAlchemyError as e:
@@ -137,7 +120,7 @@ def update(authorization_id, body):
         res = { 'error_b' : error}
     # test if the model was updated 
     try:
-        res = as_dict(Authorization.query.filter_by(id=int(authorization_id)).one())
+        res = as_dict(ConfigsModel.read(id=int(authorization_id)))
         #db.session.expunge_all()
         #db.session.close()
     except SQLAlchemyError as e:
@@ -146,9 +129,9 @@ def update(authorization_id, body):
         res = { 'error_c' : error}
     return res
 
-@authorization_required
-@log_required
-def delete(authorization_id):
+#@authorization_required
+#@log_required
+def delete(authorization_id, Base):
     """ Delete a register in db based on the id field of the authorizarions model, obtained from a request's authorization_id url parameter.
 
         Args:
@@ -157,8 +140,9 @@ def delete(authorization_id):
         Returns:
         res (int): the deleted register id field
     """
+    ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
     try:
-        res = Authorization.query.filter_by(id=authorization_id).one()
+        res = ConfigsModel.getmodel(id=authorization_id).one()
     except SQLAlchemyError as e:
         error = str(e)
         print("Error : " , error)
@@ -173,15 +157,16 @@ def delete(authorization_id):
         return error
     return { "id" : res.id }
 
-@authorization_required
-def read_all():
+#@authorization_required
+def read_all(Base):
     """ Query all registers of the logs table.
 
         Returns:
         res (dict): the requested list.
     """ 
+    ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
     try:
-        res = Authorization.query.all()
+        res = ConfigsModel.read_all()
     except SQLAlchemyError as e:
         error = str(e)
         print("Error : " , error)
@@ -191,105 +176,3 @@ def read_all():
     for r in res:
         res2.append(as_dict(r))
     return res2
-
-def is_authorized(*args, **kwargs):
-    """ Verify if a request is authorized for the current user.
-        
-        Args:
-        process_id (int): the id of the process for authorization
-
-        Returns:
-        res (dict): true if the user is authorized for the request 
-    """ 
-    method = request.method
-    route = request.path
-    get_params = request.args
-    body_params = request.json
-    # find process_id from args
-    # if args[0] is None(read_all controller), process_id = request.args.get("process_id")
-    print("args" , args)
-    print("kwargs" , kwargs)
-    process_id = None
-    if len(kwargs) > 0:
-        if "process_id" in kwargs:
-            process_id = kwargs["process_id"]
-        # if args[0] is a dict (update controller), if table is in args[0], process_id = args[0]['table']['process_id'], else process_id =  args[0]['register']['process_id']
-        elif "body" in kwargs:
-            if "table" in kwargs["body"]:
-                if isinstance(kwargs["body"]["table"], dict):  
-                    process_id = kwargs["body"]['table']['process_id']
-                else:
-                    table = kwargs["body"]['table']
-            elif "register" in kwargs["body"]:
-                process_id =  kwargs["body"]['register']['process_id']
-            elif "process_id" in kwargs["body"]:
-                process_id =  kwargs["body"]["process_id"]
-                if "user_id" in kwargs["body"]:
-                    user_id = kwargs["body"]["user_id"]
-            else:
-                process_id = None
-        else:
-            process_id = None
-    else:
-        process_id = None
-    # split the process_id from the end of the route 
-    if process_id is not None:
-        # TODO: remove only the last one, currently removes any /<process_id> from the route
-        route = route.replace('/'+str(process_id), '')
-    # set tables if the get_params or the body_params contain a "table" key
-    print("process_id = ", process_id)
-    print("route = ", route)
-    if route == "/logs": 
-        table = "log"
-    elif route == "/authorizations": 
-        table = "authorization"
-    elif route == "/users": 
-        table = "user"
-    elif body_params is not None:
-        if "table" in body_params:
-            if isinstance(body_params['table'], str):
-                table = body_params['table']
-            else:
-                table = body_params['table']['name']
-        elif "table" in get_params:
-            table = get_params['table']
-        else: 
-            table = None
-    else:
-        table = None
-    # perform a query to the authorizations table
-    if table is None:
-        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = None ).order_by(Authorization.priority.asc()).all()
-    else:
-        rules = Authorization.query.filter_by(user_id = current_user.id, process_id = process_id, table = table).order_by(Authorization.priority.asc()).all()
-    # grants permissions to admin
-    if current_user.admin:
-        auth = True
-    else:
-        # set the auth default value to false
-        auth = False
-        # if there is no table set, verify if process_crud is true
-        if table is None:
-            for r in rules:
-                # process_crud permission
-                if r.process_crud: auth = True    
-        else:
-            for r in rules:
-                # table_crud permission
-                if r.table_crud: auth = True
-            # if table_crud was false, check other authorization fields
-            if auth == False:
-                # check each of the authorization fields that are True and set auth to True only if all conditions are met
-                for r in rules:
-                    # create permission
-                    if method == 'POST' and process_id is None and r.create: auth = True
-                    # read permission
-                    if method == 'GET' and process_id is not None and r.read: auth = True
-                    # read_all permission
-                    if method == 'GET' and process_id is None and r.read_all: auth = True
-                    # update permission
-                    if method == 'PUT' and process_id is not None and r.update: auth = True
-                    # delete permission
-                    if method == 'DEL' and process_id is not None and r.delete: auth = True
-    return auth
-

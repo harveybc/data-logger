@@ -15,9 +15,9 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 from app.util import sanitize_str, reflect_prepare
 
-def ProcessRegisterFactory(table_param):
+def ProcessRegisterFactory(table_param, Base):
     # Process register model factory
-    class NewModel(Base):    
+    class NewModel():    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
         table_name = sanitize_str(table_param, 256)
         __tablename__ = table_name
