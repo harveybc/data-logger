@@ -91,7 +91,7 @@ export class Configs {
         <td>
           <a href="/configs/view/${data_[i].id}"><i class="fas fa-eye"></i></a>
           <a href="/configs/update/${data_[i].id}"><i class="fas fa-pen"></i></a>
-          <a href="/configs/delete/${data_[i].id}"><i class="fas fa-bin"></i></a>
+          <a href="/configs/delete/${data_[i].id}"><i class="fas fa-trash"></i></a>
         
         </td>
       </tr>
