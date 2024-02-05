@@ -26,7 +26,7 @@ export class Configs {
     this.gymfx_configs_list_().then((response) => {
       var configs_list = JSON.parse(response.data);
       console.log("configs_list = " + configs_list);
-      that.configs_list_update(0, 20, process_list);
+      that.configs_list_update(0, 20,configs_list);
     })
 
     /* END LINE CHART */
@@ -57,7 +57,7 @@ export class Configs {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/gymfx_process_list_', { responseType: 'text', transformResponse: [] })
+    return axios_instance.get('/gymfx_configs_list_', { responseType: 'text', transformResponse: [] })
   }
 
   
@@ -66,7 +66,7 @@ export class Configs {
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
-  process_list_update(start, num_rows, data_) {
+  configs_list_update(start, num_rows, data_) {
     var prev_num_closes = 0;
     var process_list = "";
     var row_count = 0;

@@ -21,19 +21,26 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/configs")
     #@login_required
     def configs_index():
-        """Show the processes index."""
+        """Show the configs index."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
         return render_template("/configs/index.html", p_config=p_config_gui)
     
-    @bp.route("/views/process")
+    @bp.route("/configs/gymfx_configs_list_")
+    #@login_required
+    def gymfx_configs_list():
+        """returns the configs list as a text, from the core plugin"""
+        configs_list = current_app.config['FE'].ep_input.get_configs()
+        return configs_list
+
+    @bp.route("/views/configs")
     #@login_required
     def process_index():
         """Show the users index."""
         user_list = current_app.config['FE'].ep_input.get_users()
         return render_template("/plugin_templates/user/index.html", user_list = user_list)
 
-    @bp.route("/views/process/<username>")
+    @bp.route("/views/configs/<username>")
     @login_required
     def process_detail(username):
         """Show the user detail view, if it is the current user, shows a change password button."""
