@@ -174,8 +174,4 @@ class ConfigsController():
             error = str(e)
             print("Error : " , error)
             return error
-        # convert to list of dicts and empty pass
-        res2 =[]
-        for r in res:
-            res2.append(as_dict(r))
-        return res2
+        return res
