@@ -10,7 +10,7 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 from .models.process_table import ProcessTable
-from .models.configs import Configs
+
 
 #from .models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
@@ -20,8 +20,9 @@ from copy import deepcopy
 from app.util import sanitize_str
 from sqlalchemy import func
 import warnings
+# import controllers
+from .controllers.configs import ConfigsController
 
-Base = automap_base()
 
 import os
 
@@ -46,7 +47,7 @@ class BasicAuthCore():
         self.Log = Log 
         self.Process = Process
         self.ProcessTable = ProcessTable
-        self.Configs = Configs
+        self.ConfigsController = ConfigsController
         # seed initial user 
 
     def seed_init_data(self, app, db):
@@ -98,7 +99,7 @@ class BasicAuthCore():
             else:
                 return -1
 
-    def create_table(self, app, db, table):
+    def create_table(self, app, db, table, Base):
         """ Create a table if another with the same name does not exist.
             Args:
             app (Flask): the current flask app instance.
