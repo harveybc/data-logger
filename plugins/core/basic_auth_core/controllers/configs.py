@@ -168,7 +168,8 @@ class ConfigsController():
         """ 
         ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
         try:
-            res = ConfigsModel.read_all()
+            # Instance (Process) 2 is gym_fx_app
+            res = ConfigsModel.read_all(2, "gym_fx_config")
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
