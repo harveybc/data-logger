@@ -15,7 +15,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 from app.util import sanitize_str, reflect_prepare
 
-def ProcessRegisterFactory(table_param, Base):
+def ProcessRegisterFactory(table_param, BaseAutoMap):
+    
     # Process register model factory
     class NewModel():    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
@@ -23,6 +24,8 @@ def ProcessRegisterFactory(table_param, Base):
         __tablename__ = table_name
         __table_args__ = {'extend_existing': True} 
         id = Column(Integer, primary_key=True)
+        Base = BaseAutoMap
+        
         
         def __init__(self, **kwargs):
             # extract kwargs into class attributes
@@ -106,7 +109,7 @@ def ProcessRegisterFactory(table_param, Base):
             # TODO: filter by column,value
             # TODO: validate if the table is in the process tables array
             table_name = sanitize_str(table_param, 256)
-            register_model = eval("Base.classes." + table_name)
+            register_model = eval("this.Base.classes." + table_name)
             # perform query
             res=db.session.query(register_model).all()
             return [as_dict(c) for c in res]
