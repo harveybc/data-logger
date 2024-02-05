@@ -21,11 +21,12 @@ export class Configs {
   val_plot_num_points = window.val_plot_num_points
 
   constructor() {
+    that = this
     // get gymfx_process_list data from the server
-    this.gymfx_process_list_().then((response) => {
-      var process_list = JSON.parse(response.data);
-      console.log("process_list = " + process_list);
-      that.process_list_update(0, 8, process_list);
+    this.gymfx_configs_list_().then((response) => {
+      var configs_list = JSON.parse(response.data);
+      console.log("configs_list = " + configs_list);
+      that.configs_list_update(0, 20, process_list);
     })
 
     /* END LINE CHART */
@@ -52,7 +53,7 @@ export class Configs {
     return axios_instance;
   }
 
-  gymfx_process_list_() {
+  gymfx_configs_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
