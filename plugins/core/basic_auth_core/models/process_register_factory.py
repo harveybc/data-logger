@@ -94,7 +94,7 @@ def ProcessRegisterFactory(table_param, BaseAutoMap):
             return res
         
         @classmethod
-        def read_all(cls, process_id, table_param):
+        def read_all(cls, process_id, table_param, BaseParam):
             """ Query all registers of the process table register.
                 
                 Args:
@@ -108,6 +108,7 @@ def ProcessRegisterFactory(table_param, BaseAutoMap):
             # generate list of registers
             # TODO: filter by column,value
             # TODO: validate if the table is in the process tables array
+            Base = BaseParam
             table_name = sanitize_str(table_param, 256)
             register_model = eval("Base.classes." + table_name)
             # perform query

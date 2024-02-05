@@ -169,7 +169,7 @@ class ConfigsController():
         ConfigsModel = ProcessRegisterFactory("gym_fx_config", Base)
         try:
             # Instance (Process) 2 is gym_fx_app
-            res = ConfigsModel.read_all(2, "gym_fx_config")
+            res = ConfigsModel.read_all(2, "gym_fx_config", Base)
         except SQLAlchemyError as e:
             error = str(e)
             print("Error : " , error)
