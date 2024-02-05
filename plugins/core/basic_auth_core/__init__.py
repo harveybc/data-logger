@@ -10,6 +10,8 @@ from .models.authorization import Authorization
 from .models.log import Log
 from .models.process import Process
 from .models.process_table import ProcessTable
+from .models.configs import Configs
+
 #from .models.process_register_factory import ProcessRegisterFactory
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import SQLAlchemyError
@@ -44,6 +46,7 @@ class BasicAuthCore():
         self.Log = Log 
         self.Process = Process
         self.ProcessTable = ProcessTable
+        self.Configs = Configs
         # seed initial user 
 
     def seed_init_data(self, app, db):
