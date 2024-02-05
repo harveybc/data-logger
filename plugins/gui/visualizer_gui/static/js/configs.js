@@ -73,19 +73,19 @@ export class Configs {
     for (let i = start; i < data_.length; i++) {
       var active_str = ""
       if (data_[i].active) {
-        active_str = '<span class="badge badge-danger">Stopped</span>'
+        active_str = '<span class="badge badge-success">Active</span>'
       }
       else{
-        active_str = '<span class="badge badge-success">Active</span>'
+        active_str = '<span class="badge badge-danger">Stopped</span>'
       }
 
       process_list += (`
       <tr>
         <!-- id, max, active -->
         <td>${data_[i].id}</td>
-        <td>${data_[i].max}</td>
-        <td>${active_str}</td>
         
+        <td>${active_str}</td>
+        <td>${data_[i].initial_capital}</td>
       </tr>
       `);
     }
