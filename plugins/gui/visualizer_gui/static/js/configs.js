@@ -21,7 +21,7 @@ export class Configs {
   val_plot_num_points = window.val_plot_num_points
 
   constructor() {
-    that = this
+    var that = this
     // get gymfx_process_list data from the server
     this.gymfx_configs_list_().then((response) => {
       var configs_list = JSON.parse(response.data);
