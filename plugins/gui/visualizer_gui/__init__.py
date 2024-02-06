@@ -26,8 +26,8 @@ class VisualizerGui():
     
     # register blueprints for gui    
     def register_blueprints(self, app, core_ep, store_ep, db, Base):
-        """ create the blueprints with all routes of the gui """
-        for module_name in ('base', 'dashboard','user', 'process', 'util', 'gym-fx', 'configs'):
+        """ create the blueprints with all routes of the gui """ 
+        for module_name in ('base', 'dashboard','user', 'process', 'util', 'gym-fx', 'process_tables'):
             module = import_module('plugins.gui.visualizer_gui.blueprints.{}'.format(module_name))
             bp = module.new_bp(self.template_path(), core_ep, store_ep, db, Base)
             app.register_blueprint(bp)

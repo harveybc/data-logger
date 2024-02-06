@@ -17,13 +17,19 @@ from app.app import load_plugin_config
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
     # construct the data_logger blueprint using the plugin folder as template folder
-    bp = Blueprint("configs_bp", __name__, template_folder=plugin_folder+"/templates")
+    bp = Blueprint("process_tables_bp", __name__, template_folder=plugin_folder+"/templates")
+
+
+    #TODO: GENERATE CRUD ROUTES FOR ALL PROCESS TABLES
     @bp.route("/configs")
     #@login_required
+    #TODO: USE UNIQUE FUNCTION NAMES, MAYBE ARRAY OF FUNCTIONS
     def configs_index():
         """Show the configs index."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
+
+        #TODO: USING THE GUI CONFIG, GENERATE PARAMETERS FOR A JINJA TEMPLATE TO RENDER THE INDEX
         return render_template("/configs/index.html", p_config=p_config_gui)
     
     @bp.route("/configs/gymfx_configs_list_")
