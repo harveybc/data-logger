@@ -31,46 +31,32 @@
               </p>
             </a>
           </li>
-           <!-- TODO: Generar con p_sto para cada proceso, un menú con submenús para sus tablas, apuntando al index de cada una-->
-          <li class="nav-item">
-            <a href="/dashboard/configs" class="nav-link" id="menu-configs">
-              <i class="nav-icon fas fa-network-wired"></i>
-              <p>
-                Processes
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/dashboard/plots" class="nav-link" id="menu-plots">
-              <i class="nav-icon fas fa-chart-area"></i>
-              <p>
-                Plots
-              </p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview"  id="menu-stats">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Stats
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/dashboard/training" class="nav-link" id="menu-training">
-                  <i class="far fa-clock nav-icon"></i>
-                  <p>Training</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dashboard/validation" class="nav-link" id="menu-validation">
-                  <i class="far fa-star nav-icon"></i>
-                  <p>Validation</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          
+          <!-- TODO: Generar con p_sto para cada proceso, un menú con submenús para sus tablas, apuntando al index de cada una-->
+          {% for process in p_sto.store_plugin_config.processes %}
+            <li class="nav-item has-treeview"  id="menu-stats">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  {{ process.name }}
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+              {% for table in process.tables %}
+                  <li class="nav-item">
+                    <a href="/{{ process.name }}/{{ table.name }}/view_index " class="nav-link" id="menu-training">
+                      <i class="far fa-clock nav-icon"></i>
+                      <p>{{ table.name }}</p>
+                    </a>
+                  </li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+                             
+
+          
           <li class="nav-item has-treeview" id="menu-admin">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user-tie"></i>
