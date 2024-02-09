@@ -113,12 +113,21 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_0_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_1_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['users']['users_list']['col_2_title'] }}</th>
-                      <th>Edit</th>
-                      <th>View</th>
-                      <th>Delete</th>
+                      <th>id</th>
+                      <th>user_id</th>
+                      <th>config_id</th>
+                      <th>initial_capital</th>
+                      <th>save_optimum</th>
+                      <th>overwrite_optimum</th>
+                      <th>preprocessor_params</th>
+                      <th>feature_eng_params</th>
+                      <th>active</th>
+                      <th>paused</th>
+                      <th>starting_model</th>
+                      <th>training_dataset</th>
+                      <th>validation_dataset</th>
+                      <th>status</th>
+                      <!-- TODO: Botones de edit, view y delete -->
                       <!-- TODO: Paginación -->
                     </tr>
                   </thead>
@@ -131,7 +140,7 @@ input[type="radio"] {
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New User</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New Authorization</a>
             </div>
             <!-- /.card-footer -->
           </div>
@@ -151,10 +160,8 @@ input[type="radio"] {
 {% block javascripts %}
 
 <script type="module">
-
-  import "/static/js/buffer-6.0.3.min.js"
-  import { Users } from "/static/js/users.js"
-  var users = new Users();
+  import { Configs } from "/static/js/configs.js"
+  var dashboard = new Dashboard();
 </script>
 
 <script>
