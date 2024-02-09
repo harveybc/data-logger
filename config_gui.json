@@ -52,7 +52,77 @@
             "process_list": {
                 "title": "List of Permissions per User"
             }
+        },
+        "log": {
+            "title": "Log",
+            "log_list": {
+                "title": "List of Log Entries",
+                "col_0_title": "ID",
+                "col_1_title": "Date",
+                "col_2_title": "User",
+                "col_3_title": "Event"
+            }
+        },
+        "gym_fx_config": {
+            "title": "GymFX",
+            "index": {
+                "title": "List of GymFX Environments",
+                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ]
+            },
+            "create": {
+                "title": "Create GymFX Environment",
+                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ]
+            },
+            "read": {
+                "title": "GymFX Environment",
+                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ]
+            },
+            "update": {
+                "title": "Update GymFX Environment",
+                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ]
+            },
+            "delete": {
+                "title": "Delete GymFX Environment",
+                "submit": "Please Confirm Delete"
+            }
+        },
+        "gym_fx_data": {
+            "title": "GymFX Data",
+            "index": {
+                "title": "List of GymFX Data",
+                "columns_visible": ["id", "gymfx_id", "date", "balance", "reward", "status" ]
+            },
+            "create": {
+                "title": "Create GymFX Data",
+                "columns_visible": ["id", "gymfx_id", "date", "balance", "reward", "status" ]
+            },
+            "read": {
+                "title": "GymFX Data",
+                "columns_visible": ["id", "gymfx_id", "date", "balance", "reward", "status" ]
+            },
+            "update": {
+                "title": "Update GymFX Data",
+                "columns_visible": ["id", "gymfx_id", "date", "balance", "reward", "status" ]
+            },
+            "delete": {
+                "title": "Delete GymFX Data",
+                "submit": "Please Confirm Delete"
+            }
+        },
+        "gym_fx_validation_plot": {
+            "title": "GymFX Validation Plot",
+            "plot": {
+                "title": "Validation Plot",
+                "plot_height": "280px",
+                "overview_height": "100px",
+                "max_points": "35",
+                "use_latest": true
+            }
         }
+
+
+
+
     }
 }
   

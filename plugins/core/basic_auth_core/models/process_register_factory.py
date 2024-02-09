@@ -15,14 +15,17 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..controllers.common import as_dict, is_num
 from app.util import sanitize_str, reflect_prepare
 
-def ProcessRegisterFactory(table_param):
+def ProcessRegisterFactory(table_param, BaseAutoMap):
+    
     # Process register model factory
-    class NewModel(Base):    
+    class NewModel():    
         """ Map the columns to a list of register constructor arguments  adn create a statement to be executed by the controller"""
         table_name = sanitize_str(table_param, 256)
         __tablename__ = table_name
         __table_args__ = {'extend_existing': True} 
         id = Column(Integer, primary_key=True)
+        Base = BaseAutoMap
+        
         
         def __init__(self, **kwargs):
             # extract kwargs into class attributes
@@ -73,7 +76,7 @@ def ProcessRegisterFactory(table_param):
             return res
         
         @classmethod
-        def read(cls, process_id, table_param, reg_id):
+        def read(cls, reg_id):
             """ Performs a query to a process table register.
 
                 Args:
@@ -91,7 +94,7 @@ def ProcessRegisterFactory(table_param):
             return res
         
         @classmethod
-        def read_all(cls, process_id, table_param):
+        def read_all(cls, process_id, table_param, BaseParam):
             """ Query all registers of the process table register.
                 
                 Args:
@@ -105,6 +108,7 @@ def ProcessRegisterFactory(table_param):
             # generate list of registers
             # TODO: filter by column,value
             # TODO: validate if the table is in the process tables array
+            Base = BaseParam
             table_name = sanitize_str(table_param, 256)
             register_model = eval("Base.classes." + table_name)
             # perform query
@@ -122,7 +126,7 @@ def ProcessRegisterFactory(table_param):
                 Returns:
                 register_model (model): the updated model
             """
-            table_name = sanitize_str(register['table'], 256)
+            table_name = sanitize_str(table_param, 256)
             Base.prepare(db.engine, reflect=True)
             register_model = eval("Base.classes." + table_name)
             # perform query
@@ -142,7 +146,7 @@ def ProcessRegisterFactory(table_param):
             return as_dict(model)
 
         @classmethod
-        def delete(cls, process_id, table_param, reg_id):
+        def delete(cls, reg_id):
             """ Delete a register in db based on the id field of the process model, obtained from a request's process_id url parameter.
 
                 Args:
