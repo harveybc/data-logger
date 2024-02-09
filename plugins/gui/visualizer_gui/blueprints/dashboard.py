@@ -60,8 +60,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         #    print("status[",i,"] = ", status[i])
         #return render_template("/dashboard/index.html", p_config = current_app.config['P_CONFIG'], box = box, v_original = v_original, v_predicted = v_predicted, p=p, v=v, status=status)
         p_config = load_plugin_config()
-        p_config_gui = p_config["gui"]
-        return render_template("/dashboard/index.html", p_config = p_config_gui)
+        return render_template("/dashboard/index.html", p_config = p_config["gui"], p_config_store = p_config["store"])
 
     @bp.route("/dashboard/plots")
     #@login_required
