@@ -67,8 +67,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def plots_index():
         """Show the plot list."""
         p_config = load_plugin_config()
-        p_config_gui = p_config["gui"]
-        return render_template("/dashboard/plots.html", p_config = p_config_gui)
+        return render_template("/dashboard/plots.html", p_config = p_config["gui"], p_config_store = p_config["store"])
     
     @bp.route("/dashboard/training")
     #@login_required

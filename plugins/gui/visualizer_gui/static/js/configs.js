@@ -102,14 +102,13 @@ export class Configs {
       .innerHTML += process_list;
   }
 
-
-
   // define starting field values
   field_start_values() {
     return {
       count: 0
     }
   }
+  
   get_value(a, b, c) {
     return 0
   }
