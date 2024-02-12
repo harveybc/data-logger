@@ -7,17 +7,16 @@
             "box_1_title": "Training Score",
             "box_2_title": "Best Stored",
             "box_3_title": "Validation Score",
-            "box_0_function": "gym_fx.best_online",
-            "box_1_function": "gym_fx.max_training_score",
-            "box_2_function": "gym_fx.best_offline",
-            "box_3_function": "gym_fx.max_validation_score",
+            "box_0_route": "best_online_",
+            "box_1_route": "max_training_score_",
+            "box_2_route": "best_offline_",
+            "box_3_route": "max_validation_score_",
             "rt_plot": {
                 "title": "Online Training Score",
                 "height": "380px",
                 "interval": 2,
                 "num_points" : 10,
-                "table" : "gym_fx_data",
-                "column" : "score"
+                "data_route" : "best_online_"
             },
             "val_plot": {
                 "title": "Validation Score",
@@ -25,8 +24,8 @@
                 "overview_height": "100px",
                 "max_points": "35",
                 "use_latest": true,
-                "table" : "gym_fx_validation_plot",
-                "column" : "score_v"
+                "data_route" : "gym_fx_validation_plot"
+                
             },
             "val_list": {
                 "title": "Validation Trades",
@@ -34,14 +33,16 @@
                 "col_1_title": "Balance",
                 "col_2_title": "Reward",
                 "col_3_title": "Date",
-                "table" : "gym_fx_validation_plot",
+                "data_route" : "gym_fx_validation_list",
                 "columns" : ["id","balance","reward","date"]
             },
             "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
                 "col_1_title": "Score",
-                "col_2_title": "Status"
+                "col_2_title": "Status",
+                "data_route" : "gym_fx_process_list",
+                "columns" : ["id","balance","reward","date"]
             }
         },
         "users": {
@@ -50,7 +51,14 @@
                 "title": "List of Users",
                 "col_0_title": "ID",
                 "col_1_title": "Username",
-                "col_2_title": "Admin"
+                "col_2_title": "Admin",
+                "data_route": "gym_fx_validation_plot",
+                "columns": [
+                    "id",
+                    "balance",
+                    "reward",
+                    "date"
+                ]
             }
         },
         "authorization": {

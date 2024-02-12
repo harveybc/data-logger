@@ -19,16 +19,13 @@ export class Dashboard {
   data_ = [];
   totalPoints = 10;
   val_plot_num_points = window.val_plot_num_points
+  p_conf = window.p_config
+
 
   constructor() {
-        this.gymfx_online_plot_().then((response) => {
-      console.log("before:" + response.data);
-      this.xy_points_ = JSON.parse(response.data);
-      console.log("after:" + JSON.stringify(this.xy_points_));
-    }, (error) => {
-      console.log(error);
-    });
-    // Interactive plot
+    this.update_scoreboard();
+    
+    // Draw interactive plot
     this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
       grid: {
         borderColor: '#f3f3f3',
@@ -204,6 +201,34 @@ export class Dashboard {
     //this.process_list_update();
   }
 
+  // read values from the server
+  update_scoreboard() {
+    this.gymfx_best_online_().then((response) => {
+      this.gymfx_best_online = response.data;
+      document.getElementById('box_0_value').innerHTML = this.gymfx_best_online;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_training_score_().then((response) => {
+      this.gymfx_max_training_score = response.data;
+      document.getElementById('box_1_value').innerHTML = this.gymfx_max_training_score;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_best_offline_().then((response) => {
+      this.gymfx_best_offline = response.data;
+      document.getElementById('box_2_value').innerHTML = this.gymfx_best_offline;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_validation_score_().then((response) => {
+      this.gymfx_max_validation_score = response.data;
+      document.getElementById('box_3_value').innerHTML = this.gymfx_max_validation_score;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
   // helper for returning the order status color areas for the validation plot
   order_status_areas(axes) {
     var markings = [];
@@ -268,14 +293,13 @@ export class Dashboard {
     return axios_instance;
   }
 
-  // TODO: cambiar el endpoint para usar NOMBRE DE TABLA y una función común a todas las process_tables
+  // TODO: cambiar el nombre a box 0
   // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   gymfx_best_online_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
-    // use the result of api request
-    // axios_instance.get('/gymfx_best_online_')
-    axios_instance.get('/gym_fx_data/')
+    // get the best config_id 
+     axios_instance.get('/'+ this.p_conf.gui.gui_plugin_config.dashboard.box_0_route)
       .then((response) => {
         //console.log(response.data);
         that.gymfx_best_online = response.data;
@@ -290,7 +314,7 @@ export class Dashboard {
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/gymfx_max_training_score_')
+    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_1_route)
       .then((response) => {
         that.gymfx_max_training_score = response.data;
         return response.data;
@@ -305,7 +329,7 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/gymfx_best_offline_')
+    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_2_route)
       .then((response) => {
         this.gymfx_best_offline = response.data;
         return response.data;
@@ -319,7 +343,7 @@ export class Dashboard {
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/gymfx_max_validation_score_')
+    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_3_route)
       .then((response) => {
         that.gymfx_max_validation_score = response.data;
         return response.data;
@@ -333,21 +357,28 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/gymfx_online_plot_', { responseType: 'text', transformResponse: [] })
+    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.rt_plot.data_route)
   }
 
   gymfx_validation_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/gymfx_validation_plot_', { responseType: 'text', transformResponse: [] })
+    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.val_plot.data_route)
+  }
+
+  gymfx_validation_list_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.val_list.data_route, params = { "columns": this.p_conf.gui.gui_plugin_config.dashboard.val_list.columns })
   }
 
   gymfx_process_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/gymfx_process_list_', { responseType: 'text', transformResponse: [] })
+    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.process_list.data_route, params = { "columns": this.p_conf.gui.gui_plugin_config.dashboard.val_list.columns })
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
@@ -466,6 +497,8 @@ export class Dashboard {
 
   // update the interactive plot
   update() {
+    // read values for the scoreboard and interactive plot
+    this.update_scoreboard();
     this.gymfx_online_plot_().then((response) => {
       this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
       console.log("update:" + JSON.stringify(this.xy_points_));
