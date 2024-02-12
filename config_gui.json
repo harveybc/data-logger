@@ -7,29 +7,35 @@
             "box_1_title": "Training Score",
             "box_2_title": "Best Stored",
             "box_3_title": "Validation Score",
-            "box_0_value": "gymfx_best_online",
-            "box_1_value": "gymfx_max_training_score",
-            "box_2_value": "gymfx_best_offline",
-            "box_3_value": "gymfx_max_validation_score",
+            "box_0_function": "gym_fx.best_online",
+            "box_1_function": "gym_fx.max_training_score",
+            "box_2_function": "gym_fx.best_offline",
+            "box_3_function": "gym_fx.max_validation_score",
             "rt_plot": {
                 "title": "Online Training Score",
                 "height": "380px",
                 "interval": 2,
-                "num_points" : 10
+                "num_points" : 10,
+                "table" : "gym_fx_data",
+                "column" : "score"
             },
             "val_plot": {
                 "title": "Validation Score",
                 "plot_height": "280px",
                 "overview_height": "100px",
                 "max_points": "35",
-                "use_latest": true
+                "use_latest": true,
+                "table" : "gym_fx_validation_plot",
+                "column" : "score_v"
             },
             "val_list": {
                 "title": "Validation Trades",
                 "col_0_title": "ID",
                 "col_1_title": "Balance",
                 "col_2_title": "Reward",
-                "col_3_title": "Date"
+                "col_3_title": "Date",
+                "table" : "gym_fx_validation_plot",
+                "columns" : ["id","balance","reward","date"]
             },
             "process_list": {
                 "title": "List of Processes",

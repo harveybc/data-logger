@@ -80,6 +80,7 @@ def ProcessBPFactory(process, table):
             return jsonify(res)
 
         # endpoint read_all
+            
         @bp.route("/"+process["name"]+"/"+table["name"]+"/read_all")
         def read_all():
             reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
@@ -91,6 +92,13 @@ def ProcessBPFactory(process, table):
         def read_range(start, end):
             reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
             res = reg_model.read_range(start, end)
+            return jsonify(res)            
+        
+        # endpoint read_last
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_last/<length>")
+        def read_last(length):
+            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
+            res = reg_model.read_last(start, end)
             return jsonify(res)            
         
         return bp

@@ -268,12 +268,14 @@ export class Dashboard {
     return axios_instance;
   }
 
+  // TODO: cambiar el endpoint para usar NOMBRE DE TABLA y una función común a todas las process_tables
   // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   gymfx_best_online_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/gymfx_best_online_')
+    // axios_instance.get('/gymfx_best_online_')
+    axios_instance.get('/gym_fx_data/')
       .then((response) => {
         //console.log(response.data);
         that.gymfx_best_online = response.data;
