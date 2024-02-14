@@ -301,7 +301,7 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // get the best config_id 
-     axios_instance.get('/'+ this.p_conf_gui.gui_plugin_config.dashboard.box_0_route)
+     axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config'].dashboard.box_0_route)
       .then((response) => {
         //console.log(response.data);
         that.gymfx_best_online = response.data;
