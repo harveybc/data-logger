@@ -38,7 +38,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         box= []
         status = []
         p_config = load_plugin_config()
-        return render_template("/dashboard/index.html", p_config = p_config["gui"], p_config_store = p_config["store"])
+        return render_template("/dashboard/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"])
     
     # returns the config id for the best score from table gym_fx_data that has config.active == true
     @bp.route('/gymfx_best_online_')

@@ -19,9 +19,8 @@ export class Dashboard {
   data_ = [];
   totalPoints = 10;
   val_plot_num_points = window.val_plot_num_points
-  p_conf = window.p_config
-  p_conf_gui = window.p_config["gui"]
-  p_conf_store = window.p_config["store"]
+  p_conf_gui = window.p_config_gui
+  p_conf_store = window.p_config_store
 
 
 
