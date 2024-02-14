@@ -313,7 +313,9 @@ input[type="radio"] {
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script type="module">
-
+  var p_config_gui = {{ p_config_gui | tojson }};
+  var p_config_store = {{ p_config_store | tojson }};
+  
   import "/static/js/buffer-6.0.3.min.js"
 
   import { Dashboard } from "/static/js/dashboard.js"
