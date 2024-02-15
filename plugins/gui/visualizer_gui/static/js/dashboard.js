@@ -203,34 +203,6 @@ export class Dashboard {
     //this.process_list_update();
   }
 
-  // read values from the server
-  update_scoreboard() {
-    this.gymfx_best_online_().then((response) => {
-      this.gymfx_best_online = response.data;
-      document.getElementById('box_0_value').innerHTML = this.gymfx_best_online;
-    }, (error) => {
-      console.log(error);
-    });
-    this.gymfx_max_training_score_().then((response) => {
-      this.gymfx_max_training_score = response.data;
-      document.getElementById('box_1_value').innerHTML = this.gymfx_max_training_score;
-    }, (error) => {
-      console.log(error);
-    });
-    this.gymfx_best_offline_().then((response) => {
-      this.gymfx_best_offline = response.data;
-      document.getElementById('box_2_value').innerHTML = this.gymfx_best_offline;
-    }, (error) => {
-      console.log(error);
-    });
-    this.gymfx_max_validation_score_().then((response) => {
-      this.gymfx_max_validation_score = response.data;
-      document.getElementById('box_3_value').innerHTML = this.gymfx_max_validation_score;
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
   // helper for returning the order status color areas for the validation plot
   order_status_areas(axes) {
     var markings = [];
@@ -580,6 +552,33 @@ export class Dashboard {
       .innerHTML += process_list;
   }
 
+  // read values from the server
+  update_scoreboard() {
+    this.gymfx_best_online_().then((response) => {
+      this.gymfx_best_online = response.data;
+      document.getElementById('box_0_value').innerHTML = this.gymfx_best_online;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_training_score_().then((response) => {
+      this.gymfx_max_training_score = response.data;
+      document.getElementById('box_1_value').innerHTML = this.gymfx_max_training_score;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_best_offline_().then((response) => {
+      this.gymfx_best_offline = response.data;
+      document.getElementById('box_2_value').innerHTML = this.gymfx_best_offline;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_validation_score_().then((response) => {
+      this.gymfx_max_validation_score = response.data;
+      document.getElementById('box_3_value').innerHTML = this.gymfx_max_validation_score;
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
 
   // define starting field values
