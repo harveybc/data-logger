@@ -43,7 +43,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     # returns the config id for the best score from table gym_fx_data that has config.active == true
     @bp.route('/gym_fx_best_online')
     @login_required
-    def gymfx_best_online():
+    def gym_fx_best_online():
         """ Returns the config id for the best score from table gym_fx_data that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
@@ -120,7 +120,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         
         # perform query, the column classs names are configured in config_store.json
         try:
-            best = int(gymfx_best_online())
+            best = int(gym_fx_best_online())
             print("best : " , best)
             points = db.session.query(Base.classes.gym_fx_data).filter(Base.classes.gym_fx_data.config_id == best ).order_by(desc(Base.classes.gym_fx_data.id)).limit(num_points).all()
             res = []
