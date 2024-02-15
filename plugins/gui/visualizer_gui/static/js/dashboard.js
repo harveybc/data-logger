@@ -279,7 +279,9 @@ export class Dashboard {
       .then((response) => {
         //console.log(response.data);
         that.gymfx_best_online = response.data;
+        console.log(that.gymfx_best_online);
         return response.data;
+        
       }, (error) => {
         console.log(error);
         return 0;
