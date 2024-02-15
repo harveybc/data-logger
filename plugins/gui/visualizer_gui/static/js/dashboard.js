@@ -272,6 +272,7 @@ export class Dashboard {
   gymfx_best_online_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // get the best config_id 
      axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
       .then((response) => {
