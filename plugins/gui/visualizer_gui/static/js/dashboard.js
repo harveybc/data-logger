@@ -289,7 +289,7 @@ export class Dashboard {
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_1_route)
+    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_1_route)
       .then((response) => {
         that.gymfx_max_training_score = response.data;
         return response.data;
@@ -304,7 +304,7 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_2_route)
+    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_2_route)
       .then((response) => {
         this.gymfx_best_offline = response.data;
         return response.data;
@@ -318,7 +318,7 @@ export class Dashboard {
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.box_3_route)
+    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_3_route)
       .then((response) => {
         that.gymfx_max_validation_score = response.data;
         return response.data;
@@ -332,28 +332,28 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.rt_plot.data_route)
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.rt_plot.data_route)
   }
 
   gymfx_validation_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.val_plot.data_route)
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_plot.data_route)
   }
 
   gymfx_validation_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.val_list.data_route, params = { "columns": this.p_conf.gui.gui_plugin_config.dashboard.val_list.columns })
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_list.data_route, params = { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns })
   }
 
   gymfx_process_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf.gui.gui_plugin_config.dashboard.process_list.data_route, params = { "columns": this.p_conf.gui.gui_plugin_config.dashboard.val_list.columns })
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.process_list.data_route, params = { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns })
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
