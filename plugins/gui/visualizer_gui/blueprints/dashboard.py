@@ -62,9 +62,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "config_id")
         return json.dumps(attr)
     
-    @bp.route("/gymfx_max_training_score_")
+    @bp.route("/gym_fx_max_training_score_")
     @login_required
-    def gymfx_max_training_score_():
+    def gym_fx_max_training_score_():
         """ Returns the best score from table gym_fx_data that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
@@ -78,9 +78,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "score")
         return json.dumps(attr)
 
-    @bp.route("/gymfx_best_offline_")
+    @bp.route("/gym_fx_best_offline_")
     @login_required
-    def gymfx_best_offline_():
+    def gym_fx_best_offline_():
         """ Returns the config id for the best score from table gym_fx_data that has config.active == false. """
         # table base class
         #Base.prepare(db.engine)
@@ -95,9 +95,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "config_id")
         return json.dumps(attr)
            
-    @bp.route("/gymfx_max_validation_score_")
+    @bp.route("/gym_fx_max_validation_score_")
     @login_required
-    def gymfx_max_validation_score_():
+    def gym_fx_max_validation_score_():
         """ Returns the best score_v from table gym_fx_data that has config.active == false. """
         # table base class
         #Base.prepare(db.engine)
@@ -111,9 +111,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         attr = getattr(res, "score")
         return json.dumps(attr)
     
-    @bp.route("/gymfx_online_plot_")
+    @bp.route("/gym_fx_online_plot_")
     @login_required
-    def gymfx_online_plot_():
+    def gym_fx_online_plot_():
         """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
         args = request.args
         num_points = args.get("num_points", default=100, type=int)
@@ -134,9 +134,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         return json.dumps(res)
     
-    @bp.route("/gymfx_validation_plot_")
+    @bp.route("/gym_fx_validation_plot_")
     @login_required
-    def gymfx_validation_plot_():
+    def gym_fx_validation_plot_():
         """ Returns a json with the initial capital and arrays for the columns order_status, tick_date, balance, equity,margin,reward from the gym_fx_data table for thebest prcess with config_id.active== True. """
         args = request.args
         num_points = args.get("num_points", default=1000, type=int)
@@ -153,9 +153,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         return json.dumps(res)
     
-    @bp.route('/gymfx_process_list_')
+    @bp.route('/gym_fx_process_list_')
     @login_required
-    def gymfx_process_list_():
+    def gym_fx_process_list_():
         """ TODO: Returns a list of processes in the gym_fx_data that has config.active == true. """
         # table base class
         #Base.prepare(db.engine)
