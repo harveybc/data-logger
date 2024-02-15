@@ -554,7 +554,7 @@ export class Dashboard {
 
   // read values from the server
   update_scoreboard() {
-    that=this;
+    var that=this;
     this.gymfx_best_online_().then((response) => {
       that.gymfx_best_online = response.data;
       document.getElementById('box_0_value').innerHTML = that.gymfx_best_online;
