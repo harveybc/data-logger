@@ -1,3 +1,5 @@
+
+{% set p_store = p_config_store %} 
 {% extends "layouts/base.html" %}
 <!-- uses Jinja (preload) and Vue (postload)-->
 
@@ -98,8 +100,8 @@ input[type="radio"] {
           <div class="small-box bg-info">
             <div class="inner">
               <!-- box[0] data -->
-              <h3>{{ p_config['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
-              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_0_value'] }}">00</h2>
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
+              <h2 id="box_0_value">{{ p_config_gui['gui_plugin_config']['dashboard']['box_0_value'] }}</h2>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -114,8 +116,8 @@ input[type="radio"] {
           <div class="small-box bg-success">
             <div class="inner">
               <!-- box[1] data -->
-              <h3>{{ p_config['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
-              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_1_value'] }}">00</h2>
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
+              <h2 id="box_1_value">{{ p_config_gui['gui_plugin_config']['dashboard']['box_1_value'] }}</h2>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -129,8 +131,8 @@ input[type="radio"] {
           <div class="small-box bg-warning">
             <div class="inner">
               <!-- box[2] data -->
-              <h3>{{ p_config['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
-              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }}">00</h2>
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
+              <h2 id="box_2_value">{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_value'] }}</h2>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -144,8 +146,8 @@ input[type="radio"] {
           <div class="small-box bg-danger">
             <div class="inner">
               <!-- box[3] data -->
-              <h3>{{ p_config['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
-              <h2 id="{{ p_config['gui_plugin_config']['dashboard']['box_3_value'] }}">00</h2>
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+              <h2 id="box_3_value">{{ p_config_gui['gui_plugin_config']['dashboard']['box_3_value'] }}</h2>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -164,7 +166,7 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
-                {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['title'] }}
+                {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['title'] }}
               </h3>
           
               <div class="card-tools">
@@ -176,7 +178,7 @@ input[type="radio"] {
               </div>
             </div>
             <div class="card-body">
-              <div id="interactive"  style="height: {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
             </div>
             <!-- /.card-body-->
           </div>
@@ -190,7 +192,7 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
-                {{ p_config['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: <b id="{{ p_config['gui_plugin_config']['dashboard']['box_2_value'] }}_plot">00</b> )
+                {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: <b id="{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_value'] }}_plot">00</b> )
               </h3>
               <div class="card-tools">
                 Real time
@@ -201,8 +203,8 @@ input[type="radio"] {
               </div>
             </div>
             <div class="card-body" >
-                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
-                <div id="overview"  class="demo-placeholder" style="height: {{ p_config['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
+                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+                <div id="overview"  class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
             </div>
             <!-- /.card-body-->
           </div>
@@ -216,7 +218,7 @@ input[type="radio"] {
           <!-- TABLE: VALIDATION OPERATIONS -->
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['val_list']['title'] }}</h3>
+              <h3 class="card-title">{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['title'] }}</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -233,10 +235,10 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['val_list']['col_0_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['val_list']['col_1_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['val_list']['col_2_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['val_list']['col_3_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_0_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_1_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_2_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_3_title'] }}</th>
                     </tr>
                   </thead>
                   <tbody id="val_list">
@@ -260,7 +262,7 @@ input[type="radio"] {
           <!-- TABLE: LATEST PROCESSES -->
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">{{ p_config['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
+              <h3 class="card-title">{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
         
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -277,9 +279,9 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
-                      <th>{{ p_config['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
                     </tr>
                   </thead>
                   <tbody  id="process_list">
@@ -301,7 +303,7 @@ input[type="radio"] {
         <!-- right col -->
       </div>
       <!-- /.row -->
-      <b>Input Plugin</b>:{{ p_config['input_plugin'] }}, <b>Output Plugin</b>:{{ p_config['output_plugin'] }}
+      <b>Store Plugin</b>:{{ p_config_store['store_plugin'] }}, <b>Gui Plugin</b>:{{ p_config_gui['gui_plugin'] }}
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -327,10 +329,10 @@ input[type="radio"] {
 
 <script>
   // Gets data from controller5
-  var interval = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+  var interval = {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
   var data = [];
-  var totalPoints = {{ p_config['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
-  var val_plot_num_points = {{ p_config['gui_plugin_config']['dashboard']['val_plot']['max_points'] }};
+  var totalPoints = {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['num_points'] }};
+  var val_plot_num_points = {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['max_points'] }};
   // when page finishes loading, sets the values to the ones from data
 
 

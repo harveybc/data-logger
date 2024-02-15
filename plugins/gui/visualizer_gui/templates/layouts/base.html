@@ -50,7 +50,7 @@
 <div class="wrapper" id="main_content">
 
     {% include 'includes/navigation.html' %}
-
+    {% set p_sto = p_store %} 
     {% include 'includes/sidebar.html' %}
 
     {% block content %}{% endblock content %}
@@ -64,6 +64,11 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<!-- Load gui and store plugin configuration as global JS variables  -->
+<script>
+    var p_config_gui = {{ p_config_gui | tojson }};
+    var p_config_store = {{ p_config_store | tojson }};
+</script>
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
 
