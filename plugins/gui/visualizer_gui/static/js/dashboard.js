@@ -274,16 +274,16 @@ export class Dashboard {
     let axios_instance = this.axios_auth_instance();
     var that = this;
     // get the best config_id 
-     return axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
-      .then((response) => {
-        that.gymfx_best_online = response.data;
-      }, (error) => {
-        that.gymfx_best_online = -1;
-        console.log(error);
-      });
-    }
-    
+    return axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
+    .then((response) => {
+      that.gymfx_best_online = response.data;
+    }, (error) => {
+      that.gymfx_best_online = -1;
+      console.log(error);
+    });
   }
+    
+
 
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
