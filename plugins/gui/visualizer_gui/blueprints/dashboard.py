@@ -42,7 +42,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     
     # returns the config id for the best score from table gym_fx_data that has config.active == true
     @bp.route('/gym_fx_best_online')
-    #@login_required
+    @login_required
     def gym_fx_best_online():
         """ Returns the config id for the best score from table gym_fx_data that has config.active == true. """
         # table base class
