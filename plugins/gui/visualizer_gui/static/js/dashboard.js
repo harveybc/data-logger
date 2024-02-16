@@ -5,10 +5,10 @@ export class Dashboard {
   process_list = [0, 1, 2, 3];
   process = 0;
   status = 'Halted';
-  gymfx_best_online = 1;
-  gymfx_max_training_score = 0.0;
-  gymfx_best_offline = 1;
-  gymfx_max_validation_score = 0.0;
+  gym_fx_best_online = 1;
+  gym_fx_max_training_score = 0.0;
+  gym_fx_best_offline = 1;
+  gym_fx_max_validation_score = 0.0;
   plot_min = 0.0;
   plot_max = 10000;
   v_plot_min = 0;
@@ -140,11 +140,11 @@ export class Dashboard {
 
     // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
-      var plot_data = JSON.parse(response.data);
-      console.log("plot_data = " + plot_data);
+      var plot_data = response.data;
+      // console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
-      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
+      // console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
@@ -170,8 +170,8 @@ export class Dashboard {
 
     // get gymfx_process_list data from the server
     this.gymfx_process_list_().then((response) => {
-      var process_list = JSON.parse(response.data);
-      console.log("process_list = " + process_list);
+      var process_list = response.data;
+      //console.log("process_list = " + process_list);
       that.process_list_update(0, 8, process_list);
     })
 
@@ -198,7 +198,7 @@ export class Dashboard {
       console.log("plotselected");
       plot.setSelection(ranges);
     });
-    console.log(plot.getData());
+    //console.log(plot.getData());
     //this.val_list_update();
     //this.process_list_update();
   }
@@ -276,9 +276,9 @@ export class Dashboard {
     // get the best config_id 
     return axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
     .then((response) => {
-      that.gymfx_best_online = response.data;
+      that.gym_fx_best_online = response.data;
     }, (error) => {
-      that.gymfx_best_online = -1;
+      that.gym_fx_best_online = -1;
       console.log(error);
     });
   }
@@ -288,14 +288,15 @@ export class Dashboard {
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the response of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_1_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
       .then((response) => {
-        that.gymfx_max_training_score = response.data;
+        that.gym_fx_max_training_score = response.data;
         return response.data;
       }, (error) => {
+        that.gym_fx_max_training_score = -1;
         console.log(error);
-        return 0;
       });
   }
 
@@ -303,28 +304,30 @@ export class Dashboard {
   gymfx_best_offline_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the result of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_2_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
       .then((response) => {
-        this.gymfx_best_offline = response.data;
+        that.gym_fx_best_offline = response.data;
         return response.data;
       }, (error) => {
+        that.gym_fx_best_offline = -1;
         console.log(error);
-        return 0;
       });
   }
 
   // call request that returns the best mse from table fe_validation_error that has config.active == false
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the response of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_3_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
       .then((response) => {
-        that.gymfx_max_validation_score = response.data;
+        that.gym_fx_max_validation_score = response.data;
         return response.data;
       }, (error) => {
+        that.gym_fx_max_validation_score = -1;
         console.log(error);
-        return 0;
       });
   }
 
@@ -346,14 +349,14 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_list.data_route, params = { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns })
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
   }
 
   gymfx_process_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.process_list.data_route, params = { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns })
+    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.process_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
@@ -379,7 +382,7 @@ export class Dashboard {
     }
     //if ((prev_min != min) || (prev_max != max)) {
     try {
-      console.log("update yaxis");
+      // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
       this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
@@ -475,8 +478,9 @@ export class Dashboard {
     // read values for the scoreboard and interactive plot
     this.update_scoreboard();
     this.gymfx_online_plot_().then((response) => {
-      this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
-      console.log("update:" + JSON.stringify(this.xy_points_));
+      //console.log("pre:" + JSON.stringify(response.data));
+      this.xy_points_ = this.transform_plot_data(response.data);
+      //console.log("update:" + JSON.stringify(this.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         this.interactive_plot.setData([this.xy_points_]);
@@ -557,25 +561,25 @@ export class Dashboard {
   update_scoreboard() {
     var that=this;
     this.gymfx_best_online_().then((response) => {
-      document.getElementById('box_0_value').innerHTML = that.gymfx_best_online;
+      document.getElementById('box_0_value').innerHTML = that.gym_fx_best_online;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_max_training_score_().then((response) => {
       this.gymfx_max_training_score = response.data;
-      document.getElementById('box_1_value').innerHTML = this.gymfx_max_training_score;
+      document.getElementById('box_1_value').innerHTML = this.gym_fx_max_training_score;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_best_offline_().then((response) => {
       this.gymfx_best_offline = response.data;
-      document.getElementById('box_2_value').innerHTML = this.gymfx_best_offline;
+      document.getElementById('box_2_value').innerHTML = this.gym_fx_best_offline;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_max_validation_score_().then((response) => {
       this.gymfx_max_validation_score = response.data;
-      document.getElementById('box_3_value').innerHTML = this.gymfx_max_validation_score;
+      document.getElementById('box_3_value').innerHTML = this.gym_fx_max_validation_score;
     }, (error) => {
       console.log(error);
     });

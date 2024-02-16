@@ -16,7 +16,7 @@
                 "height": "380px",
                 "interval": 2,
                 "num_points" : 10,
-                "data_route" : "best_online_"
+                "data_route" : "gym_fx_online_plot"
             },
             "val_plot": {
                 "title": "Validation Score",
@@ -33,7 +33,7 @@
                 "col_1_title": "Balance",
                 "col_2_title": "Reward",
                 "col_3_title": "Date",
-                "data_route" : "gym_fx_validation_list",
+                "data_route" : "gym_fx_validation_plot",
                 "columns" : ["id","balance","reward","date"]
             },
             "process_list": {
