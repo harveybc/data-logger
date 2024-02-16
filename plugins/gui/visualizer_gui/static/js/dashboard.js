@@ -289,13 +289,13 @@ export class Dashboard {
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_1_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
       .then((response) => {
         that.gymfx_max_training_score = response.data;
         return response.data;
       }, (error) => {
+        that.gymfx_best_online = -1;
         console.log(error);
-        return 0;
       });
   }
 
@@ -304,13 +304,13 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_2_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
       .then((response) => {
-        this.gymfx_best_offline = response.data;
+        that.gymfx_best_offline = response.data;
         return response.data;
       }, (error) => {
+        that.gymfx_best_online = -1;
         console.log(error);
-        return 0;
       });
   }
 
@@ -318,13 +318,13 @@ export class Dashboard {
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
     // use the response of api request
-    axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.box_3_route)
+    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
       .then((response) => {
         that.gymfx_max_validation_score = response.data;
         return response.data;
       }, (error) => {
+        that.gymfx_best_online = -1;
         console.log(error);
-        return 0;
       });
   }
 
