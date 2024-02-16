@@ -32,9 +32,7 @@
             </a>
           </li>
           
-          <!-- TODO: Generar con p_sto para cada proceso, un menú con submenús para sus tablas, apuntando al index de cada una-->
-          {% set p_sto = p_config_store %}
-          {% for process in p_sto.store_plugin_config.processes %}
+          {% for process in p_config_store.store_plugin_config.processes %}
             <li class="nav-item has-treeview"  id="menu-stats">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
