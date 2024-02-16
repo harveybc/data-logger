@@ -560,25 +560,25 @@ export class Dashboard {
   update_scoreboard() {
     var that=this;
     this.gymfx_best_online_().then((response) => {
-      document.getElementById('box_0_value').innerHTML = that.gymfx_best_online;
+      document.getElementById('box_0_value').innerHTML = that.gym_fx_best_online;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_max_training_score_().then((response) => {
       this.gymfx_max_training_score = response.data;
-      document.getElementById('box_1_value').innerHTML = this.gymfx_max_training_score;
+      document.getElementById('box_1_value').innerHTML = this.gym_fx_max_training_score;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_best_offline_().then((response) => {
       this.gymfx_best_offline = response.data;
-      document.getElementById('box_2_value').innerHTML = this.gymfx_best_offline;
+      document.getElementById('box_2_value').innerHTML = this.gym_fx_best_offline;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_max_validation_score_().then((response) => {
       this.gymfx_max_validation_score = response.data;
-      document.getElementById('box_3_value').innerHTML = this.gymfx_max_validation_score;
+      document.getElementById('box_3_value').innerHTML = this.gym_fx_max_validation_score;
     }, (error) => {
       console.log(error);
     });
