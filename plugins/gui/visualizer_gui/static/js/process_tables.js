@@ -273,7 +273,7 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    axios_instance.get('/gymfx_best_online_')
+    axios_instance.get('/gym_fx_best_online')
       .then((response) => {
         //console.log(response.data);
         that.gymfx_best_online = response.data;
