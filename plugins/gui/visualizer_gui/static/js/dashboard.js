@@ -278,7 +278,7 @@ export class Dashboard {
     .then((response) => {
       that.gym_fx_best_online = response.data;
     }, (error) => {
-      that.gym_fx_best_online = -1;
+      that.gym_fx_best_online = error;
       console.log(error);
     });
   }
@@ -295,7 +295,7 @@ export class Dashboard {
         that.gym_fx_max_training_score = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_max_training_score = -1;
+        that.gym_fx_max_training_score = error;
         console.log(error);
       });
   }
@@ -311,7 +311,7 @@ export class Dashboard {
         that.gym_fx_best_offline = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_best_offline = -1;
+        that.gym_fx_best_offline = error;
         console.log(error);
       });
   }
@@ -326,7 +326,7 @@ export class Dashboard {
         that.gym_fx_max_validation_score = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_max_validation_score = -1;
+        that.gym_fx_max_validation_score = error;
         console.log(error);
       });
   }
