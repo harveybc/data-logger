@@ -16,7 +16,7 @@
                 "height": "380px",
                 "interval": 2,
                 "num_points" : 10,
-                "data_route" : "best_online_"
+                "data_route" : "best_online"
             },
             "val_plot": {
                 "title": "Validation Score",
