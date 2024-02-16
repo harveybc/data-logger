@@ -140,7 +140,7 @@ export class Dashboard {
 
     // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
-      var plot_data = JSON.parse(response.data);
+      var plot_data = response.data;
       console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
@@ -170,7 +170,7 @@ export class Dashboard {
 
     // get gymfx_process_list data from the server
     this.gymfx_process_list_().then((response) => {
-      var process_list = JSON.parse(response.data);
+      var process_list = response.data;
       console.log("process_list = " + process_list);
       that.process_list_update(0, 8, process_list);
     })
@@ -382,7 +382,7 @@ export class Dashboard {
     }
     //if ((prev_min != min) || (prev_max != max)) {
     try {
-      console.log("update yaxis");
+      // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
       this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
