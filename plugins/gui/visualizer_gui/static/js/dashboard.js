@@ -141,10 +141,10 @@ export class Dashboard {
     // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = response.data;
-      console.log("plot_data = " + plot_data);
+      // console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
-      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
+      // console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
@@ -171,7 +171,7 @@ export class Dashboard {
     // get gymfx_process_list data from the server
     this.gymfx_process_list_().then((response) => {
       var process_list = response.data;
-      console.log("process_list = " + process_list);
+      //console.log("process_list = " + process_list);
       that.process_list_update(0, 8, process_list);
     })
 
