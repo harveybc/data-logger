@@ -198,7 +198,7 @@ export class Dashboard {
       console.log("plotselected");
       plot.setSelection(ranges);
     });
-    console.log(plot.getData());
+    //console.log(plot.getData());
     //this.val_list_update();
     //this.process_list_update();
   }
@@ -288,6 +288,7 @@ export class Dashboard {
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the response of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
       .then((response) => {
@@ -303,6 +304,7 @@ export class Dashboard {
   gymfx_best_offline_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the result of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
       .then((response) => {
@@ -317,6 +319,7 @@ export class Dashboard {
   // call request that returns the best mse from table fe_validation_error that has config.active == false
   gymfx_max_validation_score_() {
     let axios_instance = this.axios_auth_instance();
+    var that = this;
     // use the response of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
       .then((response) => {
