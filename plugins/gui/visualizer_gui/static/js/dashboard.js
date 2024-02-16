@@ -478,6 +478,7 @@ export class Dashboard {
     // read values for the scoreboard and interactive plot
     this.update_scoreboard();
     this.gymfx_online_plot_().then((response) => {
+      console.log("pre:" + response.data);
       this.xy_points_ = this.transform_plot_data(JSON.parse(response.data));
       console.log("update:" + JSON.stringify(this.xy_points_));
       try {
