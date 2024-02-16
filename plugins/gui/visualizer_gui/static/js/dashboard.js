@@ -5,10 +5,10 @@ export class Dashboard {
   process_list = [0, 1, 2, 3];
   process = 0;
   status = 'Halted';
-  gymfx_best_online = 1;
-  gymfx_max_training_score = 0.0;
-  gymfx_best_offline = 1;
-  gymfx_max_validation_score = 0.0;
+  gym_fx_best_online = 1;
+  gym_fx_max_training_score = 0.0;
+  gym_fx_best_offline = 1;
+  gym_fx_max_validation_score = 0.0;
   plot_min = 0.0;
   plot_max = 10000;
   v_plot_min = 0;
@@ -276,9 +276,9 @@ export class Dashboard {
     // get the best config_id 
     return axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
     .then((response) => {
-      that.gymfx_best_online = response.data;
+      that.gym_fx_best_online = response.data;
     }, (error) => {
-      that.gymfx_best_online = -1;
+      that.gym_fx_best_online = -1;
       console.log(error);
     });
   }
@@ -292,10 +292,10 @@ export class Dashboard {
     // use the response of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
       .then((response) => {
-        that.gymfx_max_training_score = response.data;
+        that.gym_fx_max_training_score = response.data;
         return response.data;
       }, (error) => {
-        that.gymfx_best_online = -1;
+        that.gym_fx_max_training_score = -1;
         console.log(error);
       });
   }
@@ -308,10 +308,10 @@ export class Dashboard {
     // use the result of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
       .then((response) => {
-        that.gymfx_best_offline = response.data;
+        that.gym_fx_best_offline = response.data;
         return response.data;
       }, (error) => {
-        that.gymfx_best_online = -1;
+        that.gym_fx_best_offline = -1;
         console.log(error);
       });
   }
@@ -323,10 +323,10 @@ export class Dashboard {
     // use the response of api request
     return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
       .then((response) => {
-        that.gymfx_max_validation_score = response.data;
+        that.gym_fx_max_validation_score = response.data;
         return response.data;
       }, (error) => {
-        that.gymfx_best_online = -1;
+        that.gym_fx_max_validation_score = -1;
         console.log(error);
       });
   }
