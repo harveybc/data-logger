@@ -23,27 +23,27 @@ def ProcessBPFactory(process, table):
         # endpoint View Create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_create")
         def view_create():
-            return render_template("/process_tables/create.html", p_config=p_config_gui, process=process, table=table)
+            return render_template("/process_tables/create.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
         # endpoint View Detail
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_detail/<id>")
         def view_detail(id):
-            return render_template("/process_tables/read.html", id=id, p_config=p_config_gui, process=process, table=table)
+            return render_template("/process_tables/read.html", id=id, p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
         # endpoint View Update
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_edit/<id>")
         def view_edit(id):
-            return render_template("/process_tables/edit.html", id=id, p_config=p_config_gui, process=process, table=table)
+            return render_template("/process_tables/edit.html", id=id, p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
         # endpoint View Remove
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_remove/<id>")
         def view_remove(id):
-            return render_template("/process_tables/remove.html", id=id, p_config=p_config_gui, process=process, table=table)
+            return render_template("/process_tables/remove.html", id=id, p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
         # endpoint View Index
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index")
         def view_update():
-            return render_template("/process_tables/index.html", p_config=p_config_gui, process=process, table=table)
+            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
