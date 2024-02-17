@@ -102,7 +102,7 @@ input[type="radio"] {
                 {% if p_config_gui['gui_plugin_config'][table['name']] is defined %}
                   {{ p_config_gui['gui_plugin_config'][table['name']]['title'] }}
                 {% else %}
-                  <b>Process:</b>{{ process['name'] }}&nbsp<b>Table:</b>{{ table['name'] }}
+                  <b>Process: </b>{{ process['name'] }},&nbsp<b>Table: </b>{{ table['name'] }}
                 {% endif %}
               </h3>
               <div class="card-tools">
