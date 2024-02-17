@@ -99,8 +99,8 @@ input[type="radio"] {
             <div class="card-header">
 <!-- TODO: Verify if gui_plugin_config key exists for current process and table -->
               <h3 class="card-title">
-                {% if p_config_gui['gui_plugin_config']['users'] is defined %}
-                  {{ p_config_gui['gui_plugin_config']['users']['title'] }}
+                {% if p_config_gui['gui_plugin_config'][table['name']] is defined %}
+                  {{ p_config_gui['gui_plugin_config'][table['name']]['title'] }}
                 {% else %}
                   {{ process['name'] }}.{ {table['name'] }}
                 {% endif %}
