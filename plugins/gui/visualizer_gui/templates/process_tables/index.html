@@ -120,22 +120,18 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      {% if p_config_gui['gui_plugin_config'][table['name']] is defined %}
-                        {% if p_config_gui['gui_plugin_config'][table['name']]['index'] is defined  %}
-                          {% if p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] is defined %}
-                            {% for column in p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] %}
-                              <th>{{ column }}</th>
-                            {% endfor %}
-                          {% else %}
+                      {%  if ((p_config_gui['gui_plugin_config'][table['name']] is defined 
+                            and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined) 
+                              and p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] is defined ) %}
+                                {% for column in p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] %}
+                                    <th>{{ column }}</th>
+                                {% endfor %}
+                      {%  else %}
                             {% set table_obj = p_config_store['store_plugin_config']['processes'][process['name']]['tables'][table['name']] %}
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
-                          {% endif %}
-                        {% endif %}
-                      {% else %}
-                        <b>Process: </b>{{ process['name'] }},&nbsp<b>Table: </b>{{ table['name'] }}
-                      {% endif %}
+                      {%  endif %}
                       <!-- TODO: Botones de edit, view y delete -->
                       <!-- TODO: Paginación -->
                     </tr>
