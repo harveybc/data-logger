@@ -127,6 +127,8 @@ input[type="radio"] {
                                     <th>{{ column }}</th>
                                 {% endfor %}
                       {%  else %}
+                            {% set process_obj = process %}
+                            {% set table_obj = table %}
                             {% set process_list = p_config_store['store_plugin_config']['processes'] %}
                             {% for p in process_list 
                                 if (p['name']==process['name'])%}
