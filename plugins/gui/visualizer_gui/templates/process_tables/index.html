@@ -131,7 +131,6 @@ input[type="radio"] {
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
-                            {% for column in p_config_store['store_plugin_config']['processes'][process['name']]['tables'] %}
                           {% endif %}
                         {% endif %}
                       {% else %}
