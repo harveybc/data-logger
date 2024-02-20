@@ -127,7 +127,11 @@ input[type="radio"] {
                                     <th>{{ column }}</th>
                                 {% endfor %}
                       {%  else %}
-                            {% set table_obj = p_config_store['store_plugin_config']['processes'][process['name']]['tables'][table['name']] %}
+                            {% set table_list = p_config_store['store_plugin_config']['processes'][process['name']]['tables'] %}
+                            {% for t in table_list 
+                                if (t['name']==table['name'])%}
+                                {% set table_obj = t %}
+                            {% endfor %}
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
