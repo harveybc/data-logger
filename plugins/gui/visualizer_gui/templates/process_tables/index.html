@@ -134,7 +134,7 @@ input[type="radio"] {
                                 if (p['name']==process['name'])%}
                                 {% set process_obj = p %}
                             {% endfor %}
-                            {% set table_list = process_obj[process['name']]['tables'] %}
+                            {% set table_list = process_obj['tables'] %}
                             {% for t in table_list 
                                 if (t['name']==table['name'])%}
                                 {% set table_obj = t %}
