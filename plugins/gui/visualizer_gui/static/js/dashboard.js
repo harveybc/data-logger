@@ -525,7 +525,7 @@ export class Dashboard {
       .innerHTML += close_list;
   }
 
-  // updates the validation list table
+  // updates the process list table
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
