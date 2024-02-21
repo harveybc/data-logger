@@ -482,6 +482,25 @@ export class Dashboard {
     });
   }
 
+  // updates the list of the table in the index view
+  // params: start: the starting index of the data_ array
+  //         num_rows: the number of rows to be added to the table
+  //         data_: the data array
+  update_list(start, num_rows, data_) {
+    var list = "";
+    for (let i = start; i < data_.length; i++) {
+      list += (`<tr>
+        <td>${data_[i].id}</td>
+        <td>${data_[i].balance}</td>
+        <td>${data_[i].reward}</td>
+        <td>${data_[i].tick_timestamp}</td>
+      </tr>`);
+    }
+    document.getElementById("index_list")
+      .innerHTML += list;
+  }
+
+
   // updates the validation list table
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
