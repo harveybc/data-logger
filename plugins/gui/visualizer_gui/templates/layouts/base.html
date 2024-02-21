@@ -68,6 +68,16 @@
 <script>
     var p_config_gui = {{ p_config_gui | tojson }};
     var p_config_store = {{ p_config_store | tojson }};
+    {%  if process is defined %}
+        var process = {{ process | tojson }};
+    {%  else %}
+        var process = {};
+    {% end if %}
+    {%  if table is defined %}
+        var table = {{ table | tojson }};
+    {%  else %}
+        var table = {};
+    {% end if %}    
 </script>
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  

@@ -1,5 +1,5 @@
-// dashboard vue Module implementation
-export class Dashboard {
+// process_tables Module implementation
+export class ProcessTables {
   xy_points_ = [];
   points = [];
   process_list = [0, 1, 2, 3];
@@ -14,13 +14,19 @@ export class Dashboard {
   v_plot_min = 0;
   v_plot_max = 10000;
   //Fetch data ever x milliseconds
-  realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
+  realtime = 'off'; //If == to on then fetch data every x seconds. else stop fetching
   updateInterval = 1000 * window.interval;
   data_ = [];
   totalPoints = 10;
   val_plot_num_points = window.val_plot_num_points
+  p_conf_gui = window.p_config_gui;
+  p_conf_store = window.p_config_store;
+  process = window.process;
+  table = window.table;
 
   constructor() {
+    this.update_view();
+
         this.gymfx_online_plot_().then((response) => {
       console.log("before:" + response.data);
       this.xy_points_ = JSON.parse(response.data);
@@ -486,18 +492,31 @@ export class Dashboard {
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
-  update_list(start, num_rows, data_) {
-    var list = "";
+  update_index_list(start, num_rows, data_) {
+    var p_list = "";
+    // create each row of the table
     for (let i = start; i < data_.length; i++) {
-      list += (`<tr>
-        <td>${data_[i].id}</td>
-        <td>${data_[i].balance}</td>
-        <td>${data_[i].reward}</td>
-        <td>${data_[i].tick_timestamp}</td>
-      </tr>`);
+      // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
+      if  (p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
+        // for each table['columns'] create a new row of the table in the html element with id index_list
+        p_list += (`<tr>`);
+        for (let j = 0; j < p_config_gui.gui_plugin_config.table['name'].index.columns_visible.length; j++) {
+          p_list += (`<td>${data_[i].column_visible[j]}</td>`);
+        }
+        p_list += (`</tr>`);
+      }
+      // else show all columns in the table.columns list
+      else{
+        // for each table['columns'] create a new row of the table in the html element with id index_list
+        p_list += (`<tr>`);
+        for (let j = 0; j < table.columns.length; j++) {
+          p_list += (`<td>${data_[i].current_process.table.columns[j].name}</td>`);
+        }
+        p_list += (`</tr>`);        
+      }
     }
     document.getElementById("index_list")
-      .innerHTML += list;
+      .innerHTML += p_list;
   }
 
 

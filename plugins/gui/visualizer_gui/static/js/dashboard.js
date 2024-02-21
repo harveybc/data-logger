@@ -64,14 +64,13 @@ export class Dashboard {
 
 
     var that = this;
-    //INITIALIZE REALTIME DATA FETCHING
+    // initialize realtime data fetching
     if (this.realtime === 'on') {
       try {
         this.update();
       } catch (e) {
         console.log(e);
       }
-
     }
     var that = this;
     //REALTIME TOGGLE
