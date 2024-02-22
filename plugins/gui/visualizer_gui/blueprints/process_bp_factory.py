@@ -19,7 +19,7 @@ def ProcessBPFactory(process, table):
         bp = Blueprint("bp_"+process["name"]+"_"+table["name"], __name__, template_folder=plugin_folder+"/templates")
         # read gui plugin config and endpoint routes for CRUD
         p_config = load_plugin_config()            
-        p_config_gui = p_config["gui"]
+       
         # endpoint View Create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_create")
         def view_create():
@@ -42,8 +42,13 @@ def ProcessBPFactory(process, table):
         
         # endpoint View Index
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index")
-        def view_update():
+        def view_index():
             return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
+        
+        # endpoint View Index Data
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index_data")
+        def view_index_data():
+            return data_index()
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
@@ -80,9 +85,7 @@ def ProcessBPFactory(process, table):
             return jsonify(res)
 
         # endpoint read_all
-            
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_all")
-        def read_all():
+        def data_index():
             reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
             res = reg_model.read_all()
             return jsonify(res)

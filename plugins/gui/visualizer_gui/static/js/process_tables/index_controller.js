@@ -17,7 +17,7 @@ export class IndexController {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/index/get_data', { params: { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns } })
+    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/view_index_data', { params: { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns } })
   }
 
   // updates the list of the table in the index view
