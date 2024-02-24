@@ -190,31 +190,14 @@ input[type="radio"] {
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-
 <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
-
-
 <script>
-
   // when page finishes loading, sets the values to the ones from data
-
   $(document).ready(function () {
     // sets the menu highlight
     $('#menu-admin').addClass('menu-open');
     $('#menu-users').addClass('active');
-    /*
-        })
-        
-        * Custom Label formatter
-        * ----------------------
-        */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-  })
+})
 
 </script>
 {% endblock javascripts %}
