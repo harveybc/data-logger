@@ -4,6 +4,7 @@ export class IndexController {
   p_conf_store = window.p_config_store;
   process = window.process;
   table = window.table;
+  page_num = window.page_num;
 
   constructor() {
     // get gymfx_process_list data from the server
@@ -16,15 +17,22 @@ export class IndexController {
   request_view_data() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
+    // get the number of rows to be shown in the index view
+    if (p_config_gui.gui_plugin_config[table['name']].index.num_rows) {
+      num_rows = p_config_gui.gui_plugin_config[table['name']].index.num_rows;
+    }
+    else {
+      num_rows = 25;
+    }
     // use the result of api request
-    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/view_index_data', { params: { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns } })
+    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/view_index_data', { params: { "page_num": this.page_num,  "num_rows": this.num_rows } })
   }
 
   // updates the list of the table in the index view
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
-  index_list_update(start, num_rows, data_) {
+  index_list_update(page_num, num_rows, data_) {
     var p_list = "";
     // create each row of the table until length or num_rows
     if (data_.length < num_rows) {

@@ -176,6 +176,11 @@ input[type="radio"] {
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
+<!-- set page_num if is not defined  -->
+{% if page_num is not defined %}
+  var page_num = 1;
+{% end if %}
+
 <script type="module">
   import { IndexController } from "/static/js/process_tables/index_controller.js"
   var index_controller = new IndexController();
