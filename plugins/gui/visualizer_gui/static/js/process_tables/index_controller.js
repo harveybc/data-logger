@@ -8,7 +8,7 @@ export class IndexController {
 
   constructor() {
     // get gymfx_process_list data from the server
-    that = this;
+    var that = this;
     this.request_view_data().then((response) => {
       that.index_list_update(0, 20, response.data);
     })
