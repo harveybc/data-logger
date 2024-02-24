@@ -72,12 +72,12 @@
         var process = {{ process | tojson }};
     {%  else %}
         var process = {};
-    {% end if %}
+    {% endif %}
     {%  if table is defined %}
         var table = {{ table | tojson }};
     {%  else %}
         var table = {};
-    {% end if %}    
+    {% endif %}    
 </script>
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}  
