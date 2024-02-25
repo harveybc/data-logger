@@ -49,7 +49,8 @@ export class IndexController {
           if (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible){
             // for each table['columns'] create a new row of the table in the html element with id index_list
             p_list += (`<tr>`);
-            for (let col in this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
+            for (let j=0; j < this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible.length; j++ ) {
+              let col = this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible[j];
               p_list += (`<td>${data_[i][col]}</td>`);
             }
             p_list += (`</tr>`);
@@ -58,7 +59,8 @@ export class IndexController {
       else {
         // for each table['columns'] create a new row of the table in the html element with id index_list
         p_list += (`<tr>`);
-        for (let col in table.columns) {
+        for (let j=0; j<table.columns.length; j++ ) {
+          let col = table.columns[j];
           p_list += (`<td>${data_[i][col]}</td>`);
         }
         p_list += (`</tr>`);
