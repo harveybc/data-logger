@@ -41,11 +41,7 @@ export class IndexController {
   //         data_: the data array
   index_list_update(page_num, num_rows, data_) {
     var p_list = "";
-    // create each row of the table until length or num_rows
-    if (data_.length < num_rows) {
-      num_rows = data_.length;
-    }
-
+    
     for (let i = 0; i < data_.length ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
       if (this.p_config_gui.gui_plugin_config[table['name']]) 
@@ -54,7 +50,7 @@ export class IndexController {
             // for each table['columns'] create a new row of the table in the html element with id index_list
             p_list += (`<tr>`);
             for (const col in this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
-              p_list += (`<td>${data_[i][col.name]}</td>`);
+              p_list += (`<td>${data_[i]['id']}</td>`);
             }
             p_list += (`</tr>`);
           }
