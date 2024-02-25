@@ -4,7 +4,7 @@ import json
 from app.util import as_dict
 
 # returns a list of the rows from the table table['name] from page_num*num_rows to page_num*num_rows+num_rows filtering on culter_col==filter_val and ordering by order_by and asc_desc
-def data_index(db, Base, process, table, page_num=0, num_rows=25, filter_col=None, filter_val=None, order_by=None, asc_desc=None):
+def list_data_index(db, Base, process, table, page_num=0, num_rows=25, filter_col=None, filter_val=None, order_by=None, asc_desc=None):
     try:
         # if filter_col is None and order_by is None, query a list of the rows from the table table['name] from page_num*num_rows to page_num*num_rows+num_rows
         if filter_col is None and order_by is None:
