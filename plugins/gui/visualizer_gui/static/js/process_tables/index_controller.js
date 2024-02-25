@@ -25,7 +25,7 @@ export class IndexController {
       num_rows = 25;
     }
     // use the result of api request
-    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/view_index_data', { params: { "page_num": this.page_num,  "num_rows": this.num_rows } })
+    return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/index_list_data', { params: { "page_num": this.page_num,  "num_rows": this.num_rows } })
   }
 
   // updates the list of the table in the index view

@@ -12,6 +12,7 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config
+from .process_tables.index import data_index
 
 def ProcessBPFactory(process, table):
     def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -45,10 +46,10 @@ def ProcessBPFactory(process, table):
         def view_index():
             return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
         
-        # endpoint View Index Data
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index_data")
-        def view_index_data():
-            return data_index()
+        # endpoint Index Data
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/index_data")
+        def index_data():
+            return data_index(db, Base, process, table)
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
@@ -84,11 +85,7 @@ def ProcessBPFactory(process, table):
             res = reg_model.delete(id)
             return jsonify(res)
 
-        # endpoint read_all
-        def data_index():
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read_all()
-            return jsonify(res)
+    
 
         # endpoint read_range
         @bp.route("/"+process["name"]+"/"+table["name"]+"/read_range/<start>/<end>")
