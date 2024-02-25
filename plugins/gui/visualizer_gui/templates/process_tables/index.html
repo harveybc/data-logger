@@ -139,7 +139,6 @@ input[type="radio"] {
                                 if (t['name']==table['name'])%}
                                 {% set table_obj = t %}
                             {% endfor %}
-                              <th>id</th>
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
