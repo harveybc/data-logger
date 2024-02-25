@@ -171,7 +171,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             return error
         except Exception as e:
             error = str(e)
-            print("Error : " ,error_f(error))
+            print("Error : ", error)
             return error
         res_list = []
         for r in res:

@@ -78,10 +78,11 @@
             }
         },
         "gym_fx_config": {
-            "title": "GymFX",
+            "title": "GymFX Config",
             "index": {
                 "title": "List of GymFX Environments",
-                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ]
+                "columns_visible": ["id", "active", "initial_capital", "paused", "status" ],
+                "num_rows": 10
             },
             "create": {
                 "title": "Create GymFX Environment",

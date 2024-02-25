@@ -33,7 +33,7 @@
           </li>
           
           {% for process in p_config_store.store_plugin_config.processes %}
-            <li class="nav-item has-treeview"  id="menu-stats">
+            <li class="nav-item has-treeview"  id="menu-{{ process.name }}">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
@@ -44,7 +44,7 @@
               <ul class="nav nav-treeview">
               {% for table in process.tables %}
                   <li class="nav-item">
-                    <a href="/{{ process.name }}/{{ table.name }}/view_index " class="nav-link" id="menu-training">
+                    <a href="/{{ process.name }}/{{ table.name }}/view_index " class="nav-link" id="submenu-{{ table.name }}"+>
                       <i class="far fa-clock nav-icon"></i>
                       <p>{{ table.name }}</p>
                     </a>

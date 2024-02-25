@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/static/assets/favicon.ico" type="image/x-icon">
+<!-- jQuery 
+<script src="/static/assets/plugins/jquery/jquery-3.6.4.min.js"></script>
+-->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+
+<!-- jQuery UI 1.11.4 -->
+<script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+
+
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/lib/globalize.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.canvaswrapper.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.colorhelpers.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.saturated.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.browser.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.drawSeries.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.uiConstants.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.navigate.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.touchNavigate.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.hover.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.touch.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.time.js"></script>
+    <script language="javascript" type="text/javascript" src="https://www.flotcharts.org/flot/source/jquery.flot.selection.js"></script>
+    
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Axios and Vue  --> 
+<script src="/static/assets/js/axios/axios.min.js"></script>
+<!-- common functions --> 
+<script src="/static/js/common.js"></script>
+
+<title>
+  data_logger - {% block title %}{% endblock %} | harveybc
+</title> 
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+<body class="hold-transition {% block body_class %}{% endblock body_class %}">
+<div class="wrapper" id="main_content">
+
+    {% include 'includes/navigation.html' %}
+
+    {% include 'includes/sidebar.html' %}
+
+    {% block content %}{% endblock content %}
+
+    {% include 'includes/footer.html' %}
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- Load gui and store plugin configuration as global JS variables  -->
+<script>
+    var p_config_gui = {{ p_config_gui | tojson }};
+    var p_config_store = {{ p_config_store | tojson }};
+    {%  if process is defined %}
+        var process = {{ process | tojson }};
+    {%  else %}
+        var process = {};
+    {% endif %}
+    {%  if table is defined %}
+        var table = {{ table | tojson }};
+    {%  else %}
+        var table = {};
+    {% endif %}    
+</script>
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}  
+
+
+
+</body>
+</html>
