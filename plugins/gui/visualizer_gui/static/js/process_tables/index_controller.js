@@ -11,6 +11,7 @@ export class IndexController {
     var that = this;
     this.request_view_data().then((response) => {
       that.index_list_update(0, 20, response.data);
+      print("response.data:", response.data);
     })
   }
 
