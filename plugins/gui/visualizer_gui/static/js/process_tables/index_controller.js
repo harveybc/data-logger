@@ -10,9 +10,14 @@ export class IndexController {
     // get gymfx_process_list data from the server
     var that = this;
     this.request_view_data().then((response) => {
-      res = JSON.parse(response);
-      that.index_list_update(0, 20, res);
-      console.log("response:" +JSON.stringify(res));
+      var res_list = [];
+      for (const str_obj in response.data) {
+        var obj = JSON.parse(str_obj); 
+        console.log("obj = ", obj);
+        res_list.push(obj);
+      }
+      that.index_list_update(0, 20, res_list);
+      console.log("res_list:" + JSON.stringify(res_list));
     })
   }
 
