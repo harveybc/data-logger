@@ -22,7 +22,6 @@ def data_index(db, Base, process, table, page_num=0, num_rows=25, filter_col=Non
             # if both filter_col and order_by are not None
             # query query a list of the rows from the table table['name] from page_num*num_rows to page_num*num_rows+num_rows filtering on culter_col==filter_val and ordering by order_by and asc_desc
             res = db.session.query(Base.classes[table['name']]).filter(Base.classes[table['name']][filter_col] == filter_val).order_by(asc_desc(Base.classes[table['name']][order_by])).offset(page_num*num_rows).limit(num_rows).all()
-        res_list = list(map(as_dict, res))
     except SQLAlchemyError as e:
         error = str(e)
         print("SQLAlchemyError : " , error)
@@ -31,5 +30,11 @@ def data_index(db, Base, process, table, page_num=0, num_rows=25, filter_col=Non
         error = str(e)
         print("Error : " ,error)
         return error
+    res_list = []
+    for r in res:
+        reg={}
+        for col in table['columns']:
+            reg[col] = getattr(r, col)
+        res_list.append(reg)
+    return json.dumps(res_list)    
     
-    return res_list
