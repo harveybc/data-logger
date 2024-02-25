@@ -1,6 +1,6 @@
 // process tables index view controller
 export class IndexController {
-  p_conf_gui = window.p_config_gui;
+  p_config_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
   process = window.process;
   table = window.table;
@@ -19,8 +19,8 @@ export class IndexController {
     let axios_instance = this.axios_auth_instance();
     let num_rows=25;
     // get the number of rows to be shown in the index view
-    if (p_config_gui.gui_plugin_config[table['name']].index.num_rows) {
-      num_rows = p_config_gui.gui_plugin_config[table['name']].index.num_rows;
+    if (this.p_config_gui.gui_plugin_config[table['name']].index.num_rows) {
+      num_rows = this.p_config_gui.gui_plugin_config[table['name']].index.num_rows;
     }
     // use the result of api request
     return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/index_list_data', { params: { "page_num": this.page_num,  "num_rows": num_rows } })
@@ -39,7 +39,7 @@ export class IndexController {
 
     for (let i = 0; i < data_.length ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
-      if (p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
+      if (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
         // for each table['columns'] create a new row of the table in the html element with id index_list
         p_list += (`<tr>`);
         for (let j = 0; j < this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible.length; j++) {
