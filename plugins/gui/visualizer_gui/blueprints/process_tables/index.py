@@ -28,6 +28,5 @@ def data_index(db, Base, process, table, page_num=0, num_rows=25, filter_col=Non
         error = str(e)
         print("Error : " ,error)
         return error
-   
     return json.dumps(res_list)    
     
