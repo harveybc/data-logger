@@ -105,7 +105,7 @@
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
-                "columns_visible": ["id", "gymfx_id", "date", "balance", "reward", "status" ]
+                "columns_visible": ["id", "timestamp", "balance", "reward" ]
             },
             "create": {
                 "title": "Create GymFX Data",
