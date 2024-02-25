@@ -44,9 +44,7 @@ export class IndexController {
     
     for (let i = 0; i < data_.length ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
-      if (this.p_config_gui.gui_plugin_config[table['name']]) 
-        if (this.p_config_gui.gui_plugin_config[table['name']].index) 
-          if (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible){
+      if (((this.p_config_gui.gui_plugin_config[table['name']]) && (this.p_config_gui.gui_plugin_config[table['name']].index)) && (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible)){
             // for each table['columns'] create a new row of the table in the html element with id index_list
             p_list += (`<tr>`);
             for (let j=0; j < this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible.length; j++ ) {
