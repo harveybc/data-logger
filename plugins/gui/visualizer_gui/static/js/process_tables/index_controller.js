@@ -50,7 +50,7 @@ export class IndexController {
             // for each table['columns'] create a new row of the table in the html element with id index_list
             p_list += (`<tr>`);
             for (const col in this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
-              p_list += (`<td>${data_[i]['id']}</td>`);
+              p_list += (`<td>${data_[i][col]}</td>`);
             }
             p_list += (`</tr>`);
           }
@@ -59,7 +59,7 @@ export class IndexController {
         // for each table['columns'] create a new row of the table in the html element with id index_list
         p_list += (`<tr>`);
         for (const col in table.columns) {
-          p_list += (`<td>${data_[i][col.name]}</td>`);
+          p_list += (`<td>${data_[i][col]}</td>`);
         }
         p_list += (`</tr>`);
       }
