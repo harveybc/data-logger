@@ -11,7 +11,7 @@ export class IndexController {
     var that = this;
     this.request_view_data().then((response) => {
       var res_list = [];
-      for (const i = 0 ; i < response.data.length ; i++) {
+      for (let i = 0 ; i < response.data.length ; i++) {
         var obj = response.data[i]; 
         console.log("obj = ", obj);
         res_list.push(obj);
