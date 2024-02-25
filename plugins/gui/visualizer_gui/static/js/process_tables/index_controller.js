@@ -19,8 +19,10 @@ export class IndexController {
     let axios_instance = this.axios_auth_instance();
     let num_rows=25;
     // get the number of rows to be shown in the index view
-    if (this.p_config_gui.gui_plugin_config[table['name']].index.num_rows) {
-      num_rows = this.p_config_gui.gui_plugin_config[table['name']].index.num_rows;
+    if (this.p_config_gui.gui_plugin_config[table['name']]) 
+      if (this.p_config_gui.gui_plugin_config[table['name']].index)
+        if (this.p_config_gui.gui_plugin_config[table['name']].index.num_rows){
+          num_rows = this.p_config_gui.gui_plugin_config[table['name']].index.num_rows;
     }
     // use the result of api request
     return axios_instance.get('/' + this.process.name + '/' + this.table.name + '/index_list_data', { params: { "page_num": this.page_num,  "num_rows": num_rows } })
