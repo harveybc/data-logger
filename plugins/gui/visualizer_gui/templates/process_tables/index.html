@@ -176,7 +176,13 @@ input[type="radio"] {
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
+<!-- set page_num if is not defined  -->
+{% if page_num is not defined %}
+  var page_num = 1;
+{% endif %}
+
 <script type="module">
+  import "/static/js/buffer-6.0.3.min.js"
   import { IndexController } from "/static/js/process_tables/index_controller.js"
   var index_controller = new IndexController();
 </script>
@@ -184,31 +190,14 @@ input[type="radio"] {
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-
 <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
-
-
 <script>
-
   // when page finishes loading, sets the values to the ones from data
-
   $(document).ready(function () {
     // sets the menu highlight
-    $('#menu-admin').addClass('menu-open');
-    $('#menu-users').addClass('active');
-    /*
-        })
-        
-        * Custom Label formatter
-        * ----------------------
-        */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-  })
+    $('#menu-{{ process.name}}').addClass('menu-open');
+    $('#submenu-{{ table.name }}').addClass('active');
+})
 
 </script>
 {% endblock javascripts %}
