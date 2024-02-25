@@ -37,7 +37,7 @@ export class IndexController {
       num_rows = data_.length;
     }
 
-    for (let i = start; i < num_rows ; i++) {
+    for (let i = 0; i < data_.length ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
       if (p_config_gui.gui_plugin_config[table['name']].index.columns_visible) {
         // for each table['columns'] create a new row of the table in the html element with id index_list
