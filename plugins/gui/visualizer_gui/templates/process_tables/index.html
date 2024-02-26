@@ -94,10 +94,17 @@ input[type="radio"] {
       <!-- Main row -->
       <div class="row">
         <section class="container-fluid">      
-          <!-- TABLE: USERS -->
+          <!-- TABLE  -->
           <div class="card card-primary card-outline">
             <div class="card-header">
-              <h3 class="card-title">{{ p_config['gui_plugin_config']['users']['title'] }}</h3>
+<!-- TODO: Verify if gui_plugin_config key exists for current process and table -->
+              <h3 class="card-title">
+                {% if p_config_gui['gui_plugin_config'][table['name']] is defined %}
+                  {{ p_config_gui['gui_plugin_config'][table['name']]['title'] }}
+                {% else %}
+                  <b>Process: </b>{{ process['name'] }},&nbsp<b>Table: </b>{{ table['name'] }}
+                {% endif %}
+              </h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -113,25 +120,34 @@ input[type="radio"] {
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th>id</th>
-                      <th>user_id</th>
-                      <th>config_id</th>
-                      <th>initial_capital</th>
-                      <th>save_optimum</th>
-                      <th>overwrite_optimum</th>
-                      <th>preprocessor_params</th>
-                      <th>feature_eng_params</th>
-                      <th>active</th>
-                      <th>paused</th>
-                      <th>starting_model</th>
-                      <th>training_dataset</th>
-                      <th>validation_dataset</th>
-                      <th>status</th>
+                      {%  if ((p_config_gui['gui_plugin_config'][table['name']] is defined 
+                            and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined) 
+                              and p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] is defined ) %}
+                                {% for column in p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] %}
+                                    <th>{{ column }}</th>
+                                {% endfor %}
+                      {%  else %}
+                            {% set process_obj = process %}
+                            {% set table_obj = table %}
+                            {% set process_list = p_config_store['store_plugin_config']['processes'] %}
+                            {% for p in process_list 
+                                if (p['name']==process['name'])%}
+                                {% set process_obj = p %}
+                            {% endfor %}
+                            {% set table_list = process_obj['tables'] %}
+                            {% for t in table_list 
+                                if (t['name']==table['name'])%}
+                                {% set table_obj = t %}
+                            {% endfor %}
+                              {% for column in table_obj['columns'] %}
+                                <th>{{ column['name'] }}</th>
+                              {% endfor %}
+                      {%  endif %}
                       <!-- TODO: Botones de edit, view y delete -->
                       <!-- TODO: Paginación -->
                     </tr>
-                  </thead>
-                  <tbody  id="users_list">
+                    </thead>
+                  <tbody  id="index_list">
                     
                   </tbody>
                 </table>
@@ -149,7 +165,7 @@ input[type="radio"] {
         <!-- right col -->
       </div>
       <!-- /.row -->
-      <b>Storage Plugin</b>:{{ p_config['store_plugin'] }}, <b>GUI Plugin</b>:{{ p_config['gui_plugin'] }}
+      <b>Storage Plugin</b>:{{ p_config_store['store_plugin'] }}, <b>GUI Plugin</b>:{{ p_config_gui['gui_plugin'] }}
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -159,39 +175,28 @@ input[type="radio"] {
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
+<!-- set page_num if is not defined  -->
+{% if page_num is not defined %}
+  var page_num = 1;
+{% endif %}
+
 <script type="module">
-  import { ProcessTables } from "/static/js/process_tables.js"
-  var process_tables = new ProcessTables();
+  import "/static/js/buffer-6.0.3.min.js"
+  import { IndexController } from "/static/js/process_tables/index_controller.js"
+  var index_controller = new IndexController();
 </script>
 
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-
 <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
-
-
 <script>
-
   // when page finishes loading, sets the values to the ones from data
-
   $(document).ready(function () {
     // sets the menu highlight
-    $('#menu-admin').addClass('menu-open');
-    $('#menu-users').addClass('active');
-    /*
-        })
-        
-        * Custom Label formatter
-        * ----------------------
-        */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-  })
+    $('#menu-{{ process.name}}').addClass('menu-open');
+    $('#submenu-{{ table.name }}').addClass('active');
+})
 
 </script>
 {% endblock javascripts %}

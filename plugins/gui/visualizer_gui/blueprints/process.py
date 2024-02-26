@@ -28,7 +28,8 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Show the processes list."""
         p_config = load_plugin_config()
         p_config_gui = p_config["gui"]
-        return render_template("/dashboard/processes.html", p_config = p_config_gui)
+        p_config_store = p_config["store"]
+        return render_template("/dashboard/processes.html", p_config_gui  = p_config_gui, p_config_store = p_config_store)
     
     @bp.route("/views/process")
     #@login_required

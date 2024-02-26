@@ -64,14 +64,13 @@ export class Dashboard {
 
 
     var that = this;
-    //INITIALIZE REALTIME DATA FETCHING
+    // initialize realtime data fetching
     if (this.realtime === 'on') {
       try {
         this.update();
       } catch (e) {
         console.log(e);
       }
-
     }
     var that = this;
     //REALTIME TOGGLE
@@ -278,7 +277,7 @@ export class Dashboard {
     .then((response) => {
       that.gym_fx_best_online = response.data;
     }, (error) => {
-      that.gym_fx_best_online = -1;
+      that.gym_fx_best_online = error.message;
       console.log(error);
     });
   }
@@ -295,7 +294,7 @@ export class Dashboard {
         that.gym_fx_max_training_score = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_max_training_score = -1;
+        that.gym_fx_max_training_score = error.message;
         console.log(error);
       });
   }
@@ -311,7 +310,7 @@ export class Dashboard {
         that.gym_fx_best_offline = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_best_offline = -1;
+        that.gym_fx_best_offline = error.message;
         console.log(error);
       });
   }
@@ -326,7 +325,7 @@ export class Dashboard {
         that.gym_fx_max_validation_score = response.data;
         return response.data;
       }, (error) => {
-        that.gym_fx_max_validation_score = -1;
+        that.gym_fx_max_validation_score = error.message;
         console.log(error);
       });
   }
@@ -525,7 +524,7 @@ export class Dashboard {
       .innerHTML += close_list;
   }
 
-  // updates the validation list table
+  // updates the process list table
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
@@ -566,20 +565,17 @@ export class Dashboard {
       console.log(error);
     });
     this.gymfx_max_training_score_().then((response) => {
-      this.gymfx_max_training_score = response.data;
-      document.getElementById('box_1_value').innerHTML = this.gym_fx_max_training_score;
+      document.getElementById('box_1_value').innerHTML = that.gym_fx_max_training_score;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_best_offline_().then((response) => {
-      this.gymfx_best_offline = response.data;
-      document.getElementById('box_2_value').innerHTML = this.gym_fx_best_offline;
+      document.getElementById('box_2_value').innerHTML = that.gym_fx_best_offline;
     }, (error) => {
       console.log(error);
     });
     this.gymfx_max_validation_score_().then((response) => {
-      this.gymfx_max_validation_score = response.data;
-      document.getElementById('box_3_value').innerHTML = this.gym_fx_max_validation_score;
+      document.getElementById('box_3_value').innerHTML = that.gym_fx_max_validation_score;
     }, (error) => {
       console.log(error);
     });
