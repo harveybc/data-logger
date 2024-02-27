@@ -13,6 +13,7 @@ from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config
 from .process_tables.index import list_data_index
+import json
 
 def ProcessBPFactory(process, table):
     def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -56,7 +57,7 @@ def ProcessBPFactory(process, table):
         def create():
             """Create a new register for the table"""
             try:
-                body = request.json
+                body = json.loads(request.json)
                 reg_model = Base.classes[table['name']]
                 reg = reg_model(**body)
                 db.session.add(reg)
