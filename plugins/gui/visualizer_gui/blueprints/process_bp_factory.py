@@ -66,7 +66,7 @@ def ProcessBPFactory(process, table):
             except Exception as e:
                 error = str(e)
                 print("Error : " ,error)
-                return jsonify({ "result": error })
+                abort(500)
         
         # endpoint detail
         @bp.route("/"+process["name"]+"/"+table["name"]+"/detail/<id>")
