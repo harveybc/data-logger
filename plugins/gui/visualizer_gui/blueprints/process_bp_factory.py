@@ -55,11 +55,17 @@ def ProcessBPFactory(process, table):
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
         def create():
             """Create a new register for the table"""
-            body = request.json
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            reg = reg_model(**body)
-            res = reg.create(**body)
-            return jsonify(res)
+            try:
+                body = request.json
+                reg_model = Base.classes[table['name']]
+                reg = reg_model(**body)
+                db.session.add(reg)
+                db.session.commit()
+                return jsonify({ "result": "ok" })
+            except Exception as e:
+                error = str(e)
+                print("Error : " ,error)
+                return jsonify({ "result": error })
         
         # endpoint detail
         @bp.route("/"+process["name"]+"/"+table["name"]+"/detail/<id>")
