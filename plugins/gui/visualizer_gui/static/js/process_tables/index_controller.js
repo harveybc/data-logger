@@ -5,6 +5,7 @@ export class IndexController {
   process = window.process;
   table = window.table;
   page_num = window.page_num;
+  total_pages = window.total_pages;
 
   constructor() {
     // get gymfx_process_list data from the server
@@ -41,8 +42,10 @@ export class IndexController {
   //         data_: the data array
   index_list_update(page_num, num_rows, data_) {
     var p_list = "";
-    
-    for (let i = 0; i < data_.length ; i++) {
+    //set total_pages variable to the last element of the data_ array
+    this.total_pages = data_[data_.length-1];
+    //uses data_length-1 due to the last element of the array is th total_pages variable returned by the server
+    for (let i = 0; i < data_.length-1 ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
       if (((this.p_config_gui.gui_plugin_config[table['name']]) && (this.p_config_gui.gui_plugin_config[table['name']].index)) && (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible)){
             // for each table['columns'] create a new row of the table in the html element with id index_list
@@ -64,8 +67,28 @@ export class IndexController {
         p_list += (`</tr>`);
       }
     }
+    // update the index_list element with the new rows
     document.getElementById("index_list")
       .innerHTML += p_list;
+    // update the pagination area with the new page_num
+    document.getElementById("page_num").innerHTML = page_num;
+    // update the pagination area with the new total_pages
+    document.getElementById("total_pages").innerHTML = this.total_pages;
+    // set the first_page_link to the first page
+    document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num=0";
+    // set the previous_page_link to the previous page, verifying that it exists
+    if (page_num > 0)
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/index?page_num=" + (page_num - 1);
+    else
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/index?page_num=" + (page_num);
+    // set the next_page_link to the next page, verifying that it exists
+    if (page_num < this.total_pages-1)
+      document.getElementById("next_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(page_num+1);
+    else
+      document.getElementById("next_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(page_num);
+    // set the last_page_link to the last page
+    document.getElementById("last_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(this.total_pages-1);
+
   }
 
   // returns an axios instance for basic authentication
