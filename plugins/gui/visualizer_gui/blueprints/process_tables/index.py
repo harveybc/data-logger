@@ -28,6 +28,10 @@ def list_data_index(db, Base, process, table, page_num=0, num_rows=25, filter_co
         error = str(e)
         print("Error : " ,error)
         return error
+    
+    # add the total number of pages to the res_list
+    res_list.append({"total_pages": len(res_list)/num_rows})
+
     #print("res_list : " , res_list)
     return json.dumps(res_list)    
     
