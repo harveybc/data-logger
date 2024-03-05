@@ -177,11 +177,12 @@ input[type="radio"] {
 {% block javascripts %}
 
 <!-- set page_num if is not defined  -->
+
 {% if page_num is not defined %}
-  var page_num = 1;
+  <script> var page_num = 1; </script>
 {% endif %}
 {% if total_pages is not defined %}
-  var total_pages = 1;
+  <script> var total_pages = 1; </script>
 {% endif %}
 
 
