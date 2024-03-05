@@ -42,9 +42,9 @@ export class IndexController {
   //         data_: the data array
   index_list_update(page_num, num_rows, data_) {
     var p_list = "";
-    //set total_pages variable to the last element of the data_ array
-    this.total_pages = data_.length-1;
-    window.total_pages = this.total_pages;
+    //set total_pages variable tothe number of pages having into account the total of registers as the length of the data_ array and the num_rows as the number of rows per page
+    this.total_pages =  Math.ceil(data_.length/num_rows);
+    window.total_pages = this.total_pages; 
     //uses data_length-1 due to the last element of the array is th total_pages variable returned by the server
     for (let i = 0; i < data_.length-1 ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
@@ -76,7 +76,7 @@ export class IndexController {
     // update the pagination area with the new total_pages
     document.getElementById("total_pages").innerHTML = this.total_pages;
     // set the first_page_link to the first page
-    document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/view_index?page_num=0";
+    document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/view_index?page_num=1";
     // set the previous_page_link to the previous page, verifying that it exists
     if (page_num > 0)
       document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (page_num - 1);
