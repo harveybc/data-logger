@@ -45,7 +45,9 @@ def ProcessBPFactory(process, table):
         # endpoint View Index
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index")
         def view_index():
-            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
+            args = request.args
+            page_num = args.get("page_num", default=1, type=int)
+            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num)
         
         # endpoint Index Data
         @bp.route("/"+process["name"]+"/"+table["name"]+"/index_list_data")

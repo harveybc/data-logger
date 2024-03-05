@@ -44,6 +44,7 @@ export class IndexController {
     var p_list = "";
     //set total_pages variable to the last element of the data_ array
     this.total_pages = data_.length-1;
+    window.total_pages = this.total_pages;
     //uses data_length-1 due to the last element of the array is th total_pages variable returned by the server
     for (let i = 0; i < data_.length-1 ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
