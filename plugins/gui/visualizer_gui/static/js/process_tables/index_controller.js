@@ -75,19 +75,19 @@ export class IndexController {
     // update the pagination area with the new total_pages
     document.getElementById("total_pages").innerHTML = this.total_pages;
     // set the first_page_link to the first page
-    document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num=0";
+    document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/view_index?page_num=0";
     // set the previous_page_link to the previous page, verifying that it exists
     if (page_num > 0)
-      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/index?page_num=" + (page_num - 1);
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (page_num - 1);
     else
-      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/index?page_num=" + (page_num);
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (page_num);
     // set the next_page_link to the next page, verifying that it exists
     if (page_num < this.total_pages-1)
-      document.getElementById("next_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(page_num+1);
+      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(page_num+1);
     else
-      document.getElementById("next_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(page_num);
+      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(page_num);
     // set the last_page_link to the last page
-    document.getElementById("last_page_link").href = "/"+this.process.name+"/"+this.table.name+"/index?page_num="+(this.total_pages-1);
+    document.getElementById("last_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(this.total_pages-1);
 
   }
 
