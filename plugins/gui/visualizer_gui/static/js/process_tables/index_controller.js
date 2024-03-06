@@ -64,6 +64,7 @@ export class IndexController {
       else {
         // for each table['columns'] create a new row of the table in the html element with id index_list
         p_list += (`<tr>`);
+        p_list += (`<td>${data_[i]['id']}</td>`);
         for (let j=0; j<table.columns.length; j++ ) {
           let col = table.columns[j].name;
           p_list += (`<td>${data_[i][col]}</td>`);
