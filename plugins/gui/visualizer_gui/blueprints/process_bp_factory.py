@@ -52,6 +52,9 @@ def ProcessBPFactory(process, table):
         # endpoint Index Data
         @bp.route("/"+process["name"]+"/"+table["name"]+"/index_list_data")
         def index_data():
+            args = request.args
+            page_num = args.get("page_num", default=1, type=int)
+            page_num = args.get("num_rows", default=15, type=int)
             return list_data_index(db, Base, process, table)
         
         # endpoint create
