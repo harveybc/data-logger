@@ -2,6 +2,7 @@
 from sqlalchemy.exc import SQLAlchemyError
 import json
 from app.util import as_dict
+import math
 
 # returns a list of the rows from the table table['name] from page_num*num_rows to page_num*num_rows+num_rows filtering on culter_col==filter_val and ordering by order_by and asc_desc
 def list_data_index(db, Base, process, table, page_num=1, num_rows=15, filter_col=None, filter_val=None, order_by=None, asc_desc=None):
@@ -34,7 +35,7 @@ def list_data_index(db, Base, process, table, page_num=1, num_rows=15, filter_co
         return error
     
     # add the total number of pages to the res_list
-    res_list.append({"total_pages": total_rows/num_rows})
+    res_list.append({"total_pages": math.ceil(total_rows/num_rows)})
 
     print("res_list : " , res_list)
     return json.dumps(res_list)    

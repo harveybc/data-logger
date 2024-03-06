@@ -45,7 +45,8 @@ export class IndexController {
   index_list_update(data_) {
     var p_list = "";
     //set total_pages variable tothe number of pages having into account the total of registers as the length of the data_ array and the num_rows as the number of rows per page
-    this.total_pages = data_[0]['total_pages'];
+    let last_element = data_.pop();
+    this.total_pages = last_element.total_pages;
     window.total_pages = this.total_pages; 
     //uses data_length-1 due to the last element of the array is th total_pages variable returned by the server
     for (let i = 0; i < data_.length-1 ; i++) {
