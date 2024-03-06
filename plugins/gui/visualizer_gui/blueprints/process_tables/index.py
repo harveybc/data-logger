@@ -36,6 +36,6 @@ def list_data_index(db, Base, process, table, page_num=1, num_rows=15, filter_co
     # add the total number of pages to the res_list
     res_list.append({"total_pages": total_rows/num_rows})
 
-    #print("res_list : " , res_list)
+    print("res_list : " , res_list)
     return json.dumps(res_list)    
     
