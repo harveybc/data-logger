@@ -85,7 +85,7 @@ export class IndexController {
     else
       document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num);
     // set the next_page_link to the next page, verifying that it exists
-    if (page_num < this.total_pages-1)
+    if (page_num < this.total_pages)
       document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num+1);
     else
       document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num);
