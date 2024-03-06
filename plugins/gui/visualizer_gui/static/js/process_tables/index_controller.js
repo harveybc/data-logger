@@ -6,6 +6,7 @@ export class IndexController {
   table = window.table;
   page_num = window.page_num;
   total_pages = window.total_pages;
+  num_rows = window.num_rows;
 
   constructor() {
     // get gymfx_process_list data from the server
@@ -17,7 +18,8 @@ export class IndexController {
         //console.log("obj = ", obj);
         res_list.push(obj);
       }
-      that.index_list_update(0, 20, res_list);
+
+      that.index_list_update(res_list);
       //console.log("res_list:" + JSON.stringify(res_list));
     })
   }
@@ -25,7 +27,7 @@ export class IndexController {
   request_view_data() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
-    let num_rows=25;
+    let num_rows=this.num_rows;
     // get the number of rows to be shown in the index view
     if (this.p_config_gui.gui_plugin_config[table['name']]) 
       if (this.p_config_gui.gui_plugin_config[table['name']].index)
@@ -40,7 +42,7 @@ export class IndexController {
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
   //         data_: the data array
-  index_list_update(page_num, num_rows, data_) {
+  index_list_update(data_) {
     var p_list = "";
     //set total_pages variable tothe number of pages having into account the total of registers as the length of the data_ array and the num_rows as the number of rows per page
     this.total_pages =  Math.ceil(data_.length/num_rows);
@@ -72,21 +74,21 @@ export class IndexController {
     document.getElementById("index_list")
       .innerHTML += p_list;
     // update the pagination area with the new page_num
-    document.getElementById("page_num").innerHTML = page_num;
+    document.getElementById("page_num").innerHTML = this.page_num;
     // update the pagination area with the new total_pages
     document.getElementById("total_pages").innerHTML = this.total_pages;
     // set the first_page_link to the first page
     document.getElementById("first_page_link").href = "/"+this.process.name+"/"+this.table.name+"/view_index?page_num=1";
     // set the previous_page_link to the previous page, verifying that it exists
-    if (page_num > 0)
-      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (page_num - 1);
+    if (this.page_num > 1)
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num - 1);
     else
-      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (page_num);
+      document.getElementById("previous_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num);
     // set the next_page_link to the next page, verifying that it exists
     if (page_num < this.total_pages-1)
-      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(page_num+1);
+      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num+1);
     else
-      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(page_num);
+      document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num);
     // set the last_page_link to the last page
     document.getElementById("last_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(this.total_pages-1);
 

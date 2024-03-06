@@ -47,15 +47,16 @@ def ProcessBPFactory(process, table):
         def view_index():
             args = request.args
             page_num = args.get("page_num", default=1, type=int)
-            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num)
+            num_rows = args.get("num_rows", default=1, type=int)
+            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num, num_rows=num_rows)
         
         # endpoint Index Data
         @bp.route("/"+process["name"]+"/"+table["name"]+"/index_list_data")
         def index_data():
             args = request.args
             page_num = args.get("page_num", default=1, type=int)
-            page_num = args.get("num_rows", default=15, type=int)
-            return list_data_index(db, Base, process, table)
+            num_rows = args.get("num_rows", default=15, type=int)
+            return list_data_index(db, Base, process, table, page_num, num_rows)
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
