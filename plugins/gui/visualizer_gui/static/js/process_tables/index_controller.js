@@ -49,7 +49,7 @@ export class IndexController {
     this.total_pages = last_element.total_pages;
     window.total_pages = this.total_pages; 
     //uses data_length-1 due to the last element of the array is th total_pages variable returned by the server
-    for (let i = 0; i < data_.length-1 ; i++) {
+    for (let i = 0; i < data_.length ; i++) {
       // verify if is defined p_config_gui.gui_plugin_config[table['name']].index.columns_visible and show those columns in the row
       if (((this.p_config_gui.gui_plugin_config[table['name']]) && (this.p_config_gui.gui_plugin_config[table['name']].index)) && (this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible)){
             // for each table['columns'] create a new row of the table in the html element with id index_list
