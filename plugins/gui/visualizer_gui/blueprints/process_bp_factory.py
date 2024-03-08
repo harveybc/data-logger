@@ -11,9 +11,10 @@ from flask_login import current_user
 from app.db import get_db
 from flask import current_app
 from flask import jsonify
-from app.util import load_plugin_config
-from .process_tables.index import list_data_index
+from app.util import load_plugin_config, sanitize_str
+from .process_tables.index import list_data, scoreboard_data
 import json
+
 
 def ProcessBPFactory(process, table):
     def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -56,7 +57,7 @@ def ProcessBPFactory(process, table):
             args = request.args
             page_num = args.get("page_num", default=1, type=int)
             num_rows = args.get("num_rows", default=15, type=int)
-            return list_data_index(db, Base, process, table, page_num, num_rows)
+            return list_data(db, Base, process, table, page_num, num_rows)
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
@@ -98,21 +99,21 @@ def ProcessBPFactory(process, table):
             res = reg_model.delete(id)
             return jsonify(res)
 
-    
+        # returns the config id for the best score from table gym_fx_data that has config.active == true
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/scoreboard")
+        @login_required
+        def scoreboard():
+            args = request.args
+            col = sanitize_str(args.get("col", default="config_id", type=str), 256)
+            order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)
+            order = sanitize_str(args.get("order", default="desc", type=str), 256)
+            foreign_key = sanitize_str(args.get("foreign_key", default="config_id", type=str), 256)
+            rel_table = sanitize_str(args.get("rel_table", default="gym_fx_config", type=str), 256)
+            rel_filter_col = sanitize_str(args.get("rel_filter_col", default="active", type=str), 256)
+            rel_filter_op = sanitize_str(args.get("rel_filter_op", default="is_equal", type=str), 256)
+            rel_filter_val = sanitize_str(args.get("rel_filter_val", default="True"), 256)
+            # return scoreboard_data(db, Base, process, table, page_num, num_rows)
+            return scoreboard_data(db, Base, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
 
-        # endpoint read_range
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_range/<start>/<end>")
-        def read_range(start, end):
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read_range(start, end)
-            return jsonify(res)            
-        
-        # endpoint read_last
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_last/<length>")
-        def read_last(length):
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read_last(start, end)
-            return jsonify(res)            
-        
         return bp
     return new_bp
