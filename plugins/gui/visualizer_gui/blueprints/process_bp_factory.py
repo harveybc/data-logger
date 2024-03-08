@@ -111,7 +111,11 @@ def ProcessBPFactory(process, table):
             rel_table = sanitize_str(args.get("rel_table", default="gym_fx_config", type=str), 256)
             rel_filter_col = sanitize_str(args.get("rel_filter_col", default="active", type=str), 256)
             rel_filter_op = sanitize_str(args.get("rel_filter_op", default="is_equal", type=str), 256)
-            rel_filter_val = sanitize_str(args.get("rel_filter_val", default="True"), 256)
+            rel_filter_val = sanitize_str(args.get("rel_filter_val", default=True), 256)
+            if rel_filter_val == "True":
+                rel_filter_val = True
+            if rel_filter_val == "False":
+                rel_filter_val = False
             # return scoreboard_data(db, Base, process, table, page_num, num_rows)
             return scoreboard_data(db, Base, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
 
