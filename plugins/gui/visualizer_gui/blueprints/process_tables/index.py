@@ -58,10 +58,10 @@ def scoreboard_data(db, Base, table, col, order_by, order, foreign_key, rel_tabl
     #   rel_filter_val=True
 
     # create the query dependin on order and rel_filter_op, first for order==desc and rel_filter_op==equal
-    base_table = getattr(Base.classes,table)
-    base_rel = getattr(Base.classes,rel_table)
+    base_table = Base.classes[table]
+    base_rel = Base.classes[rel_table]
 
-    res = db.session.query(base_table).join(base_rel, getattr(base_table,foreign_key) == base_rel.id).filter(getattr(base_rel,rel_filter_col) == rel_filter_val).order_by(desc(getattr(base_table,order_by))).first_or_404()
+    res = db.session.query(base_table).join(base_rel, getattr(base_table,foreign_key) == base_rel.id).filter(base_rel[rel_filter_col] == rel_filter_val).order_by(desc(base_table[order_by])).first_or_404()
     if order == "desc" and rel_filter_op == "not_equal":
         res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] != rel_filter_val).order_by(desc(Base.classes[table][order_by])).first_or_404()
     if order == "asc" and rel_filter_op == "is_equal":
