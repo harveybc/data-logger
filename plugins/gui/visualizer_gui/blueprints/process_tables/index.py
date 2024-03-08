@@ -56,22 +56,14 @@ def scoreboard_data(db, Base, table, col, order_by, order, foreign_key, rel_tabl
     #   rel_filter_col=active
     #   rel_filter_op=equal
     #   rel_filter_val=True
-    try:
-        # create the query dependin on order and rel_filter_op, first for order==desc and rel_filter_op==equal
-        res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] == rel_filter_val).order_by(desc(Base.classes[table][order_by])).first_or_404()
-        if order == "desc" and rel_filter_op == "not_equal":
-            res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] != rel_filter_val).order_by(desc(Base.classes[table][order_by])).first_or_404()
-        if order == "asc" and rel_filter_op == "is_equal":
-            res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] == rel_filter_val).order_by(asc(Base.classes[table][order_by])).first_or_404()
-        if order == "asc" and rel_filter_op == "not_equal":
-            res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] != rel_filter_val).order_by(asc(Base.classes[table][order_by])).first_or_404()
-    except SQLAlchemyError as e:
-        error = str(e)
-        print("SQLAlchemyError : " , error)
-        return error
-    except Exception as e:
-        error = str(e)
-        print("Error : " ,error)
-        return error
+
+    # create the query dependin on order and rel_filter_op, first for order==desc and rel_filter_op==equal
+    res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] == rel_filter_val).order_by(desc(Base.classes[table][order_by])).first_or_404()
+    if order == "desc" and rel_filter_op == "not_equal":
+        res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] != rel_filter_val).order_by(desc(Base.classes[table][order_by])).first_or_404()
+    if order == "asc" and rel_filter_op == "is_equal":
+        res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] == rel_filter_val).order_by(asc(Base.classes[table][order_by])).first_or_404()
+    if order == "asc" and rel_filter_op == "not_equal":
+        res = db.session.query(Base.classes[table]).join(Base.classes[rel_table], Base.classes[table][foreign_key] == Base.classes[rel_table]["id"]).filter(Base.classes[rel_table][rel_filter_col] != rel_filter_val).order_by(asc(Base.classes[table][order_by])).first_or_404()
     attr = getattr(res, col)
     return json.dumps(attr)
