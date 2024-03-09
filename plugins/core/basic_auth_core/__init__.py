@@ -48,6 +48,7 @@ class BasicAuthCore():
         self.Process = Process
         self.ProcessTable = ProcessTable
         self.ConfigsController = ConfigsController
+        self.Base = None
         # seed initial user 
 
     def seed_init_data(self, app, db):
@@ -99,7 +100,7 @@ class BasicAuthCore():
             else:
                 return -1
 
-    def create_table(self, app, db, table, Base):
+    def create_table(self, app, db, table):
         """ Create a table if another with the same name does not exist.
             Args:
             app (Flask): the current flask app instance.
@@ -125,7 +126,7 @@ class BasicAuthCore():
                     warnings.simplefilter("ignore")
                     db.Model.metadata.reflect(bind=db.engine)
                     # reflect the tables
-                    Base.prepare(db.engine, reflect=False)
+                    self.Base.prepare(db.engine, reflect=False)
     
     def init_data_structure(self, app, db, store_conf):
         """ Create the data structure (processes/tables) from the config_store.json """

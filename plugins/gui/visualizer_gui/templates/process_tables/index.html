@@ -139,6 +139,7 @@ input[type="radio"] {
                                 if (t['name']==table['name'])%}
                                 {% set table_obj = t %}
                             {% endfor %}
+                              <th>id</th>
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
@@ -151,6 +152,25 @@ input[type="radio"] {
                     
                   </tbody>
                 </table>
+                <!-- set page_num if is not defined  -->
+                {% if page_num is not defined %}
+                  <script> var page_num = 1; </script>
+                {% else %}  
+                  <script> var page_num = {{ page_num }}; </script>
+                {% endif %}
+                {% if total_pages is not defined %}
+                  <script> var total_pages = 1; </script>
+                {% else %}
+                  <script> var total_pages = {{ total_pages }}; </script>                
+                {% endif %}
+                {% if num_rows is not defined %}
+                <script> var num_rows = 15; </script>
+                {% else %}
+                <script> var num_rows = {{ num_rows }}; </script>
+                {% endif %}
+
+
+                Page <b id="page_num" >{{ page_num }}</b> of <b id="total_pages">{{ total_pages }}</b>. <a id="first_page_link">First</a>, <a id="previous_page_link">Previous</a>, <a id="next_page_link">Next</a>, <a id="last_page_link">Last</a>.
               </div>
               <!-- /.table-responsive -->
             </div>
@@ -175,10 +195,7 @@ input[type="radio"] {
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<!-- set page_num if is not defined  -->
-{% if page_num is not defined %}
-  var page_num = 1;
-{% endif %}
+
 
 <script type="module">
   import "/static/js/buffer-6.0.3.min.js"

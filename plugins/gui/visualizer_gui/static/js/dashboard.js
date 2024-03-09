@@ -17,7 +17,7 @@ export class Dashboard {
   realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
   updateInterval = 1000 * window.interval;
   data_ = [];
-  totalPoints = 10;
+  num_points = window.num_points;
   val_plot_num_points = window.val_plot_num_points;
   p_conf_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
@@ -54,8 +54,9 @@ export class Dashboard {
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
       xaxis: {
-        ticks: [],
-        mode: "time"
+        showTicks: true,
+        gridLines: true,
+        show: true
       },
       selection: {
         mode: "x"
@@ -107,7 +108,7 @@ export class Dashboard {
         mode: "x"
       },
       grid: {
-        //markings: this.order_status_areas
+        markings: this.order_status_areas
       }
     };
     //console.log("befoplot 1:" + response.data);
@@ -273,7 +274,7 @@ export class Dashboard {
     let axios_instance = this.axios_auth_instance();
     var that = this;
     // get the best config_id 
-    return axios_instance.get('/'+ this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
+    return axios_instance.get(this.p_conf_gui['gui_plugin_config']['dashboard']['box_0_route'])
     .then((response) => {
       that.gym_fx_best_online = response.data;
     }, (error) => {
@@ -289,7 +290,7 @@ export class Dashboard {
     let axios_instance = this.axios_auth_instance();
     var that = this;
     // use the response of api request
-    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
+    return axios_instance.get(this.p_conf_gui['gui_plugin_config']['dashboard']['box_1_route'])
       .then((response) => {
         that.gym_fx_max_training_score = response.data;
         return response.data;
@@ -305,7 +306,7 @@ export class Dashboard {
     let axios_instance = this.axios_auth_instance();
     var that = this;
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
+    return axios_instance.get(this.p_conf_gui['gui_plugin_config']['dashboard']['box_2_route'])
       .then((response) => {
         that.gym_fx_best_offline = response.data;
         return response.data;
@@ -320,7 +321,7 @@ export class Dashboard {
     let axios_instance = this.axios_auth_instance();
     var that = this;
     // use the response of api request
-    return axios_instance.get('/' + this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
+    return axios_instance.get(this.p_conf_gui['gui_plugin_config']['dashboard']['box_3_route'])
       .then((response) => {
         that.gym_fx_max_validation_score = response.data;
         return response.data;
@@ -334,28 +335,28 @@ export class Dashboard {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.rt_plot.data_route)
+    return axios_instance.get(this.p_conf_gui.gui_plugin_config.dashboard.rt_plot.data_route)
   }
 
   gymfx_validation_plot_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_plot.data_route)
+    return axios_instance.get(this.p_conf_gui.gui_plugin_config.dashboard.val_plot.data_route)
   }
 
   gymfx_validation_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.val_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
+    return axios_instance.get(this.p_conf_gui.gui_plugin_config.dashboard.val_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
   }
 
   gymfx_process_list_() {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    return axios_instance.get('/' + this.p_conf_gui.gui_plugin_config.dashboard.process_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
+    return axios_instance.get(this.p_conf_gui.gui_plugin_config.dashboard.process_list.data_route, { params : { "columns": this.p_conf_gui.gui_plugin_config.dashboard.val_list.columns }})
   }
 
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
@@ -384,7 +385,7 @@ export class Dashboard {
       // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-      this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+      this.interactive_plot.getAxes().xaxis.options.min = x_max - this.num_points;
       this.interactive_plot.getAxes().xaxis.options.max = x_max;
       this.interactive_plot.setupGrid();
       this.interactive_plot.draw();
@@ -479,7 +480,7 @@ export class Dashboard {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
-      //console.log("update:" + JSON.stringify(this.xy_points_));
+      console.log("update:" + JSON.stringify(this.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         this.interactive_plot.setData([this.xy_points_]);

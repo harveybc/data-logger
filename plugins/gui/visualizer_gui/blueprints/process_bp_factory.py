@@ -11,8 +11,10 @@ from flask_login import current_user
 from app.db import get_db
 from flask import current_app
 from flask import jsonify
-from app.util import load_plugin_config
-from .process_tables.index import list_data_index
+from app.util import load_plugin_config, sanitize_str
+from .process_tables.index import list_data, scoreboard_data,online_plot_data
+import json
+
 
 def ProcessBPFactory(process, table):
     def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -44,22 +46,35 @@ def ProcessBPFactory(process, table):
         # endpoint View Index
         @bp.route("/"+process["name"]+"/"+table["name"]+"/view_index")
         def view_index():
-            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table)
+            args = request.args
+            page_num = args.get("page_num", default=1, type=int)
+            num_rows = args.get("num_rows", default=15, type=int)
+            num_points = args.get("num_points", default=100, type=int)
+            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num, num_rows=num_rows, num_points=num_points)
         
         # endpoint Index Data
         @bp.route("/"+process["name"]+"/"+table["name"]+"/index_list_data")
         def index_data():
-            return list_data_index(db, Base, process, table)
+            args = request.args
+            page_num = args.get("page_num", default=1, type=int)
+            num_rows = args.get("num_rows", default=15, type=int)
+            return list_data(db, Base, process, table, page_num, num_rows)
         
         # endpoint create
         @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST",))
         def create():
             """Create a new register for the table"""
-            body = request.json
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            reg = reg_model(**body)
-            res = reg.create(**body)
-            return jsonify(res)
+            try:
+                body = json.loads(request.json)
+                reg_model = Base.classes[table['name']]
+                reg = reg_model(**body)
+                db.session.add(reg)
+                db.session.commit()
+                return jsonify({ "result": "ok" })
+            except Exception as e:
+                error = str(e)
+                print("Error : " ,error)
+                abort(500)
         
         # endpoint detail
         @bp.route("/"+process["name"]+"/"+table["name"]+"/detail/<id>")
@@ -85,21 +100,46 @@ def ProcessBPFactory(process, table):
             res = reg_model.delete(id)
             return jsonify(res)
 
-    
+        # returns the config id for the best score from table gym_fx_data that has config.active == true
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/scoreboard")
+        @login_required
+        def scoreboard():
+            args = request.args
+            col = sanitize_str(args.get("col", default="config_id", type=str), 256)
+            order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)
+            order = sanitize_str(args.get("order", default="desc", type=str), 256)
+            foreign_key = sanitize_str(args.get("foreign_key", default="config_id", type=str), 256)
+            rel_table = sanitize_str(args.get("rel_table", default="gym_fx_config", type=str), 256)
+            rel_filter_col = sanitize_str(args.get("rel_filter_col", default="active", type=str), 256)
+            rel_filter_op = sanitize_str(args.get("rel_filter_op", default="is_equal", type=str), 256)
+            rel_filter_val = sanitize_str(args.get("rel_filter_val", default=True), 256)
+            if rel_filter_val == "True":
+                rel_filter_val = True
+            if rel_filter_val == "False":
+                rel_filter_val = False
+            # return scoreboard_data(db, Base, process, table, page_num, num_rows)
+            return scoreboard_data(db, Base, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
 
-        # endpoint read_range
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_range/<start>/<end>")
-        def read_range(start, end):
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read_range(start, end)
-            return jsonify(res)            
-        
-        # endpoint read_last
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/read_last/<length>")
-        def read_last(length):
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read_last(start, end)
-            return jsonify(res)            
-        
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/online_plot")
+        @login_required
+        def online_plot():
+            args = request.args
+            num_points = args.get("num_points", default=100, type=int)
+
+            val_col = sanitize_str(args.get("val_col", default="config_id", type=str), 256)
+            best_col = sanitize_str(args.get("best_col", default="score", type=str), 256)
+            order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)
+            order = sanitize_str(args.get("order", default="desc", type=str), 256)
+            foreign_key = sanitize_str(args.get("foreign_key", default="config_id", type=str), 256)
+            rel_table = sanitize_str(args.get("rel_table", default="gym_fx_config", type=str), 256)
+            rel_filter_col = sanitize_str(args.get("rel_filter_col", default="active", type=str), 256)
+            rel_filter_op = sanitize_str(args.get("rel_filter_op", default="is_equal", type=str), 256)
+            rel_filter_val = sanitize_str(args.get("rel_filter_val", default=True), 256)
+            if rel_filter_val == "True":
+                rel_filter_val = True
+            if rel_filter_val == "False":
+                rel_filter_val = False
+            # return online_plot_data(db, Base, process, table, page_num, num_rows)
+            return online_plot_data(db, Base, num_points, table["name"], val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
         return bp
     return new_bp

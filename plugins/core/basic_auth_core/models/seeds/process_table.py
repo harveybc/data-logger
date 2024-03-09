@@ -34,10 +34,10 @@ def seed(app, db, table_name):
                     db.session.commit()
                     _logger.info("gym_fx_config table seeded") 
                 elif table_name == "gym_fx_data":
-                    rows.append(table_base(score=10000, score_v=9001, config_id=1))
-                    rows.append(table_base(score=1000, score_v=900, config_id=2))
-                    rows.append(table_base(score=1200, score_v=9900, config_id=1))
-                    rows.append(table_base(score=1300, score_v=9700, config_id=3))
+                    rows.append(table_base(score=0.11, score_v=0.09, config_id=1))
+                    rows.append(table_base(score=0.1, score_v=0.09, config_id=2))
+                    rows.append(table_base(score=0.14, score_v=0.13, config_id=1))
+                    rows.append(table_base(score=0.13, score_v=0.12, config_id=3))
                     for row in rows:
                         db.session.add(row)
                     db.session.commit()
