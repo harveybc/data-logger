@@ -12,7 +12,7 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config, sanitize_str
-from .process_tables.index import list_data, scoreboard_data
+from .process_tables.index import list_data, scoreboard_data,online_plot_data
 import json
 
 
@@ -118,6 +118,26 @@ def ProcessBPFactory(process, table):
                 rel_filter_val = False
             # return scoreboard_data(db, Base, process, table, page_num, num_rows)
             return scoreboard_data(db, Base, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
+
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/online_plot")
+        @login_required
+        def online_plot():
+            args = request.args
+            col = sanitize_str(args.get("col", default="config_id", type=str), 256)
+            order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)
+            order = sanitize_str(args.get("order", default="desc", type=str), 256)
+            foreign_key = sanitize_str(args.get("foreign_key", default="config_id", type=str), 256)
+            rel_table = sanitize_str(args.get("rel_table", default="gym_fx_config", type=str), 256)
+            rel_filter_col = sanitize_str(args.get("rel_filter_col", default="active", type=str), 256)
+            rel_filter_op = sanitize_str(args.get("rel_filter_op", default="is_equal", type=str), 256)
+            rel_filter_val = sanitize_str(args.get("rel_filter_val", default=True), 256)
+            if rel_filter_val == "True":
+                rel_filter_val = True
+            if rel_filter_val == "False":
+                rel_filter_val = False
+            # return online_plot_data(db, Base, process, table, page_num, num_rows)
+            return online_plot_data(db, Base, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
+            
 
         return bp
     return new_bp
