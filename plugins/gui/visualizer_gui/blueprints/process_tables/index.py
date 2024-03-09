@@ -71,7 +71,7 @@ def online_plot_data(db, Base, num_points, table, col, order_by, order, foreign_
     """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
     # perform query, the column classs names are configured in config_store.json
     try:
-        best = int(scoreboard_data(db, Base, num_points, table, col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val))
+        best = int(scoreboard_data(db, Base, table, col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val))
         print("best : " , best)
         base_table = Base.classes[table]
         points = db.session.query(base_table).filter(base_table.config_id == best).order_by(desc(base_table.id)).limit(num_points).all()
@@ -82,6 +82,6 @@ def online_plot_data(db, Base, num_points, table, col, order_by, order, foreign_
             count += 1
     except Exception as e:
         error = str(e)
-        print("Error : " ,error_f(error))
+        print("Error : " ,error)
         return error
     return json.dumps(res)
