@@ -55,7 +55,8 @@ export class Dashboard {
       //  }
       xaxis: {
         ticks: [],
-        mode: "time"
+        mode: "time",
+        show: true
       },
       selection: {
         mode: "x"
