@@ -16,6 +16,7 @@ from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
 from app.util import load_plugin_config
 from app.data_logger import DataLogger
+from sqlalchemy.ext.automap import automap_base
 
 # load the plugin config files
 plugin_conf = load_plugin_config()
@@ -41,6 +42,12 @@ app = Flask(__name__)
 app.config.from_object(app_config)
 from app.app import db
 db.init_app(app)
+
+Base = automap_base()
+with app.app.app_context():
+    Base.prepare(db.engine)
+# update the Base property of the core plugin entry point
+data_logger.core_ep.Base = Base
 
 def dbinit():
     """ drop all tables and create the data structure defined in the store plugin config file. """
