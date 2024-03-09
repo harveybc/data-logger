@@ -74,7 +74,9 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         best = int(float(scoreboard_data(db, Base, table, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)))
         print("best : " , best)
         base_table = Base.classes[table]
-        points = db.session.query(base_table).filter(base_table.config_id == best).order_by(desc(base_table.id)).limit(num_points).all()
+        total_rows = db.session.query(base_table).filter(base_table.config_id == best).count()
+        end_offset = total_rows - num_points
+        points = db.session.query(base_table).filter(base_table.config_id == best).order_by(asc(base_table.id)).offset(end_offset).limit(num_points).all()
         
         res = []
         count = 0
