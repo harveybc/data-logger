@@ -78,6 +78,7 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         res = []
         count = 0
         for p in points:
+            print("x":count, "y":p[val_col] )
             res.append({"x":count, "y":p[val_col] })
             count += 1
     except Exception as e:
