@@ -44,7 +44,7 @@ from app.app import db
 db.init_app(app)
 
 Base = automap_base()
-with app.app.app_context():
+with app.app_context():
     Base.prepare(db.engine)
 # update the Base property of the core plugin entry point
 data_logger.core_ep.Base = Base
