@@ -78,7 +78,7 @@ def online_plot_data(db, Base, num_points, table, col, order_by, order, foreign_
         res = []
         count = 0
         for p in points:
-            res.append({"x":count, "y":p.score})
+            res.append({"x":count, "y":p[col] })
             count += 1
     except Exception as e:
         error = str(e)
