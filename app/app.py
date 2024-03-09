@@ -60,6 +60,8 @@ def create_app(app_config, data_logger):
     Base = automap_base()
     with app.app.app_context():
         Base.prepare(db.engine)
+    # update the Base property of the core plugin entry point
+    data_logger.core_ep.Base = Base
     # initialize login manager
     login_manager.init_app(app.app)
     # get the output plugin template folder
