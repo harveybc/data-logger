@@ -124,7 +124,8 @@ def ProcessBPFactory(process, table):
         def online_plot():
             args = request.args
             num_points = args.get("num_points", default=1000, type=int)
-            col = sanitize_str(args.get("col", default="config_id", type=str), 256)
+            val_col = sanitize_str(args.get("val_col", default="config_id", type=str), 256)
+            best_col = sanitize_str(args.get("best_col", default="score", type=str), 256)
             order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)
             order = sanitize_str(args.get("order", default="desc", type=str), 256)
             foreign_key = sanitize_str(args.get("foreign_key", default="config_id", type=str), 256)
@@ -137,6 +138,6 @@ def ProcessBPFactory(process, table):
             if rel_filter_val == "False":
                 rel_filter_val = False
             # return online_plot_data(db, Base, process, table, page_num, num_rows)
-            return online_plot_data(db, Base, num_points, table["name"], col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
+            return online_plot_data(db, Base, num_points, table["name"], val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
         return bp
     return new_bp

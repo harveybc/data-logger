@@ -67,18 +67,18 @@ def scoreboard_data(db, Base, table, col, order_by, order, foreign_key, rel_tabl
     attr = getattr(res, col)
     return json.dumps(attr)
 
-def online_plot_data(db, Base, num_points, table, col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val):
+def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val):
     """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
     # perform query, the column classs names are configured in config_store.json
     try:
-        best = int(float(scoreboard_data(db, Base, table, col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)))
+        best = int(float(scoreboard_data(db, Base, table, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)))
         print("best : " , best)
         base_table = Base.classes[table]
         points = db.session.query(base_table).filter(base_table.config_id == best).order_by(desc(base_table.id)).limit(num_points).all()
         res = []
         count = 0
         for p in points:
-            res.append({"x":count, "y":p[col] })
+            res.append({"x":count, "y":p[val_col] })
             count += 1
     except Exception as e:
         error = str(e)
