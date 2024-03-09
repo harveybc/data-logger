@@ -49,7 +49,8 @@ def ProcessBPFactory(process, table):
             args = request.args
             page_num = args.get("page_num", default=1, type=int)
             num_rows = args.get("num_rows", default=15, type=int)
-            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num, num_rows=num_rows)
+            num_points = args.get("num_points", default=100, type=int)
+            return render_template("/process_tables/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], process=process, table=table, page_num=page_num, num_rows=num_rows, num_points=num_points)
         
         # endpoint Index Data
         @bp.route("/"+process["name"]+"/"+table["name"]+"/index_list_data")
@@ -123,7 +124,8 @@ def ProcessBPFactory(process, table):
         @login_required
         def online_plot():
             args = request.args
-            num_points = args.get("num_points", default=1000, type=int)
+            num_points = args.get("num_points", default=100, type=int)
+
             val_col = sanitize_str(args.get("val_col", default="config_id", type=str), 256)
             best_col = sanitize_str(args.get("best_col", default="score", type=str), 256)
             order_by = sanitize_str(args.get("order_by", default="score", type=str), 256)

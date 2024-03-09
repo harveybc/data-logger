@@ -17,7 +17,7 @@ export class Dashboard {
   realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
   updateInterval = 1000 * window.interval;
   data_ = [];
-  totalPoints = 10;
+  num_points = window.num_points;
   val_plot_num_points = window.val_plot_num_points;
   p_conf_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
@@ -384,7 +384,7 @@ export class Dashboard {
       // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-      this.interactive_plot.getAxes().xaxis.options.min = x_max - 10;
+      this.interactive_plot.getAxes().xaxis.options.min = x_max - this.num_points;
       this.interactive_plot.getAxes().xaxis.options.max = x_max;
       this.interactive_plot.setupGrid();
       this.interactive_plot.draw();

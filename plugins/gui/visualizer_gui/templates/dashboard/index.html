@@ -243,6 +243,23 @@ input[type="radio"] {
                     
                   </tbody>
                 </table>
+                <!-- set page_num if is not defined  -->
+                {% if page_num is not defined %}
+                <script> var page_num = 1; </script>
+                {% else %}
+                <script> var page_num = {{ page_num }}; </script>
+                {% endif %}
+                {% if total_pages is not defined %}
+                <script> var total_pages = 1; </script>
+                {% else %}
+                <script> var total_pages = {{ total_pages }}; </script>
+                {% endif %}
+                {% if num_rows is not defined %}
+                <script> var num_rows = 15; </script>
+                {% else %}
+                <script> var num_rows = {{ num_rows }}; </script>
+                {% endif %}
+
               </div>
               <!-- /.table-responsive -->
             </div>
@@ -306,10 +323,18 @@ input[type="radio"] {
   </section>
   <!-- /.content -->
 </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<!-- set page_num if is not defined  -->
+{% if num__points is not defined %}
+<script> var num_points = 100; </script>
+{% else %}
+<script> var num_points = {{ num_points }}; </script>
+{% endif %}
+
 <script type="module">
   import "/static/js/buffer-6.0.3.min.js"
   import { Dashboard } from "/static/js/dashboard.js"

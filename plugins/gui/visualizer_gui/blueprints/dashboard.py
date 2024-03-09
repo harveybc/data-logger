@@ -37,8 +37,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     def index():
         box= []
         status = []
+        args = request.args
+        page_num = args.get("page_num", default=1, type=int)
+        num_rows = args.get("num_rows", default=15, type=int)
+        num_points = args.get("num_points", default=100, type=int)
         p_config = load_plugin_config()
-        return render_template("/dashboard/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"])
+        return render_template("/dashboard/index.html", p_config_gui = p_config["gui"], p_config_store = p_config["store"], page_num=page_num, num_rows=num_rows, num_points=num_points)
        
     @bp.route("/gym_fx_validation_plot")
     @login_required
