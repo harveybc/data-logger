@@ -57,8 +57,7 @@ export class Dashboard {
         ticks: [],
         tickLength: 5,
         gridLines: true,
-        show: true,
-        position: "bottom"
+        show: true
       },
       selection: {
         mode: "x"
