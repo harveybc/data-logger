@@ -75,13 +75,11 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         print("best : " , best)
         base_table = Base.classes[table]
         points = db.session.query(base_table).filter(base_table.config_id == best).order_by(desc(base_table.id)).limit(num_points).all()
-        print("POINTS : " , points)
         
         res = []
         count = 0
         for p in points:
-            print("p : " , p)
-            res.append({"x":count, "y":p[val_col] })
+            res.append({"x":count, "y":getattr(p,val_col) })
             count += 1
     except Exception as e:
         error = str(e)
