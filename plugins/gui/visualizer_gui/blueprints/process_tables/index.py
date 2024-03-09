@@ -82,6 +82,6 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
             count += 1
     except Exception as e:
         error = str(e)
-        print("Error : " ,error)
+        print("Error 1: " ,error)
         return error
     return json.dumps(res)
