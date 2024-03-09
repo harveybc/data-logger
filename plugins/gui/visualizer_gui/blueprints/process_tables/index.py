@@ -76,6 +76,8 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         base_table = Base.classes[table]
         total_rows = db.session.query(base_table).filter(base_table.config_id == best).count()
         end_offset = total_rows - num_points
+        if end_offset < 0:
+            end_offset = 0
         points = db.session.query(base_table).filter(base_table.config_id == best).order_by(asc(base_table.id)).offset(end_offset).limit(num_points).all()
         
         res = []
