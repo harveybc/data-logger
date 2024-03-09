@@ -56,7 +56,9 @@ export class Dashboard {
       xaxis: {
         ticks: [],
         tickLength: 5,
-        gridLines: false
+        gridLines: true,
+        show: true,
+        position: "bottom"
       },
       selection: {
         mode: "x"
@@ -108,7 +110,7 @@ export class Dashboard {
         mode: "x"
       },
       grid: {
-        //markings: this.order_status_areas
+        markings: this.order_status_areas
       }
     };
     //console.log("befoplot 1:" + response.data);
