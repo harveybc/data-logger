@@ -54,8 +54,7 @@ export class Dashboard {
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
       xaxis: {
-        ticks: [],
-        tickLength: 5,
+        showTicks: true,
         gridLines: true,
         show: true
       },
