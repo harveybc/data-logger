@@ -31,7 +31,7 @@
                 "col_1_title": "Balance",
                 "col_2_title": "Reward",
                 "col_3_title": "Date",
-                "data_route" : "/gym-fx/validation_plot",
+                "data_route" : "gym_fx_validation_plot",
                 "columns" : ["id","balance","reward","date"]
             },
             "process_list": {
@@ -39,7 +39,7 @@
                 "col_0_title": "ID",
                 "col_1_title": "Score",
                 "col_2_title": "Status",
-                "data_route" : "/gym-fx/process_list",
+                "data_route" : "/gym_fx_process_list",
                 "columns" : ["id","balance","reward","date"]
             }
         },
