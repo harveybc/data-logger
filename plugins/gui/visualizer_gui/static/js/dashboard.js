@@ -34,6 +34,9 @@ export class Dashboard {
         borderWidth: 1,
         tickColor: '#f3f3f3'
       }, 
+      axisLabels: {
+        show: true
+      },
       series: {
         shadowSize: 1, // Drawing is faster without shadows
         color: '#3c8dbc',
@@ -44,7 +47,7 @@ export class Dashboard {
         }
       },
       yaxes: [{
-        position: 'bottom',
+        position: "bottom",
         axisLabel: 'Score: (Profit-Risk)/InitialCapital',
         min: this.plot_min,
         max: this.plot_max,
@@ -56,7 +59,7 @@ export class Dashboard {
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
       xaxes: [{
-        position: 'left',
+        position: "left",
         axisLabel: 'Iteration Number',
         showTicks: true,
         gridLines: true,
