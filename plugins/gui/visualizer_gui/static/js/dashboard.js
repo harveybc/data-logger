@@ -153,7 +153,7 @@ export class Dashboard {
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
-
+     
       try {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
@@ -182,7 +182,6 @@ export class Dashboard {
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
-    this.order_status_areas = this.order_status_areas.bind(this); 
 
     // now connect the two
     $(document).on('plotselected', '#placeholder', function (event, ranges) {
@@ -208,6 +207,19 @@ export class Dashboard {
     //this.process_list_update();
   }
 
+  
+  // returns an axios instance for basic authentication
+  axiosBasicAuth(username, password) {
+    let buffer_auth = buffer.Buffer.from(username + ':' + password);
+    let b64 = buffer_auth.toString('base64');
+    return axios.create({
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${b64}`,
+      }
+    });
+  }
+
   // helper for returning the order status color areas for the validation plot
   order_status_areas(axes) {
     var markings = [];
@@ -215,7 +227,7 @@ export class Dashboard {
     var from_red = 0;
     var from_blue = 0;
     var from_white = 0;
-    var to_red = 0; 
+    var to_red = 0;
     var to_blue = 0;
     var to_white = 0;
     var color = "#4f4f4f";
@@ -243,7 +255,7 @@ export class Dashboard {
       // no order when order_status == 0 (white color)
       if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] != 0) {
         from_white = x;
-      } 
+      }
       if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
         to_white = x;
         color = "#ffffff";
@@ -253,17 +265,6 @@ export class Dashboard {
     return markings;
   }
 
-  // returns an axios instance for basic authentication
-  axiosBasicAuth(username, password) {
-    let buffer_auth = buffer.Buffer.from(username + ':' + password);
-    let b64 = buffer_auth.toString('base64');
-    return axios.create({
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${b64}`,
-      }
-    });
-  }
 
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
