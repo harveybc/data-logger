@@ -203,59 +203,54 @@ export class Dashboard {
       console.log("plotselected");
       plot.setSelection(ranges);
     });
-
-
-    // helper for returning the order status color areas for the validation plot
-    order_status_areas(axes) {
-      var markings = [];
-      // for each this.data_.xy_order_status[i][1], create a region red if thre order status is -1 and green if 1
-      var from_red = 0;
-      var from_blue = 0;
-      var from_white = 0;
-      var to_red = 0;
-      var to_blue = 0;
-      var to_white = 0;
-      var color = "#4f4f4f";
-
-      for (var i = 1; i < this.data_.xy_order_status.length; ++i) {
-        var x = this.data_.xy_order_status[i][0];
-        // sell order when order_status == -1 (red color)
-        if (i > 0 && this.data_.xy_order_status[i][1] == -1 && this.data_.xy_order_status[i - 1][1] == 0) {
-          from_red = x;
-        }
-        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == -1) {
-          to_red = x;
-          color = "#ff8f8f";
-          markings.push({ xaxis: { from: from_red, to: to_red }, color: color });
-        }
-        // buy order when order_status == 1 (blue color)
-        if (i > 0 && this.data_.xy_order_status[i][1] == 1 && this.data_.xy_order_status[i - 1][1] == 0) {
-          from_blue = x;
-        }
-        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] == 1) {
-          to_blue = x;
-          color = "#8f8fff";
-          markings.push({ xaxis: { from: from_blue, to: to_blue }, color: color });
-        }
-        // no order when order_status == 0 (white color)
-        if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] != 0) {
-          from_white = x;
-        }
-        if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
-          to_white = x;
-          color = "#ffffff";
-          markings.push({ xaxis: { from: from_white, to: to_white }, color: color });
-        }
-      }
-      return markings;
-    }
-
-
     //console.log(plot.getData());
     //this.val_list_update();
     //this.process_list_update();
+  }
 
+  // helper for returning the order status color areas for the validation plot
+  order_status_areas(axes) {
+    var markings = [];
+    // for each this.data_.xy_order_status[i][1], create a region red if thre order status is -1 and green if 1
+    var from_red = 0;
+    var from_blue = 0;
+    var from_white = 0;
+    var to_red = 0; 
+    var to_blue = 0;
+    var to_white = 0;
+    var color = "#4f4f4f";
 
+    for (var i = 1; i < that.data_.xy_order_status.length; ++i) {
+      var x = that.data_.xy_order_status[i][0];
+      // sell order when order_status == -1 (red color)
+      if (i > 0 && that.data_.xy_order_status[i][1] == -1 && that.data_.xy_order_status[i - 1][1] == 0) {
+        from_red = x;
+      }
+      if (i > 0 && that.data_.xy_order_status[i][1] == 0 && that.data_.xy_order_status[i - 1][1] == -1) {
+        to_red = x;
+        color = "#ff8f8f";
+        markings.push({ xaxis: { from: from_red, to: to_red }, color: color });
+      }
+      // buy order when order_status == 1 (blue color)
+      if (i > 0 && that.data_.xy_order_status[i][1] == 1 && that.data_.xy_order_status[i - 1][1] == 0) {
+        from_blue = x;
+      }
+      if (i > 0 && that.data_.xy_order_status[i][1] == 0 && that.data_.xy_order_status[i - 1][1] == 1) {
+        to_blue = x;
+        color = "#8f8fff";
+        markings.push({ xaxis: { from: from_blue, to: to_blue }, color: color });
+      }
+      // no order when order_status == 0 (white color)
+      if (i > 0 && that.data_.xy_order_status[i][1] == 0 && that.data_.xy_order_status[i - 1][1] != 0) {
+        from_white = x;
+      } 
+      if (i > 0 && that.data_.xy_order_status[i][1] != 0 && that.data_.xy_order_status[i - 1][1] == 0) {
+        to_white = x;
+        color = "#ffffff";
+        markings.push({ xaxis: { from: from_white, to: to_white }, color: color });
+      }
+    }
+    return markings;
   }
 
   // returns an axios instance for basic authentication
