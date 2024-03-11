@@ -91,7 +91,7 @@ def online_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         return error
     return json.dumps(res)
 
-def validation_plot_data(db, Base, num_points, table, val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val):
+def static_plot_data(db, Base, num_points, table, val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val):
     """ Returns an array of points [tick_count, score] from the gym_fx_data table for thebest prcess with config_id.active== True. """
     # perform query, the column classs names are configured in config_store.json
     try:
