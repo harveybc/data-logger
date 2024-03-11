@@ -113,7 +113,7 @@ export class Dashboard {
         mode: "x"
       },
       grid: {
-        markings: this.order_status_areas
+        markings: this.order_status_areas.bind(this)
       }
     };
     //console.log("befoplot 1:" + response.data);
@@ -158,7 +158,7 @@ export class Dashboard {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
         that.overview.setData([that.data_.xy_equity]);
-        that.validation_plot.getOptions().grid.markings = that.order_status_areas
+        that.validation_plot.getOptions().grid.markings = that.order_status_areas.bind(this=that);
         plot = that.validation_plot;
         overview = that.overview;
         // Since the axes don't change, we don't need to call plot.setupGrid()
@@ -206,7 +206,6 @@ export class Dashboard {
     //this.val_list_update();
     //this.process_list_update();
   }
-
   
   // returns an axios instance for basic authentication
   axiosBasicAuth(username, password) {
@@ -264,7 +263,6 @@ export class Dashboard {
     }
     return markings;
   }
-
 
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
