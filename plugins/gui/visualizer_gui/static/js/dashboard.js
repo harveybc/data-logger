@@ -149,7 +149,7 @@ export class Dashboard {
       // console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
-      // console.log("that.data_.xy_equity = " + that.data_.xy_equity);
+      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
