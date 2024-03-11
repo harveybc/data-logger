@@ -432,6 +432,7 @@ export class Dashboard {
       op_profit.push(response_data[i].op_profit);
       xy_balance.push([response_data[i].tick_timestamp, response_data[i].balance]);
       xy_equity.push([response_data[i].tick_timestamp, response_data[i].equity]);
+      console.log("response_data[i]" + JSON.stringify(response_data[i]))
       console.log("xy_equity = " + xy_equity)
       // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
       xy_order_status.push([response_data[i].tick_timestamp, response_data[i].order_status]);
