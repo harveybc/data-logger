@@ -33,7 +33,7 @@ export class Dashboard {
         borderColor: '#f3f3f3',
         borderWidth: 1,
         tickColor: '#f3f3f3'
-      },
+      }, 
       series: {
         shadowSize: 1, // Drawing is faster without shadows
         color: '#3c8dbc',
