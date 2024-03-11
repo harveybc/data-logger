@@ -103,8 +103,9 @@ def static_plot_data(db, Base, num_points, table, val_col, best_col, order_by, o
         if end_offset < 0:
             end_offset = 0
         points = db.session.query(base_table).filter(base_table.config_id == best).order_by(asc(base_table.id)).offset(end_offset).limit(num_points).all()
+        res_list = list(map(as_dict, points))
     except Exception as e:
         error = str(e)
         print("Error 1: " ,error)
         return error
-    return json.dumps(points)
+    return json.dumps(res_list)
