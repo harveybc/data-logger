@@ -44,6 +44,7 @@ export class Dashboard {
         }
       },
       yaxis: {
+        position: 'bottom',
         axisLabel: 'Score: (Profit-Risk)/InitialCapital',
         min: this.plot_min,
         max: this.plot_max,
@@ -55,6 +56,7 @@ export class Dashboard {
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
       xaxis: {
+        position: 'left',
         axisLabel: 'Iteration Number',
         showTicks: true,
         gridLines: true,
