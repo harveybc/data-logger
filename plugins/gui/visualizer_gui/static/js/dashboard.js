@@ -158,7 +158,7 @@ export class Dashboard {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
         that.overview.setData([that.data_.xy_equity]);
-        that.validation_plot.getOptions().grid.markings = that.order_status_areas.bind(that);
+        that.validation_plot.getOptions().grid.markings = that.order_status_areas;
         plot = that.validation_plot;
         overview = that.overview;
         // Since the axes don't change, we don't need to call plot.setupGrid()
