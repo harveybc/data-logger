@@ -220,7 +220,7 @@ export class Dashboard {
     var to_white = 0;
     var color = "#4f4f4f";
 
-    for (var i = 1; i < that.data_.xy_order_status.length; ++i) {
+    for (var i = 1; i < this.data_.xy_order_status.length; ++i) {
       var x = this.data_.xy_order_status[i][0];
       // sell order when order_status == -1 (red color)
       if (i > 0 && this.data_.xy_order_status[i][1] == -1 && this.data_.xy_order_status[i - 1][1] == 0) {
