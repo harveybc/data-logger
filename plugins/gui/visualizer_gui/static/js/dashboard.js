@@ -47,7 +47,6 @@ export class Dashboard {
         }
       },
       yaxes: [{
-        position: "bottom",
         axisLabel: 'Score: (Profit-Risk)/InitialCapital',
         min: this.plot_min,
         max: this.plot_max,
@@ -59,7 +58,6 @@ export class Dashboard {
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
       xaxes: [{
-        position: "left",
         axisLabel: 'Iteration Number',
         showTicks: true,
         gridLines: true,
@@ -392,11 +390,9 @@ export class Dashboard {
       // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-      this.interactive_plot.getAxes().yaxis.options.axisLabel = "Testy";
-
+      
       this.interactive_plot.getAxes().xaxis.options.min = x_max - this.num_points;
       this.interactive_plot.getAxes().xaxis.options.max = x_max;
-      this.interactive_plot.getAxes().yaxis.options.axisLabel = "Testx";
       this.interactive_plot.setupGrid();
       this.interactive_plot.draw();
     }
