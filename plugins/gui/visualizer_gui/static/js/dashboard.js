@@ -113,7 +113,7 @@ export class Dashboard {
         mode: "x"
       },
       grid: {
-        markings: this.order_status_areas.bind(this)
+        //markings: this.order_status_areas.bind(this)
       }
     };
     //console.log("befoplot 1:" + response.data);
