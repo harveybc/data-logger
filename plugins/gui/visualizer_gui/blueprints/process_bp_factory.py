@@ -12,7 +12,7 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config, sanitize_str
-from .process_tables.index import list_data, scoreboard_data,online_plot_data
+from .process_tables.index import list_data, scoreboard_data, online_plot_data, static_plot_data
 import json
 
 
@@ -141,8 +141,7 @@ def ProcessBPFactory(process, table):
                 rel_filter_val = False
             # return online_plot_data(db, Base, process, table, page_num, num_rows)
             return online_plot_data(db, Base, num_points, table["name"], val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
-        return bp
-    
+
         @bp.route("/"+process["name"]+"/"+table["name"]+"/static_plot")
         @login_required
         def static_plot():
@@ -164,6 +163,7 @@ def ProcessBPFactory(process, table):
                 rel_filter_val = False
             # return online_plot_data(db, Base, process, table, page_num, num_rows)
             return static_plot_data(db, Base, num_points, table["name"], val_col, best_col, order_by, order, foreign_key, rel_table, rel_filter_col, rel_filter_op, rel_filter_val)
-        return bp
+ 
 
+        return bp
     return new_bp
