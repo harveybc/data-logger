@@ -146,7 +146,7 @@ export class Dashboard {
     // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = response.data;
-      // console.log("plot_data = " + plot_data);
+      console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
       console.log("that.data_.xy_equity = " + that.data_.xy_equity);
