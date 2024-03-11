@@ -43,25 +43,25 @@ export class Dashboard {
           show: true
         }
       },
-      yaxis: {
+      yaxes: [{
         position: 'bottom',
         axisLabel: 'Score: (Profit-Risk)/InitialCapital',
         min: this.plot_min,
         max: this.plot_max,
         show: true
-      },
+      }],
       
       //xaxis: {
       //   mode: "time", 
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
-      xaxis: {
+      xaxes: [{
         position: 'left',
         axisLabel: 'Iteration Number',
         showTicks: true,
         gridLines: true,
         show: true
-      },
+      }],
       selection: {
         mode: "x"
       }
