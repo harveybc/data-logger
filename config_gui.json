@@ -99,7 +99,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "/gym-fx/data": {
+        "/gym-fx_data": {
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
@@ -123,7 +123,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "/gym-fx/validation_plot": {
+        "/gym-fx_validation_plot": {
             "title": "GymFX Validation Plot",
             "plot": {
                 "title": "Validation Plot",
