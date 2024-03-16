@@ -103,6 +103,7 @@
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
+                "rt_plot_visible": true,
                 "columns_visible": ["id", "timestamp", "balance", "reward" ]
             },
             "create": {
