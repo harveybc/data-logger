@@ -75,7 +75,7 @@
                 "col_3_title": "Event"
             }
         },
-        "/gym_fx_config": {
+        "gym_fx_config": {
             "title": "GymFX Config",
             "index": {
                 "title": "List of GymFX Environments",
@@ -99,7 +99,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "/gym_fx_data": {
+        "gym_fx_data": {
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
@@ -123,7 +123,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "/gym_fx_validation_plot": {
+        "gym_fx_validation_plot": {
             "title": "GymFX Validation Plot",
             "plot": {
                 "title": "Validation Plot",
