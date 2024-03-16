@@ -92,7 +92,15 @@ input[type="radio"] {
   <section class="content">
     <div class="container-fluid" id="main_content">
       <!-- Main row -->
-      <div class="row" style="display: none;" >
+      {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+        and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+          and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot_visible'] is defined ) 
+            and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot_visible'] == true %}
+              <div class="row"></div>
+      {% else %}
+              <div class="row" style="display: none;">
+              
+            
         <!-- Left col -->
         <section class="col-lg-6">
           <!-- Interactive chart -->
