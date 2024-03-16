@@ -92,6 +92,34 @@ input[type="radio"] {
   <section class="content">
     <div class="container-fluid" id="main_content">
       <!-- Main row -->
+      <div class="row" style="display: none;" >
+        <!-- Left col -->
+        <section class="col-lg-6">
+          <!-- Interactive chart -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['title'] }}
+              </h3>
+          
+              <div class="card-tools">
+                Real time
+                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                  <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+            </div>
+            <!-- /.card-body-->
+          </div>
+          <!-- /.card -->
+        </section>
+      </div>
+
       <div class="row">
         <section class="container-fluid">      
           <!-- TABLE  -->
