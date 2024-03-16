@@ -90,8 +90,80 @@ input[type="radio"] {
 
   <!-- Main content -->
   <section class="content">
+    <!-- Small boxes (Stat box) -->
+    <!-- RT PLOT row -->
+    {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+      and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+        and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot_visible'] is defined )
+          and p_config_gui['gui_plugin_config'][table['name']]['index']['scoreboard_visible'] == true %}
+            <div class="row">
+    {% else %}
+            <div class="row" style="display: none;">
+    {% endif %}
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <!-- box[0] data -->
+            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
+            <h2 id="box_0_value" style="text-align:center;"></h2>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <!-- TODO -->
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <!-- box[1] data -->
+            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
+            <h2 id="box_1_value" style="text-align:center;"></h2>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <!-- TODO --> <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <!-- box[2] data -->
+            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
+            <h2 id="box_2_value" style="text-align:center;"></h2>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <!-- TODO --> <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <!-- box[3] data -->
+            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+            <h2 id="box_3_value" style="text-align:center;"></h2>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
     <div class="container-fluid" id="main_content">
-      <!-- Main row -->
+      <!-- RT PLOT row -->
       {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
         and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
           and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot_visible'] is defined ) 
