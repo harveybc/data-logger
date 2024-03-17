@@ -37,7 +37,7 @@ export class IndexController {
       $('#realtime .btn').click(function () {
         if ($(this).data('toggle') === 'on') {
           that.realtime = 'on'
-          that.update()
+          that.rt_update()
         } else {
           that.realtime = 'off'
         }
