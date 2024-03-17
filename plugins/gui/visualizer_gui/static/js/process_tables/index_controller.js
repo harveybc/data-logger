@@ -93,7 +93,32 @@ export class IndexController {
       document.getElementById("next_page_link").href = "/" + this.process.name + "/" + this.table.name + "/view_index?page_num=" + (this.page_num);
     // set the last_page_link to the last page
     document.getElementById("last_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(this.total_pages);
+  }
 
+
+  // read values from the server
+  update_scoreboard() {
+    var that = this;
+    this.gymfx_best_online_().then((response) => {
+      document.getElementById('box_0_value').innerHTML = that.gym_fx_best_online;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_training_score_().then((response) => {
+      document.getElementById('box_1_value').innerHTML = that.gym_fx_max_training_score;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_best_offline_().then((response) => {
+      document.getElementById('box_2_value').innerHTML = that.gym_fx_best_offline;
+    }, (error) => {
+      console.log(error);
+    });
+    this.gymfx_max_validation_score_().then((response) => {
+      document.getElementById('box_3_value').innerHTML = that.gym_fx_max_validation_score;
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   // returns an axios instance for basic authentication

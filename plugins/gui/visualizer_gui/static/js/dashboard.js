@@ -271,7 +271,6 @@ export class Dashboard {
     return axios_instance;
   }
 
-  // TODO: cambiar el nombre a box 0
   // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   gymfx_best_online_() {
     // setup authentication
