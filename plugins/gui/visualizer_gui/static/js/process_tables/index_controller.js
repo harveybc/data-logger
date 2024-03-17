@@ -15,7 +15,6 @@ export class IndexController {
 
   constructor() {
     // get gymfx_process_list data from the server
-    var that = this;
     this.request_view_data().then((response) => {
       var res_list = [];
       for (let i = 0 ; i < response.data.length ; i++) {
@@ -27,8 +26,6 @@ export class IndexController {
       this.scoreboard_update();
       // Draw interactive plot
       this.interactive_plot = this.interactive_plot_();
-      
-      var that = this;
       // initialize realtime data fetching
       if (this.realtime === 'on') {
         try {
@@ -37,16 +34,15 @@ export class IndexController {
           console.log(e);
         }
       }
-      var that = this;
       //REALTIME TOGGLE
       $('#realtime .btn').click(function () {
         if ($(this).data('toggle') === 'on') {
-          that.realtime = 'on'
-          that.rt_update()
+          this.realtime = 'on'
+          this.rt_update()
         } else {
-          that.realtime = 'off'
+          this.realtime = 'off'
         }
-      })
+      }, bind(this));
       /*
         * END INTERACTIVE CHART
       */
