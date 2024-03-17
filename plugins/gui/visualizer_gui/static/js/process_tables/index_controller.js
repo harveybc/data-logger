@@ -230,7 +230,7 @@ export class IndexController {
   // update the interactive plot
   rt_update() {
     // read values for the scoreboard and interactive plot
-    this.update_scoreboard();
+    this.scoreboard_update();
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
@@ -287,6 +287,45 @@ export class IndexController {
     })
   }
   
+  // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
+  transform_plot_data(response_data) {
+    let xy_points = [];
+    let min = 0;
+    let max = 1;
+    let prev_min = this.plot_min;
+    let prev_max = this.plot_max;
+    let x_max = 0;
+
+    for (let i = 0; i < response_data.length; i++) {
+      if (response_data[i].y > max) {
+        max = response_data[i].y;
+      }
+      if (response_data[i].y < min) {
+        min = response_data[i].y;
+      }
+      if (response_data[i].x > x_max) {
+        x_max = response_data[i].x;
+      }
+      xy_points.push([response_data[i].x, response_data[i].y]);
+    }
+    //if ((prev_min != min) || (prev_max != max)) {
+    try {
+      // console.log("update yaxis");
+      this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
+      this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
+      this.interactive_plot.getAxes().xaxis.options.min = x_max - this.num_points;
+      this.interactive_plot.getAxes().xaxis.options.max = x_max;
+      this.interactive_plot.setupGrid();
+      this.interactive_plot.draw();
+    }
+    catch (e) {
+      console.log(e);
+    }
+    this.plot_max = max;
+    this.plot_min = min;
+    return xy_points;
+  }
+
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
   axios_auth_instance() {
