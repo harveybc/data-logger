@@ -286,8 +286,6 @@ export class Dashboard {
     });
   }
     
-
-
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();

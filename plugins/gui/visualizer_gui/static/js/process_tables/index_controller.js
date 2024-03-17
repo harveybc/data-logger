@@ -133,11 +133,82 @@ export class IndexController {
     });
   }
 
+  // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+  gymfx_best_online_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    // get the best config_id 
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_route'])
+      .then((response) => {
+        that.gym_fx_best_online = response.data;
+      }, (error) => {
+        that.gym_fx_best_online = error.message;
+        console.log(error);
+      });
+  }
+
+
+
+  // call request that returns the best mse from table fe_training_error that has config.active == true
+  gymfx_max_training_score_() {
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    // use the response of api request
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index']['box_1_route'])
+      .then((response) => {
+        that.gym_fx_max_training_score = response.data;
+        return response.data;
+      }, (error) => {
+        that.gym_fx_max_training_score = error.message;
+        console.log(error);
+      });
+  }
+
+  // call request that returns the config id for the best mse from table fe_validation_error that has config.active == false
+  gymfx_best_offline_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    // use the result of api request
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_route'])
+      .then((response) => {
+        that.gym_fx_best_offline = response.data;
+        return response.data;
+      }, (error) => {
+        that.gym_fx_best_offline = error.message;
+        console.log(error);
+      });
+  }
+
+  // call request that returns the best mse from table fe_validation_error that has config.active == false
+  gymfx_max_validation_score_() {
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    // use the response of api request
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index']['box_3_route'])
+      .then((response) => {
+        that.gym_fx_max_validation_score = response.data;
+        return response.data;
+      }, (error) => {
+        that.gym_fx_max_validation_score = error.message;
+        console.log(error);
+      });
+  }
+
+  gymfx_online_plot_() {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    // use the result of api request
+    return axios_instance.get(this.p_conf_gui.gui_plugin_config.dashboard.rt_plot.data_route)
+  }
+
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
   axios_auth_instance() {
     let axios_instance = this.axiosBasicAuth("test", "pass");
     return axios_instance;
   }
+
 }
 
