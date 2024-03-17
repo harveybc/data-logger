@@ -1,5 +1,7 @@
 // process tables index view controller
 export class IndexController {
+  xy_points_ = [];
+  data_ = [];
   p_config_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
   process = window.process;
@@ -7,7 +9,10 @@ export class IndexController {
   page_num = window.page_num;
   total_pages = window.total_pages;
   num_rows = window.num_rows;
-
+  //Fetch data ever x milliseconds
+  realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
+  updateInterval = 1000 * window.interval;
+  
   constructor() {
     // get gymfx_process_list data from the server
     var that = this;
