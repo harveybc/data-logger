@@ -39,12 +39,13 @@ export class IndexController {
       */
     })
     //REALTIME TOGGLE
+    var that = this;
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
-        this.realtime = 'on'
-        this.rt_update()
+        that.realtime = 'on'
+        that.rt_update()
       } else {
-        this.realtime = 'off'
+        that.realtime = 'off'
       }
     });
   }
