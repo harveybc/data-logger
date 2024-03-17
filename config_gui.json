@@ -103,9 +103,28 @@
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
-                "rt_plot_visible": true,
+                "columns_visible": [
+                    "id",
+                    "timestamp",
+                    "balance",
+                    "reward"
+                ],
                 "scoreboard_visible": true,
-                "columns_visible": ["id", "timestamp", "balance", "reward" ]
+                "box_0_title": "BestOnline",
+                "box_1_title": "Tr.Score",
+                "box_2_title": "BestStored",
+                "box_3_title": "Val.Score",
+                "box_0_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+                "box_1_route": "/gym_fx/gym_fx_data/scoreboard?col=score&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+                "box_2_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+                "box_3_route": "/gym_fx/gym_fx_data/scoreboard?col=score_v&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+                "rt_plot_visible": true,
+                "rt_plot": {
+                    "title": "Online Training Score",
+                    "height": "180px",
+                    "interval": 2,
+                    "data_route": "/gym_fx/gym_fx_data/online_plot?num_points=250&val_col=score&best_col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True"
+                }
             },
             "create": {
                 "title": "Create GymFX Data",

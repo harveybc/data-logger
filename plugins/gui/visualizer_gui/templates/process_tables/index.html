@@ -106,7 +106,7 @@ input[type="radio"] {
         <div class="small-box bg-info">
           <div class="inner">
             <!-- box[0] data -->
-            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
+            <h3>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_title'] }}</h3>
             <h2 id="box_0_value" style="text-align:center;"></h2>
           </div>
           <div class="icon">
@@ -122,7 +122,7 @@ input[type="radio"] {
         <div class="small-box bg-success">
           <div class="inner">
             <!-- box[1] data -->
-            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
+            <h3>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_1_title'] }}</h3>
             <h2 id="box_1_value" style="text-align:center;"></h2>
           </div>
           <div class="icon">
@@ -137,7 +137,7 @@ input[type="radio"] {
         <div class="small-box bg-warning">
           <div class="inner">
             <!-- box[2] data -->
-            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
+            <h3>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_title'] }}</h3>
             <h2 id="box_2_value" style="text-align:center;"></h2>
           </div>
           <div class="icon">
@@ -152,7 +152,7 @@ input[type="radio"] {
         <div class="small-box bg-danger">
           <div class="inner">
             <!-- box[3] data -->
-            <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+            <h3>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_3_title'] }}</h3>
             <h2 id="box_3_value" style="text-align:center;"></h2>
           </div>
           <div class="icon">
@@ -179,7 +179,7 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
-                {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['title'] }}
+                {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['title'] }}
               </h3>
           
               <div class="card-tools">
@@ -198,7 +198,7 @@ input[type="radio"] {
 
             </div>
             <div class="card-body">
-              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['height'] }};"></div>
             </div>
             <!-- /.card-body-->
           </div>
