@@ -21,7 +21,7 @@ export class IndexController {
       this.index_list_update(res_list);
       this.scoreboard_update();
       // Draw interactive plot
-      this.interactive_plot = interactive_plot_();
+      this.interactive_plot = this.interactive_plot_();
       
       var that = this;
       // initialize realtime data fetching
