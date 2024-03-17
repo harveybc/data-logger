@@ -249,7 +249,7 @@ export class IndexController {
         setTimeout(function () { this.rt_update(); }.bind(this), 1000);
     }, (error) => {
       console.log(error);
-    });
+    }).bind(this);
   }
 
   interactive_plot_() {
