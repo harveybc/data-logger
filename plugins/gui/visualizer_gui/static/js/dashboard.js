@@ -386,7 +386,6 @@ export class Dashboard {
       // console.log("update yaxis");
       this.interactive_plot.getAxes().yaxis.options.min = this.plot_min;
       this.interactive_plot.getAxes().yaxis.options.max = this.plot_max;
-      
       this.interactive_plot.getAxes().xaxis.options.min = x_max - this.num_points;
       this.interactive_plot.getAxes().xaxis.options.max = x_max;
       this.interactive_plot.setupGrid();
