@@ -24,20 +24,20 @@ export class IndexController {
       }
       this.index_list_update(res_list);
       this.scoreboard_update();
-      // Draw interactive plot
-      this.interactive_plot = this.interactive_plot_();
-      // initialize realtime data fetching
-      if (this.realtime === 'on') {
-        try {
-          this.rt_update();
-        } catch (e) {
-          console.log(e);
-        }
-      }
-      /*
-        * END INTERACTIVE CHART
-      */
     })
+    // Draw interactive plot
+    this.interactive_plot = this.interactive_plot_();
+    // initialize realtime data fetching
+    if (this.realtime === 'on') {
+      try {
+        this.rt_update();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    /*
+      * END INTERACTIVE CHART
+    */
     //REALTIME TOGGLE
     var that = this;
     $('#realtime .btn').click(function () {
