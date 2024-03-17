@@ -18,9 +18,9 @@ export class IndexController {
         //console.log("obj = ", obj);
         res_list.push(obj);
       }
-
       that.index_list_update(res_list);
-      //console.log("res_list:" + JSON.stringify(res_list));
+      that.scoreboard_update();
+      
     })
   }
 
@@ -97,7 +97,7 @@ export class IndexController {
 
 
   // read values from the server
-  update_scoreboard() {
+  scoreboard_update() {
     var that = this;
     this.gymfx_best_online_().then((response) => {
       document.getElementById('box_0_value').innerHTML = that.gym_fx_best_online;
