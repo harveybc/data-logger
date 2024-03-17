@@ -90,6 +90,7 @@ input[type="radio"] {
 
   <!-- Main content -->
   <section class="content">
+    <div class="container-fluid" id="main_content"></div>
     <!-- Small boxes (Stat box) -->
     <!-- RT PLOT row -->
     {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
@@ -162,7 +163,7 @@ input[type="radio"] {
       </div>
       <!-- ./col -->
     </div>
-    <div class="container-fluid" id="main_content">
+    <div>
       <!-- RT PLOT row -->
       {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
         and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
@@ -172,9 +173,7 @@ input[type="radio"] {
       {% else %}
               <div class="row" style="display: none;">
       {% endif %}
-            
         <!-- Left col -->
-        <section class="container-fluid">
           <!-- Interactive chart -->
           <div class="card card-primary card-outline">
             <div class="card-header">
@@ -204,12 +203,10 @@ input[type="radio"] {
             <!-- /.card-body-->
           </div>
           <!-- /.card -->
-        </section>
       </div>
 
       <div class="row">
-        <section class="container-fluid">      
-          <!-- TABLE  -->
+         <!-- TABLE  -->
           <div class="card card-primary card-outline">
             <div class="card-header">
 <!-- TODO: Verify if gui_plugin_config key exists for current process and table -->
