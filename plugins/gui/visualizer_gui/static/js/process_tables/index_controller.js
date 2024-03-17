@@ -46,7 +46,7 @@ export class IndexController {
       } else {
         this.realtime = 'off'
       }
-    }).bind(this);
+    });
   }
 
   request_view_data() {
