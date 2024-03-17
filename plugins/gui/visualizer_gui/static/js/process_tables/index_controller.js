@@ -34,19 +34,19 @@ export class IndexController {
           console.log(e);
         }
       }
-      //REALTIME TOGGLE
-      $('#realtime .btn').click(function () {
-        if ($(this).data('toggle') === 'on') {
-          this.realtime = 'on'
-          this.rt_update()
-        } else {
-          this.realtime = 'off'
-        }
-      }).bind(this);
       /*
         * END INTERACTIVE CHART
       */
     })
+    //REALTIME TOGGLE
+    $('#realtime .btn').click(function () {
+      if ($(this).data('toggle') === 'on') {
+        this.realtime = 'on'
+        this.rt_update()
+      } else {
+        this.realtime = 'off'
+      }
+    }).bind(this);
   }
 
   request_view_data() {
