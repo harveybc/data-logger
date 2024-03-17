@@ -18,12 +18,11 @@ export class IndexController {
         //console.log("obj = ", obj);
         res_list.push(obj);
       }
-      that.index_list_update(res_list);
-      that.scoreboard_update();
+      this.index_list_update(res_list);
+      this.scoreboard_update();
       // Draw interactive plot
       this.interactive_plot = interactive_plot_();
       
-
       var that = this;
       // initialize realtime data fetching
       if (this.realtime === 'on') {
