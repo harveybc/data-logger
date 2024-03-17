@@ -12,7 +12,7 @@ export class IndexController {
   //Fetch data ever x milliseconds
   realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
   updateInterval = 1000 * window.interval;
-  
+
   constructor() {
     // get gymfx_process_list data from the server
     var that = this;
@@ -32,7 +32,7 @@ export class IndexController {
       // initialize realtime data fetching
       if (this.realtime === 'on') {
         try {
-          this.update();
+          this.rt_update();
         } catch (e) {
           console.log(e);
         }
