@@ -322,6 +322,9 @@ input[type="radio"] {
 </script>
 <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
 <script>
+  // Gets data from controller5
+  var interval = {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['interval'] }};
+  var data = [];
   // when page finishes loading, sets the values to the ones from data
   $(document).ready(function () {
     // sets the menu highlight
