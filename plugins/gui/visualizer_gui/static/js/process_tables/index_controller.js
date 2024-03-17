@@ -42,7 +42,7 @@ export class IndexController {
         } else {
           this.realtime = 'off'
         }
-      }, bind(this));
+      }).bind(this);
       /*
         * END INTERACTIVE CHART
       */
