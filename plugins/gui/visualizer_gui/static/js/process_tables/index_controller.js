@@ -26,7 +26,42 @@ export class IndexController {
       this.scoreboard_update();
     })
     // Draw interactive plot
-    this.interactive_plot = this.interactive_plot_();
+    this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
+      grid: {
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        tickColor: '#f3f3f3'
+      },
+      axisLabels: {
+        show: true
+      },
+      series: {
+        shadowSize: 1, // Drawing is faster without shadows
+        color: '#3c8dbc',
+        lines: {
+          line_width: 2,
+          fill: true, // Converts the line chart to area chart
+          show: true
+        }
+      },
+      yaxes: [{
+        axisLabel: 'Score: (Profit-Risk)/InitialCapital',
+        min: this.plot_min,
+        max: this.plot_max,
+        show: true
+      }],
+      xaxes: [{
+        axisLabel: 'Iteration Number',
+        showTicks: true,
+        gridLines: true,
+        show: true
+      }],
+      selection: {
+        mode: "x"
+      }
+    })
+    
+
     // initialize realtime data fetching
     if (this.realtime === 'on') {
       try {
@@ -121,7 +156,6 @@ export class IndexController {
     document.getElementById("last_page_link").href = "/" + this.process.name + "/" + this.table.name +"/view_index?page_num="+(this.total_pages);
   }
 
-
   // read values from the server
   scoreboard_update() {
     var that = this;
@@ -173,8 +207,6 @@ export class IndexController {
         console.log(error);
       });
   }
-
-
 
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
@@ -253,43 +285,6 @@ export class IndexController {
     });
   }
 
-  interactive_plot_() {
-    return $.plot('#interactive', [{ data: this.xy_points_ }], {
-      grid: {
-        borderColor: '#f3f3f3',
-        borderWidth: 1,
-        tickColor: '#f3f3f3'
-      },
-      axisLabels: {
-        show: true
-      },
-      series: {
-        shadowSize: 1, // Drawing is faster without shadows
-        color: '#3c8dbc',
-        lines: {
-          line_width: 2,
-          fill: true, // Converts the line chart to area chart
-          show: true
-        }
-      },
-      yaxes: [{
-        axisLabel: 'Score: (Profit-Risk)/InitialCapital',
-        min: this.plot_min,
-        max: this.plot_max,
-        show: true
-      }],
-      xaxes: [{
-        axisLabel: 'Iteration Number',
-        showTicks: true,
-        gridLines: true,
-        show: true
-      }],
-      selection: {
-        mode: "x"
-      }
-    })
-  }
-  
   // This function transforms the response json [{"x":x0, "y":y0},...] to a 2D array [[x0,y0],...]required  by flot.js
   transform_plot_data(response_data) {
     let xy_points = [];
