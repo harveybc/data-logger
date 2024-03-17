@@ -325,8 +325,8 @@ input[type="radio"] {
   // Gets data from config
   {%  if ((p_config_gui['gui_plugin_config'][table['name']] is defined 
     and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined) 
-      and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot'] is defined ) 
-        and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['interval'] is defined ) %}
+      and (p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot'] is defined  
+        and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['interval'] is defined )) %}
     var interval = {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['interval'] }};
   {% else %}
     var interval = 1000;
