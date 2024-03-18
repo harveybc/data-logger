@@ -31,6 +31,7 @@ export class IndexController {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
+      console.log("update1:" + JSON.stringify(this.xy_points_));
       //if (that.realtime === 'on')
       //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
