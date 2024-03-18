@@ -25,61 +25,54 @@ export class IndexController {
       this.index_list_update(res_list);
       this.scoreboard_update();
     })
-   
+   // Online Plot
+    that.interactive_plot = $.plot('#interactive', [], {
+      grid: {
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        tickColor: '#f3f3f3'
+      },
+      axisLabels: {
+        show: true
+      },
+      series: {
+        shadowSize: 1, // Drawing is faster without shadows
+        color: '#3c8dbc',
+        lines: {
+          line_width: 2,
+          fill: true, // Converts the line chart to area chart
+          show: true
+        }
+      },
+      yaxes: [{
+        axisLabel: 'Score: (Profit-Risk)/InitialCapital',
+        min: this.plot_min,
+        max: this.plot_max,
+        show: true
+      }],
+      xaxes: [{
+        axisLabel: 'Iteration Number',
+        showTicks: true,
+        gridLines: true,
+        show: true
+      }],
+      selection: {
+        mode: "x"
+      }
+    })
+
     // get the plot data from the server
     var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       that.xy_points_ = that.transform_plot_data(response.data);
-      // console.log("update1:" + JSON.stringify(this.xy_points_));
-      that.interactive_plot = $.plot('#interactive', [that.xy_points_], {
-        grid: {
-          borderColor: '#f3f3f3',
-          borderWidth: 1,
-          tickColor: '#f3f3f3'
-        },
-        axisLabels: {
-          show: true
-        },
-        series: {
-          shadowSize: 1, // Drawing is faster without shadows
-          color: '#3c8dbc',
-          lines: {
-            line_width: 2,
-            fill: true, // Converts the line chart to area chart
-            show: true
-          }
-        },
-        yaxes: [{
-          axisLabel: 'Score: (Profit-Risk)/InitialCapital',
-          min: that.plot_min,
-          max: that.plot_max,
-          show: true
-        }],
-        xaxes: [{
-          axisLabel: 'Iteration Number',
-          showTicks: true,
-          gridLines: true,
-          show: true
-        }],
-        selection: {
-          mode: "x"
-        }
-      })
+      //console.log("update1:" + JSON.stringify(this.xy_points_));
       //if (that.realtime === 'on')
       //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
       console.log(error);
     });
     //Since the axes don't change, we don't need to call plot.setupGrid()
-    // initialize realtime data fetching
-    if (this.realtime === 'on') {
-      try {
-        this.rt_update();
-      } catch (e) {
-        console.log(e);
-      }
-    }
     var that = this;
     //REALTIME TOGGLE
     $('#realtime .btn').click(function () {
@@ -280,7 +273,7 @@ export class IndexController {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       that.xy_points_ = that.transform_plot_data(response.data);
-      console.log("update3:" + JSON.stringify(that.xy_points_));
+      //console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         that.interactive_plot.setData([that.xy_points_]);
