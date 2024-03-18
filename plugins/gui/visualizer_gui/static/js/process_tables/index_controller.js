@@ -61,7 +61,8 @@ export class IndexController {
       }
     })
     
-
+    this.rt_update();
+    
     // initialize realtime data fetching
     if (this.realtime === 'on') {
       try {
@@ -269,7 +270,7 @@ export class IndexController {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       that.xy_points_ = that.transform_plot_data(response.data);
-      console.log("update:" + JSON.stringify(this.xy_points_));
+      //console.log("update:" + JSON.stringify(this.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         that.interactive_plot.setData([that.xy_points_]);
