@@ -75,7 +75,7 @@ export class IndexController {
     // initialize realtime data fetching
     if (this.realtime === 'on') {
       try {
-        this.update();
+        this.rt_update();
       } catch (e) {
         console.log(e);
       }
@@ -85,7 +85,7 @@ export class IndexController {
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
         that.realtime = 'on'
-        that.update()
+        that.rt_update()
       } else {
         that.realtime = 'off'
       }
