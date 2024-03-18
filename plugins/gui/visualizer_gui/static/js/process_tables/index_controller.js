@@ -26,7 +26,7 @@ export class IndexController {
       this.scoreboard_update();
     })
    // Online Plot
-    that.interactive_plot = $.plot('#interactive', [], {
+    this.interactive_plot = $.plot('#interactive', [], {
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
