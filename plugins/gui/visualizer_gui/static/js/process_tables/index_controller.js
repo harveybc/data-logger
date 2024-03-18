@@ -32,17 +32,17 @@ export class IndexController {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
       console.log("update1:" + JSON.stringify(this.xy_points_));
+      this.interactive_plot.setData([this.xy_points_]);
       //if (that.realtime === 'on')
       //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
       console.log(error);
     });
-    //this.interactive_plot.setData(this.xy_points_);
-    //that.interactive_plot.setData([that.xy_points_]);
+    //
     //Since the axes don't change, we don't need to call plot.setupGrid()
     console.log("update2:" + JSON.stringify(this.xy_points_));
     // Draw interactive plot
-    this.interactive_plot = $.plot('#interactive', this.xy_points_ , {
+    this.interactive_plot = $.plot('#interactive', [this.xy_points_] , {
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
