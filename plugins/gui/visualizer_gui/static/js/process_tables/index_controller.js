@@ -25,6 +25,7 @@ export class IndexController {
       this.index_list_update(res_list);
       this.scoreboard_update();
     })
+    console.log("test0");
     // get the plot data from the server
     var that = this;
     this.gymfx_online_plot_().then((response) => {
