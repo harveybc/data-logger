@@ -289,8 +289,8 @@ export class IndexController {
       } catch (e) {
         console.log(e);
       }
-      //if (that.realtime === 'on')
-      //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
+      if (that.realtime === 'on')
+        setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
       console.log(error);
     });
