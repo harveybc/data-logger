@@ -25,7 +25,6 @@ export class IndexController {
       this.index_list_update(res_list);
       this.scoreboard_update();
     })
-    this.rt_update()
     // Draw interactive plot
     this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
       grid: {
@@ -72,6 +71,7 @@ export class IndexController {
         console.log(e);
       }
     }
+    
     /*
       * END INTERACTIVE CHART
     */
