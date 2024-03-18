@@ -26,7 +26,7 @@ export class IndexController {
       this.scoreboard_update();
     })
     // Draw interactive plot
-    this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
+    this.interactive_plot = $.plot('#interactive', this.xy_points_ , {
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
