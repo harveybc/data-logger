@@ -67,14 +67,14 @@ export class IndexController {
       //console.log("pre:" + JSON.stringify(response.data));
       that.xy_points_ = that.transform_plot_data(response.data);
       //console.log("update1:" + JSON.stringify(this.xy_points_));
-      //if (that.realtime === 'on')
-      //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
       console.log(error);
     });
     //Since the axes don't change, we don't need to call plot.setupGrid()
     var that = this;
     //REALTIME TOGGLE
+    if (that.realtime === 'on')
+      setTimeout(function () { this.rt_update(); }, 1000);
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
         that.realtime = 'on'
