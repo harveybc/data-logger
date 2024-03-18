@@ -25,12 +25,12 @@ export class IndexController {
       this.index_list_update(res_list);
       this.scoreboard_update();
     })
-    console.log("test0");
+   
     // get the plot data from the server
     var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
-      that.xy_points_ = that.transform_plot_data(response.data);
+      this.xy_points_ = this.transform_plot_data(response.data);
       //if (that.realtime === 'on')
       //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
