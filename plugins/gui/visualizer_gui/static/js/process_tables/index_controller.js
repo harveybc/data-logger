@@ -32,7 +32,40 @@ export class IndexController {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
       console.log("update1:" + JSON.stringify(this.xy_points_));
-      this.interactive_plot.setData([this.xy_points_]);
+      this.interactive_plot = $.plot('#interactive', [this.xy_points_], {
+        grid: {
+          borderColor: '#f3f3f3',
+          borderWidth: 1,
+          tickColor: '#f3f3f3'
+        },
+        axisLabels: {
+          show: true
+        },
+        series: {
+          shadowSize: 1, // Drawing is faster without shadows
+          color: '#3c8dbc',
+          lines: {
+            line_width: 2,
+            fill: true, // Converts the line chart to area chart
+            show: true
+          }
+        },
+        yaxes: [{
+          axisLabel: 'Score: (Profit-Risk)/InitialCapital',
+          min: this.plot_min,
+          max: this.plot_max,
+          show: true
+        }],
+        xaxes: [{
+          axisLabel: 'Iteration Number',
+          showTicks: true,
+          gridLines: true,
+          show: true
+        }],
+        selection: {
+          mode: "x"
+        }
+      })
       //if (that.realtime === 'on')
       //  setTimeout(function () { this.rt_update(); }.bind(that), 1000);
     }, (error) => {
@@ -42,41 +75,6 @@ export class IndexController {
     //Since the axes don't change, we don't need to call plot.setupGrid()
     console.log("update2:" + JSON.stringify(this.xy_points_));
     // Draw interactive plot
-    this.interactive_plot = $.plot('#interactive', [this.xy_points_] , {
-      grid: {
-        borderColor: '#f3f3f3',
-        borderWidth: 1,
-        tickColor: '#f3f3f3'
-      },
-      axisLabels: {
-        show: true
-      },
-      series: {
-        shadowSize: 1, // Drawing is faster without shadows
-        color: '#3c8dbc',
-        lines: {
-          line_width: 2,
-          fill: true, // Converts the line chart to area chart
-          show: true
-        }
-      },
-      yaxes: [{
-        axisLabel: 'Score: (Profit-Risk)/InitialCapital',
-        min: this.plot_min,
-        max: this.plot_max,
-        show: true
-      }],
-      xaxes: [{
-        axisLabel: 'Iteration Number',
-        showTicks: true,
-        gridLines: true,
-        show: true
-      }],
-      selection: {
-        mode: "x"
-      }
-    })
-    this.interactive_plot.draw();
     //this.rt_update();
 
    
