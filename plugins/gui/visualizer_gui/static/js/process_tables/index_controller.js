@@ -73,8 +73,9 @@ export class IndexController {
     //Since the axes don't change, we don't need to call plot.setupGrid()
     var that = this;
     //REALTIME TOGGLE
-    if (that.realtime === 'on')
-      setTimeout(function () { this.rt_update(); }, 1000);
+    if (this.realtime === 'on')
+    that = this;
+      setTimeout(function () { that.rt_update(); }.bind(this), 1000);
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
         that.realtime = 'on'
