@@ -77,28 +77,7 @@ export class IndexController {
     this.interactive_plot.draw();
     //this.rt_update();
 
-    // initialize realtime data fetching
-    if (this.realtime === 'on') {
-      try {
-        //this.rt_update();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    
-    /*
-      * END INTERACTIVE CHART
-    */
-    //REALTIME TOGGLE
-    var that = this;
-    $('#realtime .btn').click(function () {
-      if ($(that).data('toggle') === 'on') {
-        that.realtime = 'on'
-        //that.rt_update()
-      } else {
-        that.realtime = 'off'
-      }
-    });
+   
   }
 
   request_view_data() {
