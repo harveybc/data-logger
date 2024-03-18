@@ -71,9 +71,25 @@ export class IndexController {
     }, (error) => {
       console.log(error);
     });
-    //
     //Since the axes don't change, we don't need to call plot.setupGrid()
-    console.log("update2:" + JSON.stringify(this.xy_points_));
+    // initialize realtime data fetching
+    if (this.realtime === 'on') {
+      try {
+        this.update();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    var that = this;
+    //REALTIME TOGGLE
+    $('#realtime .btn').click(function () {
+      if ($(this).data('toggle') === 'on') {
+        that.realtime = 'on'
+        that.update()
+      } else {
+        that.realtime = 'off'
+      }
+    })
     // Draw interactive plot
     //this.rt_update();
 
