@@ -30,7 +30,7 @@ export class IndexController {
     var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
-      that.xy_points_ = that.transform_plot_data(response.data).bind(that);
+      that.xy_points_ = that.transform_plot_data(response.data);
       // console.log("update1:" + JSON.stringify(this.xy_points_));
       that.interactive_plot = $.plot('#interactive', [that.xy_points_], {
         grid: {
@@ -279,7 +279,7 @@ export class IndexController {
     var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
-      that.xy_points_ = that.transform_plot_data(response.data).bind(that);
+      that.xy_points_ = that.transform_plot_data(response.data);
       console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
