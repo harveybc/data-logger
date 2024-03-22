@@ -273,18 +273,18 @@ export class IndexController {
     var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
-      that.xy_points_ = that.transform_plot_data(response.data);
+      this.xy_points_ = this.transform_plot_data(response.data);
       //console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
-        that.interactive_plot.setData(that.xy_points_);
+        this.interactive_plot.setData(that.xy_points_);
         //Since the axes don't change, we don't need to call plot.setupGrid()
-        that.interactive_plot.draw();
+        this.interactive_plot.draw();
       } catch (e) {
         console.log(e);
       }
-      if (that.realtime === 'on')
-        setTimeout(function () { this.rt_update(); }.bind(that), 1000);
+      if (this.realtime === 'on')
+        setTimeout(function () { this.rt_update(); }.bind(this), 1000);
     }, (error) => {
       console.log(error);
     });
