@@ -270,14 +270,13 @@ export class IndexController {
   rt_update() {
     // read values for the scoreboard and interactive plot
     this.scoreboard_update();
-    var that = this;
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
       //console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
-        this.interactive_plot.setData(that.xy_points_);
+        this.interactive_plot.setData([that.xy_points_]);
         //Since the axes don't change, we don't need to call plot.setupGrid()
         this.interactive_plot.draw();
       } catch (e) {
