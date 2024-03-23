@@ -274,7 +274,7 @@ export class IndexController {
   // update the interactive plot
   update() {
     // read values for the scoreboard and interactive plot
-    this.update_scoreboard();
+    this.scoreboard_updates();
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
