@@ -4,31 +4,28 @@ export class IndexController {
   data_ = [];
   p_config_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
-  xy_points_ = [];
-  points = [];
-  process_list = [0, 1, 2, 3];
-  process = 0;
-  status = 'Halted';
-  gym_fx_best_online = 1;
-  gym_fx_max_training_score = 0.0;
-  gym_fx_best_offline = 1;
-  gym_fx_max_validation_score = 0.0;
-  plot_min = 0.0;
-  plot_max = 10000;
-  v_plot_min = 0;
-  v_plot_max = 10000;
+  process = window.process;
+  table = window.table;
+  page_num = window.page_num;
+  total_pages = window.total_pages;
+  num_rows = window.num_rows;
   //Fetch data ever x milliseconds
   realtime = 'on'; //If == to on then fetch data every x seconds. else stop fetching
   updateInterval = 1000 * window.interval;
-  data_ = [];
-  num_points = window.num_points;
-  val_plot_num_points = window.val_plot_num_points;
-  p_conf_gui = window.p_config_gui;
-  p_conf_store = window.p_config_store;
-  that = this;
 
   constructor() {
     // get gymfx_process_list data from the server
+    this.request_view_data().then((response) => {
+      var res_list = [];
+      for (let i = 0 ; i < response.data.length ; i++) {
+        var obj = response.data[i]; 
+        //console.log("obj = ", obj);
+        res_list.push(obj);
+      }
+      this.index_list_update(res_list);
+      this.scoreboard_update();
+    })
+   // Online Plot
     this.interactive_plot = $.plot('#interactive', [{ data: this.xy_points_ }], {
       grid: {
         borderColor: '#f3f3f3',
@@ -53,11 +50,6 @@ export class IndexController {
         max: this.plot_max,
         show: true
       }],
-
-      //xaxis: {
-      //   mode: "time", 
-      //  timeformat:"%y/%m/%d %H:%M:%S"        
-      //  }
       xaxes: [{
         axisLabel: 'Iteration Number',
         showTicks: true,
@@ -69,29 +61,33 @@ export class IndexController {
       }
     })
 
-
+    // get the plot data from the server
     var that = this;
-    // initialize realtime data fetching
-    if (this.realtime === 'on') {
-      try {
-        this.update();
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    this.gymfx_online_plot_().then((response) => {
+      //console.log("pre:" + JSON.stringify(response.data));
+      that.xy_points_ = that.transform_plot_data(response.data);
+      //console.log("update1:" + JSON.stringify(this.xy_points_));
+    }, (error) => {
+      console.log(error);
+    });
+    //Since the axes don't change, we don't need to call plot.setupGrid()
     var that = this;
     //REALTIME TOGGLE
+    if (this.realtime === 'on')
+    that = this;
+      setTimeout(function () { that.rt_update(); }.bind(this), 1000);
     $('#realtime .btn').click(function () {
       if ($(this).data('toggle') === 'on') {
         that.realtime = 'on'
-        that.update()
+        that.rt_update()
       } else {
         that.realtime = 'off'
       }
     })
-    /*
-      * END INTERACTIVE CHART
-      */
+    // Draw interactive plot
+    //this.rt_update();
+
+   
   }
 
   request_view_data() {
@@ -267,18 +263,17 @@ export class IndexController {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    //return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index'].rt_plot.data_route)
-    return axios_instance.get(this.p_config_gui['gui_plugin_config'].dashboard.rt_plot.data_route)
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index'].rt_plot.data_route)
   }
   
   // update the interactive plot
-  update() {
+  rt_update() {
     // read values for the scoreboard and interactive plot
     this.scoreboard_update();
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
-      //console.log("update:" + JSON.stringify(this.xy_points_));
+      //console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         this.interactive_plot.setData([this.xy_points_]);
@@ -288,7 +283,7 @@ export class IndexController {
         console.log(e);
       }
       if (this.realtime === 'on')
-        setTimeout(function () { this.update(); }.bind(this), 1000);
+        setTimeout(function () { this.rt_update(); }.bind(this), 1000);
     }, (error) => {
       console.log(error);
     });
