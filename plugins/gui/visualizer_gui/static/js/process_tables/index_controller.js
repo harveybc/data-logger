@@ -27,6 +27,9 @@ export class IndexController {
   that = this;
   table = window.table;
   process = window.process;
+  page_num = window.page_num;
+  total_pages = window.total_pages;
+  num_rows = window.num_rows;
 
   constructor() {
     // get gymfx_process_list data from the server
