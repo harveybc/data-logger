@@ -7,7 +7,6 @@ export class IndexController {
   xy_points_ = [];
   points = [];
   process_list = [0, 1, 2, 3];
-  process = 0;
   status = 'Halted';
   gym_fx_best_online = 1;
   gym_fx_max_training_score = 0.0;
@@ -26,6 +25,8 @@ export class IndexController {
   p_conf_gui = window.p_config_gui;
   p_conf_store = window.p_config_store;
   that = this;
+  table = window.table;
+  process = window.process;
 
   constructor() {
     // get gymfx_process_list data from the server
