@@ -282,8 +282,9 @@ export class IndexController {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
     // use the result of api request
-    //return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index'].rt_plot.data_route)
-    return axios_instance.get(this.p_config_gui['gui_plugin_config'].dashboard.rt_plot.data_route)
+    //return axios_instance.get(this.p_config_gui['gui_plugin_config'].dashboard.rt_plot.data_route)
+    return axios_instance.get(this.p_config_gui['gui_plugin_config'][table['name']]['index'].rt_plot.data_route)
+    
   }
   
   // update the interactive plot
