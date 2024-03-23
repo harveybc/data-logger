@@ -308,7 +308,12 @@ input[type="radio"] {
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
+<!-- set page_num if is not defined  -->
+{% if num__points is not defined %}
+<script> var num_points = 100; </script>
+{% else %}
+<script> var num_points = {{ num_points }}; </script>
+{% endif %}
 
 
 <script type="module">

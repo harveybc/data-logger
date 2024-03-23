@@ -483,7 +483,7 @@ export class Dashboard {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
-      console.log("update:" + JSON.stringify(this.xy_points_));
+      //console.log("update:" + JSON.stringify(this.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         this.interactive_plot.setData([this.xy_points_]);
