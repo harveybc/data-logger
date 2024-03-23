@@ -276,7 +276,7 @@ export class IndexController {
       //console.log("update3:" + JSON.stringify(that.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
-        this.interactive_plot.setData([that.xy_points_]);
+        this.interactive_plot.setData([this.xy_points_]);
         //Since the axes don't change, we don't need to call plot.setupGrid()
         this.interactive_plot.draw();
       } catch (e) {
