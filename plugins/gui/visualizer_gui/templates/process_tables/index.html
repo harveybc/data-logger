@@ -92,11 +92,11 @@ input[type="radio"] {
   <section class="content">
     <div class="container-fluid" id="main_content">
     <!-- Small boxes (Stat box) -->
-    <!-- RT PLOT row -->
+    <!-- Scoreboard row -->
     {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
       and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
-        and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot_visible'] is defined )
-          and p_config_gui['gui_plugin_config'][table['name']]['index']['scoreboard_visible'] == true %}
+        and p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_title'] is defined )
+          and p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_title'] == true %}
             <div class="row">
     {% else %}
             <div class="row" style="display: none;">
@@ -106,8 +106,13 @@ input[type="radio"] {
         <div class="small-box bg-info">
           <div class="inner">
             <!-- box[0] data -->
-            
+            {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+              and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_title'] is defined )%}
             <h5>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_0_title'] }}</h5>
+            {% else %}
+            <h5>Var 0</h5>
+            {% endif %}
             <h4 id="box_0_value" style="text-align:center;"></h4>
           </div>
           <div class="icon">
@@ -123,8 +128,15 @@ input[type="radio"] {
         <div class="small-box bg-success">
           <div class="inner">
             <!-- box[1] data -->
+            {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+              and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_1_title'] is defined ) %}
             <h5>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_1_title'] }}</h5>
-            <h4 id="box_1_value" style="text-align:center;"></h4>
+            {% else %}
+            <h5>Var 1</h5>
+            {% endif %}
+            
+            <h4 id ="box_1_value" style="text-align:center;"></h4>
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
@@ -138,7 +150,13 @@ input[type="radio"] {
         <div class="small-box bg-warning">
           <div class="inner">
             <!-- box[2] data -->
+            {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+              and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_title'] is defined ) %}
             <h5>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_title'] }}</h5>
+            {% else %}  
+            <h5>Var 2</h5>
+            {% endif %}
             <h4 id="box_2_value" style="text-align:center;"></h4>
           </div>
           <div class="icon">
@@ -153,7 +171,14 @@ input[type="radio"] {
         <div class="small-box bg-danger">
           <div class="inner">
             <!-- box[3] data -->
+            {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+              and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_title'] is defined ) %}
             <h5>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_3_title'] }}</h5>
+            {% else %}  
+            <h5>Var 3</h5>
+            {% endif %}
+          
             <h4 id="box_3_value" style="text-align:center;"></h4>
           </div>
           <div class="icon">
@@ -299,6 +324,7 @@ input[type="radio"] {
                 {% endif %}
 
 
+                
                 &nbsp Page <b id="page_num" >{{ page_num }}</b> of <b id="total_pages">{{ total_pages }}</b>. <a id="first_page_link">First</a>, <a id="previous_page_link">Previous</a>, <a id="next_page_link">Next</a>, <a id="last_page_link">Last</a>.
               </div>
               <!-- /.table-responsive -->
