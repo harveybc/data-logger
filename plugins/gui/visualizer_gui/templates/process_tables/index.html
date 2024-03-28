@@ -179,7 +179,15 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
+                {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+                  and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                    and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot'] is defined )
+                      and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['title'] is defined %}
                 {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['title'] }}
+                {% else %}
+                Real Time Plot
+                {% endif %}
+
               </h3>
           
               <div class="card-tools">
@@ -198,7 +206,11 @@ input[type="radio"] {
 
             </div>
             <div class="card-body">
-              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['height'] }};"></div>
+              {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
+                and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
+                 and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot'] is defined )
+                  and p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['height'] is defined %}
+                <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config'][table['name']]['index']['rt_plot']['height'] }};"></div>
             </div>
             <!-- /.card-body-->
           </div>
