@@ -173,7 +173,7 @@ input[type="radio"] {
             <!-- box[3] data -->
             {% if ((p_config_gui['gui_plugin_config'][table['name']] is defined
               and p_config_gui['gui_plugin_config'][table['name']]['index'] is defined)
-                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_2_title'] is defined ) %}
+                and p_config_gui['gui_plugin_config'][table['name']]['index']['box_3_title'] is defined ) %}
             <h5>{{ p_config_gui['gui_plugin_config'][table['name']]['index']['box_3_title'] }}</h5>
             {% else %}  
             <h5>Var 3</h5>
@@ -280,6 +280,7 @@ input[type="radio"] {
                                 {% for column in p_config_gui['gui_plugin_config'][table['name']]['index']['columns_visible'] %}
                                     <th>{{ column }}</th>
                                 {% endfor %}
+                                <th>View</th><th>Edit</th><th>Delete</th>
                       {%  else %}
                             {% set process_obj = process %}
                             {% set table_obj = table %}
@@ -297,6 +298,9 @@ input[type="radio"] {
                               {% for column in table_obj['columns'] %}
                                 <th>{{ column['name'] }}</th>
                               {% endfor %}
+                              <th>View</th>
+                              <th>Edit</th>
+                              <th>Delete</th>
                       {%  endif %}
                       <!-- TODO: Botones de edit, view y delete -->
                       <!-- TODO: Paginación -->
