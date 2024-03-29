@@ -143,6 +143,9 @@ export class IndexController {
               let col = this.p_config_gui.gui_plugin_config[table['name']].index.columns_visible[j];
               p_list += (`<td>${data_[i][col]}</td>`);
             }
+
+            p_list += "<td>View</td><td>Edit</td><td>Delete</td>"
+                    
             p_list += (`</tr>`);
           }
       // else show all columns in the table.columns list
@@ -154,6 +157,8 @@ export class IndexController {
           let col = table.columns[j].name;
           p_list += (`<td>${data_[i][col]}</td>`);
         }
+        p_list += "<td>View</td><td>Edit</td><td>Delete</td>"
+
         p_list += (`</tr>`);
       }
     }
