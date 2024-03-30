@@ -147,7 +147,7 @@ export class IndexController {
             //p_list += "<td>View</td><td>Edit</td><td>Delete</td>"
             p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view?id=" + data_[i]["id"] +  '"><i class="fas fa-eye"></i></a></td>';
             p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/edit?id=" + data_[i]["id"] + '"><i class="fas fa-pen"></i></a></td>';
-            p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/delete?id=" + data_[i]["id"] + '"><i class="fas fa-trash">Delete</i></a></td>';
+            p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/delete?id=" + data_[i]["id"] + '"><i class="fas fa-trash"></i></a></td>';
             p_list += (`</tr>`);
           }
       // else show all columns in the table.columns list
