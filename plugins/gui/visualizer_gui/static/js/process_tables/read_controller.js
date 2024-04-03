@@ -19,7 +19,7 @@ export class ReadController {
         axios.get(url, { params: {} })
             .then((response) => {
               let data_ = response.data;
-              print(data_);
+              console.log(data_); 
               let table = document.getElementById('detail_table');
               var p_list = "";
               
