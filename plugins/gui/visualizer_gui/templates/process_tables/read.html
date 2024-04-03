@@ -136,11 +136,15 @@
   <!-- AdminLTE for demo purposes -->
   <script src="/static/assets/js/demo.js"></script>
   <!-- page script -->
+<script>
+  var id = {{ id }};
+  
+</script>
 
 <script type="module">
   import "/static/js/buffer-6.0.3.min.js"
   import { ReadController } from "/static/js/process_tables/read_controller.js"
-  var id = {{ id }};
+  
   var read_controller = new ReadController();
 </script>
 
