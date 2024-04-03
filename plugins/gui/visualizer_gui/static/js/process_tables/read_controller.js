@@ -19,10 +19,11 @@ export class ReadController {
         axios.get(url, { params: {} })
             .then((response) => {
               let data_ = JSON.parse(response.data);
+              print(data_);
               let table = document.getElementById('detail_table');
               var p_list = "";
               
-              for (let column in table.columns) {
+              for (var column in table.columns) {
                 let col_name = column.name;
                 p_list += (`<tr>`);
                 p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
