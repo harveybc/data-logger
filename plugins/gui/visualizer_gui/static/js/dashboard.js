@@ -33,6 +33,9 @@ export class Dashboard {
         borderColor: '#f3f3f3',
         borderWidth: 1,
         tickColor: '#f3f3f3'
+      }, 
+      axisLabels: {
+        show: true
       },
       series: {
         shadowSize: 1, // Drawing is faster without shadows
@@ -43,21 +46,23 @@ export class Dashboard {
           show: true
         }
       },
-      yaxis: {
+      yaxes: [{
+        axisLabel: 'Score: (Profit-Risk)/InitialCapital',
         min: this.plot_min,
         max: this.plot_max,
         show: true
-      },
+      }],
       
       //xaxis: {
       //   mode: "time", 
       //  timeformat:"%y/%m/%d %H:%M:%S"        
       //  }
-      xaxis: {
+      xaxes: [{
+        axisLabel: 'Iteration Number',
         showTicks: true,
         gridLines: true,
         show: true
-      },
+      }],
       selection: {
         mode: "x"
       }
@@ -108,7 +113,7 @@ export class Dashboard {
         mode: "x"
       },
       grid: {
-        markings: this.order_status_areas
+        //markings: this.order_status_areas.bind(this)
       }
     };
     //console.log("befoplot 1:" + response.data);
@@ -141,19 +146,19 @@ export class Dashboard {
     // get gymfx_validation_plot data from the server
     this.gymfx_validation_plot_().then((response) => {
       var plot_data = response.data;
-      // console.log("plot_data = " + plot_data);
+      console.log("plot_data = " + plot_data);
       // prepare the data  
       that.data_ = that.transform_validation_plot_data(plot_data);
-      // console.log("that.data_.xy_equity = " + that.data_.xy_equity);
+      console.log("that.data_.xy_equity = " + that.data_.xy_equity);
       // TODO: update validation_plot_data and options.grid.markings function
       // for each that.data_ a ppend to val_list tbody elementz
       that.val_list_update(0,8,plot_data);      
-
+     
       try {
         // that.interactive_plot.setData(that.xy_points_);
         that.validation_plot.setData([that.data_.xy_equity]);
         that.overview.setData([that.data_.xy_equity]);
-        that.validation_plot.getOptions().grid.markings = that.order_status_areas
+        that.validation_plot.getOptions().grid.markings = that.order_status_areas.bind(that);
         plot = that.validation_plot;
         overview = that.overview;
         // Since the axes don't change, we don't need to call plot.setupGrid()
@@ -177,7 +182,6 @@ export class Dashboard {
 
     /* END LINE CHART */
     //$("body").on("mouseover-highlight", this.onMouseover)    
-    this.order_status_areas = this.order_status_areas.bind(this); 
 
     // now connect the two
     $(document).on('plotselected', '#placeholder', function (event, ranges) {
@@ -202,6 +206,18 @@ export class Dashboard {
     //this.val_list_update();
     //this.process_list_update();
   }
+  
+  // returns an axios instance for basic authentication
+  axiosBasicAuth(username, password) {
+    let buffer_auth = buffer.Buffer.from(username + ':' + password);
+    let b64 = buffer_auth.toString('base64');
+    return axios.create({
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${b64}`,
+      }
+    });
+  }
 
   // helper for returning the order status color areas for the validation plot
   order_status_areas(axes) {
@@ -210,7 +226,7 @@ export class Dashboard {
     var from_red = 0;
     var from_blue = 0;
     var from_white = 0;
-    var to_red = 0; 
+    var to_red = 0;
     var to_blue = 0;
     var to_white = 0;
     var color = "#4f4f4f";
@@ -238,7 +254,7 @@ export class Dashboard {
       // no order when order_status == 0 (white color)
       if (i > 0 && this.data_.xy_order_status[i][1] == 0 && this.data_.xy_order_status[i - 1][1] != 0) {
         from_white = x;
-      } 
+      }
       if (i > 0 && this.data_.xy_order_status[i][1] != 0 && this.data_.xy_order_status[i - 1][1] == 0) {
         to_white = x;
         color = "#ffffff";
@@ -248,18 +264,6 @@ export class Dashboard {
     return markings;
   }
 
-  // returns an axios instance for basic authentication
-  axiosBasicAuth(username, password) {
-    let buffer_auth = buffer.Buffer.from(username + ':' + password);
-    let b64 = buffer_auth.toString('base64');
-    return axios.create({
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${b64}`,
-      }
-    });
-  }
-
   // returns an axios instance with configured basic authentication
   // TODO: change to use current user
   axios_auth_instance() {
@@ -267,7 +271,6 @@ export class Dashboard {
     return axios_instance;
   }
 
-  // TODO: cambiar el nombre a box 0
   // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   gymfx_best_online_() {
     // setup authentication
@@ -283,8 +286,6 @@ export class Dashboard {
     });
   }
     
-
-
   // call request that returns the best mse from table fe_training_error that has config.active == true
   gymfx_max_training_score_() {
     let axios_instance = this.axios_auth_instance();
@@ -427,6 +428,8 @@ export class Dashboard {
       op_profit.push(response_data[i].op_profit);
       xy_balance.push([response_data[i].tick_timestamp, response_data[i].balance]);
       xy_equity.push([response_data[i].tick_timestamp, response_data[i].equity]);
+      console.log("response_data[i]" + JSON.stringify(response_data[i]))
+      console.log("xy_equity = " + xy_equity)
       // TODO: create a region colored plot for order status like : https://www.flotcharts.org/flot/examples/visitors/index.html
       xy_order_status.push([response_data[i].tick_timestamp, response_data[i].order_status]);
       if (response_data[i].balance > y_max) {
@@ -480,7 +483,7 @@ export class Dashboard {
     this.gymfx_online_plot_().then((response) => {
       //console.log("pre:" + JSON.stringify(response.data));
       this.xy_points_ = this.transform_plot_data(response.data);
-      console.log("update:" + JSON.stringify(this.xy_points_));
+      //console.log("update:" + JSON.stringify(this.xy_points_));
       try {
         //this.interactive_plot.setData(this.xy_points_);
         this.interactive_plot.setData([this.xy_points_]);
