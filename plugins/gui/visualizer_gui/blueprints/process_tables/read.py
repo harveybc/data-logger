@@ -8,6 +8,8 @@ from sqlalchemy import func, asc, desc
 # returns a a row with id = id from the table table['name]
 def read_data(db, Base, process, table, id):
     try:
+        print("table['name'] : ", table['name'])
+        
         res = db.session.query(Base.classes[table['name']]).filter(Base.classes[table['name']]["id"] == id).one()
         res_map = map(as_dict, res)
     except SQLAlchemyError as e:
