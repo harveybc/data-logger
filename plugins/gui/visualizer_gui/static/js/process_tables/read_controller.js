@@ -22,14 +22,10 @@ export class ReadController {
               let table = document.getElementById('detail_table');
               var p_list = "";
               p_list += (`<tr>`);
-              p_list += (`<td>${data_[i]['id']}</td>`);
               for (let j = 0; j < table.columns.length; j++) {
                 let col = table.columns[j].name;
-                p_list += (`<td>${data_[i][col]}</td>`);
+                p_list += (`<td>${col}</td><td>${data_[col]}</td>`);
               }
-              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_detail/" + data_[i]["id"] + '"><i class="fas fa-eye"></i></a></td>';
-              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_edit/" + data_[i]["id"] + '"><i class="fas fa-pen"></i></a></td>';
-              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_remove/" + data_[i]["id"] + '"><i class="fas fa-trash"></i></a></td>';
               p_list += (`</tr>`);
                 table.innerHTML = html;
             })
