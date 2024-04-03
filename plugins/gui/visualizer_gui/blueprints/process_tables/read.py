@@ -9,12 +9,12 @@ from sqlalchemy import func, asc, desc
 def read_data(db, Base, process, table, id):
     try:
         print("table['name'] : ", table['name'])
-        res = db.session.query(Base.classes[table['name']]).filter(Base.classes[table['name']]["id"] == id).one()
+        res = db.session.query(Base.classes[getattr(table,"name")]).filter(Base.classes[getattr(table,"name")]["id"] == id).one()
         res_map = as_dict(res)
         return json.dumps(res_map, default=str)
     except SQLAlchemyError as e:
         error = str(e)
-        print("1SQLAlchemyError : " , error)
+        print("SQLAlchemyError : " , error)
         return error
     except Exception as e:
         error = str(e)
