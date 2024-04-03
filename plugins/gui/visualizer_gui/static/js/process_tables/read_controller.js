@@ -18,7 +18,7 @@ export class ReadController {
         let url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
         axios.get(url, { params: {} })
             .then((response) => {
-              let data_ = JSON.parse(response.data);
+              let data_ = response.data;
               print(data_);
               let table = document.getElementById('detail_table');
               var p_list = "";
