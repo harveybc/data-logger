@@ -14,7 +14,7 @@ def read_data(db, Base, process, table, id):
         return json.dumps(as_dict(res), default=str)
     except SQLAlchemyError as e:
         error = str(e)
-        print("SQLAlchemyError : " , error)
+        print("1SQLAlchemyError : " , error)
         return error
     except Exception as e:
         error = str(e)
