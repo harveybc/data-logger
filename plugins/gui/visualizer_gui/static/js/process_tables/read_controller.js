@@ -21,13 +21,14 @@ export class ReadController {
               let data_ = response.data;
               let table = document.getElementById('detail_table');
               var p_list = "";
-              p_list += (`<tr>`);
+              
               for (let column in table.columns) {
                 let col_name = column.name;
+                p_list += (`<tr>`);
                 p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
+                p_list += (`</tr>`);
               }
-              p_list += (`</tr>`);
-                table.innerHTML = html;
+              table.innerHTML = p_list;
             })
             .catch((error) => {
                 console.log(error);
