@@ -34,7 +34,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">User Details</li>
+              <li class="breadcrumb-item active">{{ table['name'] }} Details</li>
             </ol>
           </div>
         </div>
@@ -46,14 +46,11 @@
       <div class="card">
         <!-- /.card-header -->
         <div class="card-body">
-          <div id="jsGrid1"></div>
+          <div id="detail_table"></div>
         </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-      {%if current_user.username == username  %}
-        <a href="/user/reset_pass">Change Password</a>
-      {% endif %}
     </section>
     <!-- /.content -->
   </div>
@@ -76,23 +73,8 @@
   <script src="/static/assets/js/demo.js"></script>
   <!-- page script -->
   <script>
-    $(function () {
-      $("#jsGrid1").jsGrid({
-          //height: "100%",
-          width: "100%",
+    
 
-          sorting: true,
-          paging: true,
-
-          data: {{ user_list|tojson }},
-
-          fields: [
-              { name: "id", type: "number", width: 50 },
-              { name: "username", type: "text", width: 200 },
-              { name: "email", type: "text", width: 200 }
-          ]
-      });
-    });
   </script>
 
 {% endblock javascripts %}
