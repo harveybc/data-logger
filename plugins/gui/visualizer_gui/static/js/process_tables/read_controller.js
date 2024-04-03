@@ -18,20 +18,19 @@ export class ReadController {
         let url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
         axios.get(url, { params: {} })
             .then((response) => {
-                let data = response.data;
-                let table = document.getElementById('detail_table');
-                let html = '<table class="table table-striped table-bordered table-hover">';
-                html += '<tr>';
-                html += '<th>Column Name</th>';
-                html += '<th>Value</th>';
-                html += '</tr>';
-                for (let i = 0; i < this.table.columns.length; i++) {
-                    html += '<tr>';
-                    html += '<td>' + this.table.columns[i] + '</td>';
-                    html += '<td>' + data[this.table.columns[i]] + '</td>';
-                    html += '</tr>';
-                }
-                html += '</table>';
+              let data = response.data;
+              let table = document.getElementById('detail_table');
+              var p_list = "";
+              p_list += (`<tr>`);
+              p_list += (`<td>${data_[i]['id']}</td>`);
+              for (let j = 0; j < table.columns.length; j++) {
+                let col = table.columns[j].name;
+                p_list += (`<td>${data_[i][col]}</td>`);
+              }
+              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_detail/" + data_[i]["id"] + '"><i class="fas fa-eye"></i></a></td>';
+              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_edit/" + data_[i]["id"] + '"><i class="fas fa-pen"></i></a></td>';
+              p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_remove/" + data_[i]["id"] + '"><i class="fas fa-trash"></i></a></td>';
+              p_list += (`</tr>`);
                 table.innerHTML = html;
             })
             .catch((error) => {
@@ -72,6 +71,6 @@ export class ReadController {
       p_list += '<td><a href="/' + this.process.name + "/" + this.table.name + "/view_remove/" + data_[i]["id"] + '"><i class="fas fa-trash"></i></a></td>';
       p_list += (`</tr>`);
     }
-    
+  }
 }
 
