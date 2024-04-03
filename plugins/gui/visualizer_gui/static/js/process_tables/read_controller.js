@@ -22,9 +22,9 @@ export class ReadController {
               let table = document.getElementById('detail_table');
               var p_list = "";
               p_list += (`<tr>`);
-              for (let j = 0; j < table.columns.length; j++) {
-                let col = table.columns[j].name;
-                p_list += (`<td>${col}</td><td>${data_[col]}</td>`);
+              for (let column in table.columns) {
+                let col_name = column.name;
+                p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
               }
               p_list += (`</tr>`);
                 table.innerHTML = html;
