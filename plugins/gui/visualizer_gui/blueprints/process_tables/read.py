@@ -11,8 +11,7 @@ def read_data(db, Base, process, table, id):
         table_name = table['name']
         print("table['name'] : ", table['name'])
         res = db.session.query(Base.classes.table_name).filter(Base.classes.table_name.id == id).one()
-        res_map = as_dict(res)
-        return json.dumps(res_map, default=str)
+        return json.dumps(res, default=str)
     except SQLAlchemyError as e:
         error = str(e)
         print("SQLAlchemyError : " , error)
