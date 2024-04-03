@@ -5,8 +5,11 @@ export class ReadController {
     table = window.table;
     process = window.process;
 
+    // replaces the contents of the html element with id=detail_table with an html table containing a column for the table's column names and another column showing the value of each of the table's columns for an element of the table with table.id=function_parameter
     constructor() {
         this.read(this.id);
+      
+
     }
 
     // suppose there is a variable called table containing an array called columns with the table's column names
