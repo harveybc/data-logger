@@ -12,6 +12,7 @@ from app.db import get_db
 from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config, sanitize_str
+from .process_tables.read import read_data
 from .process_tables.index import list_data, scoreboard_data, online_plot_data, static_plot_data
 import json
 
@@ -79,13 +80,7 @@ def ProcessBPFactory(process, table):
         # endpoint detail
         @bp.route("/"+process["name"]+"/"+table["name"]+"/detail/<id>")
         def detail(id):
-            return detail_data(id, db, Base, process, table)
-        
-        def detail_data(id, db, Base, process, table):
-            """Retrieve a register for the table"""
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.read(id)
-            return jsonify(res)
+            return read_data(db, Base, process, table, id)
         
         # endpoint update
         @bp.route("/"+process["name"]+"/"+table["name"]+"/edit", methods=("POST",))
