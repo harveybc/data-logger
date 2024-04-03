@@ -9,9 +9,9 @@ from sqlalchemy import func, asc, desc
 def read_data(db, Base, process, table, id):
     try:
         print("table['name'] : ", table['name'])
-        
         res = db.session.query(Base.classes[table['name']]).filter(Base.classes[table['name']]["id"] == id).one()
-        res_map = map(as_dict, res)
+        res_map = as_dict(res)
+        return json.dumps(res_map, default=str)
     except SQLAlchemyError as e:
         error = str(e)
         print("1SQLAlchemyError : " , error)
