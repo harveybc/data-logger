@@ -72,9 +72,11 @@
   <!-- AdminLTE for demo purposes -->
   <script src="/static/assets/js/demo.js"></script>
   <!-- page script -->
-  <script>
-    
 
-  </script>
+<script type="module">
+  import "/static/js/buffer-6.0.3.min.js"
+  import { ReadController } from "/static/js/process_tables/read_controller.js"
+  var index_controller = new IndexController();
+</script>
 
 {% endblock javascripts %}
