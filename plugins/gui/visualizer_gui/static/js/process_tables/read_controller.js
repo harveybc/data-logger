@@ -42,9 +42,9 @@ export class ReadController {
     console.log("data_:" + data_); 
     console.log("this.table.columns:" + this.table.columns); 
     var p_list = "";
-    for (var column in this.table.columns) {
+    for (var i = 0; i<this.table.columns.length; i++) {
       p_list += "<tr>";
-      p_list += "<td>"+ column.name +"</td><td>" + data_[column.name]+"</td>";
+      p_list += "<td>" + this.table.columns[i].name + "</td><td>" + data_[this.table.columns[i].name]+"</td>";
       p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
