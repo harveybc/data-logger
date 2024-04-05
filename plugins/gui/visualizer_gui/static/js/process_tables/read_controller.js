@@ -30,7 +30,7 @@ export class ReadController {
   // to read the register, we need to call an axios http request to the endpoint: '/' + this.process.name + '/' + this.table.name + '/detail/{id}', { params: {} }
   update(reg_id) {
     var that = this;
-    this.data_request_(reg_id).then((response) => {
+    this.data_request(reg_id).then((response) => {
       document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
     }, (error) => {
       console.log(error);
