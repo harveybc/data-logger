@@ -37,8 +37,6 @@ export class ReadController {
 
   
   gui_update(data_) {
-    console.log("data_:" + data_); 
-    console.log("this.table.columns:" + this.table.columns); 
     var p_list = "";
     for (var i = 0; i<this.table.columns.length; i++) {
       p_list += "<tr>";
