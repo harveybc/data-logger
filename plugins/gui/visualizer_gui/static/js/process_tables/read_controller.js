@@ -8,8 +8,6 @@ export class ReadController {
     constructor() {
         console.log("this.id: " + this.id);
         this.update(this.id);
-        setTimeout(function () { this.gui_update(this.data_); }.bind(this), 1500);
-        
     }
   
   async update(reg_id) {
