@@ -39,12 +39,12 @@ export class ReadController {
 
   
   gui_update(data_) {
-    console.log(data_); 
+    console.log("data_:" + data_); 
+    console.log("this.table.columns:" + this.table.columns); 
     var p_list = "";
     for (var column in this.table.columns) {
-      let col_name = column.name;
       p_list += "<tr>";
-      p_list += "<td>"+ col_name +"</td><td>" + data_[col_name]+"</td>";
+      p_list += "<td>"+ column.name +"</td><td>" + data_[col_name]+"</td>";
       p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
