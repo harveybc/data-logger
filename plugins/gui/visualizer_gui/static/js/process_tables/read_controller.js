@@ -3,38 +3,51 @@ export class ReadController {
     id = window.id;  
     table = window.table;
     process = window.process;
-
+    data_ = {};
     // replaces the contents of the html element with id=detail_table with an html table containing a column for the table's column names and another column showing the value of each of the table's columns for an element of the table with table.id=function_parameter
     constructor() {
-        this.read(this.id);
-
-
+        this.update(this.id);
     }
-
-    // suppose there is a variable called table containing an array called columns with the table's column names
-    // the parameter reg_id is the id of the element of the table that we want to read
+  
+    // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+  data_request(reg_id) {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    var url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
+    // get the best config_id 
+    return axios_instance.get(url)
+      .then((response) => {
+        that.data_ = response.data;
+      }, (error) => {
+        that.data_ = error.message;
+        console.log(error);
+      });
+  }
+  
+  // suppose there is a variable called table containing an array called columns with the table's column names
+  // the parameter reg_id is the id of the element of the table that we want to read
   // to read the register, we need to call an axios http request to the endpoint: '/' + this.process.name + '/' + this.table.name + '/detail/{id}', { params: {} }
-    read(reg_id) {
-        let url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
-        axios.get(url, { params: {} })
-            .then((response) => {
-              let data_ = response.data;
-              console.log(data_); 
-              let table = document.getElementById('detail_table');
-              var p_list = "";
-              
-              for (var column in table.columns) {
-                let col_name = column.name;
-                p_list += (`<tr>`);
-                p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
-                p_list += (`</tr>`);
-              }
-              table.innerHTML = p_list;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }  
+  update(reg_id) {
+    var that = this;
+    this.data_request_(reg_id).then((response) => {
+      document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
+    }, (error) => {
+      console.log(error);
+    });
+  }  
+  
+  gui_update(data_) {
+    console.log(data_); 
+    var p_list = "";
+    for (var column in this.table.columns) {
+      let col_name = column.name;
+      p_list += (`<tr>`);
+      p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
+      p_list += (`</tr>`);
+    }
+    return p_list;
+  }  
   // updates the list of the table in the index view
   // params: start: the starting index of the data_ array
   //         num_rows: the number of rows to be added to the table
