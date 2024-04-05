@@ -13,7 +13,7 @@ export class ReadController {
   async update(reg_id) {
     var that = this;
     await this.data_request(reg_id).then((response) => {
-      document.getElementById('detail_table').innerHTML = that.gui_update(response.data);
+      document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
     }, (error) => {
       console.log(error);
     });
