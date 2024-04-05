@@ -9,7 +9,16 @@ export class ReadController {
         this.update(this.id);
     }
   
-    // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+  async update(reg_id) {
+    var that = this;
+    await this.data_request(reg_id).then((response) => {
+      document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
+    }, (error) => {
+      console.log(error);
+    });
+  }  
+
+  // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
   data_request(reg_id) {
     // setup authentication
     let axios_instance = this.axios_auth_instance();
@@ -24,18 +33,7 @@ export class ReadController {
         console.log(error);
       });
   }
-  
-  // suppose there is a variable called table containing an array called columns with the table's column names
-  // the parameter reg_id is the id of the element of the table that we want to read
-  // to read the register, we need to call an axios http request to the endpoint: '/' + this.process.name + '/' + this.table.name + '/detail/{id}', { params: {} }
-  update(reg_id) {
-    var that = this;
-    this.data_request(reg_id).then((response) => {
-      document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
-    }, (error) => {
-      console.log(error);
-    });
-  }  
+
   
   gui_update(data_) {
     console.log(data_); 
