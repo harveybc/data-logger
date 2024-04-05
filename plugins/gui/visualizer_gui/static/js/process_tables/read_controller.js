@@ -44,7 +44,7 @@ export class ReadController {
     var p_list = "";
     for (var column in this.table.columns) {
       p_list += "<tr>";
-      p_list += "<td>"+ column.name +"</td><td>" + data_[col_name]+"</td>";
+      p_list += "<td>"+ column.name +"</td><td>" + data_[column.name]+"</td>";
       p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
