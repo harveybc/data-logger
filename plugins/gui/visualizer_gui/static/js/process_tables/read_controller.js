@@ -8,14 +8,14 @@ export class ReadController {
     constructor() {
         console.log("this.id: " + this.id);
         this.update(this.id);
-        setTimeout(function () { this.update(this.id); }.bind(this), 1500);
+        setTimeout(function () { this.gui_update(this.data_); }.bind(this), 1500);
         
     }
   
   async update(reg_id) {
     var that = this;
     await this.data_request(reg_id).then((response) => {
-      document.getElementById('detail_table').innerHTML = that.gui_update(that.data_);
+      that.gui_update(response.data);
     }, (error) => {
       console.log(error);
     });
@@ -47,7 +47,7 @@ export class ReadController {
       p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
       p_list += (`</tr>`);
     }
-    return p_list;
+    document.getElementById('detail_table').innerHTML = p_list;
   }  
 
   // returns an axios instance for basic authentication
