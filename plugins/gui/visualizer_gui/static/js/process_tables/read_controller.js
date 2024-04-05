@@ -43,9 +43,9 @@ export class ReadController {
     var p_list = "";
     for (var column in this.table.columns) {
       let col_name = column.name;
-      p_list += (`<tr>`);
-      p_list += (`<td>${col_name}</td><td>${data_[col_name]}</td>`);
-      p_list += (`</tr>`);
+      p_list += "<tr>";
+      p_list += "<td>${col_name}</td><td>${data_[col_name]}</td>";
+      p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
   }  
