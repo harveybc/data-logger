@@ -15,7 +15,7 @@ export class ReadController {
   async update(reg_id) {
     var that = this;
     await this.data_request(reg_id).then((response) => {
-      that.gui_update(response.data);
+      that.gui_update(that.data_);
     }, (error) => {
       console.log(error);
     });
