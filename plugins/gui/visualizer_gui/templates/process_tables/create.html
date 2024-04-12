@@ -110,17 +110,20 @@
       <div class="card">
         <!-- /.card-header -->
         <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table m-0">
-              <thead>
-                <tr>
-                  <th>Attribute</th>  
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody id="detail_table"></tbody>
-            </table>
-          </div>    
+          <form action="javascript:handle_post()"></form>
+            <div class="table-responsive">
+              <table class="table m-0">
+                <thead>
+                  <tr>
+                    <th>Attribute</th>  
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="detail_table"></tbody>
+              </table>
+            </div>    
+            <input type="submit" value="Submit">
+          </form>
         </div>
         <!-- /.card-body -->
       </div>
@@ -137,7 +140,24 @@
 
   <!-- page script -->
 <script>
-  var id = {{ id }};
+ 
+  function handle_post() {
+    var data = {};
+    var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+      data[inputs[i].name] = inputs[i].value;
+    }
+    console.log(data);
+    axios.post('/{{ process.name }}/{{ table.name }}/create', data)
+      .then(function (response) {
+        console.log(response);
+        var id = response.data.id;
+        window.location.href = '/{{ process.name }}/{{ table.name }}/' + id;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   
 </script>
 

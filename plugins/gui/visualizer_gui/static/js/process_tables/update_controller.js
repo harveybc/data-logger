@@ -9,18 +9,36 @@ export class CreateController {
     }
   
   async update(reg_id) {
-    this.gui_update(this.data_);
+    var that = this;
+    await this.data_request(reg_id).then((response) => {
+      that.gui_update(that.data_);
+    }, (error) => {
+      console.log(error);
+    });
   }  
 
-  gui_update() {
+  // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+  data_request(reg_id) {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    var url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
+    // get the best config_id 
+    return axios_instance.get(url)
+      .then((response) => {
+        that.data_ = response.data;
+      }, (error) => {
+        that.data_ = error.message;
+        console.log(error);
+      });
+  }
+
+  
+  gui_update(data_) {
     var p_list = "";
     for (var i = 0; i<this.table.columns.length; i++) {
-      
-            //<input type="text" id="fname" name="fname" value="John">
-            //<label for="lname">Last name:</label>
-            //<input type="text" id="lname" name="lname" value="Doe">
       p_list += "<tr>";
-      p_list += "<td><label for=" + this.table.columns[i].name + ">" + this.table.columns[i].name + ":</label>" + this.table.columns[i].name + '</td><td><input type="text" id="' + this.table.columns[i].name + '" name="' + this.table.columns[i].name +'"></td>';
+      p_list += "<td>" + this.table.columns[i].name + "</td><td>" + data_[this.table.columns[i].name]+"</td>";
       p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
