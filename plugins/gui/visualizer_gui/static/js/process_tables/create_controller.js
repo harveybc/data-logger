@@ -1,13 +1,11 @@
 // contains a method that shows an html table containing a column for the table's column names and another columdn showing the value of each ot the table's columns for an element of the table with table.id=function_parameter  in the html element with id=detail_table, and a constructor that executes it
-export class ReadController {
-    id = window.id;  
+export class CreateController {
     table = window.table;
     process = window.process;
     data_ = {};
     // replaces the contents of the html element with id=detail_table with an html table containing a column for the table's column names and another column showing the value of each of the table's columns for an element of the table with table.id=function_parameter
     constructor() {
-        console.log("this.id: " + this.id);
-        this.update(this.id);
+        this.update();
     }
   
   async update(reg_id) {
