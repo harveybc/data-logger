@@ -150,7 +150,7 @@
       bodyFormData.append(inputs[i].name, inputs[i].value);
     }
     console.log(data);
-    axios.post('/{{ process.name }}/{{ table.name }}/create', data = bodyFormData, headers = { "Content-Type": "multipart/form-data" })
+    axios.post('/{{ process.name }}/{{ table.name }}/create', {data : bodyFormData}, {headers : { "Content-Type": "multipart/form-data" }})
       .then(function (response) {
         console.log(response);
         var id = response.data.id;
