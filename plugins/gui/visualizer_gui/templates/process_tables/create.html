@@ -147,7 +147,8 @@
     var bodyFormData = new FormData();
     for (var i = 0; i < inputs.length; i++) {
       //append only if the key is diferent from ''
-      if (inputs[i].value != 'Submit')
+
+      if (inputs[i].value.localeCompare("Submit")!=0)
         bodyFormData.append(inputs[i].name, inputs[i].value);
     }
     console.log(bodyFormData);
