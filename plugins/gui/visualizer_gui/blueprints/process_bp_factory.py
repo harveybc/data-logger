@@ -66,7 +66,9 @@ def ProcessBPFactory(process, table):
         def create():
             """Create a new register for the table"""
             try:
+                print("Request form: ", request.form)
                 body = request.form.to_dict(flat=True)
+                print("Body: ", body)
                 reg_model = Base.classes[table['name']]
                 reg = reg_model(**body)
                 db.session.add(reg)
