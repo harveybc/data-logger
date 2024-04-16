@@ -62,7 +62,7 @@ def ProcessBPFactory(process, table):
             return list_data(db, Base, process, table, page_num, num_rows)
         
         # endpoint create
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=("POST"))
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/create", methods=(["POST"]))
         def create():
             """Create a new register for the table"""
             try:
