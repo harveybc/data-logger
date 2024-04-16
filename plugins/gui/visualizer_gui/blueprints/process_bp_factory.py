@@ -13,6 +13,7 @@ from flask import current_app
 from flask import jsonify
 from app.util import load_plugin_config, sanitize_str
 from .process_tables.read import read_data
+from .process_tables.read import create_data
 from .process_tables.index import list_data, scoreboard_data, online_plot_data, static_plot_data
 import json
 

@@ -144,11 +144,13 @@
   function handle_post() {
     var data = {};
     var inputs = document.getElementsByTagName('input');
+    var bodyFormData = new FormData();
     for (var i = 0; i < inputs.length; i++) {
-      data[inputs[i].name] = inputs[i].value;
+      //data[inputs[i].name] = inputs[i].value;
+      bodyFormData.append(inputs[i].name, inputs[i].value);
     }
     console.log(data);
-    axios.post('/{{ process.name }}/{{ table.name }}/create', data)
+    axios.post('/{{ process.name }}/{{ table.name }}/create', data = bodyFormData, headers = { "Content-Type": "multipart/form-data" })
       .then(function (response) {
         console.log(response);
         var id = response.data.id;
