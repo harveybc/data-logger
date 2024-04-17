@@ -130,7 +130,7 @@ def ProcessRegisterFactory(table_param, BaseAutoMap):
             Base.prepare(db.engine, reflect=True)
             register_model = eval("Base.classes." + table_name)
             # perform query
-            model = db.session.query(register_model).filter_by(id=register['reg_id']).one()
+            model = db.session.query(register_model).filter_by(id=register['id']).one()
             # set the new values from the values array
             for property, value in register['values'].items():
                 setattr(model, property, value)
