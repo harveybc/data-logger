@@ -141,7 +141,7 @@
   <!-- page script -->
 <script>
   var id = {{ id }};
-  
+
   function handle_post() {
     var data = {};
     var inputs = document.getElementsByTagName('input');
@@ -152,7 +152,7 @@
         bodyFormData.append(inputs[i].name, inputs[i].value[0]);
     }
     console.log(bodyFormData);
-    axios.post('/{{ process.name }}/{{ table.name }}/edit', bodyFormData, {headers : { "Content-Type": "multipart/form-data" }})
+    axios.post('/{{ process.name }}/{{ table.name }}/edit/{{ id }}', bodyFormData, {headers : { "Content-Type": "multipart/form-data" }})
       .then(function (response) {
         console.log(response);
         window.location.href = '/{{ process.name }}/{{ table.name }}/view_index';

@@ -15,7 +15,7 @@ from app.util import load_plugin_config, sanitize_str
 from .process_tables.read import read_data
 from .process_tables.index import list_data, scoreboard_data, online_plot_data, static_plot_data
 import json
-
+from sqlalchemy import update
 
 def ProcessBPFactory(process, table):
     def new_bp(plugin_folder, core_ep, store_ep, db, Base):
@@ -85,14 +85,29 @@ def ProcessBPFactory(process, table):
             return read_data(db, Base, process, table, id)
         
         # endpoint update
-        @bp.route("/"+process["name"]+"/"+table["name"]+"/edit", methods=("POST",))
-        def edit():
+        @bp.route("/"+process["name"]+"/"+table["name"]+"/edit/<id>", methods=("POST",))
+        def edit(id):
             """Update a register for the table"""
-            body = request.json
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.update(**body)
-            return jsonify(res)
-
+            try:
+                print("Request form: ", request.form)
+                body = request.form.to_dict(flat=True)
+                print("Body: ", body)
+                reg_model = Base.classes[table['name']]
+                # perform query
+                model = db.session.query(reg_model).filter_by(id=id).one()
+                # set the new values from the values array
+                for property, value in body.items() :
+                    setattr(model, property, value)
+                # update the register
+                db.session.commit()
+                ##db.session.expunge_all()
+                ##db.session.close()
+                return jsonify({ "result": "ok" })
+            except Exception as e:
+                error = str(e)
+                print("Error : " ,error)
+                abort(500)
+        
         # endpoint remove
         @bp.route("/"+process["name"]+"/"+table["name"]+"/remove/<id>", methods=("POST",))
         def remove(id):
