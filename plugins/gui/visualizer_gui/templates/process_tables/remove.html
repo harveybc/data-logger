@@ -104,9 +104,14 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+    <form action="javascript:handle_post()">
+      Do you want to remove this record?
+      <button type="submit" class="btn btn-primary">Yes</button>
+      <a href="/{{ process.name }}/{{ table.name }}/view_index" class="btn btn-secondary">No</a>
+    </form>
     <!-- Main content -->
     <section class="content">
+
       <div class="card">
         <!-- /.card-header -->
         <div class="card-body p-0">
@@ -138,7 +143,19 @@
   <!-- page script -->
 <script>
   var id = {{ id }};
-  
+
+  function handle_post() {
+    var data = {};
+    axios.post('/{{ process.name }}/{{ table.name }}/remove/{{ id }}', bodyFormData, { })
+      .then(function (response) {
+        console.log(response);
+        window.location.href = '/{{ process.name }}/{{ table.name }}/view_index';
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 </script>
 
 <script type="module">

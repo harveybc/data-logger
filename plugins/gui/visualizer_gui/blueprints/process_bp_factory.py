@@ -112,9 +112,17 @@ def ProcessBPFactory(process, table):
         @bp.route("/"+process["name"]+"/"+table["name"]+"/remove/<id>", methods=("POST",))
         def remove(id):
             """Remove a register for the table"""
-            reg_model = core_ep.ProcessRegisterFactory(table["name"], Base)
-            res = reg_model.delete(id)
-            return jsonify(res)
+            reg_model = Base.classes[table['name']]
+            # perform query
+            res = db.session.query(reg_model).filter_by(id=id).one()
+            db.session.delete(res)
+            try:
+                db.session.commit()
+                return jsonify({ "result": "ok" })
+            except Exception as e:
+                error = str(e)
+                print("Error : " ,error)
+                abort(500)
 
         # returns the config id for the best score from table gym_fx_data that has config.active == true
         @bp.route("/"+process["name"]+"/"+table["name"]+"/scoreboard")
