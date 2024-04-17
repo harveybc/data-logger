@@ -35,7 +35,6 @@ export class ReadController {
       });
   }
 
-  
   gui_update(data_) {
     var p_list = "";
     for (var i = 0; i<this.table.columns.length; i++) {

@@ -32,8 +32,8 @@ export class EditController {
         console.log(error);
       });
   }
-  
-  gui_update() {
+
+  gui_update(data_) {
     var p_list = "";
     for (var i = 0; i<this.table.columns.length; i++) {
       
@@ -41,7 +41,8 @@ export class EditController {
             //<label for="lname">Last name:</label>
             //<input type="text" id="lname" name="lname" value="Doe">
       p_list += "<tr>";
-      p_list += "<td><label for=" + this.table.columns[i].name + ">" + this.table.columns[i].name + ":</label>" + this.table.columns[i].name + '</td><td><input type="text" id="' + this.table.columns[i].name + '" name="' + this.table.columns[i].name +'"></td>';
+      p_list += "<td><label for=" + this.table.columns[i].name + ">" + this.table.columns[i].name + ":</label>" + this.table.columns[i].name + '</td>';
+      p_list += '<td><input type="text" id="' + this.table.columns[i].name + '" name="' + this.table.columns[i].name + '" value="' + data_[this.table.columns[i].name] + '"></td>';
       p_list += "</tr>";
     }
     document.getElementById('detail_table').innerHTML = p_list;
