@@ -8,7 +8,7 @@ export class CreateController {
         this.update();
     }
   
-  async update(reg_id) {
+  async update() {
     this.gui_update(this.data_);
   }  
 
