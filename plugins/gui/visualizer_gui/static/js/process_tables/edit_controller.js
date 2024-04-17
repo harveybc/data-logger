@@ -1,5 +1,6 @@
 // contains a method that shows an html table containing a column for the table's column names and another columdn showing the value of each ot the table's columns for an element of the table with table.id=function_parameter  in the html element with id=detail_table, and a constructor that executes it
 export class EditController {
+    id = window.id; 
     table = window.table;
     process = window.process;
     data_ = {};
