@@ -146,7 +146,7 @@
 
   function handle_post() {
     var data = {};
-    axios.post('/{{ process.name }}/{{ table.name }}/remove/{{ id }}', bodyFormData, { })
+    axios.post('/{{ process.name }}/{{ table.name }}/remove/{{ id }}')
       .then(function (response) {
         console.log(response);
         window.location.href = '/{{ process.name }}/{{ table.name }}/view_index';
