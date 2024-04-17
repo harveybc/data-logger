@@ -154,8 +154,7 @@
     axios.post('/{{ process.name }}/{{ table.name }}/create', bodyFormData, {headers : { "Content-Type": "multipart/form-data" }})
       .then(function (response) {
         console.log(response);
-        var id = response.data.id;
-        window.location.href = '/{{ process.name }}/{{ table.name }}/index' + id;
+        window.location.href = '/{{ process.name }}/{{ table.name }}/index';
       })
       .catch(function (error) {
         console.log(error);
