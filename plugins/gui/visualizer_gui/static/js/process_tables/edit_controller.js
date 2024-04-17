@@ -9,9 +9,30 @@ export class EditController {
     }
   
   async update(reg_id) {
-    this.gui_update(this.data_);
+    var that = this;
+    await this.data_request(reg_id).then((response) => {
+      that.gui_update(that.data_);
+    }, (error) => {
+      console.log(error);
+    });
   }  
 
+  // call request that returns the config id for the best mse from table fe_training_error that has config.active == true
+  data_request(reg_id) {
+    // setup authentication
+    let axios_instance = this.axios_auth_instance();
+    var that = this;
+    var url = '/' + this.process.name + '/' + this.table.name + '/detail/' + reg_id;
+    // get the best config_id 
+    return axios_instance.get(url)
+      .then((response) => {
+        that.data_ = response.data;
+      }, (error) => {
+        that.data_ = error.message;
+        console.log(error);
+      });
+  }
+  
   gui_update() {
     var p_list = "";
     for (var i = 0; i<this.table.columns.length; i++) {
