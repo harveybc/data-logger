@@ -155,7 +155,7 @@
       .then(function (response) {
         console.log(response);
         var id = response.data.id;
-        window.location.href = '/{{ process.name }}/{{ table.name }}/' + id;
+        window.location.href = '/{{ process.name }}/{{ table.name }}/index' + id;
       })
       .catch(function (error) {
         console.log(error);
