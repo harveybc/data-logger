@@ -1,22 +1,86 @@
-{% extends "plugin_templates/layouts/base.html" %}
+{% extends "layouts/base.html" %}
+<!-- uses Jinja (preload) and Vue (postload)-->
 
-{% block title %} Tables JSGrid {% endblock %} 
+{% block title %} Details {% endblock %}
 
 <!-- Element injected in the BODY element -->
-{% block body_class %} {% endblock body_class %} 
+{% block body_class %} sidebar-mini {% endblock body_class %}
 
-<!-- Specific Page CSS goes HERE  -->
+<!-- Specific Page CSS and JS goes HERE  -->
 {% block stylesheets %}
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- jsGrid -->
-  <link rel="stylesheet" href="/static/assets/plugins/jsgrid/jsgrid.min.css">
-  <link rel="stylesheet" href="/static/assets/plugins/jsgrid/jsgrid-theme.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+<style>
+  .demo-placeholder {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+  }
+
+  fieldset {
+    display: block;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+    padding: 10px;
+  }
+
+  .legend {
+    display: block;
+    -webkit-padding-start: 2px;
+    -webkit-padding-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .legendLayer .background {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(0, 0, 0, 0.85);
+    stroke-width: 1;
+  }
+
+  input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
+  }
+
+  .tickLabel {
+    line-height: 1.1;
+  }
+</style>
 
 {% endblock stylesheets %}
 
@@ -27,68 +91,45 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <!-- SELECT2 EXAMPLE -->
-        <div class="card card-default">
-          <div class="card-header">
-            <h3 class="card-title">New User</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{ table['name'] }} Remove</h1>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <form role="form" action="/user/create" method="post">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="userUsername">Username</label>
-                    <input type="text" class="form-control" id="userUsername" placeholder="Enter username">
-                  </div>
-                  <div class="form-group">
-                    <label for="userEmail">Email address</label>
-                    <input type="email" class="form-control" id="userEmail" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="userPassword">Password</label>
-                    <input type="password" class="form-control" id="userPassword" placeholder="Password">
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="userAdmin">
-                    TODO: read-only for admins
-                    <label class="form-check-label" for="userAdmin">Administrator</label>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">{{ table['name'] }} Remove</li>
+            </ol>
           </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
-
       </div><!-- /.container-fluid -->
     </section>
-
+    <form action="javascript:handle_post()">
+      Do you want to remove this record?
+      <button type="submit" class="btn btn-primary">Yes</button>
+      <a href="/{{ process.name }}/{{ table.name }}/view_index" class="btn btn-secondary">No</a>
+    </form>
     <!-- Main content -->
     <section class="content">
+
       <div class="card">
         <!-- /.card-header -->
-        <div class="card-body">
-          <div id="jsGrid1"></div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+                <tr>
+                  <th>Attribute</th>  
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody id="detail_table"></tbody>
+            </table>
+          </div>    
         </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-      {%if current_user.username == username  %}
-        <a href="/user/reset_pass">Change Password</a>
-      {% endif %}
     </section>
     <!-- /.content -->
   </div>
@@ -98,16 +139,45 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-  <!-- jQuery -->
-  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- jsGrid -->
-  <script src="/static/assets/plugins/jsgrid/demos/db.js"></script>
-  <script src="/static/assets/plugins/jsgrid/jsgrid.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="/static/assets/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="/static/assets/js/demo.js"></script>
+
+  <!-- page script -->
+<script>
+  var id = {{ id }};
+
+  function handle_post() {
+    var data = {};
+    axios.post('/{{ process.name }}/{{ table.name }}/remove/{{ id }}')
+      .then(function (response) {
+        console.log(response);
+        window.location.href = '/{{ process.name }}/{{ table.name }}/view_index';
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+</script>
+
+<script type="module">
+  import "/static/js/buffer-6.0.3.min.js"
+  import { RemoveController } from "/static/js/process_tables/remove_controller.js"
+  var remove_controller = new RemoveController();
+</script>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+<script>
+  // Gets data from config
+  var data = [];
+  // when page finishes loading, sets the values to the ones from data
+  $(document).ready(function () {
+    // sets the menu highlight
+    $('#menu-{{ process.name}}').addClass('menu-open');
+    $('#submenu-{{ table.name }}').addClass('active');
+  })
+
+</script>
+
 
 {% endblock javascripts %}

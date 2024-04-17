@@ -1,22 +1,86 @@
-{% extends "plugin_templates/layouts/base.html" %}
+{% extends "layouts/base.html" %}
+<!-- uses Jinja (preload) and Vue (postload)-->
 
-{% block title %} Tables JSGrid {% endblock %} 
+{% block title %} Create {% endblock %}
 
 <!-- Element injected in the BODY element -->
-{% block body_class %} {% endblock body_class %} 
+{% block body_class %} sidebar-mini {% endblock body_class %}
 
-<!-- Specific Page CSS goes HERE  -->
+<!-- Specific Page CSS and JS goes HERE  -->
 {% block stylesheets %}
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- jsGrid -->
-  <link rel="stylesheet" href="/static/assets/plugins/jsgrid/jsgrid.min.css">
-  <link rel="stylesheet" href="/static/assets/plugins/jsgrid/jsgrid-theme.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+<style>
+  .demo-placeholder {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+  }
+
+  fieldset {
+    display: block;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+    padding: 10px;
+  }
+
+  .legend {
+    display: block;
+    -webkit-padding-start: 2px;
+    -webkit-padding-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .legendLayer .background {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(0, 0, 0, 0.85);
+    stroke-width: 1;
+  }
+
+  input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
+  }
+
+  .tickLabel {
+    line-height: 1.1;
+  }
+</style>
 
 {% endblock stylesheets %}
 
@@ -29,12 +93,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>User Details</h1>
+            <h1>{{ table['name'] }} Edit</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">User Details</li>
+              <li class="breadcrumb-item active">{{ table['name'] }} Edit</li>
             </ol>
           </div>
         </div>
@@ -45,15 +109,25 @@
     <section class="content">
       <div class="card">
         <!-- /.card-header -->
-        <div class="card-body">
-          <div id="jsGrid1"></div>
+        <div class="card-body p-0">
+          <form action="javascript:handle_post()">
+            <div class="table-responsive">
+              <table class="table m-0">
+                <thead>
+                  <tr>
+                    <th>Attribute</th>  
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="detail_table"></tbody>
+              </table>
+            </div>    
+            <input type="submit" value="Submit">
+          </form>
         </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-      {%if current_user.username == username  %}
-        <a href="/user/reset_pass">Change Password</a>
-      {% endif %}
     </section>
     <!-- /.content -->
   </div>
@@ -63,36 +137,64 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-  <!-- jQuery -->
-  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- jsGrid -->
-  <script src="/static/assets/plugins/jsgrid/demos/db.js"></script>
-  <script src="/static/assets/plugins/jsgrid/jsgrid.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="/static/assets/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="/static/assets/js/demo.js"></script>
+
   <!-- page script -->
-  <script>
-    $(function () {
-      $("#jsGrid1").jsGrid({
-          //height: "100%",
-          width: "100%",
+<script>
+  var id = {{ id }};
 
-          sorting: true,
-          paging: true,
-
-          data: {{ user_list|tojson }},
-
-          fields: [
-              { name: "id", type: "number", width: 50 },
-              { name: "username", type: "text", width: 200 },
-              { name: "email", type: "text", width: 200 }
-          ]
+  function handle_post() {
+    var data = {};
+    var inputs = document.getElementsByTagName('input');
+    var bodyFormData = new FormData();
+    for (var i = 0; i < inputs.length; i++) {
+      //append only if the key is diferent from 'Submit'
+      if (inputs[i].value.localeCompare("Submit") != 0) {
+        if (!isNaN(inputs[i].value) && inputs[i].value.toString().indexOf('.') != -1) {
+          bodyFormData.append(inputs[i].name, parseFloat(inputs[i].value));
+        }
+        else if (!isNaN(inputs[i].value)) {
+          bodyFormData.append(inputs[i].name, parseInt(inputs[i].value));
+        }
+        else {
+          bodyFormData.append(inputs[i].name, inputs[i].value);
+        }
+      }
+    }
+    console.log(bodyFormData);
+    axios.post('/{{ process.name }}/{{ table.name }}/edit/{{ id }}', bodyFormData, {headers : { "Content-Type": "multipart/form-data" }})
+      .then(function (response) {
+        console.log(response);
+        window.location.href = '/{{ process.name }}/{{ table.name }}/view_index';
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-    });
-  </script>
+  }
+  
+</script>
+
+<script type="module">
+  import "/static/js/buffer-6.0.3.min.js"
+  import { EditController } from "/static/js/process_tables/edit_controller.js"
+  
+  var edit_controller = new EditController();
+</script>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+<script>
+  // Gets data from config
+  var data = [];
+  // when page finishes loading, sets the values to the ones from data
+  $(document).ready(function () {
+    // sets the menu highlight
+    $('#menu-{{ process.name}}').addClass('menu-open');
+    $('#submenu-{{ table.name }}').addClass('active');
+
+  })
+
+</script>
+
 
 {% endblock javascripts %}
