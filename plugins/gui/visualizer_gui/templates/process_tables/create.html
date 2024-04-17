@@ -146,10 +146,9 @@
     var inputs = document.getElementsByTagName('input');
     var bodyFormData = new FormData();
     for (var i = 0; i < inputs.length; i++) {
-      //append only if the key is diferent from ''
-
+      //append only if the key is diferent from 'Submit'
       if (inputs[i].value.localeCompare("Submit")!=0)
-        bodyFormData.append(inputs[i].name, inputs[i].value);
+        bodyFormData.append(inputs[i].name, inputs[i].value[0]);
     }
     console.log(bodyFormData);
     axios.post('/{{ process.name }}/{{ table.name }}/create', bodyFormData, {headers : { "Content-Type": "multipart/form-data" }})
