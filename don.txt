@@ -12,16 +12,11 @@ platform with an adjustable block time.
 The Key Components of the system are the efficiency Metrics in which each participating models computes 
 their efficiency metric, a weighted sum calculation that uses a Game Theory Approach to calculate weight 
 adjustments, with factors influencing weights including download frequency (that produced an optimum), 
-aproximate computational capacity used in each model's optimization, frequency of new optimums and other factors such as available 
-computational resources. The weights represent the relative importance due to their offer and demand 
-of the models’s improvement.
-
-Efficiency: Models that enhance network efficiency receive higher weights.
-Fairness: Weight adjustments respond to changing conditions, ensuring fairness.
-Security: PoW remains a fundamental security layer.
+aproximate computational capacity used in each model's optimization, frequency of new optimums and
+other factors such as available computational resources. The weights represent the relative importance 
+due to their offer and demand of the models’s improvement.
 
 2. Introduction:
-
 
 
 3. Objectives 
