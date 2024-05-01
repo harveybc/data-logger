@@ -32,6 +32,7 @@ By aligning incentives through this weighted reward system, the network fosters 
 efficiency, and continuous improvement.
 
 2. Introduction
+flowchart TD
 
 3. Objectives and Scope
 
@@ -44,7 +45,7 @@ efficiency, and continuous improvement.
 4.2 Optima descentralized validation scheme formal demonstration
 
 4.3 Stakeholder fee distribution formal demonstration
-
+The stakeholders are: optimizers, evaluators (also do validation of optimuma), nodes(transport/store), and clients that send evaluations to the network to be evaluated with real data, these requests are stored as pending on the nodes until an evaluator solves them using latest optima found by optimizers.
 
 5. Methodology
 
