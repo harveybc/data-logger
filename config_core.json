@@ -2,6 +2,27 @@
     "core_plugin": "basic_auth_core",
     "core_plugin_config": {
         "filename": "DataLogger-OAS.apic.json"
+    },
+    "relay": {
+        "host": "localhost",
+        "port": 8080
+    },
+    "flooding": {
+        "enabled": true,
+        "method": {
+            "name": "TTL-SNCF",
+            "config": {
+                "ttl": 10
+            }
+        }
+    },
+    "blockchain": {
+        "enabled": true,
+        "desired_block_time": 10,
+        "block_creation_method": "ProofOfOptimization",
+        "block_creation_method_config": {
+                "difficulty": 0.5,
+                "fee_distribution_method": "nash_equilibrium"
+        }
     }
 }
-  
