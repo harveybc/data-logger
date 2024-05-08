@@ -68,6 +68,10 @@
                             {
                                 "name": "quiet_mode",
                                 "col_type": "String"
+                            },
+                            {
+                                "name": "active",
+                                "col_type": "String"
                             }
                         ]
                     },
