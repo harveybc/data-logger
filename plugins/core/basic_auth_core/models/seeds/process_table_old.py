@@ -25,14 +25,14 @@ def seed(app, db, table_name):
             # perform query
             try:
                 rows=[]
-                if table_name == "fe_config":
+                if table_name == "gym_fx_config":
                     rows.append(table_base(initial_capital=10000, active=True))
                     rows.append(table_base(initial_capital=1000, active=True))
                     rows.append(table_base(initial_capital=9000, active=False))
                     for row in rows:
                         db.session.add(row)
                     db.session.commit()
-                    _logger.info("fe_config table seeded") 
+                    _logger.info("gym_fx_config table seeded") 
                 elif table_name == "gym_fx_data":
                     rows.append(table_base(score=0.11, score_v=0.09, config_id=1))
                     rows.append(table_base(score=0.1, score_v=0.09, config_id=2))
@@ -42,7 +42,7 @@ def seed(app, db, table_name):
                         db.session.add(row)
                     db.session.commit()
                     _logger.info("gym_fx_data table seeded") 
-                elif table_name == "fe_training_error":
+                elif table_name == "gym_fx_validation_plot":
                     # TODO: add reward, num_closes
                     rows.append(table_base(balance=10000, equity=10000, order_status= 0, reward=0, num_closes=0, config_id=3, tick_timestamp=0))
                     rows.append(table_base(balance=10000, equity=13000, order_status= 1, reward=0, num_closes=0 ,config_id=3, tick_timestamp=1))
