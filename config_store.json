@@ -61,6 +61,14 @@
                                 "name": "step_size",
                                 "col_type": "String"
                             },
+                            {
+                                "name": "remote_log",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "quiet_mode",
+                                "col_type": "String"
+                            }
                         ]
                     },
                     {
