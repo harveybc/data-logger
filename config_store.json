@@ -4,177 +4,63 @@
         "filename": "db.sqlite3",
         "processes" : [
             {
-                "name": "test",
-                "tables": [ 	
-                    {
-                        "name": "test_table",
-                        "columns": [
-                            {
-                                "name" : "test_column",
-                                "col_type": "Integer"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "test_table4",
-                        "columns": [
-                            {
-                                "name" : "test_column",
-                                "col_type": "C"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "gym_fx",
-                "tables": [
-                    {
-                        "name": "gym_fx_config",
-                        "columns": [
-                            {
-                                "name": "initial_capital",
-                                "col_type": "Integer" 
-                            },
-                            {
-                                "name": "save_optimum",
-                                "col_type": "Boolean" 
-                            },
-                            {
-                                "name": "overwrite_optimum",
-                                "col_type": "Boolean" 
-                            },
-                            {
-                                "name": "preprocessor_params",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "feature_eng_params",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "active",
-                                "col_type": "Boolean" 
-                            },
-                            {
-                                "name": "paused",
-                                "col_type": "Boolean" 
-                            },
-                            {
-                                "name": "starting_model",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "training_dataset",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "validation_dataset",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name" : "status",
-                                "col_type" : "String"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "gym_fx_data",
-                        "columns": [
-                            { "name" : "reward" },
-                            { "name" : "balance" },
-                            { "name" : "equity" },
-                            { "name" : "score" },
-                            { "name" : "score_v" }, 
-                            { "name" : "avg_score" },
-                            { "name" : "avg_score_v" },
-                            { "name" : "margin" },
-                            {
-                                "name" : "config_id",
-                                "foreign_key" : "gym_fx_config.id"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "gym_fx_validation_plot",
-                        "columns": [
-                            { "name" : "reward" },                            
-                            { "name" : "balance" },
-                            { "name" : "equity" },
-                            { "name" : "score_v" }, 
-                            { "name" : "avg_score_v" },
-                            { "name" : "margin" },                        
-                            { "name" : "action" },
-                            { "name" : "num_closes" },
-                            { "name" : "order_status" },                            
-                            { "name" : "tick_count" },
-                            { "name" : "tick_timestamp" },                            
-                            {
-                                "name" : "config_id",
-                                "foreign_key" : "gym_fx_config.id"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
                 "name": "feature_extractor",
                 "tables": [
                     {
                         "name": "fe_config",
-
                         "columns": [
                             {
-                                "name": "max_iterations",
+                                "name": "csv_file",
                                 "col_type": "Integer" 
                             },
-                            { "name": "min_mse" },
-                            { "name": "min_mae" },
-                            { "name": "min_r2" },
                             {
-                                "name": "save_optimum",
+                                "name": "save_encoder",
+                                "col_type": "save_decoder" 
+                            },
+                            {
+                                "name": "save_decoder",
                                 "col_type": "Boolean" 
                             },
                             {
-                                "name": "overwrite_optimum",
+                                "name": "load_encoder",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "load_decoder",
+                                "col_type": "String" 
+                            },
+                            {
+                                "name": "evaluate_encoder",
                                 "col_type": "Boolean" 
                             },
                             {
-                                "name": "preprocessor_params",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "feature_eng_params",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "scan_interval",
+                                "name": "evaluate_decoder",
                                 "col_type": "Boolean" 
                             },
                             {
-                                "name": "active",
+                                "name": "encoder_plugin",
                                 "col_type": "Boolean" 
                             },
                             {
-                                "name": "restart",
-                                "col_type": "Boolean" 
-                            },
-                            {
-                                "name": "starting_model",
+                                "name": "decoder_plugin",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "training_dataset",
+                                "name": "window_size",
                                 "col_type": "String" 
                             },
                             {
-                                "name": "evaluation_dataset",
+                                "name": "max_error",
                                 "col_type": "String" 
                             },
                             {
-                                "name" : "status",
+                                "name" : "initial_size",
                                 "col_type" : "String"
-                            }
+                            },
+                            {
+                                "name": "step_size",
+                                "col_type": "String"
+                            },
                         ]
                     },
                     {
@@ -183,39 +69,11 @@
                             { "name" : "mse" },
                             { "name" : "mae" },
                             { "name" : "r2" },
-                            { "name" : "reward" },
-                            { "name" : "balance" },
-                            { "name" : "equity" },
-                            { "name" : "margin" },
-                            { "name" : "order_status" },
+                            { "name" : "interface_size" },
                             {
                                 "name" : "config_id",
                                 "foreign_key" : "fe_config.id"
                             }
-                        ]
-                    },
-                    {
-                        "name": "fe_validation_error",
-                        "columns": [
-                            { "name" : "mse" },
-                            { "name" : "mae" },
-                            { "name" : "r2" },
-                            {
-                                "name" : "config_id",
-                                "foreign_key" : "fe_config.id"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "fe_validation_plot",
-                        "columns": [
-                            { "name" : "original" },
-                            { "name" : "predicted" },
-                            { 
-                                "name" : "config_id",
-                                "col_type" : "Integer"
-                            }
-                            
                         ]
                     }
                 ]
