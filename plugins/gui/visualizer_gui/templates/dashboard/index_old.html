@@ -1,0 +1,372 @@
+{% extends "layouts/base.html" %}
+<!-- uses Jinja (preload) and Vue (postload)-->
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS and JS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="/static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- JQVMap -->
+<link rel="stylesheet" href="/static/assets/plugins/jqvmap/jqvmap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="/static/assets/plugins/daterangepicker/daterangepicker.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/static/assets/plugins/summernote/summernote-bs4.min.css">
+<style>
+  .demo-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+}
+
+fieldset {
+		display: block;
+		-webkit-margin-start: 2px;
+		-webkit-margin-end: 2px;
+		-webkit-padding-before: 0.35em;
+		-webkit-padding-start: 0.75em;
+		-webkit-padding-end: 0.75em;
+		-webkit-padding-after: 0.625em;
+		min-width: -webkit-min-content;
+		border-width: 2px;
+		border-style: groove;
+		border-color: threedface;
+		border-image: initial;
+		padding: 10px;
+}
+
+.legend {
+		display: block;
+		-webkit-padding-start: 2px;
+		-webkit-padding-end: 2px;
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+		padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+}
+
+.legendLayer .background {
+    fill: rgba(255, 255, 255, 0.85);
+    stroke: rgba(0, 0, 0, 0.85);
+    stroke-width: 1;
+}
+
+input[type="radio"] {
+		margin-top: -1px;
+		vertical-align: middle;
+}
+
+.tickLabel {
+	line-height: 1.1;
+}
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content-wrapper" style="height:100% !important; min-height:100% !important;">
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid" id="main_content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <!-- box[0] data -->
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_0_title'] }}</h3>
+              <h2 id="box_0_value" style="text-align:center;" ></h2>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <!-- TODO -->
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <!-- box[1] data -->
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_1_title'] }}</h3>
+              <h2 id="box_1_value" style="text-align:center;" ></h2>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <!-- TODO --> <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <!-- box[2] data -->
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_title'] }}</h3>
+              <h2 id="box_2_value" style="text-align:center;" ></h2>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <!-- TODO --> <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <!-- box[3] data -->
+              <h3>{{ p_config_gui['gui_plugin_config']['dashboard']['box_3_title'] }}</h3>
+              <h2 id="box_3_value" style="text-align:center;" ></h2>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6">
+          <!-- Interactive chart -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['title'] }}
+              </h3>
+          
+              <div class="card-tools">
+                Real time
+                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                  <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="interactive"  style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['height'] }};"></div>
+            </div>
+            <!-- /.card-body-->
+          </div>
+          <!-- /.card -->
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-6">
+        <!-- Line chart -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: <b id="{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_value'] }}_plot">00</b> )
+              </h3>
+              <div class="card-tools">
+                Real time
+                <div class="btn-group" id="realtime" data-toggle="btn-toggle">
+                  <button type="button" class="btn btn-default btn-sm active" data-toggle="on">On</button>
+                  <button type="button" class="btn btn-default btn-sm" data-toggle="off">Off</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body" >
+                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+                <div id="overview"  class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
+            </div>
+            <!-- /.card-body-->
+          </div>
+          <!-- /.card -->  
+        </section>
+        <!-- right col -->
+        <section class="col-lg-6 ">
+          <!-- TABLE: VALIDATION OPERATIONS -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['title'] }}</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_0_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_1_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_2_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_3_title'] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="val_list">
+                  </tbody>
+                </table>
+                <!-- set page_num if is not defined  -->
+                {% if page_num is not defined %}
+                <script> var page_num = 1; </script>
+                {% else %}
+                <script> var page_num = {{ page_num }}; </script>
+                {% endif %}
+                {% if total_pages is not defined %}
+                <script> var total_pages = 1; </script>
+                {% else %}
+                <script> var total_pages = {{ total_pages }}; </script>
+                {% endif %}
+                {% if num_rows is not defined %}
+                <script> var num_rows = 15; </script>
+                {% else %}
+                <script> var num_rows = {{ num_rows }}; </script>
+                {% endif %}
+
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </section>
+        <!-- right col -->
+        
+        <section class="col-lg-6 connectedSortable">      
+          <!-- TABLE: LATEST PROCESSES -->
+          <div class="card card-primary card-outline">
+            <div class="card-header">
+              <h3 class="card-title">{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['title'] }}</h3>
+        
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_0_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_1_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['process_list']['col_2_title'] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody  id="process_list">
+                    
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Create New Process</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </section>
+        <!-- right col -->
+      </div>
+      <!-- /.row -->
+      <b>Store Plugin</b>:{{ p_config_store['store_plugin'] }}, <b>Gui Plugin</b>:{{ p_config_gui['gui_plugin'] }}
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- set page_num if is not defined  -->
+{% if num__points is not defined %}
+  <script> var num_points = 100; </script>
+{% else %}
+  <script> var num_points = {{ num_points }}; </script>
+{% endif %}
+
+<script type="module">
+  import "/static/js/buffer-6.0.3.min.js"
+  import { Dashboard } from "/static/js/dashboard.js"
+  var dashboard = new Dashboard();
+</script>
+
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+
+
+<script>
+  // Gets data from controller5
+  var interval = {{ p_config_gui['gui_plugin_config']['dashboard']['rt_plot']['interval'] }};
+  var data = [];
+  // when page finishes loading, sets the values to the ones from data
+
+
+   
+  $(document).ready(function () {
+    // sets the menu highlight
+    $('#menu-dashboard').addClass('active');
+    /*
+        })
+        
+        * Custom Label formatter
+        * ----------------------
+        */
+    function labelFormatter(label, series) {
+      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+        + label
+        + '<br>'
+        + Math.round(series.percent) + '%</div>'
+    }
+  })
+
+</script>
+{% endblock javascripts %}
