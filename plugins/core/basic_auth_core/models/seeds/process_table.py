@@ -33,7 +33,7 @@ def seed(app, db):
                     db.session.add(row)
                 # commit the session to the database
                 db.session.commit()
-                _logger.info(table_name + "table seeded") 
+                _logger.info(table_name + " table seeded") 
                 
             # "fe_config":
                 table_name = "fe_config"
