@@ -27,7 +27,7 @@ def seed(app, db):
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
-                rows.append(table_base(json_config='{"csv_file": ".\\tests\\datasets\\EURUSD_5m_2006_2007.csv", "output_file": "./csv_output.csv", "plugin_name": "default_plugin", "method": "min-max", "range": [0.0, 1.0], "save_config": "out_config.json", "load_config": "./config_in.json", "quiet_mode": false, "remote_log": null, "remote_config": null}' ))
+                rows.append(table_base(json_config='{"csv_file": "tests\\data\\EURUSD_5m_2006_2007.csv", "plugin_name": "feature_selector", "method": "select_single", "single": 3}' ))
                 # add all the rows to the session
                 for row in rows:
                     db.session.add(row)
