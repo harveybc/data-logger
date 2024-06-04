@@ -7,7 +7,59 @@
                 "name": "preprocessor",
                 "tables": [
                     {
-                        "name": "preprocessor",
+                        "name": "default_plugin",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "unbiaser",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "trimmer",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "feature_selector",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "cleaner",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -19,6 +71,7 @@
                             }
                         ]
                     }
+
                 ]
             },
             {
