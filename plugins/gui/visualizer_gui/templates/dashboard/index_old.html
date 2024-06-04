@@ -190,7 +190,7 @@ input[type="radio"] {
             <div class="card-header">
               <h3 class="card-title">
                 <i class="far fa-chart-bar"></i>
-               
+                {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['title'] }} (Process: <b id="{{ p_config_gui['gui_plugin_config']['dashboard']['box_2_value'] }}_plot">00</b> )
               </h3>
               <div class="card-tools">
                 Real time
@@ -201,7 +201,8 @@ input[type="radio"] {
               </div>
             </div>
             <div class="card-body" >
-    
+                <div id="placeholder" class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['plot_height'] }};"></div>
+                <div id="overview"  class="demo-placeholder" style="height: {{ p_config_gui['gui_plugin_config']['dashboard']['val_plot']['overview_height'] }};"></div>             
             </div>
             <!-- /.card-body-->
           </div>
@@ -211,10 +212,56 @@ input[type="radio"] {
         <section class="col-lg-6 ">
           <!-- TABLE: VALIDATION OPERATIONS -->
           <div class="card card-primary card-outline">
-            
+            <div class="card-header">
+              <h3 class="card-title">{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['title'] }}</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
             <!-- /.card-header -->
-            
-          
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_0_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_1_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_2_title'] }}</th>
+                      <th>{{ p_config_gui['gui_plugin_config']['dashboard']['val_list']['col_3_title'] }}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="val_list">
+                  </tbody>
+                </table>
+                <!-- set page_num if is not defined  -->
+                {% if page_num is not defined %}
+                <script> var page_num = 1; </script>
+                {% else %}
+                <script> var page_num = {{ page_num }}; </script>
+                {% endif %}
+                {% if total_pages is not defined %}
+                <script> var total_pages = 1; </script>
+                {% else %}
+                <script> var total_pages = {{ total_pages }}; </script>
+                {% endif %}
+                {% if num_rows is not defined %}
+                <script> var num_rows = 15; </script>
+                {% else %}
+                <script> var num_rows = {{ num_rows }}; </script>
+                {% endif %}
+
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All</a>
+            </div>
             <!-- /.card-footer -->
           </div>
           <!-- /.card -->

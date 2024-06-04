@@ -7,23 +7,40 @@
             "box_1_title": "Training Score",
             "box_2_title": "Best Stored",
             "box_3_title": "Validation Score",
-            "box_0_route": "/feature_extractor/fe_training_error/scoreboard?col=config_id&order_by=mse&order=asc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
-            "box_1_route": "/feature_extractor/fe_training_error/scoreboard?col=mse&order_by=mse&order=asc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
-            "box_2_route": "/feature_extractor/fe_training_error/scoreboard?col=config_id&order_by=mse&order=asc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
-            "box_3_route": "/feature_extractor/fe_training_error/scoreboard?col=mse&order_by=mse&order=asc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+            "box_0_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+            "box_1_route": "/gym_fx/gym_fx_data/scoreboard?col=score&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+            "box_2_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+            "box_3_route": "/gym_fx/gym_fx_data/scoreboard?col=score_v&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
             "rt_plot": {
                 "title": "Online Training Score",
                 "height": "380px",
                 "interval": 2,
-                "data_route" : "/feature_extractor/fe_training_error/online_plot?num_points=250&val_col=mse&best_col=config_id&order_by=mse&order=asc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True"
+                "data_route" : "/gym_fx/gym_fx_data/online_plot?num_points=250&val_col=score&best_col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True"
+            },
+            "val_plot": {
+                "title": "Validation Score",
+                "plot_height": "280px",
+                "overview_height": "100px",
+                "max_points": "35",
+                "use_latest": true,
+                "data_route" : "/gym_fx/gym_fx_validation_plot/static_plot?num_points=250&val_col=score_v&best_col=config_id&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False"
+            },
+            "val_list": {
+                "title": "Validation Trades",
+                "col_0_title": "ID",
+                "col_1_title": "Balance",
+                "col_2_title": "Reward",
+                "col_3_title": "Date",
+                "data_route" : "gym_fx_validation_plot",
+                "columns" : ["id","balance","reward","date"]
             },
             "process_list": {
                 "title": "List of Processes",
                 "col_0_title": "ID",
                 "col_1_title": "Score",
                 "col_2_title": "Status",
-                "data_route" : "/feature_extractor_process_list",
-                "columns" : ["id","mse","interface_size","date"]
+                "data_route" : "/gym_fx_process_list",
+                "columns" : ["id","balance","reward","date"]
             }
         },
         "users": {
@@ -58,7 +75,7 @@
                 "col_3_title": "Event"
             }
         },
-        "feature_extractor_config": {
+        "gym_fx_config": {
             "title": "GymFX Config",
             "index": {
                 "title": "List of GymFX Environments",
@@ -82,7 +99,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "fe_training_error": {
+        "gym_fx_data": {
             "title": "GymFX Data",
             "index": {
                 "title": "List of GymFX Data",
@@ -97,16 +114,16 @@
                 "box_1_title": "Tr.Score",
                 "box_2_title": "BestStored",
                 "box_3_title": "Val.Score",
-                "box_0_route": "/feature_extractor/fe_training_error/scoreboard?col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
-                "box_1_route": "/feature_extractor/fe_training_error/scoreboard?col=score&order_by=score&order=desc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
-                "box_2_route": "/feature_extractor/fe_training_error/scoreboard?col=config_id&order_by=score_v&order=desc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
-                "box_3_route": "/feature_extractor/fe_training_error/scoreboard?col=score_v&order_by=score_v&order=desc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+                "box_0_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+                "box_1_route": "/gym_fx/gym_fx_data/scoreboard?col=score&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True",
+                "box_2_route": "/gym_fx/gym_fx_data/scoreboard?col=config_id&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
+                "box_3_route": "/gym_fx/gym_fx_data/scoreboard?col=score_v&order_by=score_v&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=False",
                 "rt_plot_visible": true,
                 "rt_plot": {
                     "title": "Online Training Score",
                     "height": "150px",
                     "interval": 2,
-                    "data_route": "/feature_extractor/fe_training_error/online_plot?num_points=250&val_col=score&best_col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=feature_extractor_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True"
+                    "data_route": "/gym_fx/gym_fx_data/online_plot?num_points=250&val_col=score&best_col=config_id&order_by=score&order=desc&foreign_key=config_id&rel_table=gym_fx_config&rel_filter_col=active&rel_filter_op=is_equal&rel_filter_val=True"
                 }
             },
             "create": {
@@ -126,7 +143,7 @@
                 "submit": "Please Confirm Delete"
             }
         },
-        "feature_extractor_validation_plot": {
+        "gym_fx_validation_plot": {
             "title": "GymFX Validation Plot",
             "plot": {
                 "title": "Validation Plot",
