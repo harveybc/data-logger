@@ -7,7 +7,7 @@
                 "name": "preprocessor",
                 "tables": [
                     {
-                        "name": "default_plugin",
+                        "name": "normalizer",
                         "columns": [
                             {
                                 "name": "json_config",
