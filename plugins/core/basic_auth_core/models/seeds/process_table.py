@@ -27,7 +27,10 @@ def seed(app, db, table_name):
                 rows=[]
                 
                 #append all the columnsof the table 
-                if table_name == "fe_config":
+                if table_name == "preprocessor":
+                    rows.append(table_base(json_config='{"csv_file": ".\\tests\\datasets\\EURUSD_5m_2006_2007.csv", "output_file": "./csv_output.csv", "plugin_name": "default_plugin", "method": "min-max", "range": [0.0, 1.0], "save_config": "out_config.json", "load_config": "./config_in.json", "quiet_mode": false, "remote_log": null, "remote_config": null}', 
+                                            ))
+                elif table_name == "fe_config":
                     rows.append(table_base(csv_file="EURUSD_5m_mar2014_mar2024_preprocessed.csv", 
                                             save_encoder="EURUSD_5m_mar2014_mar2024_encoder.h5", 
                                             save_decoder="EURUSD_5m_mar2014_mar2024_decoder.h5", 

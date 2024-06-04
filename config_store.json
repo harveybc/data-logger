@@ -4,8 +4,21 @@
         "filename": "db.sqlite3",
         "processes" : [
             {
-                "name": "feature_extractor",
+                "name": "preprocessor",
                 "tables": [
+                    {
+                        "name": "preprocessor",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
                     {
                         "name": "fe_config",
                         "columns": [
