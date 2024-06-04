@@ -62,9 +62,8 @@ class BasicAuthCore():
         from .models.seeds.process_table import seed as process_table_seed
         user_seed(app,db)
         # seeds training_error data
-        process_table_seed(app,db, "fe_config")
-        process_table_seed(app,db, "fe_training_error")
-
+        process_table_seed(app,db)
+        
     def create_process(self, app, db, process):
         """ Create a register in the process table if another with the same name does not exist.
             Args:
