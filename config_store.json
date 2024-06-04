@@ -18,7 +18,12 @@
                                 "col_type": "String"
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "feature_extractor",
+                "tables": [
                     {
                         "name": "fe_config",
                         "columns": [
