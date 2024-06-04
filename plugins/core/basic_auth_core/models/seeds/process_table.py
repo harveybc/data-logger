@@ -22,7 +22,7 @@ def seed(app, db):
             # perform query
             try:
             # "preprocessor":
-                table_name = "preprocessor"
+                table_name = "feature_selector"
                 rows=[]
                 # table base class
                 table_base = Base.classes[table_name]
