@@ -27,7 +27,7 @@ def seed(app, db):
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
-                rows.append(table_base(json_config='{"csv_file": "tests\\data\\EURUSD_5m_2006_2007.csv", "plugin_name": "feature_selector", "method": "select_single", "single": 3}' ))
+                rows.append(table_base(json_config='{"csv_file": "tests\\data\\EURUSD_5m_2006_2007.csv", "plugin": "feature_selector", "method": "select_single", "single": 3}' ))
                 # add all the rows to the session
                 for row in rows:
                     db.session.add(row)
