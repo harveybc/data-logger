@@ -78,7 +78,7 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "ann",
+                        "name": "fe_ann",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -91,7 +91,7 @@
                         ]
                     },
                     {
-                        "name": "cnn",
+                        "name": "fe_cnn",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -104,7 +104,7 @@
                         ]
                     },
                     {
-                        "name": "lstm",
+                        "name": "fe_lstm",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -117,7 +117,7 @@
                         ]
                     },
                     {
-                        "name": "transformer",
+                        "name": "fe_transformer",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -130,7 +130,7 @@
                         ]
                     },
                     {
-                        "name": "bi-lstm",
+                        "name": "fe_bi-lstm",
                         "columns": [
                             {
                                 "name": "json_config",
@@ -143,15 +143,15 @@
                         ]
                     },
                     {
-                        "name": "fe_training_error",
+                        "name": "fe_ann_training_error",
                         "columns": [
                             { "name" : "mse" },
                             { "name" : "mae" },
                             { "name" : "r2" },
                             { "name" : "interface_size", "col_type" : "Integer"},
                             {
-                                "name" : "config_id",
-                                "foreign_key" : "fe_config.id"
+                                "name" : "fe_ann_id",
+                                "foreign_key" : "fe_ann.id"
                             }
                         ]
                     }
