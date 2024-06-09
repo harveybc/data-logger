@@ -37,7 +37,7 @@ def seed(app, db):
                 
             # "fe_training_error":
                 rows=[]
-                table_name = "fe_training_error"
+                table_name = "fe_ann_training_error"
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
