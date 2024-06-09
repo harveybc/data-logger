@@ -41,11 +41,11 @@ def seed(app, db):
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
-                rows.append(table_base(mse=0.9, interface_size=256, config_id=1))
-                rows.append(table_base(mse=0.9, interface_size=128, config_id=2))
-                rows.append(table_base(mse=0.9, interface_size=64, config_id=3))
-                rows.append(table_base(mse=0.9, interface_size=32, config_id=4))
-                rows.append(table_base(mse=0.9, interface_size=16, config_id=5))
+                rows.append(table_base(mse=0.9, interface_size=256, fe_ann_id=1))
+                rows.append(table_base(mse=0.9, interface_size=128, fe_ann_id=2))
+                rows.append(table_base(mse=0.9, interface_size=64, fe_ann_id=3))
+                rows.append(table_base(mse=0.9, interface_size=32, fe_ann_id=4))
+                rows.append(table_base(mse=0.9, interface_size=16, fe_ann_id=5))
                 # add all the rows to the session
                 for row in rows:
                     db.session.add(row)
