@@ -78,78 +78,67 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "fe_config",
+                        "name": "ann",
                         "columns": [
                             {
-                                "name": "csv_file",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "save_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "save_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "load_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "load_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "evaluate_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "evaluate_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "encoder_plugin",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "decoder_plugin",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "window_size",
-                                "col_type": "Integer" 
-                            },
-                            {
-                                "name": "max_error",
-                                "col_type": "Float" 
-                            },
-                            {
-                                "name" : "initial_size",
-                                "col_type" : "Integer"
-                            },
-                            {
-                                "name": "step_size",
-                                "col_type": "Integer"
-                            },
-                            {
-                                "name": "remote_log",
+                                "name": "json_config",
                                 "col_type": "String"
                             },
                             {
-                                "name": "quiet_mode",
-                                "col_type": "Integer"
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "cnn",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
                             },
                             {
-                                "name": "encoder_model",
+                                "name": "json_result",
                                 "col_type": "String"
-                            },{
-                                "name": "decoder_model",
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lstm",
+                        "columns": [
+                            {
+                                "name": "json_config",
                                 "col_type": "String"
                             },
                             {
-                                "name": "active",
-                                "col_type": "Boolean"
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "transformer",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "bi-lstm",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
                             }
                         ]
                     },
