@@ -17,25 +17,22 @@ class MapReduce(MRJob):
 
     def mapper(self, _, line):
         print(f"DEBUG: Mapper input line (type: {type(line)}): {line}")
-        try:
+        if isinstance(line, bytes):
             line = line.decode('utf-8')
             print(f"DEBUG: Decoded line (type: {type(line)}): {line}")
-        except AttributeError:
-            print(f"DEBUG: Line already decoded: {line}")
-            # Already decoded in Python 3
-            pass
         for word in WORD_RE.findall(line):
             print(f"DEBUG: Mapper yield: {word.lower()}, 1")
             yield (word.lower(), 1)
 
     def reducer(self, word, counts):
         total = sum(counts)
-        print(f"DEBUG: Reducer - word: {word}, total: {total}")
-        yield (word.encode('utf-8'), total)
+        print(f"DEBUG: Reducer - word (type: {type(word)}): {word}, total: {total}")
+        yield (word, total)
 
     def reducer_format(self, _, word_count_pairs):
         for word, count in word_count_pairs:
-            word = word.decode('utf-8')  # Ensure word is a string
+            if isinstance(word, bytes):
+                word = word.decode('utf-8')  # Ensure word is a string
             print(f"DEBUG: Reducer Final - word: {word}, count: {count}")
             yield None, f"{word},{count}"
 
