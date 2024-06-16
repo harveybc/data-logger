@@ -16,12 +16,16 @@ class MapReduce(MRJob):
         ]
 
     def mapper(self, _, line):
+        print(f"DEBUG: Mapper input line: {line}")
         try:
             line = line.decode('utf-8')
+            print(f"DEBUG: Decoded line: {line}")
         except AttributeError:
+            print(f"DEBUG: Line already decoded: {line}")
             # Already decoded in Python 3
             pass
         for word in WORD_RE.findall(line):
+            print(f"DEBUG: Mapper yield: {word.lower()}, 1")
             yield (word.lower(), 1)
 
     def reducer(self, word, counts):
