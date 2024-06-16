@@ -11,7 +11,7 @@ class MapReduce(MRJob):
             MRStep(
                 mapper=self.mapper,
                 reducer=self.reducer,
-                reducer_final=self.reducer_format
+                reducer_final=self.reducer_final
             )
         ]
 
@@ -28,9 +28,9 @@ class MapReduce(MRJob):
     def reducer(self, word, counts):
         yield (word, sum(counts))
 
-    def reducer_format(self, word, count):
-        # Format the output as "word,count"
-        yield None, f"{word},{count}"
+    def reducer_final(self, word, counts):
+        for count in counts:
+            yield None, f"{word},{count}"
 
 if __name__ == "__main__":
     MapReduce.run()
