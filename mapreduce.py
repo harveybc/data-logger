@@ -10,7 +10,8 @@ class MapReduce(MRJob):
         return [
             MRStep(
                 mapper=self.mapper,
-                reducer=self.reducer
+                reducer=self.reducer,
+                reducer_final=self.reducer_final
             )
         ]
 
@@ -22,14 +23,9 @@ class MapReduce(MRJob):
         yield (self.decode_unicode(word), sum(counts))
 
     def decode_unicode(self, text):
-        # Decodificar caracteres Unicode a su forma legible
         return text.encode('latin1').decode('utf-8')
 
     def reducer_final(self, word, count):
-        yield (word, count)
-
-    def reducer_format(self, word, count):
-        # Formatear la salida como "palabra,contador"
         yield None, f"{word},{count}"
 
 if __name__ == "__main__":
