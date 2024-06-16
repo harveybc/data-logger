@@ -11,21 +11,25 @@ class MapReduce(MRJob):
             MRStep(
                 mapper=self.mapper,
                 reducer=self.reducer,
-                reducer_final=self.reducer_final
+                reducer_final=self.reducer_format
             )
         ]
 
     def mapper(self, _, line):
+        # Decode the line to ensure it handles different encodings
+        try:
+            line = line.decode('utf-8')
+        except AttributeError:
+            # If already decoded (Python 3), pass
+            pass
         for word in WORD_RE.findall(line):
             yield (word.lower(), 1)
 
     def reducer(self, word, counts):
-        yield (self.decode_unicode(word), sum(counts))
+        yield (word, sum(counts))
 
-    def decode_unicode(self, text):
-        return text.encode('latin1').decode('utf-8')
-
-    def reducer_final(self, word, count):
+    def reducer_format(self, word, count):
+        # Format the output as "word,count"
         yield None, f"{word},{count}"
 
 if __name__ == "__main__":
