@@ -16,17 +16,16 @@ class MapReduce(MRJob):
         ]
 
     def mapper(self, _, line):
-        print(f"DEBUG: Mapper input line (type: {type(line)}): {line}")
         if isinstance(line, bytes):
-            line = line.decode('utf-8')
-            print(f"DEBUG: Decoded line (type: {type(line)}): {line}")
+            line = line.decode('utf-8')  # Decode bytes to str
+        print(f"DEBUG: Mapper input line (type: {type(line)}): {line}")
         for word in WORD_RE.findall(line):
             print(f"DEBUG: Mapper yield: {word.lower()}, 1")
             yield (word.lower(), 1)
 
     def reducer(self, word, counts):
         total = sum(counts)
-        print(f"DEBUG: Reducer - word (type: {type(word)}): {word}, total: {total}")
+        print(f"DEBUG: Reducer - word: {word} (type: {type(word)}), total: {total}")
         yield (word, total)
 
     def reducer_format(self, _, word_count_pairs):
