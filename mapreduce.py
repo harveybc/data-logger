@@ -2,7 +2,6 @@ from mrjob.job import MRJob
 from mrjob.step import MRStep
 import re
 
-# Compilar una expresión regular para encontrar palabras
 WORD_RE = re.compile(r"\w+")
 
 class MapReduce(MRJob):
@@ -16,14 +15,22 @@ class MapReduce(MRJob):
         ]
 
     def mapper(self, _, line):
-        # Dividir la línea en palabras utilizando una expresión regular
         for word in WORD_RE.findall(line):
-            # Emitir cada palabra con el conteo 1
             yield (word.lower(), 1)
 
     def reducer(self, word, counts):
-        # Sumar todos los conteos para cada palabra
-        yield (word, sum(counts))
+        yield (self.decode_unicode(word), sum(counts))
+
+    def decode_unicode(self, text):
+        # Decodificar caracteres Unicode a su forma legible
+        return text.encode('latin1').decode('utf-8')
+
+    def reducer_final(self, word, count):
+        yield (word, count)
+
+    def reducer_format(self, word, count):
+        # Formatear la salida como "palabra,contador"
+        yield None, f"{word},{count}"
 
 if __name__ == "__main__":
     MapReduce.run()
