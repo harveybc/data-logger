@@ -26,7 +26,7 @@ class MapReduce(MRJob):
     def reducer(self, word, counts):
         total = sum(counts)
         print(f"DEBUG: Reducer - word: {word} (type: {type(word)}), total: {total}")
-        yield (word, total)
+        yield (word.encode('utf-8'), total)
 
     def reducer_format(self, _, word_count_pairs):
         for word, count in word_count_pairs:
