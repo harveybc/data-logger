@@ -16,10 +16,10 @@ class MapReduce(MRJob):
         ]
 
     def mapper(self, _, line):
-        print(f"DEBUG: Mapper input line: {line}")
+        print(f"DEBUG: Mapper input line (type: {type(line)}): {line}")
         try:
             line = line.decode('utf-8')
-            print(f"DEBUG: Decoded line: {line}")
+            print(f"DEBUG: Decoded line (type: {type(line)}): {line}")
         except AttributeError:
             print(f"DEBUG: Line already decoded: {line}")
             # Already decoded in Python 3
