@@ -78,91 +78,80 @@
                 "name": "feature_extractor",
                 "tables": [
                     {
-                        "name": "fe_config",
+                        "name": "fe_ann",
                         "columns": [
                             {
-                                "name": "csv_file",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "save_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "save_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "load_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "load_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "evaluate_encoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "evaluate_decoder",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "encoder_plugin",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "decoder_plugin",
-                                "col_type": "String" 
-                            },
-                            {
-                                "name": "window_size",
-                                "col_type": "Integer" 
-                            },
-                            {
-                                "name": "max_error",
-                                "col_type": "Float" 
-                            },
-                            {
-                                "name" : "initial_size",
-                                "col_type" : "Integer"
-                            },
-                            {
-                                "name": "step_size",
-                                "col_type": "Integer"
-                            },
-                            {
-                                "name": "remote_log",
+                                "name": "json_config",
                                 "col_type": "String"
                             },
                             {
-                                "name": "quiet_mode",
-                                "col_type": "Integer"
-                            },
-                            {
-                                "name": "encoder_model",
+                                "name": "json_result",
                                 "col_type": "String"
-                            },{
-                                "name": "decoder_model",
-                                "col_type": "String"
-                            },
-                            {
-                                "name": "active",
-                                "col_type": "Boolean"
                             }
                         ]
                     },
                     {
-                        "name": "fe_training_error",
+                        "name": "fe_cnn",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "fe_lstm",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "fe_transformer",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "fe_bi-lstm",
+                        "columns": [
+                            {
+                                "name": "json_config",
+                                "col_type": "String"
+                            },
+                            {
+                                "name": "json_result",
+                                "col_type": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "fe_ann_training_error",
                         "columns": [
                             { "name" : "mse" },
                             { "name" : "mae" },
                             { "name" : "r2" },
                             { "name" : "interface_size", "col_type" : "Integer"},
                             {
-                                "name" : "config_id",
-                                "foreign_key" : "fe_config.id"
+                                "name" : "fe_ann_id",
+                                "foreign_key" : "fe_ann.id"
                             }
                         ]
                     }

@@ -27,7 +27,7 @@ def seed(app, db):
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
-                rows.append(table_base(json_config='{"csv_file": "tests\\data\\EURUSD_5m_2006_2007.csv", "plugin_name": "feature_selector", "method": "select_single", "single": 3}' ))
+                rows.append(table_base(json_config='{"csv_file": "tests\\data\\EURUSD_5m_2006_2007.csv", "plugin": "feature_selector", "method": "select_single", "single": 3}' ))
                 # add all the rows to the session
                 for row in rows:
                     db.session.add(row)
@@ -35,110 +35,17 @@ def seed(app, db):
                 db.session.commit()
                 _logger.info(table_name + " table seeded") 
                 
-            # "fe_config":
-                table_name = "fe_config"
-                rows=[]
-                # table base class
-                table_base = Base.classes[table_name]
-                #append rows
-                rows.append(table_base(csv_file="EURUSD_5m_mar2014_mar2024_preprocessed.csv", 
-                                        save_encoder="EURUSD_5m_mar2014_mar2024_encoder.h5", 
-                                        save_decoder="EURUSD_5m_mar2014_mar2024_decoder.h5", 
-                                        load_encoder="EURUSD_5m_mar2014_mar2024_encoder.h5", 
-                                        load_decoder="EURUSD_5m_mar2014_mar2024_decoder.h5", 
-                                        evaluate_encoder="EURUSD_5m_mar2014_mar2024_encoder.h5", 
-                                        evaluate_decoder="EURUSD_5m_mar2014_mar2024_decoder.h5", 
-                                        encoder_plugin="cnn", 
-                                        decoder_plugin="cnn", 
-                                        window_size=512, 
-                                        max_error=0.1, 
-                                        initial_size=256, 
-                                        step_size=16, 
-                                        remote_log="http://localhost:60500/feature_extractor/fe_training_error/1", 
-                                        quiet_mode=0, 
-                                        active=True))
-                rows.append(table_base(csv_file="EURUSD_15m_mar2014_mar2024_preprocessed.csv",
-                                        save_encoder="EURUSD_15m_mar2014_mar2024_encoder.h5",
-                                        save_decoder="EURUSD_15m_mar2014_mar2024_decoder.h5",
-                                        load_encoder="EURUSD_15m_mar2014_mar2024_encoder.h5",
-                                        load_decoder="EURUSD_15m_mar2014_mar2024_decoder.h5",
-                                        evaluate_encoder="EURUSD_15m_mar2014_mar2024_encoder.h5",
-                                        evaluate_decoder="EURUSD_15m_mar2014_mar2024_decoder.h5",
-                                        encoder_plugin="cnn",
-                                        decoder_plugin="cnn",
-                                        window_size=256,
-                                        max_error=0.1,
-                                        initial_size=128,
-                                        step_size=8,
-                                        remote_log="http://localhost:60500/feature_extractor/fe_training_error/2",
-                                        quiet_mode=0,
-                                        active=True))
-                rows.append(table_base(csv_file="EURUSD_1h_mar2014_mar2024_preprocessed.csv", 
-                                        save_encoder="EURUSD_1h_mar2014_mar2024_encoder.h5", 
-                                        save_decoder="EURUSD_1h_mar2014_mar2024_decoder.h5", 
-                                        load_encoder="EURUSD_1h_mar2014_mar2024_encoder.h5", 
-                                        load_decoder="EURUSD_1h_mar2014_mar2024_decoder.h5", 
-                                        evaluate_encoder="EURUSD_1h_mar2014_mar2024_encoder.h5", 
-                                        evaluate_decoder="EURUSD_1h_mar2014_mar2024_decoder.h5", 
-                                        encoder_plugin="cnn", 
-                                        decoder_plugin="cnn", 
-                                        window_size=128, 
-                                        max_error=0.1, 
-                                        initial_size=64, 
-                                        step_size=4, 
-                                        remote_log="http://localhost:60500/feature_extractor/fe_training_error/3", 
-                                        quiet_mode=0, 
-                                        active=True))
-                rows.append(table_base(csv_file="EURUSD_4h_mar2014_mar2024_preprocessed.csv",
-                                            save_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            save_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            load_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            load_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            evaluate_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            evaluate_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            encoder_plugin="cnn",
-                                            decoder_plugin="cnn",
-                                            window_size=64,
-                                            max_error=0.1,
-                                            initial_size=32,
-                                            step_size=2,
-                                            remote_log="http://localhost:60500/feature_extractor/fe_training_error/4",
-                                            quiet_mode=0,
-                                            active=True))                            
-                rows.append(table_base(csv_file="EURUSD_1d_mar2014_mar2024_preprocessed.csv",
-                                            save_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            save_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            load_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            load_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            evaluate_encoder="EURUSD_4h_mar2014_mar2024_encoder.h5",
-                                            evaluate_decoder="EURUSD_4h_mar2014_mar2024_decoder.h5",
-                                            encoder_plugin="cnn",
-                                            decoder_plugin="cnn",
-                                            window_size=32,
-                                            max_error=0.1,
-                                            initial_size=16,
-                                            step_size=1,
-                                            remote_log="http://localhost:60500/feature_extractor/fe_training_error/5",
-                                            quiet_mode=0,
-                                            active=True))                            
-                # add all the rows to the session
-                for row in rows:
-                    db.session.add(row)
-                # commit the session to the database
-                db.session.commit()
-                _logger.info(table_name + " table seeded") 
-
             # "fe_training_error":
                 rows=[]
-                table_name = "fe_training_error"
+                table_name = "fe_ann_training_error"
                 # table base class
                 table_base = Base.classes[table_name]
                 #append rows
-                rows.append(table_base(mse=0.9, interface_size=256, config_id=1))
-                rows.append(table_base(mse=0.9, interface_size=128, config_id=2))
-                rows.append(table_base(mse=0.9, interface_size=64, config_id=3))
-                rows.append(table_base(mse=0.9, interface_size=32, config_id=4))
-                rows.append(table_base(mse=0.9, interface_size=16, config_id=5))
+                rows.append(table_base(mse=0.9, interface_size=256, fe_ann_id=1))
+                rows.append(table_base(mse=0.9, interface_size=128, fe_ann_id=2))
+                rows.append(table_base(mse=0.9, interface_size=64, fe_ann_id=3))
+                rows.append(table_base(mse=0.9, interface_size=32, fe_ann_id=4))
+                rows.append(table_base(mse=0.9, interface_size=16, fe_ann_id=5))
                 # add all the rows to the session
                 for row in rows:
                     db.session.add(row)
