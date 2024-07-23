@@ -156,7 +156,83 @@
                         ]
                     }
                 ]
+            },
+
+            {
+                "name": "evaluator",
+                "tables": [
+                    {
+                        "name": "evaluations",
+                        "columns": [
+                            {
+                                "name": "client_id",
+                                "type": "integer",
+                                "not_null": true
+                            },
+                            {
+                                "name": "data",
+                                "type": "text",
+                                "not_null": true
+                            },
+                            {
+                                "name": "window_size",
+                                "type": "integer",
+                                "not_null": true
+                            },
+                            {
+                                "name": "feature_extractor_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            },
+                            {
+                                "name": "champion_genome_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            },
+                            {
+                                "name": "neat_config_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            },
+                            {
+                                "name": "evaluation_status",
+                                "type": "string",
+                                "length": 20,
+                                "not_null": true,
+                                "default": "pending"
+                            },
+                            {
+                                "name": "json_result",
+                                "type": "text",
+                                "not_null": false
+                            },
+                            {
+                                "name": "data_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            },
+                            {
+                                "name": "feature_extracted_data_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            },
+                            {
+                                "name": "result_hash",
+                                "type": "string",
+                                "length": 64,
+                                "not_null": true
+                            }
+                        ]
+                    }
+                ]
             }
+            
+                        
         ]
     }
 }
