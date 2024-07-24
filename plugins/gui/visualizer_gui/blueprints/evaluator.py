@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, abort, current_app
+from flask import Blueprint, request, jsonify, abort
 from sqlalchemy.ext.automap import automap_base
 import hashlib
 import logging
@@ -24,7 +24,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Create a new evaluation request"""
         try:
             content = request.json
-            required_fields = ['client_id', 'data', 'window_size', 'feature_extractor_hash', 'champion_genome_hash', 'neat_config_hash']
+            required_fields = ['client_id', 'data', 'window_size']
 
             # Validate input data
             for field in required_fields:
@@ -34,18 +34,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             client_id = content['client_id']
             data = content['data']  # Expecting data to be a JSON string
             window_size = content['window_size']
-            feature_extractor_hash = content['feature_extractor_hash']
-            champion_genome_hash = content['champion_genome_hash']
-            neat_config_hash = content['neat_config_hash']
             data_hash = calculate_hash(data)  # Calculate hash of the JSON string
 
             new_evaluation = Evaluations(
                 client_id=client_id,
                 data=data,  # Store JSON string
                 window_size=window_size,
-                feature_extractor_hash=feature_extractor_hash,
-                champion_genome_hash=champion_genome_hash,
-                neat_config_hash=neat_config_hash,
                 evaluation_status='pending',
                 data_hash=data_hash
             )
@@ -69,9 +63,6 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     "client_id": evaluation.client_id,
                     "data": evaluation.data,  # Return JSON string
                     "window_size": evaluation.window_size,
-                    "feature_extractor_hash": evaluation.feature_extractor_hash,
-                    "champion_genome_hash": evaluation.champion_genome_hash,
-                    "neat_config_hash": evaluation.neat_config_hash,
                     "data_hash": evaluation.data_hash
                 }), 200
             else:
@@ -86,7 +77,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Submit the result of an evaluation"""
         try:
             content = request.json
-            required_fields = ['evaluation_id', 'json_result', 'data_hash', 'feature_extracted_data_hash']
+            required_fields = ['evaluation_id', 'json_result', 'data_hash', 'feature_extracted_data_hash', 'feature_extractor_hash', 'champion_genome_hash', 'neat_config_hash']
 
             # Validate input data
             for field in required_fields:
@@ -97,6 +88,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             json_result = content['json_result']  # Expecting result to be a JSON string
             data_hash = content['data_hash']
             feature_extracted_data_hash = content['feature_extracted_data_hash']
+            feature_extractor_hash = content['feature_extractor_hash']
+            champion_genome_hash = content['champion_genome_hash']
+            neat_config_hash = content['neat_config_hash']
             result_hash = calculate_hash(json_result)  # Calculate hash of the JSON string
 
             evaluation = db.session.query(Evaluations).filter_by(id=evaluation_id).first()
@@ -113,6 +107,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
 
             evaluation.json_result = json_result  # Store JSON string
             evaluation.feature_extracted_data_hash = feature_extracted_data_hash
+            evaluation.feature_extractor_hash = feature_extractor_hash
+            evaluation.champion_genome_hash = champion_genome_hash
+            evaluation.neat_config_hash = neat_config_hash
             evaluation.result_hash = result_hash
             evaluation.evaluation_status = 'completed'
             db.session.commit()
