@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify, abort, current_app
 from sqlalchemy.ext.automap import automap_base
 import hashlib
 import logging
-import json
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -33,17 +32,16 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     return jsonify({"error": f"Missing field: {field}"}), 400
 
             client_id = content['client_id']
-            data = content['data']
+            data = content['data']  # Expecting data to be a JSON string
             window_size = content['window_size']
             feature_extractor_hash = content['feature_extractor_hash']
             champion_genome_hash = content['champion_genome_hash']
             neat_config_hash = content['neat_config_hash']
-            data_str = json.dumps(data)  # Convert data to JSON string
-            data_hash = calculate_hash(data_str)  # Calculate hash of the JSON string
+            data_hash = calculate_hash(data)  # Calculate hash of the JSON string
 
             new_evaluation = Evaluations(
                 client_id=client_id,
-                data=data_str,  # Store JSON string
+                data=data,  # Store JSON string
                 window_size=window_size,
                 feature_extractor_hash=feature_extractor_hash,
                 champion_genome_hash=champion_genome_hash,
@@ -69,7 +67,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return jsonify({
                     "evaluation_id": evaluation.id,
                     "client_id": evaluation.client_id,
-                    "data": json.loads(evaluation.data),  # Convert stored JSON string back to dict
+                    "data": evaluation.data,  # Return JSON string
                     "window_size": evaluation.window_size,
                     "feature_extractor_hash": evaluation.feature_extractor_hash,
                     "champion_genome_hash": evaluation.champion_genome_hash,
@@ -96,10 +94,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     return jsonify({"error": f"Missing field: {field}"}), 400
 
             evaluation_id = content['evaluation_id']
-            json_result = content['json_result']
+            json_result = content['json_result']  # Expecting result to be a JSON string
             data_hash = content['data_hash']
             feature_extracted_data_hash = content['feature_extracted_data_hash']
-            result_hash = calculate_hash(json.dumps(json_result))  # Convert result to JSON string before hashing
+            result_hash = calculate_hash(json_result)  # Calculate hash of the JSON string
 
             evaluation = db.session.query(Evaluations).filter_by(id=evaluation_id).first()
 
@@ -113,7 +111,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             if evaluation.data_hash != data_hash:
                 return jsonify({"error": "Data hash mismatch"}), 400
 
-            evaluation.json_result = json.dumps(json_result)  # Convert result to JSON string before storing
+            evaluation.json_result = json_result  # Store JSON string
             evaluation.feature_extracted_data_hash = feature_extracted_data_hash
             evaluation.result_hash = result_hash
             evaluation.evaluation_status = 'completed'
@@ -136,7 +134,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return jsonify({"message": "Evaluation is still pending"}), 202
 
             return jsonify({
-                "json_result": json.loads(evaluation.json_result),  # Convert stored JSON string back to dict
+                "json_result": evaluation.json_result,  # Return JSON string
                 "result_hash": evaluation.result_hash
             }), 200
         except Exception as e:
