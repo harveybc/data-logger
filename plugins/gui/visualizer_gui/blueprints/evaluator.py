@@ -1,10 +1,11 @@
-from flask import Blueprint, request, jsonify, abort, current_app
+from flask import Blueprint, request, jsonify, abort
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 import hashlib
 import logging
 from contextlib import contextmanager
+from flask import current_app
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
