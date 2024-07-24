@@ -1,9 +1,8 @@
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, current_app
 from sqlalchemy.ext.automap import automap_base
-from flask import current_app
-
 import hashlib
 import logging
+import json
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,11 +38,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             feature_extractor_hash = content['feature_extractor_hash']
             champion_genome_hash = content['champion_genome_hash']
             neat_config_hash = content['neat_config_hash']
-            data_hash = calculate_hash(data)
+            data_hash = calculate_hash(json.dumps(data))  # Convert data to JSON string before hashing
 
             new_evaluation = Evaluations(
                 client_id=client_id,
-                data=data,
+                data=json.dumps(data),  # Convert data to JSON string before storing
                 window_size=window_size,
                 feature_extractor_hash=feature_extractor_hash,
                 champion_genome_hash=champion_genome_hash,
@@ -69,7 +68,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return jsonify({
                     "evaluation_id": evaluation.id,
                     "client_id": evaluation.client_id,
-                    "data": evaluation.data,
+                    "data": json.loads(evaluation.data),  # Convert stored JSON string back to dict
                     "window_size": evaluation.window_size,
                     "feature_extractor_hash": evaluation.feature_extractor_hash,
                     "champion_genome_hash": evaluation.champion_genome_hash,
@@ -99,7 +98,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             json_result = content['json_result']
             data_hash = content['data_hash']
             feature_extracted_data_hash = content['feature_extracted_data_hash']
-            result_hash = calculate_hash(json_result)
+            result_hash = calculate_hash(json.dumps(json_result))  # Convert result to JSON string before hashing
 
             evaluation = db.session.query(Evaluations).filter_by(id=evaluation_id).first()
 
@@ -113,7 +112,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             if evaluation.data_hash != data_hash:
                 return jsonify({"error": "Data hash mismatch"}), 400
 
-            evaluation.json_result = json_result
+            evaluation.json_result = json.dumps(json_result)  # Convert result to JSON string before storing
             evaluation.feature_extracted_data_hash = feature_extracted_data_hash
             evaluation.result_hash = result_hash
             evaluation.evaluation_status = 'completed'
@@ -136,7 +135,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return jsonify({"message": "Evaluation is still pending"}), 202
 
             return jsonify({
-                "json_result": evaluation.json_result,
+                "json_result": json.loads(evaluation.json_result),  # Convert stored JSON string back to dict
                 "result_hash": evaluation.result_hash
             }), 200
         except Exception as e:
