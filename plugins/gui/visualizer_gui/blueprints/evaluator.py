@@ -18,9 +18,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
     # Ensure application context is available
-    with current_app.app_context():
-        Base.prepare(db.get_engine(), reflect=True)
-        Evaluations = Base.classes.evaluations
+    Evaluations = Base.classes.evaluations
 
     # Endpoint to submit evaluation request (Client)
     @bp.route("/submit_evaluation", methods=["POST"])
