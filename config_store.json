@@ -166,66 +166,55 @@
                         "columns": [
                             {
                                 "name": "client_id",
-                                "col_type": "integer",
-                                "nullable": false
+                                "col_type": "integer"
                             },
                             {
                                 "name": "data",
-                                "col_type": "Text",
-                                "nullable": false
+                                "col_type": "Text"
                             },
                             {
                                 "name": "window_size",
-                                "col_type": "integer",
-                                "nullable": false
+                                "col_type": "integer"
                             },
                             {
                                 "name": "feature_extractor_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             },
                             {
                                 "name": "champion_genome_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             },
                             {
                                 "name": "neat_config_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             },
                             {
                                 "name": "evaluation_status",
                                 "col_type": "string",
                                 "length": 20,
-                                "nullable": false,
                                 "default": "pending"
                             },
                             {
                                 "name": "json_result",
-                                "col_type": "text",
-                                "not_null": false
+                                "col_type": "text"
                             },
                             {
                                 "name": "data_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             },
                             {
                                 "name": "feature_extracted_data_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             },
                             {
                                 "name": "result_hash",
                                 "col_type": "string",
-                                "length": 64,
-                                "nullable": false
+                                "length": 64
                             }
                         ]
                     }
