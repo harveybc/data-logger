@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, current_app
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
@@ -11,10 +11,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def new_bp(plugin_folder, core_ep, store_ep, db, Base):
-    # Initialize SQLAlchemy and Automap Base
-    Base.prepare(db.get_engine(), reflect=True)
-    Evaluations = Base.classes.evaluations
-
     # Create a new Blueprint
     bp = Blueprint("bp_evaluator", __name__)
 
@@ -35,6 +31,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             raise
         finally:
             session.close()
+
+    # Ensure application context is available
+    with current_app.app_context():
+        Base.prepare(db.get_engine(), reflect=True)
+        Evaluations = Base.classes.evaluations
 
     # Endpoint to submit evaluation request (Client)
     @bp.route('/submit_evaluation', methods=['POST'])
