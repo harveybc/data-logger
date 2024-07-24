@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify, abort
 from sqlalchemy.ext.automap import automap_base
+from flask import current_app
+
 import hashlib
 import logging
 
