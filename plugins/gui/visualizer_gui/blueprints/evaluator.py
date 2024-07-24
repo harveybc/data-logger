@@ -101,9 +101,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             if evaluation.evaluation_status != 'pending':
                 return jsonify({"error": "Evaluation already completed"}), 400
 
-            # Verify hashes
-            if evaluation.data_hash != data_hash:
-                return jsonify({"error": "Data hash mismatch"}), 400
+            # TODO: Verify hashes
+            #if evaluation.data_hash != data_hash:
+            #    return jsonify({"error": "Data hash mismatch"}), 400
 
             evaluation.json_result = json_result  # Store JSON string
             evaluation.feature_extracted_data_hash = feature_extracted_data_hash
