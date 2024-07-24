@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, abort, current_app
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
+from flask_sqlalchemy import SQLAlchemy
 import hashlib
 import logging
 
