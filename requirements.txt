@@ -13,3 +13,4 @@ swagger-ui-bundle
 click
 sphinx
 sphinx_rtd_theme
+rpds
