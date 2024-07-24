@@ -38,11 +38,12 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             feature_extractor_hash = content['feature_extractor_hash']
             champion_genome_hash = content['champion_genome_hash']
             neat_config_hash = content['neat_config_hash']
-            data_hash = calculate_hash(json.dumps(data))  # Convert data to JSON string before hashing
+            data_str = json.dumps(data)  # Convert data to JSON string
+            data_hash = calculate_hash(data_str)  # Calculate hash of the JSON string
 
             new_evaluation = Evaluations(
                 client_id=client_id,
-                data=json.dumps(data),  # Convert data to JSON string before storing
+                data=data_str,  # Store JSON string
                 window_size=window_size,
                 feature_extractor_hash=feature_extractor_hash,
                 champion_genome_hash=champion_genome_hash,
