@@ -41,6 +41,8 @@ class ProcessTable():
             if "index" not in c: c["index"] = False
             if "default" not in c: c["default"] = {}
             if "nullable" not in c: c["nullable"] = True
+            if "not-null" in c: c["nullable"] = not c["not-null"]
+            
             if "primary_key" in c:
                 if c["primary_key"]:
                     t_args.append(Column(c["name"], col_type, autoincrement=True, primary_key=c["primary_key"], nullable=False))
