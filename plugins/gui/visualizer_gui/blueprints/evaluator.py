@@ -41,7 +41,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             data = content['data']  # Expecting data to be a JSON string
             window_size = content['window_size']
             data_hash = calculate_hash(data)  # Calculate hash of the JSON string
-
+            print("Hashes calculated")
             new_evaluation = Evaluations(
                 client_id=client_id,
                 data=data,  # Store JSON string
@@ -49,9 +49,10 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 evaluation_status='pending',
                 data_hash=data_hash
             )
-
+            print("Evaluation object created")
             db.session.add(new_evaluation)
             db.session.commit()
+            print("Evaluation committed")
             evaluation_id = new_evaluation.id
             return jsonify({"evaluation_id": evaluation_id}), 201
         except Exception as e:
