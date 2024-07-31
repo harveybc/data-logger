@@ -29,8 +29,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         print("Form: ", request.form)
         print("Files: ", request.files)
         try:
-            print("JSON: ", request.get_json())
             content = request.json
+            print("contrent: ", content)
+            
             required_fields = ['client_id', 'data', 'window_size']
 
             # Validate input data
