@@ -24,7 +24,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Create a new evaluation request"""
         print("Headers: ", request.headers)
         print("Body: ", request.get_data(as_text=True))
-        print("JSON: ", request.get_json())
+        #print("JSON: ", request.get_json())
         print("Args: ", request.args)
         print("Form: ", request.form)
         print("Files: ", request.files)
