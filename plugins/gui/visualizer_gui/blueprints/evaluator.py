@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, abort
 from sqlalchemy.ext.automap import automap_base
 import hashlib
 import logging
+import json
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,12 +25,14 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         """Create a new evaluation request"""
         print("Headers: ", request.headers)
         print("Body: ", request.get_data(as_text=True))
-        print("JSON: ", request.request.get_data(as_text=True).get_json())
+        body=request.get_data(as_text=True)
+        json_body = json.loads(body)
+        print("JSON: ", json_body)
         print("Args: ", request.args)
         print("Form: ", request.form)
         print("Files: ", request.files)
         try:
-            content = request.json
+            content = json_body
             print("contrent: ", content)
             
             required_fields = ['client_id', 'data', 'window_size']
