@@ -26,7 +26,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
         print("Headers: ", request.headers)
         print("Body: ", request.get_data(as_text=True))
         body=request.get_data(as_text=True)
-        json_body = json.loads(body)
+        json_body = json.loads(body[:-1])
         print("JSON: ", json_body)
         print("Args: ", request.args)
         print("Form: ", request.form)
