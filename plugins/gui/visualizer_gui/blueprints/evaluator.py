@@ -22,9 +22,9 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     @bp.route("/submit_evaluation", methods=["POST"])
     def submit_evaluation():
         """Create a new evaluation request"""
+        print("request", request)
         try:
             content = request.json
-            print("Content: ", content)
             required_fields = ['client_id', 'data', 'window_size']
 
             # Validate input data
