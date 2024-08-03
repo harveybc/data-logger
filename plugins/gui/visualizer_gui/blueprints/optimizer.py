@@ -68,6 +68,11 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             optimum_base64 = content['optimum']
             optimum_hash = content['optimum_hash']
 
+            # Verify if optimizer_id exists in the optimizations table
+            optimizer_exists = db.session.query(Optimizations).filter_by(id=optimizer_id).first()
+            if not optimizer_exists:
+                return jsonify({"error": "Optimizer ID not found"}), 404
+
             # Decode the Base64 encoded optimum
             optimum_pickled = base64.b64decode(optimum_base64)
 
@@ -84,9 +89,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             db.session.add(new_optimum)
 
             # Update the latest optimum hash in the optimizations table
-            latest_optimization = db.session.query(Optimizations).filter_by(id=optimizer_id).first()
-            if latest_optimization:
-                latest_optimization.last_optimum_hash = optimum_hash
+            optimizer_exists.last_optimum_hash = optimum_hash
 
             db.session.commit()
             return jsonify({"message": "Optimum reported successfully"}), 201
