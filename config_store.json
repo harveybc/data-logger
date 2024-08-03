@@ -229,21 +229,11 @@
                             {
                                 "name": "optimizer_name",
                                 "col_type": "string",
-                                "length": 100
-                            },
-                            {
-                                "name": "optimization_algorithm",
-                                "col_type": "string",
-                                "length": 100
+                                "length": 200
                             },
                             {
                                 "name": "optimization_parameters",
                                 "col_type": "text"
-                            },
-                            {
-                                "name": "last_optimum_hash",
-                                "col_type": "string",
-                                "length": 64
                             },
                             {
                                 "name": "status",
