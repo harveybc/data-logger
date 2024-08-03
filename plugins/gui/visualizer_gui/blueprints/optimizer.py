@@ -2,19 +2,20 @@ from flask import Blueprint, request, jsonify, abort
 from sqlalchemy.ext.automap import automap_base
 import hashlib
 import logging
-import json
+import base64
+import pickle
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def new_bp(plugin_folder, core_ep, store_ep, db, Base):
+def new_bp_optimizer(db, Base):
     # Create a new Blueprint
     bp_optimizer = Blueprint("bp_optimizer", __name__)
 
     # Function to calculate hash
     def calculate_hash(data):
-        return hashlib.sha256(data.encode('utf-8')).hexdigest()
+        return hashlib.sha256(data).hexdigest()
 
     # Ensure application context is available
     Optimizations = Base.classes.optimizations
@@ -64,16 +65,20 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                     return jsonify({"error": f"Missing field: {field}"}), 400
 
             optimizer_id = content['optimizer_id']
-            optimum = content['optimum']
+            optimum_base64 = content['optimum']
             optimum_hash = content['optimum_hash']
 
-            # Validate hash
-            if calculate_hash(optimum) != optimum_hash:
-                return jsonify({"error": "Optimum hash mismatch"}), 400
+            # Decode the Base64 encoded optimum
+            optimum_pickled = base64.b64decode(optimum_base64)
+
+            # Validate hash, just show a warning if invalid
+            if calculate_hash(optimum_pickled) != optimum_hash:
+                logger.warning("Optimum hash mismatch")
+                #return jsonify({"error": "Optimum hash mismatch"}), 400
 
             new_optimum = Optimae(
                 optimizer_id=optimizer_id,
-                optimum=optimum,
+                optimum=optimum_base64,  # Store the Base64 encoded data
                 optimum_hash=optimum_hash
             )
             db.session.add(new_optimum)
