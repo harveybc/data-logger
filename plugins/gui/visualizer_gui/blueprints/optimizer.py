@@ -39,7 +39,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
             latest_optimum = db.session.query(Optimae).filter_by(optimizer_id=optimization_id).order_by(Optimae.id.desc()).first()
 
             if not latest_optimum:
-                return jsonify({"message": "No optimizations available for the given ID"}), 204
+                return jsonify({"message": "No optimizations available for the given ID"}), 404
 
             if latest_optimum.optimum_hash == current_optimum_hash:
                 return jsonify({"message": "No new optimum reported"}), 204
