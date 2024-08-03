@@ -42,7 +42,7 @@ def new_bp(plugin_folder, core_ep, store_ep, db, Base):
                 return jsonify({"message": "No optimizations available for the given ID"}), 204
 
             if latest_optimum.optimum_hash == current_optimum_hash:
-                return jsonify({"message": "No new optimum reported"}), 200
+                return jsonify({"message": "No new optimum reported"}), 204
 
             return jsonify({
                 "optimum": latest_optimum.optimum,
