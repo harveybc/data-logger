@@ -9,7 +9,7 @@ import pickle
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def new_bp_optimizer(db, Base):
+def new_bp(plugin_folder, core_ep, store_ep, db, Base):
     # Create a new Blueprint
     bp_optimizer = Blueprint("bp_optimizer", __name__)
 
