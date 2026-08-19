@@ -1,76 +1,50 @@
-# Firmware ESP32 — temperatura de finca
+# Firmware ESP32
 
-Tres sketches listos. Empieza por HTTP: es el camino más corto para
-comprobar que el ESP32 habla con ThingsBoard.
+HTTP primero. Contrato: `docs/INGEST.md`. Recintos: `docs/ENCIERRO.md`.
+Hop: `docs/HOP.md`. Pluviómetro: `docs/PLUVIOMETRO.md`.
 
-| Carpeta | Sensor | Protocolo | Cuándo usarlo |
-|---|---|---|---|
-| `esp32_pluviometro_http/` | ToF + válvula (+ BME280) | HTTP POST | **Primero en campo** (lluvia diaria) |
-| `esp32_dht22_http/` | DHT22 (temp + humedad) | HTTP POST | Mesa / ambiente |
-| `esp32_ds18b20_http/` | DS18B20 (solo temp) | HTTP POST | Vaina / sombra |
-| `esp32_dht22_mqtt/` | DHT22 | MQTT 1883 | Cuando quieras menos overhead |
+| Carpeta | Qué | Cuándo |
+|---|---|---|
+| `esp32_pluviometro_http/` | ToF + válvula + BME280 | **Primero en campo** |
+| `esp32_dht22_http/` | DHT22 HTTP | Mesa / ambiente |
+| `esp32_ds18b20_http/` | DS18B20 HTTP | Vaina / sombra |
+| `esp32_tank_level_http/` | JSN-SR04T + buffer NVS | Nivel de tanque (domo CIP) |
+| `esp32_espnow_node/` | Hijo ESP-NOW | Sombra RF **sin** Faraday |
+| `esp32_gateway_http/` | Padre ESP-NOW → HTTP | Reenvía con el token del hijo |
+| `esp32_dht22_mqtt/` | DHT22 MQTT | Opcional |
+| `common/` | `tb_http.h`, `tb_wifi.h` | No se flashea solo |
 
-Pluviómetro (caja, pines, calibración): [`docs/PLUVIOMETRO.md`](../docs/PLUVIOMETRO.md).
+Helpers: el Serial escribe `POST /api/v1/****/telemetry → code` (sin token).
+Attributes `source` / `hop` / `firmware` / `sensor` al arrancar.
 
-## Qué necesitas en el computador
+`USE_DEEP_SLEEP` y `INTERVAL_S 3600` solo en placa de Iq bajo (no DevKit,
+no power bank). `BATTERY_ADC_PIN` solo con tap de celda a ADC1.
 
-1. [Arduino IDE 2](https://www.arduino.cc/en/software) (o PlatformIO).
-2. Soporte ESP32: en IDE, *File → Preferences → Additional boards*, pega
-   `https://espressif.github.io/arduino-esp32/package_esp32_index.json`,
-   luego *Tools → Board → Boards Manager → esp32*.
-3. Librerías (*Tools → Manage Libraries*):
-   - DHT22: **DHT sensor library** (Adafruit) + **Adafruit Unified Sensor**
-   - DS18B20: **OneWire** + **DallasTemperature**
-   - MQTT: **PubSubClient**
+## Arduino IDE
 
-Placa típica: *ESP32 Dev Module*, 115200 baud.
+1. [Arduino IDE 2](https://www.arduino.cc/en/software).
+2. Boards URL: `https://espressif.github.io/arduino-esp32/package_esp32_index.json`.
+3. Librerías según sketch: DHT + Unified Sensor; OneWire + DallasTemperature;
+   VL53L1X (Pololu); Adafruit BME280; PubSubClient.
 
-## Token y Wi‑Fi
-
-```bash
-cp firmware/secrets.h.example firmware/esp32_dht22_http/secrets.h
-# edita WIFI_SSID, WIFI_PASS, TB_HOST, TB_TOKEN
-```
-
-`TB_HOST` es la IP LAN del computador donde corre ThingsBoard, **no**
-`localhost`. En Linux:
+Placa: *ESP32 Dev Module* (mesa/mural) o FireBeetle si hay `USE_DEEP_SLEEP`.
+115200 baud.
 
 ```bash
-hostname -I | awk '{print $1}'
+cp firmware/secrets.h.example firmware/esp32_pluviometro_http/secrets.h
+python3 scripts/add_sensor.py --name pluviometro-01 --lote meteo --sensor pluviometro
 ```
 
-El token lo imprime:
+`TB_HOST` = IP LAN de ThingsBoard, **nunca** `localhost`.
 
-```bash
-python3 scripts/bootstrap_finca.py          # sensores demo
-python3 scripts/add_sensor.py --name pozo-temp-01 --lote pozo --sensor DS18B20
-```
-
-## Cableado
+## Cableado corto
 
 ```
-DHT22                         DS18B20
------                         -------
-VCC  → 3V3                    VCC (rojo)    → 3V3
-GND  → GND                    GND (negro)   → GND
-DATA → GPIO 4                 DATA (amarillo) → GPIO 4
-                              + 4.7 kΩ entre DATA y 3V3
+DHT22 / DS18B20 DATA → GPIO 4   (DS18B20: 4.7 kΩ a 3V3)
+VL53L1X + BME280     → I2C 21/22
+Válvula MOSFET       → GPIO 26
+JSN-SR04T            → TRIG 16, ECHO 17 (divisor si el módulo es 5 V)
 ```
 
-GPIO 4 se cambia con `#define SENSOR_PIN` en `secrets.h`.
-
-## Cómo saber que funciona
-
-1. Monitor serie a 115200: debe decir `WiFi OK` y `POST ... → 200`.
-2. En ThingsBoard: *Entities → Devices → [tu sensor] → Latest telemetry*.
-   En menos de un minuto aparecen `temperature` (y `humidity` si es DHT).
-
-Si el POST da **401**, el token está mal. Si no hay Wi‑Fi, SSID/clave o
-banda 5 GHz (usa la red 2.4 GHz). Si el sensor lee `nan`, es cableado.
-
-## HTTP vs MQTT
-
-HTTP basta para temperatura cada 30 s. MQTT (`esp32_dht22_mqtt`) usa el
-mismo token como usuario MQTT, contraseña vacía, tópico
-`v1/devices/me/telemetry`, puerto 1883. El ESP32 y el servidor tienen
-que verse en la misma LAN (o el 1883 tiene que estar publicado).
+Éxito: Serial `→ 200` y *Latest telemetry* en la UI. 401 = token. Sin
+Wi‑Fi = SSID o red 5 GHz (usa 2.4). `nan` = cableado.

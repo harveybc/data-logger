@@ -2,12 +2,12 @@
 
 ## Decisión
 
-La plataforma de telemetría de finca **es ThingsBoard Community Edition**.
+La plataforma **es ThingsBoard Community Edition**.
 `data-logger` es el **puente**: no reimplementa un backend IoT. Empaqueta:
 
 - el compose oficial (ThingsBoard 4.3.1.3 + PostgreSQL 18)
-- scripts para crear finca, sensores y tokens
-- firmware ESP32 de temperatura
+- scripts para crear customers, sensores y tokens
+- firmware ESP32 (pluviómetro, temp, nivel de tanque, hop ESP-NOW)
 - prompts para que un agente haga el despliegue
 
 El Flask + AdminLTE que ocupaba este repo está retirado (`docs/LEGACY.md`).
@@ -15,7 +15,7 @@ El Flask + AdminLTE que ocupaba este repo está retirado (`docs/LEGACY.md`).
 ## Planos
 
 ```
-ESP32 / sensor virtual / (más adelante) Hermes
+ESP32 / hop ESP-NOW / sensor virtual / (más adelante) Hermes
         |  HTTP :8080/api/v1/$TOKEN/telemetry
         |  MQTT :1883  v1/devices/me/telemetry
         v
@@ -51,8 +51,9 @@ ThingsBoard no exige un esquema fijo.
 - Parser de correo o PDF (Hermes).
 - Backend Flask propio, ni login propio, ni base propia de usuarios.
 - Trading, predicción, DOIN, OLAP de `predictor`.
-- ThingsBoard Professional Edition. CE cubre el PoC y las primeras fincas.
+- ThingsBoard Professional Edition. CE cubre el PoC y los primeros sitios.
   PE se evalúa solo si hace falta white-label o tenants aislados a escala.
+- Un range extender como “AAA” o como solución de tanque metálico. Ver `docs/HOP.md`.
 
 ## Cuentas por defecto (solo con LOAD_DEMO)
 

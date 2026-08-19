@@ -72,6 +72,12 @@ echo
 echo "Listo."
 echo "  UI:     ${TB_URL:-http://127.0.0.1:${HTTP_PORT}}"
 echo "  Login:  tenant@thingsboard.org  /  tenant"
+echo
+echo "AVISO: claves demo (sysadmin/tenant/customer). Cámbialas en la UI"
+echo "       ANTES de publicar 8080/1883/8883/7070/CoAP a una red."
+echo "       Este compose también abre 8883, 7070 y 5683-5688/udp."
+echo "       No publiques el 5432 (Postgres no está mapeado a propósito)."
+echo
 echo "Siguiente paso:"
 echo "  python3 scripts/bootstrap_finca.py"
 echo "  python3 scripts/send_demo_telemetry.py --once"

@@ -149,8 +149,8 @@ up Metabase, do not create a star schema, do not touch `predictor`'s
 | `scripts/send_demo_telemetry.py` | Laptop virtual sensor (no hardware) |
 | `scripts/diagnose.sh` | Ports, UI, tokens, one test POST |
 | `scripts/tb_client.py` | Tiny REST helper (stdlib) |
-| `firmware/` | Arduino sketches DHT22/DS18B20 HTTP and DHT22 MQTT |
-| `docs/` | Architecture, tenants, sensors, retired Flask notes — Spanish |
+| `firmware/` | Arduino: pluviometer, DHT/DS18B20, tank level, ESP-NOW hop/gateway |
+| `docs/` | Architecture, ingest, enclosure, hop, pluviometer, design — Spanish |
 | `hermes/` | Contract only: later email/PDF injects the same HTTP API |
 | `prompts/` | Copy-paste prompts for users to give their coding agent |
 | `secrets/` | Generated tokens; gitignored JSON |

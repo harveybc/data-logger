@@ -8,13 +8,13 @@
  * Copia ../secrets.h.example a secrets.h en esta carpeta.
  */
 
-#include <WiFi.h>
-#include <HTTPClient.h>
 #include <Wire.h>
 #include <time.h>
 #include <VL53L1X.h>
 #include <Adafruit_BME280.h>
 #include "secrets.h"
+#include "../common/tb_wifi.h"
+#include "../common/tb_http.h"
 
 #ifndef INTERVAL_S
 #define INTERVAL_S 900
@@ -47,46 +47,8 @@ bool haveTof = false;
 bool haveBme = false;
 int lastDrainYday = -1;
 
-void connectWifi() {
-  if (WiFi.status() == WL_CONNECTED) {
-    return;
-  }
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-  unsigned long start = millis();
-  while (WiFi.status() != WL_CONNECTED && millis() - start < 20000) {
-    delay(400);
-  }
-}
-
 bool sendTelemetry(const String& body) {
-  if (WiFi.status() != WL_CONNECTED) {
-    return false;
-  }
-  String url = String("http://") + TB_HOST + ":" + String(TB_PORT)
-               + "/api/v1/" + TB_TOKEN + "/telemetry";
-  HTTPClient http;
-  http.begin(url);
-  http.addHeader("Content-Type", "application/json");
-  int code = http.POST(body);
-  Serial.printf("POST /api/v1/****/telemetry → %d  %s\n", code, body.c_str());
-  http.end();
-  return code == 200;
-}
-
-bool sendAttributes() {
-  if (WiFi.status() != WL_CONNECTED) {
-    return false;
-  }
-  String url = String("http://") + TB_HOST + ":" + String(TB_PORT)
-               + "/api/v1/" + TB_TOKEN + "/attributes";
-  String body = "{\"source\":\"esp32\",\"hop\":\"wifi\",\"sensor\":\"pluviometro\"}";
-  HTTPClient http;
-  http.begin(url);
-  http.addHeader("Content-Type", "application/json");
-  int code = http.POST(body);
-  http.end();
-  return code == 200;
+  return tbTelemetry(TB_HOST, TB_PORT, TB_TOKEN, body);
 }
 
 // ToF mira hacia abajo: cubo vacío = distancia grande (TOF_EMPTY_MM).
@@ -191,13 +153,13 @@ void setup() {
   haveBme = bme.begin(0x76) || bme.begin(0x77);
   Serial.println(haveBme ? "BME280 OK" : "BME280 ausente (ok)");
 
-  connectWifi();
+  tbConnectWifi(WIFI_SSID, WIFI_PASS);
   configTime(TZ_OFFSET_S, 0, "pool.ntp.org", "time.nist.gov");
-  sendAttributes();
+  tbBootAttributes(TB_HOST, TB_PORT, TB_TOKEN, "pluviometro");
 }
 
 void loop() {
-  connectWifi();
+  tbConnectWifi(WIFI_SSID, WIFI_PASS);
   drainIfMidnight();
   float level = levelMm();
   float rain = rainMm(level);

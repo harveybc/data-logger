@@ -105,8 +105,8 @@ por sensor.
 |---|---|
 | `docker-compose.yml` | ThingsBoard + su base. La base no se publica en el puerto 5432 del host |
 | `scripts/` | Instalar, crear el customer demo, registrar sensor, mandar datos de prueba |
-| `firmware/` | Sketches Arduino para ESP32 |
-| `docs/` | Arquitectura, tenants, sensores, legado Flask |
+| `firmware/` | Sketches: pluviómetro, DHT/DS18B20, nivel de tanque, hop ESP-NOW |
+| `docs/` | Arquitectura, ingestión, recintos, hop, pluviómetro, diseño |
 | `prompts/` | Textos listos para un agente |
 | `hermes/` | Solo el contrato: más adelante el correo entra por el mismo HTTP |
 | `secrets/` | Tokens (no se suben a git) |

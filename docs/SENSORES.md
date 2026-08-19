@@ -1,47 +1,27 @@
 # Sensores
 
-## Temperatura (lo que Harvey va a desempolvar)
+Firmware en `firmware/`. HTTP primero. Contrato JSON: `docs/INGEST.md`.
 
-| Sensor | Qué mide | Precisión típica | Notas de finca |
-|---|---|---|---|
-| **DS18B20** | Temperatura | ±0.5 °C | Cable largo, se puede mojar (versión waterproof). Ideal establo, tanque, sombra. Resistencia 4.7 kΩ en DATA. |
-| **DHT22 / AM2302** | Temp + humedad | ±0.5 °C / ±2–5 % HR | Barato, no sumergible. Bueno para ambiente (lechería, cuarto frío). |
-| DHT11 | Temp + humedad | ±2 °C | Evítalo si puedes: es tosco. El sketch DHT22 no le sirve tal cual. |
+| Sensor | Sketch | Notas |
+|---|---|---|
+| **Pluviómetro** (ToF VL53L1X + válvula + BME280) | `esp32_pluviometro_http` | **Primero en campo.** Toma. `docs/PLUVIOMETRO.md` |
+| **DS18B20** | `esp32_ds18b20_http` | ±0.5 °C, cable largo, vaina. Pull-up 4.7 kΩ |
+| **DHT22** | `esp32_dht22_http` (MQTT opcional) | Ambiente, no sumergible |
+| **JSN-SR04T** | `esp32_tank_level_http` | Nivel tanque, domo que escurre CIP. No durante lavado |
+| DHT11 | — | Tosco; no uses el sketch DHT22 tal cual |
 
-Firmware listo en `firmware/`. HTTP primero, MQTT si quieres.
-
-## Cómo se ve un punto de datos
-
-```json
-{
-  "temperature": 22.4,
-  "humidity": 67.0,
-  "rssi": -58
-}
-```
-
-`humidity` solo si el hardware la tiene. `rssi` ayuda a diagnosticar Wi‑Fi
-malo en el galpón.
-
-## Atributos (no cambian cada 30 s)
-
-El bootstrap publica:
+## Punto de datos
 
 ```json
-{"finca": "Finca Demo", "lote": "establo-norte", "sensor": "DHT22"}
+{"temperature": 22.4, "humidity": 67.0, "rssi": -58}
 ```
 
-Sirven para filtrar dashboards (“todos los sensores del lote X”).
+`humidity` solo si el hardware la tiene. `rssi` diagnostica Wi‑Fi.
 
-## Añadir otro tipo (pH, litros, peso)
-
-No hay que tocar el servidor. En el JSON del ESP32 (o de Hermes) agregas
-la clave. En la UI, *Latest telemetry* la muestra. Luego arrastras un
-widget al dashboard.
+Attributes (casi fijos): `source`, `hop`, `sensor`, `lote`, `site`.
 
 ## Red
 
-El ESP32 habla **Wi‑Fi 2.4 GHz**. Si la finca no tiene Wi‑Fi en el
-establo, opciones posteriores (no en este kit): ESP32 + LoRa hacia un
-gateway, o un router 4G en la finca. El protocolo hacia ThingsBoard
-sigue siendo HTTP o MQTT.
+ESP32 = Wi‑Fi **2.4 GHz**. Si no hay cobertura y **no** hay jaula de
+Faraday: hop ESP-NOW (`docs/HOP.md`). Tanque metálico: no hop, cable o
+domo. Un AP comercial solo cubre galpón; no es AAA.

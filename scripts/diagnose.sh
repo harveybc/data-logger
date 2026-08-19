@@ -44,6 +44,23 @@ else
 fi
 
 echo
+echo "=== claves demo ==="
+PYTHONPATH=scripts python3 - <<'PY'
+from tb_client import ThingsBoard, load_env, tb_url
+env = load_env()
+email = env.get("TB_TENANT_EMAIL", "")
+pwd = env.get("TB_TENANT_PASSWORD", "")
+print("tenant:", email)
+if email.endswith("@thingsboard.org") or pwd == "tenant":
+    print("AVISO: sigues con claves demo. No publiques 8080/1883/8883/7070/CoAP a una red.")
+try:
+    ThingsBoard(tb_url(env)).login(email, pwd)
+    print("login tenant OK")
+except Exception as exc:
+    print("login tenant FALLÓ:", exc)
+PY
+
+echo
 echo "=== telemetría de prueba ==="
 if [ -f secrets/devices.json ]; then
   python3 scripts/send_demo_telemetry.py --once || true

@@ -135,6 +135,37 @@ class ThingsBoard:
             device = self.get(f"/api/device/{device['id']['id']}")
         return device
 
+    def create_customer_user(
+        self,
+        customer_id: str,
+        email: str,
+        password: str,
+        first_name: str = "",
+    ) -> dict[str, Any]:
+        """Crea un CUSTOMER_USER. La API de credenciales varía; si falla, click-ops."""
+        user = self.post(
+            "/api/user?sendActivationMail=false",
+            {
+                "email": email,
+                "authority": "CUSTOMER_USER",
+                "firstName": first_name or email.split("@")[0],
+                "lastName": "",
+                "customerId": {"entityType": "CUSTOMER", "id": customer_id},
+            },
+        )
+        uid = user["id"]["id"]
+        try:
+            self.post(
+                f"/api/user/{uid}/userCredentials",
+                {"enabled": True, "password": password},
+            )
+        except RuntimeError as exc:
+            print(
+                f"AVISO: usuario {email} creado pero la clave hay que "
+                f"activarla en la UI (Users). Detalle: {exc}"
+            )
+        return user
+
     def device_token(self, device_id: str) -> str:
         creds = self.get(f"/api/device/{device_id}/credentials")
         token = creds.get("credentialsId")
