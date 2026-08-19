@@ -4,8 +4,8 @@
 
 Este repositorio **no es un servidor IoT**. Es el kit que deja armada
 [ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3 — compose,
-tokens, firmware de temperatura y prompts para un agente — para que un
-granjero no técnico vea sensores en el celular sin programar un backend.
+tokens, firmware de temperatura y prompts para un agente — para que
+personal no técnico vea sensores en el celular sin programar un backend.
 
 El Flask + AdminLTE que vivía aquí (AAA casero, plugins, GUI autogenerada)
 está retirado. La historia de git lo conserva; el árbol actual es solo el
@@ -29,7 +29,7 @@ el agente y pega **uno** de estos bloques.
 > abrir ThingsBoard, el usuario y la clave, dónde quedaron los tokens,
 > y una cosa que deba probar primero en la UI.
 
-Más variantes (añadir un ESP32, dar de alta otra finca, diagnosticar)
+Más variantes (añadir un ESP32, dar de alta otro customer, diagnosticar)
 están en [`prompts/`](prompts/) listas para copiar y pegar.
 
 `AGENTS.md` sigue la convención [agents.md](https://agents.md): la
@@ -63,7 +63,7 @@ Abre **http://127.0.0.1:8080**
 
 | Quién | Correo | Clave |
 |---|---|---|
-| Administrador de la finca | tenant@thingsboard.org | tenant |
+| Administrador | tenant@thingsboard.org | tenant |
 | Super-admin (casi no se usa) | sysadmin@thingsboard.org | sysadmin |
 
 *Entities → Devices → `establo-norte-temp-01` → Latest telemetry*.
@@ -87,24 +87,24 @@ HTTP primero (`esp32_dht22_http` o `esp32_ds18b20_http`). MQTT es
 opcional. `TB_HOST` **nunca** es `localhost`: el ESP32 no es este
 computador.
 
-## Cómo se organiza una cooperativa
+## Cómo se organiza el acceso
 
 ```
-ANALAC / SAGAN / gremio   →  Tenant en ThingsBoard
-cada finca (~5 USD)       →  Customer
-cada productor            →  usuario de ese customer (solo ve lo suyo)
-cada sensor               →  Device
+quien opera la plataforma  →  Tenant en ThingsBoard
+cada cliente / sitio       →  Customer
+cada usuario final         →  usuario de ese customer (solo ve lo suyo)
+cada sensor                →  Device
 ```
 
-Detalle en [`docs/TENANTS.md`](docs/TENANTS.md). El cobro es del gremio
-(hosting + soporte). ThingsBoard CE no cobra por sensor.
+Detalle en [`docs/TENANTS.md`](docs/TENANTS.md). ThingsBoard CE no cobra
+por sensor.
 
 ## Qué hay en el repo
 
 | Carpeta | Para qué |
 |---|---|
 | `docker-compose.yml` | ThingsBoard + su base. La base no se publica en el puerto 5432 del host |
-| `scripts/` | Instalar, crear finca, registrar sensor, mandar datos de prueba |
+| `scripts/` | Instalar, crear el customer demo, registrar sensor, mandar datos de prueba |
 | `firmware/` | Sketches Arduino para ESP32 |
 | `docs/` | Arquitectura, tenants, sensores, legado Flask |
 | `prompts/` | Textos listos para un agente |
