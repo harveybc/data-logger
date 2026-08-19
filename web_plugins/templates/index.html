@@ -3,15 +3,22 @@
 {% block heading %}Inicio{% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col-md-4">
-    <a href="/produccion" class="small-box bg-info"><div class="inner"><h3>Producción</h3><p>Acopio, tanque, pesaje</p></div></a>
+  <div class="col-md-3">
+    <a href="/produccion?rol={{ role }}" class="small-box bg-info"><div class="inner"><h3>Producción</h3><p>Acopio, tanque, pesaje</p></div></a>
   </div>
-  <div class="col-md-4">
-    <a href="/clima" class="small-box bg-success"><div class="inner"><h3>Clima</h3><p>Presión, lluvia, T/HR</p></div></a>
+  <div class="col-md-3">
+    <a href="/clima?rol={{ role }}" class="small-box bg-primary"><div class="inner"><h3>Clima</h3><p>Presión, lluvia, T/HR</p></div></a>
   </div>
-  <div class="col-md-4">
-    <a href="/calidad" class="small-box bg-warning"><div class="inner"><h3>Calidad</h3><p>Series y alertas</p></div></a>
+  {% if 'calidad' in modules %}
+  <div class="col-md-3">
+    <a href="/calidad?rol={{ role }}" class="small-box bg-warning"><div class="inner"><h3>Calidad</h3><p>Lab y alertas</p></div></a>
   </div>
+  {% endif %}
+  {% if 'pastoreo' in modules %}
+  <div class="col-md-3">
+    <a href="/pastoreo?rol={{ role }}" class="small-box bg-success"><div class="inner"><h3>Pastoreo</h3><p>Potreros y rotación</p></div></a>
+  </div>
+  {% endif %}
 </div>
 <p class="text-muted">Software libre. El hospedaje y el soporte, si los hay, son un servicio aparte.</p>
 {% endblock %}

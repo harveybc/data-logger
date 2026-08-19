@@ -9,8 +9,9 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
-from flask import Flask, render_template
+from flask import Flask, abort, render_template, request
 
+from app.roles import ROLES, can
 from app.store import Store
 from tb_client import ThingsBoard
 
@@ -36,6 +37,8 @@ class Plugin:
         ],
         "site_name": "Sitio demo",
         "app_db": "data/app.db",
+        "current_role": "admin",
+        "current_user": "admin-local",
     }
 
     def __init__(self) -> None:
@@ -161,12 +164,40 @@ class Plugin:
         app = Flask(__name__, template_folder=tmpl)
         plugin = self
 
+        def role() -> str:
+            r = request.args.get("rol") or plugin.params.get("current_role") or "operario"
+            return r if r in ROLES else "operario"
+
+        def require(module: str) -> None:
+            if not can(role(), module):
+                abort(403)
+
+        def sitio_id() -> int | None:
+            sitios = plugin.store().sitios_de(
+                None if role() == "admin" else plugin.params.get("current_user")
+            )
+            if request.args.get("sitio_id"):
+                return int(request.args["sitio_id"])
+            return sitios[0]["id"] if sitios else None
+
         @app.context_processor
         def inject():
+            r = role()
             return {
                 "site_name": plugin.params.get("site_name") or "data-logger",
                 "tb_ok": plugin._client() is not None,
+                "role": r,
+                "role_label": ROLES[r]["label"],
+                "modules": ROLES[r]["modules"],
+                "sitios": plugin.store().sitios_de(
+                    None if r == "admin" else plugin.params.get("current_user")
+                ),
+                "sitio_id": sitio_id(),
             }
+
+        @app.errorhandler(403)
+        def forbidden(_e):
+            return render_template("forbidden.html"), 403
 
         @app.route("/")
         def home():
@@ -174,6 +205,7 @@ class Plugin:
 
         @app.route("/produccion")
         def produccion():
+            require("produccion")
             tank = plugin._latest(
                 plugin.params.get("device_tanque") or "",
                 ["level_mm", "temperature"],
@@ -189,6 +221,7 @@ class Plugin:
 
         @app.route("/clima")
         def clima():
+            require("clima")
             keys = ["rain_mm", "temperature", "humidity", "pressure", "tips_day"]
             rain_dev = plugin.params.get("device_rain") or ""
             clima_dev = plugin.params.get("device_clima") or rain_dev
@@ -207,12 +240,48 @@ class Plugin:
 
         @app.route("/calidad")
         def calidad():
+            require("calidad")
             rows, alerts, hist, last = plugin._calidad_rows()
             return render_template(
                 "calidad.html", rows=rows, alerts=alerts, hist=hist, last=last
             )
 
+        @app.route("/pastoreo")
+        def pastoreo():
+            require("pastoreo")
+            sid = sitio_id()
+            return render_template("pastoreo.html", sitio_id=sid or 0)
+
+        @app.route("/api/pastoreo")
+        def api_pastoreo():
+            require("pastoreo")
+            sid = sitio_id()
+            if not sid:
+                return {"potreros": [], "ocupacion": None}
+            pots = []
+            for p in plugin.store().potreros(sid):
+                item = dict(p)
+                item["movimientos"] = plugin.store().historial_potrero(p["id"], 5)
+                item["fertilizaciones"] = plugin.store().fertilizaciones_potrero(p["id"], 5)
+                pots.append(item)
+            return {"potreros": pots, "ocupacion": plugin.store().ocupacion(sid)}
+
+        @app.route("/accounting")
+        def accounting():
+            require("accounting")
+            return render_template("admin_stub.html", heading="Accounting")
+
+        @app.route("/authorization")
+        def authorization():
+            require("authorization")
+            return render_template("admin_stub.html", heading="Authorization")
+
+        @app.route("/users")
+        def users():
+            require("users")
+            return render_template("admin_stub.html", heading="Usuarios")
+
         host = self.params.get("web_host") or "127.0.0.1"
         port = int(self.params.get("web_port") or 5000)
-        print(f"Web AdminLTE en http://{host}:{port}/  (Clima / Producción / Calidad)")
+        print(f"Web en http://{host}:{port}/  rol={self.params.get('current_role')}")
         app.run(host=host, port=port, debug=False)

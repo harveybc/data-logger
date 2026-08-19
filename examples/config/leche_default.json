@@ -9,6 +9,8 @@
   "save_config": "config_out.json",
   "site_name": "Sitio demo",
   "app_db": "data/app.db",
+  "current_role": "admin",
+  "current_user": "admin-local",
   "plugins": {
     "pipeline": {},
     "web": {

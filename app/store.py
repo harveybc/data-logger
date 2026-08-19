@@ -49,6 +49,35 @@ CREATE TABLE IF NOT EXISTS pesaje (
   litros_pm REAL,
   UNIQUE (fecha, placa)
 );
+CREATE TABLE IF NOT EXISTS sitio (
+  id INTEGER PRIMARY KEY,
+  nombre TEXT NOT NULL UNIQUE,
+  usuario TEXT
+);
+CREATE TABLE IF NOT EXISTS potrero (
+  id INTEGER PRIMARY KEY,
+  sitio_id INTEGER NOT NULL,
+  numero TEXT NOT NULL,
+  nombre TEXT NOT NULL,
+  geojson TEXT,
+  UNIQUE (sitio_id, numero)
+);
+CREATE TABLE IF NOT EXISTS pastoreo_mov (
+  id INTEGER PRIMARY KEY,
+  potrero_id INTEGER NOT NULL,
+  fecha TEXT NOT NULL,
+  momento TEXT,
+  tipo TEXT NOT NULL,
+  mensaje TEXT
+);
+CREATE TABLE IF NOT EXISTS fertilizacion (
+  id INTEGER PRIMARY KEY,
+  potrero_id INTEGER NOT NULL,
+  fecha TEXT NOT NULL,
+  abono TEXT,
+  bultos REAL,
+  mensaje TEXT
+);
 """
 
 
@@ -136,6 +165,111 @@ class Store:
             "SELECT * FROM pesaje WHERE fecha=? ORDER BY placa", (day["d"],)
         ).fetchall()
         return [dict(x) for x in rows]
+
+    def ensure_sitio(self, nombre: str, usuario: str | None = None) -> int:
+        row = self.conn.execute("SELECT id FROM sitio WHERE nombre=?", (nombre,)).fetchone()
+        if row:
+            return row["id"]
+        cur = self.conn.execute(
+            "INSERT INTO sitio (nombre, usuario) VALUES (?, ?)", (nombre, usuario)
+        )
+        self.conn.commit()
+        return cur.lastrowid
+
+    def sitios_de(self, usuario: str | None) -> list[dict]:
+        if usuario:
+            rows = self.conn.execute(
+                "SELECT * FROM sitio WHERE usuario=? OR usuario IS NULL ORDER BY nombre",
+                (usuario,),
+            ).fetchall()
+        else:
+            rows = self.conn.execute("SELECT * FROM sitio ORDER BY nombre").fetchall()
+        return [dict(r) for r in rows]
+
+    def upsert_potrero(self, sitio_id: int, numero: str, nombre: str, geojson: str | None) -> int:
+        self.conn.execute(
+            """INSERT INTO potrero (sitio_id, numero, nombre, geojson)
+               VALUES (?, ?, ?, ?)
+               ON CONFLICT(sitio_id, numero) DO UPDATE SET
+                 nombre=excluded.nombre,
+                 geojson=COALESCE(excluded.geojson, potrero.geojson)
+            """,
+            (sitio_id, str(numero), nombre, geojson),
+        )
+        self.conn.commit()
+        row = self.conn.execute(
+            "SELECT id FROM potrero WHERE sitio_id=? AND numero=?",
+            (sitio_id, str(numero)),
+        ).fetchone()
+        return row["id"]
+
+    def potreros(self, sitio_id: int) -> list[dict]:
+        rows = self.conn.execute(
+            "SELECT * FROM potrero WHERE sitio_id=? ORDER BY CAST(numero AS INTEGER), numero",
+            (sitio_id,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def find_potrero(self, sitio_id: int, token: str) -> dict | None:
+        token = (token or "").strip().lower()
+        if not token:
+            return None
+        rows = self.potreros(sitio_id)
+        for r in rows:
+            if str(r["numero"]).lower() == token or r["nombre"].lower() == token:
+                return r
+        for r in rows:
+            if token in r["nombre"].lower() or r["nombre"].lower() in token:
+                return r
+        return None
+
+    def add_movimiento(self, potrero_id: int, fecha: str, momento: str | None, tipo: str, mensaje: str) -> None:
+        self.conn.execute(
+            """INSERT INTO pastoreo_mov (potrero_id, fecha, momento, tipo, mensaje)
+               VALUES (?, ?, ?, ?, ?)""",
+            (potrero_id, fecha, momento, tipo, mensaje),
+        )
+        self.conn.commit()
+
+    def add_fertilizacion(
+        self, potrero_id: int, fecha: str, abono: str | None, bultos: float | None, mensaje: str
+    ) -> None:
+        self.conn.execute(
+            """INSERT INTO fertilizacion (potrero_id, fecha, abono, bultos, mensaje)
+               VALUES (?, ?, ?, ?, ?)""",
+            (potrero_id, fecha, abono, bultos, mensaje),
+        )
+        self.conn.commit()
+
+    def historial_potrero(self, potrero_id: int, limit: int = 5) -> list[dict]:
+        rows = self.conn.execute(
+            """SELECT fecha, momento, tipo, mensaje FROM pastoreo_mov
+               WHERE potrero_id=? ORDER BY fecha DESC, id DESC LIMIT ?""",
+            (potrero_id, limit),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def fertilizaciones_potrero(self, potrero_id: int, limit: int = 5) -> list[dict]:
+        rows = self.conn.execute(
+            """SELECT fecha, abono, bultos FROM fertilizacion
+               WHERE potrero_id=? ORDER BY fecha DESC, id DESC LIMIT ?""",
+            (potrero_id, limit),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def ocupacion(self, sitio_id: int) -> int | None:
+        """Última entrada del sitio (potrero_id) si no hay salida posterior."""
+        row = self.conn.execute(
+            """SELECT m.potrero_id, m.tipo, m.fecha, m.id
+               FROM pastoreo_mov m
+               JOIN potrero p ON p.id = m.potrero_id
+               WHERE p.sitio_id=?
+               ORDER BY m.fecha DESC, m.id DESC LIMIT 1""",
+            (sitio_id,),
+        ).fetchone()
+        if not row:
+            return None
+        return row["potrero_id"] if row["tipo"] == "entrada" else None
 
     def calidad_series(self) -> list[dict]:
         rows = self.conn.execute(

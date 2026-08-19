@@ -44,7 +44,9 @@ UI: <http://127.0.0.1:5000> — menú Producción / Clima / Calidad (AdminLTE).
 | **B3** | Producción por vaca AM/PM (`fecha,placa,litros_am,litros_pm`) | Hecho (`--pesaje` CSV) |
 | **C1** | PDF liquidación: proteína, grasa, sólidos, UFC, precio | Hecho (`--planilla`); alertas UFC |
 | **P1** | Anemómetro / veleta como extra | No en alpha |
-| **S1** | Login Google + plan beta/pago + Mercado Pago | Después; ver `docs/DATOS.md` |
+| **S1** | Login Google + plan beta/pago + Mercado Pago | Después; `docs/SAAS.md` |
+| **R1** | Roles admin / veterinario / operario + varios sitios | Hecho (`?rol=`, `docs/ROLES.md`) |
+| **G1** | Pastoreo: polígonos, movimientos, fertilización, mapa | Hecho (CSV + parseo de mensaje; Excel cuando esté) |
 | **L1** | Texto corto de “sin garantía / AS-IS” vs contrato del servicio | `docs/SERVICIO.md` |
 
 ## No hacer

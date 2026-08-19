@@ -52,7 +52,9 @@ pip install -r requirements.txt
 PYTHONPATH=. python3 -m app.main --load_config examples/config/leche_default.json
 ```
 
-Abre **http://127.0.0.1:5000**. Clima lee ThingsBoard (presión, lluvia).
+Abre **http://127.0.0.1:5000**. Menú: Producción, Clima, Calidad, Pastoreo.
+Roles de prueba: `?rol=admin`, `veterinario` (sin accounting ni usuarios),
+`operario` (solo lectura, sin calidad). Varios sitios por usuario, sin GPS.
 Producción y calidad leen una SQLite local alimentada por documentos:
 
 ```bash

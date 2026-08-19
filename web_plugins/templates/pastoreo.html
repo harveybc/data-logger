@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Pastoreo{% endblock %}
+{% block heading %}Pastoreo{% endblock %}
+{% block content %}
+<p class="text-muted">Polígonos del predio (Excel → CSV). El operario avisa cambios
+por el grupo; un agente los parsea. Hover: últimas entradas/salidas y abonos.
+Sin GPS en los sensores.</p>
+<div id="map" style="height: 520px; border-radius: 4px;"></div>
+<p class="small mt-2">
+  Carga: <code>python3 -m app.ingest --potreros examples/fixtures/potreros.csv</code><br>
+  Mensaje: <code>python3 -m app.ingest --mensaje "17/08 tarde salieron del 1 y entraron al 2" --sitio "Sitio demo"</code>
+</p>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+fetch("/api/pastoreo?sitio_id={{ sitio_id }}").then(r => r.json()).then(data => {
+  const map = L.map("map").setView([1.215, -77.279], 16);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19}).addTo(map);
+  const occ = data.ocupacion;
+  data.potreros.forEach(p => {
+    if (!p.geojson) return;
+    const gj = typeof p.geojson === "string" ? JSON.parse(p.geojson) : p.geojson;
+    const layer = L.geoJSON(gj, {
+      style: {
+        color: p.id === occ ? "#28a745" : "#3388ff",
+        fillOpacity: p.id === occ ? 0.45 : 0.2
+      }
+    }).addTo(map);
+    const movs = (p.movimientos || []).map(m =>
+      `${m.fecha} ${m.momento || ""} ${m.tipo}`).join("<br>") || "Sin movimientos";
+    const fert = (p.fertilizaciones || []).map(f =>
+      `${f.fecha}: ${f.abono || "?"} ${f.bultos != null ? f.bultos + " bultos" : ""}`).join("<br>") || "Sin abonos";
+    layer.bindTooltip(
+      `<strong>${p.numero} ${p.nombre}</strong><br><em>Movimientos</em><br>${movs}<br><em>Fertilización</em><br>${fert}`,
+      {sticky: true}
+    );
+  });
+});
+</script>
+{% endblock %}

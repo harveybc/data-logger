@@ -15,9 +15,23 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
     </ul>
-    <span class="navbar-text ml-2">{{ site_name }}</span>
+    <span class="navbar-text ml-2">{{ site_name }} · {{ role_label }}</span>
+    {% if sitios %}
+    <form class="form-inline ml-3" method="get">
+      <select name="sitio_id" class="form-control form-control-sm" onchange="this.form.submit()">
+        {% for s in sitios %}
+        <option value="{{ s.id }}" {% if s.id == sitio_id %}selected{% endif %}>{{ s.nombre }}</option>
+        {% endfor %}
+      </select>
+      <input type="hidden" name="rol" value="{{ role }}">
+    </form>
+    {% endif %}
     <span class="navbar-text ml-auto mr-3 small {% if tb_ok %}text-success{% else %}text-warning{% endif %}">
-      {% if tb_ok %}ThingsBoard conectado{% else %}ThingsBoard no disponible — datos vacíos{% endif %}
+      {% if tb_ok %}ThingsBoard conectado{% else %}ThingsBoard no disponible{% endif %}
+      · demo rol:
+      <a href="?rol=admin">admin</a> ·
+      <a href="?rol=veterinario">vet</a> ·
+      <a href="?rol=operario">operario</a>
     </span>
   </nav>
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -25,21 +39,44 @@
     <div class="sidebar">
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview">
+          {% if 'produccion' in modules %}
           <li class="nav-item">
-            <a href="/produccion" class="nav-link {% if request.path=='/produccion' %}active{% endif %}">
+            <a href="/produccion?rol={{ role }}" class="nav-link {% if request.path=='/produccion' %}active{% endif %}">
               <i class="nav-icon fas fa-industry"></i><p>Producción</p>
             </a>
           </li>
+          {% endif %}
+          {% if 'clima' in modules %}
           <li class="nav-item">
-            <a href="/clima" class="nav-link {% if request.path=='/clima' %}active{% endif %}">
+            <a href="/clima?rol={{ role }}" class="nav-link {% if request.path=='/clima' %}active{% endif %}">
               <i class="nav-icon fas fa-cloud-sun"></i><p>Clima</p>
             </a>
           </li>
+          {% endif %}
+          {% if 'calidad' in modules %}
           <li class="nav-item">
-            <a href="/calidad" class="nav-link {% if request.path=='/calidad' %}active{% endif %}">
+            <a href="/calidad?rol={{ role }}" class="nav-link {% if request.path=='/calidad' %}active{% endif %}">
               <i class="nav-icon fas fa-flask"></i><p>Calidad</p>
             </a>
           </li>
+          {% endif %}
+          {% if 'pastoreo' in modules %}
+          <li class="nav-item">
+            <a href="/pastoreo?rol={{ role }}" class="nav-link {% if request.path=='/pastoreo' %}active{% endif %}">
+              <i class="nav-icon fas fa-map"></i><p>Pastoreo</p>
+            </a>
+          </li>
+          {% endif %}
+          {% if 'accounting' in modules %}
+          <li class="nav-item">
+            <a href="/accounting?rol={{ role }}" class="nav-link"><i class="nav-icon fas fa-file-invoice-dollar"></i><p>Accounting</p></a>
+          </li>
+          {% endif %}
+          {% if 'authorization' in modules %}
+          <li class="nav-item">
+            <a href="/authorization?rol={{ role }}" class="nav-link"><i class="nav-icon fas fa-key"></i><p>Authorization</p></a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </div>
