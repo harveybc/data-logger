@@ -1,7 +1,6 @@
 # Firmware ESP32
 
-Repo: <https://github.com/harveybc/data-logger>  
-Carpeta local: `/home/harveybc/Documents/GitHub/data-logger`
+Repo: <https://github.com/harveybc/data-logger>
 
 HTTP primero.
 [Ingestión](https://github.com/harveybc/data-logger/blob/master/docs/INGEST.md) ·

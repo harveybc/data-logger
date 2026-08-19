@@ -1,18 +1,45 @@
-# Lista de compras — prototipo primero
+# Lista de compras
 
-Este repo **no** está dentro de `predictor`. En el computador:
+Código: <https://github.com/harveybc/data-logger>
 
-`/home/harveybc/Documents/GitHub/data-logger`
+Precios de Mercado Libre Colombia y Amazon (agosto 2026). Van a
+moverse. El **asistente de campo** entra después: huecos, empaques,
+mangueras y conexiones a intemperie. No elige sensores.
 
-En GitHub: <https://github.com/harveybc/data-logger>
+## Pedido de 4 juegos
 
-Precios de Mercado Libre Colombia y Amazon, agosto 2026. Van a
-moverse; los enlaces son de búsqueda / ficha. **No hace falta comprar
-todo si ya tienes ESP32, sensores y electroválvula:** primero prueba
-en protoboard lo que hay en el cajón.
+Misma lista para todos. Destino:
 
-El **asistente de campo** entra después: huecos, empaques, mangueras y
-conexiones eléctricas para que resista el ambiente. No elige sensores.
+| # | Rol | Dónde |
+|---|---|---|
+| 1 | Alpha | Dentro de casa (mesa / patio techado) |
+| 2 | Beta | Primer sitio de campo |
+| 3 | Beta | Segundo sitio (p. ej. otro predio o el del veterinario) |
+| 4 | Recambio | Si se daña en prueba o montaje |
+
+**No pidas kit de viento** (anemómetro / veleta). La cubeta sola basta.
+
+| Pieza | Cant. | Pedir | Enlace | ≈ c/u |
+|---|---|---|---|---|
+| Pluviómetro cubeta (reed / pulso), **solo lluvia** | **4** | No el Weather Meter Kit completo | [Amazon tipping bucket Arduino](https://www.amazon.com/s?k=tipping+bucket+rain+gauge+arduino) · [DFRobot SEN0575](https://www.dfrobot.com/product-2689.html) | US$20–40 |
+| ESP32 DevKit (si no tienes 4) | **4** | 30 pines, USB-C o micro-USB | [Amazon ESP32 DevKit](https://www.amazon.com/s?k=ESP32+DevKit+C) · [ML ESP32](https://listado.mercadolibre.com.co/esp32-devkit) | US$8–15 |
+| Fuente USB 5 V ≥ 1 A (el ESP32) | **4** | Cargador de celular sirve en alpha | [Amazon 5V 1A](https://www.amazon.com/s?k=5V+1A+USB+power+adapter) | US$5–10 |
+| DHT22 / AM2302 | **4** | Temp + humedad ambiente | [Amazon DHT22](https://www.amazon.com/s?k=DHT22+AM2302) · [ML DHT22](https://listado.mercadolibre.com.co/dht22) | US$5–8 |
+| DS18B20 (cápsula, cable ~1 m) | **4** | Temp en vaina / sombra | [Amazon DS18B20 waterproof](https://www.amazon.com/s?k=DS18B20+waterproof+1m) · [ML DS18B20](https://listado.mercadolibre.com.co/ds18b20) | US$4–8 |
+| BME280 | **4** | T + HR + presión (opcional en la cubeta) | [Amazon BME280](https://www.amazon.com/s?k=BME280+sensor) · [ML BME280](https://listado.mercadolibre.com.co/bme280) | US$8–13 |
+| JSN-SR04T (tanque, más barato) **o** A02YYUW (menos ciego, menos mA) | **4** | Nivel de tanque **después** de la lluvia | [JSN-SR04T](https://www.amazon.com/s?k=JSN-SR04T) · [A02YYUW](https://www.amazon.com/s?k=A02YYUW+ultrasonic) | US$8–22 |
+| Jumpers + protoboard | **1** set | Solo alpha | [ML protoboard](https://listado.mercadolibre.com.co/protoboard-65) | US$5–10 |
+| Resistencias 4.7 kΩ (pack) | **1** pack | Pull-up DS18B20 | [Amazon 4.7k resistor](https://www.amazon.com/s?k=4.7k+ohm+resistor) | US$5 |
+
+Con cubeta **no** hace falta pedir ToF, MOSFET ni electroválvula para la
+lluvia. Si ya las tienes, déjalas para el proto de mesa o para otro uso.
+
+Suma grosera del carrito (4 cubetas + 4 ESP32 + 4× DHT22 + 4× DS18B20 +
+4× BME280 + 4 fuentes 5 V, sin ultrasonido de tanque): **~US$250–400**.
+Cuatro JSN-SR04T añaden ~US$40; cuatro A02YYUW ~US$70–90.
+
+Firmware de la cubeta: `firmware/esp32_tipping_bucket_http/`.
+`TIP_PIN 27`, `MM_PER_TIP 0.2` (o `0.2794` si el fabricante dice 0.011").
 
 ## Orden
 
@@ -38,9 +65,8 @@ ThingsBoard. Lo que sí existe y **guarda los datos como diseñamos**
 
 | Qué pedir | Por qué | Enlace | ≈ |
 |---|---|---|---|
-| **Cubeta basculante con salida de pulso** (reed). 1 vuelco ≈ 0.2 mm o 0.279 mm. Se vacía sola. | Estándar de pastos / meteo. 2 hilos a GPIO + GND. | [Amazon: tipping bucket rain gauge Arduino](https://www.amazon.com/s?k=tipping+bucket+rain+gauge+arduino) · [DFRobot SEN0575](https://www.dfrobot.com/product-2689.html) (~US$30, I2C/UART) | US$20–40 el sensor solo |
-| **SparkFun Weather Meter Kit** (SEN-08942) | Misma cubeta + anemómetro y veleta (viento lo querías después). | [Amazon B084DBXMPX](https://www.amazon.com/dp/B084DBXMPX) · [SparkFun](https://www.sparkfun.com/weather-meter-kit.html) | US$80–100 el kit |
-| **Davis 6466 / 6463 Rain Collector** | El de estaciones profesionales. Reed 0.2 mm. | [Amazon: Davis rain collector](https://www.amazon.com/s?k=Davis+6466+rain+collector) | US$80–150 |
+| **Cubeta basculante con salida de pulso** (reed). 1 vuelco ≈ 0.2 mm. Se vacía sola. | Pedir **4**. 2 hilos a GPIO + GND. | [Amazon: tipping bucket rain gauge Arduino](https://www.amazon.com/s?k=tipping+bucket+rain+gauge+arduino) · [DFRobot SEN0575](https://www.dfrobot.com/product-2689.html) (~US$30) | US$20–40 |
+| **Davis 6466 / 6463** | Más preciso; no hace falta ×4 en alpha | [Amazon: Davis rain collector](https://www.amazon.com/s?k=Davis+6466+rain+collector) | US$80–150 |
 | Hydreon **RG-15** (óptico, sin partes móviles) | Menos atascos; ±10 %; UART o emula cubeta. Reviews mixtos vs Davis en mm. | [ficha oficial](https://rainsensors.com/products/rg-15/) ~US$99 | Solo si odias limpiar hojas |
 
 **No pidas** para este uso: pluviómetros “smart” solo-app, Ecowitt WH40

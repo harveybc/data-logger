@@ -5,7 +5,7 @@ pegárselo al agente.
 
 ---
 
-Necesito añadir un sensor de temperatura ESP32 a la finca que ya corre
+Necesito añadir un sensor de temperatura ESP32 al sitio que ya corre
 en este repo (`data-logger`).
 
 Datos del sensor:

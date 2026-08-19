@@ -50,7 +50,7 @@ ThingsBoard no exige un esquema fijo.
 
 - Parser de correo o PDF (Hermes).
 - Backend Flask propio, ni login propio, ni base propia de usuarios.
-- Trading, predicción, DOIN, OLAP de `predictor`.
+- Trading, entrenamiento de modelos o un almacén analítico aparte.
 - ThingsBoard Professional Edition. CE cubre el PoC y los primeros sitios.
   PE se evalúa solo si hace falta white-label o tenants aislados a escala.
 - Un range extender como “AAA” o como solución de tanque metálico. Ver `docs/HOP.md`.

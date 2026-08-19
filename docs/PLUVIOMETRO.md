@@ -6,9 +6,8 @@ No hace falta ToF ni electroválvula. Ver
 y el sketch `firmware/esp32_tipping_bucket_http/`.
 
 Repo: <https://github.com/harveybc/data-logger>  
-En este computador: `/home/harveybc/Documents/GitHub/data-logger`  
-Compras: [BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md)  
-Diseño largo: [DISENO.md](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md)
+Compras (4 juegos): [BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md)  
+Diseño: [DISENO.md](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md)
 
 El **asistente de campo** (huecos, empaques, mangueras, conexiones a
 intemperie) entra **después** de que el prototipo publique `rain_mm` en
@@ -33,8 +32,8 @@ ThingsBoard. En mesa: protoboard, USB y un cubo.
   `secrets.h`.
 
 ```bash
-cd /home/harveybc/Documents/GitHub/data-logger
-python3 scripts/add_sensor.py --name pluviometro-01 --lote meteo --sensor pluviometro
+cd data-logger
+python3 scripts/add_sensor.py --name lluvia-01 --lote meteo --sensor pluviometro
 cp firmware/secrets.h.example firmware/esp32_pluviometro_http/secrets.h
 ```
 

@@ -14,20 +14,19 @@ It does **not** parse email or PDFs (that is Hermes, later, injecting
 into the same HTTP telemetry API). It does **not** implement login,
 tenants or dashboards — ThingsBoard already does. The pre-2026 Flask +
 AdminLTE app that used to occupy this repository is retired
-(`docs/LEGACY.md`); do not restore it. It is not `predictor`,
-`doin-node`, or a trading system.
+(`docs/LEGACY.md`); do not restore it. It is not a trading system
+and it does not train models.
 
 Verified against the official install guide:
 <https://thingsboard.io/docs/user-guide/install/docker/>
 
 ## Agent quickstart (install → ingest → show the user results)
 
-### 0. Safety on Harvey's research machine
+### 0. Safety if this machine already runs other Docker stacks
 
-This workstation may already be running GPU training jobs and Docker
-containers for Postgres/Metabase of `predictor`. **Do not stop, restart
-or recreate any container you did not start.** **Do not bind host port
-5432.** This compose keeps Postgres internal on purpose.
+**Do not stop, restart or recreate any container you did not start.**
+**Do not bind host port 5432.** This compose keeps Postgres internal
+on purpose.
 
 Before `up`:
 
@@ -49,7 +48,7 @@ Docker Engine + Compose v2. Python 3.10+ for the helper scripts (stdlib
 only — no `pip install`).
 
 ```bash
-cd /home/harveybc/Documents/GitHub/data-logger
+cd data-logger   # clone or open https://github.com/harveybc/data-logger
 cp -n .env.example .env
 docker compose version
 python3 --version
@@ -117,8 +116,7 @@ python3 scripts/add_sensor.py --name pozo-temp-01 --lote pozo --sensor DS18B20
 
 **There is none in this repo, and none should be added here.**
 ThingsBoard *is* the dashboard and the time-series store. Do not stand
-up Metabase, do not create a star schema, do not touch `predictor`'s
-`predictor_olap` database.
+up a second analytics stack unless the user asked for it.
 
 ### 6. Final message to give the user
 

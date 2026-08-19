@@ -2,7 +2,7 @@
 
 Copia todo el recuadro y pégalo en Claude, Cursor, Codex, Copilot o Grok
 (el agente necesita acceso a la terminal de **este** computador o del
-servidor de la finca).
+servidor del sitio).
 
 ---
 

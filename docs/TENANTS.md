@@ -1,52 +1,38 @@
-# Tenants, cooperativas y el plan de ~5 USD
+# Tenants y sitios
 
 ThingsBoard ya trae la jerarquía. No inventamos otra.
 
 ```
 System admin
- └── Tenant          ← una cooperativa / un gremio / ANALAC / SAGAN
-      ├── Users      ← técnicos de la cooperativa
-      └── Customer   ← una finca
-           └── Users ← el productor (solo ve sus dispositivos)
+ └── Tenant          ← quien opera la plataforma (un gremio, una empresa)
+      ├── Users      ← técnicos
+      └── Customer   ← un sitio / un cliente
+           └── Users ← solo ven los dispositivos de ese sitio
                 └── Devices
 ```
 
-## Cómo mapear el producto
-
-| Idea de negocio | Objeto ThingsBoard |
+| Idea de producto | Objeto ThingsBoard |
 |---|---|
-| Plataforma (nosotros) | System admin |
-| Cooperativa o gremio | **Tenant** |
-| Finca que paga ~5 USD | **Customer** dentro de ese tenant |
-| Productor | User del customer (permiso de solo lectura o de sus dispositivos) |
-| Sensor | Device asignado a ese customer |
+| Quien hospeda | System admin |
+| Organización | **Tenant** |
+| Sitio o cliente | **Customer** |
+| Usuario final | User de ese customer |
+| Sensor | Device asignado al customer |
 
-El productor entra a la misma UI, ve solo su finca, no la del vecino.
+## PoC de hoy
 
-## Qué hacer en el PoC (hoy)
+`scripts/bootstrap_finca.py` crea un Customer de demostración en el
+tenant `tenant@thingsboard.org`. Basta para un ESP32 y para mostrar
+“yo veo lo mío”.
 
-`scripts/bootstrap_finca.py` crea un **Customer** `Finca Demo` dentro del
-tenant de demostración (`tenant@thingsboard.org`). Eso basta para:
-
-- Harvey y un ESP32
-- una finca piloto
-- mostrar el aislamiento “yo veo lo mío”
-
-## Cuando haya varias cooperativas
+## Varios clientes
 
 1. Entra como `sysadmin@thingsboard.org`.
-2. *Tenants → Add tenant* (una por cooperativa).
-3. Crea el tenant admin de esa cooperativa.
-4. Ese admin crea un Customer por finca y le asigna dispositivos.
+2. *Tenants → Add tenant* si cada organización debe ir aislada.
+3. Ese admin crea un Customer por sitio y le asigna dispositivos.
 
-No hace falta otro microservicio. Si más adelante el gremio quiere marca
-propia (logo, dominio, facturación), se evalúa ThingsBoard PE. No es el
+Marca propia (logo, dominio, facturación) es ThingsBoard PE. No es el
 paso 1.
 
-## Precio de 5 USD
-
-Eso es política comercial, no software. Técnicamente un customer + N
-dispositivos no tiene costo de licencia en CE. El costo real es el
-servidor (un VPS de 1–2 vCPU / 4 GB aguanta el PoC y varias fincas
-chicas). El cobro al productor cubre hosting y soporte del gremio, no
-una licencia por sensor.
+El cobro por sitio (si algún día hay servicio) es política comercial.
+CE no cobra licencia por sensor; el costo es el servidor.

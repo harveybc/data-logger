@@ -1,70 +1,59 @@
 # data-logger
 
-**Estado: puente a ThingsBoard CE, listo para el primer ESP32.**
+Kit para ver sensores en el celular o el computador **sin programar un
+servidor**. Por debajo corre
+[ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3: la
+plataforma guarda series, usuarios y alarmas. Este repositorio solo la
+deja armada y trae el firmware para ESP32.
 
-Este repositorio **no vive dentro de `predictor`**. Ábrelo aparte:
+Sirve para telemetría chica que se puede repetir en varios sitios
+(lluvia, temperatura, nivel de tanque, y más adelante otros orígenes).
+Un sitio no ve los dispositivos de otro.
 
-- GitHub: <https://github.com/harveybc/data-logger>
-- En este computador: `/home/harveybc/Documents/GitHub/data-logger`
+Código: <https://github.com/harveybc/data-logger>
 
-Hojas útiles (enlaces absolutos):
-[pluviómetro](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) ·
-[lista de compras](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) ·
-[firmware](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) ·
-[diseño](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md)
+| Guía | Enlace |
+|---|---|
+| Pedido de hardware (4 juegos) | [docs/BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) |
+| Pluviómetro | [docs/PLUVIOMETRO.md](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) |
+| Firmware | [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) |
+| Cómo se registran los datos | [docs/INGEST.md](https://github.com/harveybc/data-logger/blob/master/docs/INGEST.md) |
 
-Este repositorio **no es un servidor IoT**. Es el kit que deja armada
-[ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3 — compose,
-tokens, firmware de temperatura y prompts para un agente — para que
-personal no técnico vea sensores en el celular sin programar un backend.
+## Úsalo con un agente
 
-El Flask + AdminLTE que vivía aquí (AAA casero, plugins, GUI autogenerada)
-está retirado. La historia de git lo conserva; el árbol actual es solo el
-puente. Detalle en [`docs/LEGACY.md`](docs/LEGACY.md).
+Si tienes un asistente de código con terminal (Claude, Cursor, Codex,
+Copilot, Grok, …), abre **este** repositorio y pega:
 
-No predice precios. No lee el correo (eso será Hermes, después, escribiendo
-al mismo ThingsBoard).
+> Lee `AGENTS.md` y sigue el **Agent quickstart**: comprueba Docker,
+> no detengas contenedores ajenos, corre `bash scripts/install.sh`,
+> luego `python3 scripts/bootstrap_finca.py` y
+> `python3 scripts/send_demo_telemetry.py --once`. Dime la URL de
+> ThingsBoard, usuario y clave, dónde quedaron los tokens, y una cosa
+> que deba probar primero en la UI.
 
-## Úsalo con un agente (como en DOIN)
-
-Si tienes Claude, Cursor, Codex, Copilot o Grok con acceso a la
-terminal, no hace falta que recuerdes Docker. Abre este repositorio en
-el agente y pega **uno** de estos bloques.
-
-### 1. Levantar la plataforma
-
-> Lee `AGENTS.md` de este repositorio y sigue el **Agent quickstart**
-> de punta a punta: comprueba Docker, no toques contenedores ajenos,
-> corre `bash scripts/install.sh`, luego `python3 scripts/bootstrap_finca.py`
-> y `python3 scripts/send_demo_telemetry.py --once`. Dime la URL para
-> abrir ThingsBoard, el usuario y la clave, dónde quedaron los tokens,
-> y una cosa que deba probar primero en la UI.
-
-Más variantes (añadir un ESP32, dar de alta otro customer, diagnosticar)
-están en [`prompts/`](prompts/) listas para copiar y pegar.
-
-`AGENTS.md` sigue la convención [agents.md](https://agents.md): la
-mayoría de agentes lo leen solos.
+Más tareas (añadir un ESP32, otro sitio, diagnosticar) están en
+[`prompts/`](https://github.com/harveybc/data-logger/tree/master/prompts).
 
 ## Qué vas a ver
 
-1. Una página web en `http://IP-DEL-SERVIDOR:8080`.
-2. Dos sensores de mentira (*establo norte* y *lechería*) mandando
-   temperatura desde este mismo computador.
-3. Tu ESP32, cuando lo flashees, apareciendo al lado.
+1. Una página en `http://IP-DEL-SERVIDOR:8080`.
+2. Dos sensores de prueba mandando temperatura desde el computador.
+3. Tus ESP32, cuando los flashees, en la misma lista.
 
 ## Requisitos
 
-- Un computador o VPS con **Docker** y **Docker Compose v2**.
-- 2 CPU / 4 GB RAM de holgura (PoC). En producción chica, 8 GB.
-- Python 3 (ya viene en Linux/macOS) — los scripts no instalan paquetes.
-- Para el hardware: un ESP32, un DHT22 o un DS18B20, y Wi‑Fi 2.4 GHz.
+- Computador o VPS con **Docker** y **Docker Compose v2**.
+- 2 CPU / 4 GB de holgura para probar. En producción chica, 8 GB.
+- Python 3 (ya viene en Linux y macOS). Los scripts no instalan paquetes.
+- Hardware: ESP32 y Wi‑Fi **2.4 GHz**. El primer instrumento de campo
+  es un pluviómetro de cubeta (ver compras).
 
 ## A mano, sin agente
 
 ```bash
+git clone https://github.com/harveybc/data-logger.git
 cd data-logger
-cp .env.example .env          # cambia puertos solo si 8080/1883 están ocupados
+cp .env.example .env          # cambia puertos solo si 8080 o 1883 están ocupados
 bash scripts/install.sh       # primera vez: varios minutos
 python3 scripts/bootstrap_finca.py
 python3 scripts/send_demo_telemetry.py --once
@@ -77,61 +66,55 @@ Abre **http://127.0.0.1:8080**
 | Administrador | tenant@thingsboard.org | tenant |
 | Super-admin (casi no se usa) | sysadmin@thingsboard.org | sysadmin |
 
-*Entities → Devices → `establo-norte-temp-01` → Latest telemetry*.
-Ahí tiene que estar `temperature`.
+*Entities → Devices →* elige un dispositivo → *Latest telemetry*.
 
-Cambia esas claves antes de abrir el 8080 a una red. HTTPS (para
-usarlo fuera de la LAN) es un Caddy o nginx delante, no un cambio de
+Cambia esas claves antes de abrir el 8080 a una red. HTTPS (acceso
+fuera de la LAN) es un Caddy o nginx delante, no un cambio de
 ThingsBoard.
 
-## Desempolvar el ESP32
-
-Guía corta: [`firmware/README.md`](firmware/README.md).
+## Un ESP32 de verdad
 
 ```bash
-python3 scripts/add_sensor.py --name establo-norte-temp-02 --lote establo-norte --sensor DS18B20
-cp firmware/secrets.h.example firmware/esp32_ds18b20_http/secrets.h
-# edita Wi-Fi, TB_HOST = IP LAN de este PC, TB_TOKEN = el que imprimió add_sensor
+python3 scripts/add_sensor.py --name lluvia-01 --lote meteo --sensor pluviometro
+cp firmware/secrets.h.example firmware/esp32_tipping_bucket_http/secrets.h
+# Wi-Fi, TB_HOST = IP LAN de este PC, TB_TOKEN = el que imprimió add_sensor
 ```
 
-HTTP primero (`esp32_dht22_http` o `esp32_ds18b20_http`). MQTT es
-opcional. `TB_HOST` **nunca** es `localhost`: el ESP32 no es este
-computador.
+Guía: [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md).
+`TB_HOST` **nunca** es `localhost`: el ESP32 no es este computador.
 
-## Cómo se organiza el acceso
+## Varios sitios
 
 ```
-quien opera la plataforma  →  Tenant en ThingsBoard
+quien opera la plataforma  →  Tenant
 cada cliente / sitio       →  Customer
-cada usuario final         →  usuario de ese customer (solo ve lo suyo)
+cada usuario final         →  solo ve los dispositivos de su sitio
 cada sensor                →  Device
 ```
 
-Detalle en [`docs/TENANTS.md`](docs/TENANTS.md). ThingsBoard CE no cobra
-por sensor.
+Detalle: [docs/TENANTS.md](https://github.com/harveybc/data-logger/blob/master/docs/TENANTS.md).
 
-## Qué hay en el repo
+## Carpetas
 
 | Carpeta | Para qué |
 |---|---|
-| `docker-compose.yml` | ThingsBoard + su base. La base no se publica en el puerto 5432 del host |
-| `scripts/` | Instalar, crear el customer demo, registrar sensor, mandar datos de prueba |
-| `firmware/` | Sketches: pluviómetro, DHT/DS18B20, nivel de tanque, hop ESP-NOW |
-| `docs/` | Arquitectura, ingestión, recintos, hop, pluviómetro, [compras](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md), diseño |
-| `prompts/` | Textos listos para un agente |
-| `hermes/` | Solo el contrato: más adelante el correo entra por el mismo HTTP |
+| `docker-compose.yml` | ThingsBoard y su base (la base no se publica en el 5432 del host) |
+| `scripts/` | Instalar, registrar dispositivos, mandar datos de prueba |
+| `firmware/` | Sketches Arduino (cubeta, DHT/DS18B20, tanque, hop) |
+| `docs/` | Arquitectura, compras, recintos, ingestión |
+| `prompts/` | Textos para pegarle a un agente |
 | `secrets/` | Tokens (no se suben a git) |
 
-## Parar y borrar
+## Parar
 
 ```bash
-docker compose stop          # apaga, conserva dispositivos y series
+docker compose stop          # apaga, conserva datos
 docker compose down          # apaga, conserva el volumen
-docker compose down -v       # BORRA todos los datos. Pídelo dos veces.
+docker compose down -v       # BORRA todos los datos
 ```
 
-## Documentación oficial
+## ThingsBoard (oficial)
 
-- Instalar con Docker: <https://thingsboard.io/docs/user-guide/install/docker/>
-- HTTP de dispositivos: <https://thingsboard.io/docs/reference/http-api/>
-- MQTT de dispositivos: <https://thingsboard.io/docs/reference/mqtt-api/>
+- [Instalar con Docker](https://thingsboard.io/docs/user-guide/install/docker/)
+- [HTTP de dispositivos](https://thingsboard.io/docs/reference/http-api/)
+- [MQTT de dispositivos](https://thingsboard.io/docs/reference/mqtt-api/)
