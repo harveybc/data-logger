@@ -52,9 +52,16 @@ pip install -r requirements.txt
 PYTHONPATH=. python3 -m app.main --load_config examples/config/leche_default.json
 ```
 
-Abre **http://127.0.0.1:5000**. Clima muestra presión, T/HR y última
-lluvia (si el ESP32 ya publica). Producción y calidad tienen huecos
-marcados (correo de acopio, pesaje, laboratorio).
+Abre **http://127.0.0.1:5000**. Clima lee ThingsBoard (presión, lluvia).
+Producción y calidad leen una SQLite local alimentada por documentos:
+
+```bash
+PYTHONPATH=. python3 -m app.ingest --email examples/fixtures/recoleccion_email.txt
+PYTHONPATH=. python3 -m app.ingest --pesaje examples/fixtures/pesaje_semanal.csv
+PYTHONPATH=. python3 -m app.ingest --planilla /ruta/liquidacion.pdf
+```
+
+No hay ETL de sensores. Detalle: [docs/DATOS.md](https://github.com/harveybc/data-logger/blob/master/docs/DATOS.md).
 
 El software es libre; hospedar y soportar sitios puede ser un servicio
 de pago. Ver [docs/SERVICIO.md](https://github.com/harveybc/data-logger/blob/master/docs/SERVICIO.md).

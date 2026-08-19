@@ -5,35 +5,54 @@
 <div class="row">
   <div class="col-md-6">
     <div class="card">
-      <div class="card-header"><h3 class="card-title">Acopio diario</h3></div>
+      <div class="card-header"><h3 class="card-title">Acopio diario (correo planta)</h3></div>
       <div class="card-body">
-        <p>La producción diaria llega con un día de retraso desde el correo o
-        planilla de la planta. Eso lo hará un origen aparte (p. ej. Hermes)
-        escribiendo al mismo ThingsBoard.</p>
-        <span class="badge badge-secondary">Pendiente</span>
+        {% if rec %}
+        <p>Fecha: <strong>{{ rec.fecha }}</strong></p>
+        <p>Litros: <strong>{{ rec.litros }}</strong></p>
+        <p>Medida tanque: {{ rec.medida_tanque }}</p>
+        <p class="text-muted small">Ruta {{ rec.ruta }} · compartimiento {{ rec.compartimiento }}</p>
+        {% else %}
+        <p>Aún no hay correo cargado. El acopio llega ~1 día tarde.</p>
+        <pre class="small mb-0">PYTHONPATH=. python3 -m app.ingest --email examples/fixtures/recoleccion_email.txt</pre>
+        {% endif %}
       </div>
     </div>
   </div>
   <div class="col-md-6">
     <div class="card">
-      <div class="card-header"><h3 class="card-title">Tanque de frío</h3></div>
+      <div class="card-header"><h3 class="card-title">Tanque de frío (sensor)</h3></div>
       <div class="card-body">
         {% if tank.level_mm %}
         <p>Nivel: <strong>{{ tank.level_mm.value }}</strong> mm</p>
         {% if tank.temperature %}<p>Temp: {{ tank.temperature.value }} °C</p>{% endif %}
         {% else %}
-        <p class="text-muted">Sin dispositivo de tanque configurado, o aún sin telemetría.</p>
+        <p class="text-muted">Serie de ThingsBoard. No pasa por SQLite.</p>
         {% endif %}
       </div>
     </div>
   </div>
 </div>
 <div class="card">
-  <div class="card-header"><h3 class="card-title">Último pesaje semanal</h3></div>
-  <div class="card-body">
-    <p>Tabla del último reporte de pesaje. Factible; no está implementada.</p>
-    <table class="table table-sm"><thead><tr><th>Fecha</th><th>Lote</th><th>kg</th></tr></thead>
-    <tbody><tr><td colspan="3" class="text-muted">Sin filas todavía.</td></tr></tbody></table>
+  <div class="card-header"><h3 class="card-title">Producción por vaca (último día cargado)</h3></div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-sm">
+      <thead><tr><th>Fecha</th><th>Placa</th><th>Litros AM</th><th>Litros PM</th><th>Total</th></tr></thead>
+      <tbody>
+      {% for r in pesaje %}
+        <tr>
+          <td>{{ r.fecha }}</td><td>{{ r.placa }}</td>
+          <td>{{ r.litros_am }}</td><td>{{ r.litros_pm }}</td>
+          <td>{{ (r.litros_am or 0) + (r.litros_pm or 0) }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="text-muted">
+          CSV <code>fecha,placa,litros_am,litros_pm</code> —
+          <code>python3 -m app.ingest --pesaje examples/fixtures/pesaje_semanal.csv</code>
+        </td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock %}

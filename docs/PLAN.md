@@ -39,17 +39,18 @@ UI: <http://127.0.0.1:5000> — menú Producción / Clima / Calidad (AdminLTE).
 | **A0** | Compose ThingsBoard + scripts + firmware cubeta/DHT/tanque/hop | Hecho |
 | **A1** | Loader + merger + pipeline + plugin web AdminLTE (3 menús) | Hecho (este cambio) |
 | **A2** | Clima real: `rain_mm` + T/HR + **presión** y texto de tendencia | Hecho (lee TB; vacío si no hay datos) |
-| **B1** | Origen correo/planilla → producción diaria (Hermes u otro, ~1 día de retraso) | Pendiente (otro plugin o repo) |
-| **B2** | Tanque de frío en Producción (`device_tanque`) | Firmware listo; cablear dispositivo |
-| **B3** | Tabla de pesaje semanal | Pendiente |
-| **C1** | Series de calidad de leche + alertas por pendiente (bacterias, etc.) | Esqueleto en web; faltan orígenes de lab |
+| **B1** | Correo de acopio → SQLite → Producción | Hecho (`app.ingest --email`, campos Colácteos) |
+| **B2** | Tanque de frío en Producción (`device_tanque`) | Firmware listo; lee TB, no SQLite |
+| **B3** | Producción por vaca AM/PM (`fecha,placa,litros_am,litros_pm`) | Hecho (`--pesaje` CSV) |
+| **C1** | PDF liquidación: proteína, grasa, sólidos, UFC, precio | Hecho (`--planilla`); alertas UFC |
 | **P1** | Anemómetro / veleta como extra | No en alpha |
-| **S1** | Servicio hospedado (un tenant / customer por cliente) | Comercial; no es código de este repo |
+| **S1** | Login Google + plan beta/pago + Mercado Pago | Después; ver `docs/DATOS.md` |
 | **L1** | Texto corto de “sin garantía / AS-IS” vs contrato del servicio | `docs/SERVICIO.md` |
 
 ## No hacer
 
 - Volver al Flask AAA viejo (`docs/LEGACY.md`).
-- Inventar login propio: AAA = ThingsBoard.
+- Inventar login de ranchero en ThingsBoard. Dispositivos = token TB. Humanos del servicio = Google más adelante.
+- ETL de sensores a un cubo propio. TB ya es la serie.
 - Meter viento en el pedido de 4 juegos.
 - Prometer pronóstico meteorológico oficial: solo tendencia de presión + lluvia medida.

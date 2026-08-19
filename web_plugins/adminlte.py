@@ -11,6 +11,7 @@ if str(ROOT / "scripts") not in sys.path:
 
 from flask import Flask, render_template
 
+from app.store import Store
 from tb_client import ThingsBoard
 
 
@@ -34,14 +35,21 @@ class Plugin:
             }
         ],
         "site_name": "Sitio demo",
+        "app_db": "data/app.db",
     }
 
     def __init__(self) -> None:
         self.params = dict(self.plugin_params)
         self._tb: ThingsBoard | None = None
+        self._store: Store | None = None
 
     def set_params(self, **kwargs) -> None:
         self.params.update(kwargs)
+
+    def store(self) -> Store:
+        if self._store is None:
+            self._store = Store(self.params.get("app_db") or "data/app.db")
+        return self._store
 
     def _client(self) -> ThingsBoard | None:
         if self._tb and self._tb.token:
@@ -110,42 +118,43 @@ class Plugin:
             )
         return f"Presión estable ({delta:+.1f} hPa). Ni aviso ni despeje claro."
 
-    def _calidad_rows(self) -> tuple[list[dict], list[dict], dict]:
-        keys = list(self.params.get("calidad_keys") or [])
-        hist = self._history(self.params.get("device_clima") or "", keys, hours=24 * 14)
+    def _calidad_rows(self) -> tuple[list[dict], list[dict], dict, dict | None]:
+        last = self.store().last_calidad()
+        series = self.store().calidad_series()
+        hist: dict = {
+            "proteina_pct": [{"ts": r["periodo_hasta"], "value": r["proteina_pct"]} for r in series if r.get("proteina_pct") is not None],
+            "grasa_pct": [{"ts": r["periodo_hasta"], "value": r["grasa_pct"]} for r in series if r.get("grasa_pct") is not None],
+            "ufc_x1000": [{"ts": r["periodo_hasta"], "value": r["ufc_x1000"]} for r in series if r.get("ufc_x1000") is not None],
+        }
         alerts = []
-        for spec in self.params.get("calidad_alerts") or []:
-            key = spec.get("key")
-            series = hist.get(key) or []
-            if len(series) < 3:
-                alerts.append(
-                    {
-                        "label": spec.get("label") or key,
-                        "ok": True,
-                        "text": "Sin suficientes muestras todavía.",
-                    }
-                )
-                continue
-            vals = [float(p["value"]) for p in series[-8:]]
-            slope = vals[-1] - vals[0]
-            worse = spec.get("higher_is_worse", True)
-            min_delta = float(spec.get("min_delta") or 0)
-            firing = (slope > min_delta) if worse else (slope < -min_delta)
+        ufc_pts = [r["ufc_x1000"] for r in series if r.get("ufc_x1000") is not None]
+        if len(ufc_pts) >= 2 and ufc_pts[-1] > ufc_pts[0]:
             alerts.append(
                 {
-                    "label": spec.get("label") or key,
-                    "ok": not firing,
-                    "text": f"Δ reciente = {slope:+.2f}"
-                    + (" — tendencia a vigilar" if firing else " — estable"),
+                    "label": "UFC ×1000/ml",
+                    "ok": False,
+                    "text": f"Subió de {ufc_pts[0]} a {ufc_pts[-1]} — vigilar higiene.",
+                }
+            )
+        elif last and last.get("ufc_x1000") is not None:
+            alerts.append(
+                {
+                    "label": "UFC ×1000/ml",
+                    "ok": True,
+                    "text": f"Último {last['ufc_x1000']} (promedio de la liquidación).",
                 }
             )
         rows = []
-        # Último valor por clave
-        latest = self._latest(self.params.get("device_clima") or "", keys)
-        for k in keys:
-            cell = latest.get(k) or {}
-            rows.append({"key": k, "value": cell.get("value"), "ts": cell.get("ts")})
-        return rows, alerts, hist
+        if last:
+            for k, label in (
+                ("proteina_pct", "Proteína %"),
+                ("grasa_pct", "Grasa %"),
+                ("solidos_pct", "Sólidos %"),
+                ("ufc_x1000", "UFC ×1000/ml"),
+                ("precio_final_litro", "Precio $/L"),
+            ):
+                rows.append({"key": label, "value": last.get(k), "ts": last.get("periodo_hasta")})
+        return rows, alerts, hist, last
 
     def serve(self) -> None:
         tmpl = str(Path(__file__).resolve().parent / "templates")
@@ -169,11 +178,13 @@ class Plugin:
                 plugin.params.get("device_tanque") or "",
                 ["level_mm", "temperature"],
             )
+            rec = plugin.store().last_recoleccion()
+            pesaje = plugin.store().pesaje_ultimo_dia()
             return render_template(
                 "produccion.html",
                 tank=tank,
-                hermes_pending=True,
-                pesaje_pending=True,
+                rec=rec,
+                pesaje=pesaje,
             )
 
         @app.route("/clima")
@@ -196,8 +207,10 @@ class Plugin:
 
         @app.route("/calidad")
         def calidad():
-            rows, alerts, hist = plugin._calidad_rows()
-            return render_template("calidad.html", rows=rows, alerts=alerts, hist=hist)
+            rows, alerts, hist, last = plugin._calidad_rows()
+            return render_template(
+                "calidad.html", rows=rows, alerts=alerts, hist=hist, last=last
+            )
 
         host = self.params.get("web_host") or "127.0.0.1"
         port = int(self.params.get("web_port") or 5000)

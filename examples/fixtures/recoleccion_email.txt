@@ -1,0 +1,12 @@
+Recolección de leche:17/08/26 07:28
+
+Te enviamos la informacion de recoleccion de leche para el dia de hoy:
+Ruta 	13. RUTA-EJEMPLO
+Fecha 	2026-08-17
+Codigo del productor 	00000
+Productor 	PRODUCTOR DEMO
+Finca 	SITIO-DEMO
+Medida del tanque 	6.8000
+Litros 	1853.0000
+Conductor 	13
+Compartimiento 	1
