@@ -1,66 +1,54 @@
-# Pluviómetro 1A — lo primero que se fabrica
+# Pluviómetro 1A — prototipo de mesa primero
 
-Registro automático de lluvia para el veterinario (pastos). Sustituye la
-lectura manual diaria. Una caja, toma de corriente, sin CIP, sin metal
-alrededor.
+Repo: <https://github.com/harveybc/data-logger>  
+En este computador: `/home/harveybc/Documents/GitHub/data-logger`  
+Compras: [BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md)  
+Diseño largo: [DISENO.md](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md)
 
-Diseño largo: [`DISENO.md`](DISENO.md). Esta hoja es la de taller + flasheo.
+El **asistente de campo** (huecos, empaques, mangueras, conexiones a
+intemperie) entra **después** de que el prototipo publique `rain_mm` en
+ThingsBoard. En mesa: protoboard, USB y un cubo.
 
 ## Qué hace
 
-1. Mide el nivel de agua en un cubo de área conocida (ToF VL53L1X bajo la tapa).
-2. Convierte a milímetros de lluvia: `rain_mm = level_mm * (A_cubo / A_embudo)`.
-3. Cada 15 min manda `rain_mm`, `level_mm`, y si hay BME280 también
-   `temperature`, `humidity`, `pressure`.
-4. A las **00:00 hora local**: si hay agua, abre la electroválvula, espera
-   a nivel ≈ 0, cierra, manda `drain_ok=1`.
+1. Mide el nivel en un cubo de área conocida.
+2. `rain_mm = level_mm * (A_cubo / A_embudo)`.
+3. Cada 15 min manda `rain_mm`, `level_mm` (y BME280 si está).
+4. A las **00:00** hora local: si hay agua, abre la electroválvula,
+   espera nivel ≈ 0, cierra, `drain_ok=1`.
 
-Viento: no entra en este lote.
+## Prototipo (tú)
 
-## Lugui (caja única)
-
-- Caja IP66, interior mínimo **160 × 110 × 70 mm**, plástico (ABS/PC), no metal.
-- Tapa de 4 tornillos, no potear. Taladros y prensas **abajo o de lado**.
-- **PG9:** pigtail 5 V mural → JST-XH macho a la platina (no uses el USB
-  de programación a la intemperie).
-- **PG7:** cable de la electroválvula (fondo del cubo).
-- Cubo de área conocida + embudo. ToF y BME280 **secos bajo la tapa**,
-  mirando el agua (ToF) / el aire de la caja (BME).
-- Válvula en el punto más bajo del cubo, con pendiente para que vacíe.
-- Lavado: manguera + jabón suave. Pasa de taller = **caja seca por dentro**.
-  El POST 200 lo confirma quien flashea, no el taller.
-
-Escribir en etiqueta interior: `pluviometro-01`, `A_cubo` y `A_embudo` en mm².
-
-## Flasheo
+- ESP32 por USB 5 V.
+- Electroválvula con **MOSFET + diodo flyback** (GPIO 26). Nunca directo
+  al pin del ESP32.
+- Sensor de nivel: el que ya tengas (ver tabla en `BOM.md`). El sketch
+  default es VL53L1X en I2C (GPIO 21/22).
+- Mide `A_cubo`, `A_embudo` y `TOF_EMPTY_MM` (cubo seco) y ponlos en
+  `secrets.h`.
 
 ```bash
-python3 scripts/add_sensor.py \
-  --name pluviometro-01 --lote meteo --sensor pluviometro \
-  --label "Lluvia diaria"
+cd /home/harveybc/Documents/GitHub/data-logger
+python3 scripts/add_sensor.py --name pluviometro-01 --lote meteo --sensor pluviometro
 cp firmware/secrets.h.example firmware/esp32_pluviometro_http/secrets.h
-# WIFI_*, TB_HOST, TB_TOKEN, A_CUBO_MM2, A_EMBUDO_MM2, TZ_OFFSET_S, TOF_EMPTY_MM
 ```
 
-Arduino IDE: placa ESP32 Dev Module. Librerías: **VL53L1X** (Pololu),
-**Adafruit BME280**, **Adafruit Unified Sensor**. Sketch:
+Arduino IDE: *ESP32 Dev Module*. Librerías: **VL53L1X** (Pololu),
+**Adafruit BME280** (si lo usas). Sketch:
 `firmware/esp32_pluviometro_http/`.
 
 | Pin | Qué |
 |---|---|
-| 3V3 / GND | VL53L1X y BME280 |
-| GPIO 21 / 22 | I2C SDA / SCL |
-| GPIO 26 | MOSFET de la válvula (activo en HIGH, diodo flyback en la bobina) |
-| VIN | 5 V del pigtail |
+| 5 V USB / GND | ESP32 |
+| GPIO 21 / 22 | I2C (VL53L1X y BME280) |
+| GPIO 26 | gate del MOSFET (HIGH = abre válvula) |
+| 12 V aparte | solo la bobina de la válvula |
 
-Si no hay BME280 el sketch sigue (solo lluvia). Si no hay ToF, no publiques
-`rain_mm` inventado: revisa el Serial.
+Éxito: Serial `POST /api/v1/****/telemetry → 200` y *Latest telemetry*
+con `rain_mm`.
 
-## ThingsBoard
+## Montaje de intemperie (asistente de campo, después)
 
-Device `pluviometro-01`. *Latest telemetry*: `rain_mm` (lo que mira el
-veterinario), `level_mm`, `drain_ok`, y clima si hay BME.
-
-Pendiente de medir en sitio (no bloquea fabricar la caja): área del cubo
-y del embudo, voltaje de la válvula (5 V vs 12 V + fuente en la misma
-caja), huso para las 00:00.
+Una caja IP66, plástico, prensas abajo, pigtail 5 V, válvula al fondo,
+ToF seco bajo la tapa. Lavado: manguera + jabón suave. Pasa de taller =
+caja seca. El POST 200 lo confirma quien flasheó el prototipo.

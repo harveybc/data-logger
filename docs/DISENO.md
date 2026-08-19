@@ -6,8 +6,8 @@
 | **Autor** | _por completar_ |
 | **Fecha** | 2026-08-18 |
 | **Estado** | Draft (rev. 2026-08-18; lote 1A = pluviómetro) |
-| **Repo** | [harveybc/data-logger](https://github.com/harveybc/data-logger) (checkout local `/home/harveybc/Documents/GitHub/data-logger`) |
-| **Audiencia** | operadores no técnicos, Lugui (fabricación), agentes de código, quien mantiene el puente ThingsBoard |
+| **Repo** | <https://github.com/harveybc/data-logger> — checkout `/home/harveybc/Documents/GitHub/data-logger` (no está dentro de `predictor`) |
+| **Audiencia** | operadores no técnicos, asistente de campo (montaje), agentes de código, quien mantiene el puente ThingsBoard |
 | **Idioma** | español; identificadores de protocolo, rutas, claves JSON y APIs de ThingsBoard en inglés tal como están en el código |
 
 ---
@@ -54,7 +54,7 @@ Lo que ya funciona:
 ### Dolores que este diseño ataca
 
 1. **Lluvia a mano.** Un empleado mide el acumulado; el dato alimenta la ración. Sin registro automático no hay auditoría ni serie en ThingsBoard.
-2. **Recinto.** Un ESP32 DevKit no sobrevive a manguera ni a CIP de tanque. Lugui fabrica agujeros y cajas; hace falta un contrato (caja única + toma para el pluviómetro; dos cajas + pack para nodos a batería; clase CIP para el tanque).
+2. **Recinto.** Un ESP32 DevKit no sobrevive a manguera ni a CIP de tanque. El asistente de campo fabrica agujeros y cajas; hace falta un contrato (caja única + toma para el pluviómetro; dos cajas + pack para nodos a batería; clase CIP para el tanque).
 3. **Tanque + CIP.** El tanque de leche **sí** se lava con ácido/álcali y desinfectante. Nivel **sin contacto** desde el techo; nada mecánico en el producto. Faraday + vapor + espuma.
 3. **Orígenes heterogéneos.** El kit ya acepta ESP32 y un script de laptop. Hermes (otro repo) y software de planta tienen que entrar por el **mismo** contrato, no por un Flask nuevo.
 4. **AAA casero.** La tentación de “un login propio” es exactamente lo que se retiró en `docs/LEGACY.md`. ThingsBoard CE ya tiene tenants, customers, users, access tokens y auditoría.
@@ -80,7 +80,7 @@ Lo que ya funciona:
 ### Goals
 
 1. Entregar el **pluviómetro 1A** (acumulado diario `rain_mm`, drenaje a las 00:00, BME280, toma) como primer nodo de campo.
-2. Contrato mecánico: Hoja Lugui — **caja única + toma** (pluviómetro); dos cajas + pack (batería); **clase CIP + domo** (tanque).
+2. Contrato mecánico: Hoja de taller — **caja única + toma** (pluviómetro); dos cajas + pack (batería); **clase CIP + domo** (tanque).
 3. **Nivel de tanque 1B:** no contacto, domo que escurre CIP, store-and-forward; temperatura por vaina aparte.
 4. RF: rechazar el repeater; hop solo sombra sin Faraday (**1C**, no primero).
 5. Contrato de ingestión + AAA = ThingsBoard CE. GitHub mínimo. Kit existente.
@@ -153,7 +153,7 @@ Motivo: dejar de depender de una lectura manual de lluvia. Device `pluviometro-0
 |---|---|
 | Recipiente | Cubo/embudo de **área conocida** (hay que medirla; OQ 10) |
 | Nivel | **ToF VL53L1X** bajo la tapa, mirando el agua. Default: no boya. Un ultrasónico JSN-SR04T tiene zona ciega ~20 cm — inútil en un cubo chico. Hidrostático contacta el agua y pelea el fondo con la válvula. ToF corto, tapa seca, sin partes móviles. |
-| Drenaje | Electroválvula en el fondo. Driver **MOSFET + diodo flyback**. Típico 12 V (fuente aparte en la misma caja); si Lugui consigue válvula 5–6 V, mejor BOM (OQ 12). |
+| Drenaje | Electroválvula en el fondo. Driver **MOSFET + diodo flyback**. Típico 12 V (fuente aparte en la misma caja); si el asistente de campo consigue válvula 5–6 V, mejor BOM (OQ 12). |
 | Energía | **Toma + adaptador.** Una caja IP66. **No** caja B. DevKit. `INTERVAL_S` de muestreo 15–60 min. |
 | Lavado | Manguera + jabón suave. |
 | Extra | **BME280** (o clon): `temperature`, `humidity`, `pressure`. Viento **aplazado**. |
@@ -205,13 +205,13 @@ Electrónica: fuera del volumen metálico, **o** en el domo si el domo es **plá
 
 Sombra RF **sin** Faraday. Padre mural; hijo batería + 3600 s. **No** es el tanque. **No** es lo primero que se suelda.
 
-### 2. Contrato mecánico / eléctrico (Lugui)
+### 2. Contrato mecánico / eléctrico (el asistente de campo)
 
-Lugui no es ingeniero de software. Lo que se le entrega es **`docs/ENCIERRO.md` partido en dos**: (1) **Hoja Lugui** — una página, imprimible, sin pines ni `secrets.h`; (2) **Apéndice de firmware** — pines, LDO, ADC, P/N de placa. Esta sección del diseño es la fuente; PR 1 la copia a esos dos archivos. **No** se imprime el diseño completo ni el mermaid al taller.
+El asistente de campo no es ingeniero de software. Lo que se le entrega es **`docs/ENCIERRO.md` partido en dos**: (1) **Hoja de taller** — una página, imprimible, sin pines ni `secrets.h`; (2) **Apéndice de firmware** — pines, LDO, ADC, P/N de placa. Esta sección del diseño es la fuente; PR 1 la copia a esos dos archivos. **No** se imprime el diseño completo ni el mermaid al taller.
 
-#### 2.0 Hoja Lugui (una página — esto es lo que se imprime)
+#### 2.0 Hoja de taller (una página — esto es lo que se imprime)
 
-Texto de taller. Lugui no necesita el resto del documento.
+Texto de taller. El asistente de campo no necesita el resto del documento.
 
 **Qué fabrica**
 
@@ -232,7 +232,7 @@ Texto de taller. Lugui no necesita el resto del documento.
 
 No compartir sonda y alimentación en el mismo agujero. Junta tórica en cada prensa. Strain-relief interno (brida) para que un tirón no llegue a la placa. **No** taladrar USB a la intemperie (sería IP0). **No** taladrar RP-SMA en el lote 1 (caja plástica).
 
-5. **Montaje de la placa:** firmware entrega una **platina-portadora v1** con 4 huecos M2.5 ya taladrados y la placa atornillada encima. Lugui **no** mide un DevKit ni elige P/N. Atornilla la platina a 4 standoffs M2.5 × 8 mm en el fondo de la caja A, **al rectángulo de esa platina v1**. Ese intereje se anota en el apéndice de `docs/ENCIERRO.md` en cuanto exista la v1 y **queda congelado**: cajas posteriores usan el mismo patrón. Un FireBeetle / D32 / WROOM futuro se atornilla a **otra platina** que conserva esos 4 huecos; **no** se taladran huecos nuevos en la caja A. Muchos DevKit (DevKitC V4, clones DOIT) **no tienen** 4 huecos M2.5: por eso la platina es entrega de firmware, no un taladro de Lugui.
+5. **Montaje de la placa:** firmware entrega una **platina-portadora v1** con 4 huecos M2.5 ya taladrados y la placa atornillada encima. el asistente de campo **no** mide un DevKit ni elige P/N. Atornilla la platina a 4 standoffs M2.5 × 8 mm en el fondo de la caja A, **al rectángulo de esa platina v1**. Ese intereje se anota en el apéndice de `docs/ENCIERRO.md` en cuanto exista la v1 y **queda congelado**: cajas posteriores usan el mismo patrón. Un FireBeetle / D32 / WROOM futuro se atornilla a **otra platina** que conserva esos 4 huecos; **no** se taladran huecos nuevos en la caja A. Muchos DevKit (DevKitC V4, clones DOIT) **no tienen** 4 huecos M2.5: por eso la platina es entrega de firmware, no un taladro del taller.
 6. **Conector del lote 1 (uno solo a la platina):** hembra **JST-XH 2 pines** polarizada (`5V`, `GND`) en la platina (`VIN`+`GND`). **Un** macho JST a la vez. **No** usar el USB de programación como alimentación de campo. El USB queda **dentro**, accesible al abrir la tapa A, solo para flashear.
 7. **Alimentación.**
    - **1A pluviómetro: solo toma.** Adaptador 5 V al ESP (pigtail PG9). Si la válvula es 12 V, fuente 12 V **en la misma caja** (no caja B). MOSFET + flyback en la platina (firmware). Pico ≥ 1 A si hay 12 V.
@@ -242,22 +242,22 @@ No compartir sonda y alimentación en el mismo agujero. Junta tórica en cada pr
 8. **Autonomía:** 1A no aplica (toma). DevKit despierto ~10 h de pack. Meses **solo** Iq bajo + 3600 s. No prometas semanas en DevKit.
 9. **Sonda / tanque (default de proceso):** si el tanque ya tiene **vaina termométrica**, la sonda entra en la vaina. **No** taladrar el tanque. **No** poner una cápsula genérica en contacto directo con alimento. Pasamuros 1/4" NPT solo si no hay vaina **y** el líquido no es alimento, o con cápsula/cable con especificación de contacto alimentario. Electrónica **siempre fuera** del metal.
 10. **Etiqueta:** **dentro** de la tapa A, `name` del device + últimos 4 caracteres del token. Nada de SSID, clave Wi‑Fi ni token completo por fuera.
-11. **Prueba de manguera (1A / ambiente / hop):** 1 min, ~3 m, **jabón suave**. Pasa de Lugui = **cajas secas**. POST 200 = operador. El **domo 1B** no se “aprueba” con manguera de jardín: el CIP del tanque es otra prueba (OQ 13, puerto existente).
+11. **Prueba de manguera (1A / ambiente / hop):** 1 min, ~3 m, **jabón suave**. Pasa de taller = **cajas secas**. POST 200 = operador. El **domo 1B** no se “aprueba” con manguera de jardín: el CIP del tanque es otra prueba (OQ 13, puerto existente).
 12. **1A cubo:** recipiente de área conocida; ToF bajo la tapa; válvula en el fondo; prensa del cable de válvula; BME280 bajo la tapa (seco) o prensa extra si va fuera. Medir `A_cubo` y `A_embudo` y escribirlos en la etiqueta interior.
 
-**Qué no fabrica Lugui:** soldadura, pull-up, `secrets.h`, elección de GPIO, conformal coating, antena, ThingsBoard.
+**Qué no fabrica el asistente de campo:** soldadura, pull-up, `secrets.h`, elección de GPIO, conformal coating, antena, ThingsBoard.
 
 #### 2.1 Quién dueña qué
 
 | Pieza | Dueño | Entrega |
 |---|---|---|
-| Caja A (electrónica) + caja B (pack), tapas, juntas, tornillos, prensaestopas | **Lugui** | Dos IP66; pasa de manguera = cajas secas (§2.0.11) |
-| Pigtail 5 V mural → JST-XH macho (por PG9 de A) | **Lugui** | USB-A/C hembra o barrel 5.5 mm → JST macho |
-| Pack 5 V regulados, extraíble, fusible 1 A | **Lugui** | Caja B; JST-XH macho; **XOR** mural (un JST a la platina) |
-| Vaina existente / (si aplica) pasamuros y montaje de sonda | **Lugui** | Sonda sujeta; electrónica fuera del metal |
-| **Platina-portadora** 4× M2.5 + placa cableada + pull-up | **firmware / plataforma** | Lugui solo atornilla la platina |
+| Caja A (electrónica) + caja B (pack), tapas, juntas, tornillos, prensaestopas | **asistente de campo** | Dos IP66; pasa de manguera = cajas secas (§2.0.11) |
+| Pigtail 5 V mural → JST-XH macho (por PG9 de A) | **asistente de campo** | USB-A/C hembra o barrel 5.5 mm → JST macho |
+| Pack 5 V regulados, extraíble, fusible 1 A | **asistente de campo** | Caja B; JST-XH macho; **XOR** mural (un JST a la platina) |
+| Vaina existente / (si aplica) pasamuros y montaje de sonda | **asistente de campo** | Sonda sujeta; electrónica fuera del metal |
+| **Platina-portadora** 4× M2.5 + placa cableada + pull-up | **firmware / plataforma** | el asistente de campo solo atornilla la platina |
 | Wi‑Fi, `TB_HOST`, `TB_TOKEN`, ThingsBoard | **plataforma / operador** | `firmware/**/secrets.h` (gitignored) |
-| Antena externa | **No en lote 1** (caja plástica) | Si algún día hay caja metal: Lugui taladra RP-SMA; plataforma elige el látigo 2.4 GHz |
+| Antena externa | **No en lote 1** (caja plástica) | Si algún día hay caja metal: el asistente de campo taladra RP-SMA; plataforma elige el látigo 2.4 GHz |
 | Conformal coating, soldadura, programación USB | **firmware** | No potear / no epoxi |
 
 #### 2.2 Lavado vs inmersión (no confundir)
@@ -288,11 +288,11 @@ Default: vaina existente. El recinto (cajas A+B) va en la pared exterior. Bater�
 
 #### 2.4 Prensaestopas y huecos
 
-Quedó fijado en la Hoja Lugui §2.0.4. Apéndice: si en un lote futuro el recinto fuera **metal**, añadir RP-SMA hembra bulkhead (Ø 6.5 mm + tuerca) y látigo 2.4 GHz 2–3 dBi; o, mejor, volver a plástico.
+Quedó fijado en la Hoja de taller §2.0.4. Apéndice: si en un lote futuro el recinto fuera **metal**, añadir RP-SMA hembra bulkhead (Ø 6.5 mm + tuerca) y látigo 2.4 GHz 2–3 dBi; o, mejor, volver a plástico.
 
 #### 2.5 Eléctrico: pines, alimentación, química, autonomía (apéndice de firmware)
 
-Lugui no lee esta subsección. La Hoja ya le dice “5 V por JST-XH 2 pines a la platina”.
+El asistente de campo no lee esta subsección. La Hoja ya le dice “5 V por JST-XH 2 pines a la platina”.
 
 El firmware fija pines (`firmware/README.md`, `firmware/secrets.h.example`):
 
@@ -302,12 +302,12 @@ DHT22                         DS18B20 (3 hilos, NO parásito)
 VCC  → 3V3                    VCC (rojo)      → 3V3
 GND  → GND                    GND (negro)     → GND
 DATA → GPIO 4                 DATA (amarillo) → GPIO 4
-                              4.7 kΩ entre DATA y 3V3   ← lo suelda firmware, no Lugui
+                              4.7 kΩ entre DATA y 3V3   ← lo suelda firmware, no el asistente de campo
 ```
 
 `SENSOR_PIN` se cambia en `secrets.h`. El recinto **no** decide el GPIO.
 
-**Alimentación lote 1 (contrato con Lugui):**
+**Alimentación lote 1 (contrato con el asistente de campo):**
 
 | Señal | Valor | Conector | Notas |
 |---|---|---|---|
@@ -353,14 +353,14 @@ Carga: **fuera** de la zona de lavado. No hay cargador en la caja A.
 | FireBeetle / WROOM+LDO, 3600 s, Wi‑Fi 3 s | ~0.20 mAh/h (0.17 radio + 0.03 sleep) | **~10–13 meses** |
 | Mismo, hijo ESP-NOW ~0.5 s despierto | ~0.06 mAh/h | **meses a >1 año** (cifra de diseño: **meses**) |
 
-Conclusión: lote 1 **envía DevKit** en mesa y en cajas con toma. Cajas **batería-primaria** (ambiente sin socket, hijo hop) esperan la platina Iq bajo, mismo rectángulo v1. PR 5b va en esa placa. Lugui no taladra de nuevo.
+Conclusión: lote 1 **envía DevKit** en mesa y en cajas con toma. Cajas **batería-primaria** (ambiente sin socket, hijo hop) esperan la platina Iq bajo, mismo rectángulo v1. PR 5b va en esa placa. El asistente de campo no taladra de nuevo.
 
 **`battery_v` — fuera de alcance en el lote 1.** El pack entrega 5 V opacos. Un ADC en ese rail lee ~5 V hasta el corte abrupto: no hay curva de SoC, y un umbral “3.5 V post-boost” **no ocurre**. El JST-XH de **2 pines** no trae sense. Por tanto:
 
 - Lote 1: **no** se publica `battery_v`. La alarma humana es “dejó de postear” o “el mural se fue”.
 - Más adelante, **solo** si se decide batería primaria con tap de celda: JST-XH **3 pines** (`5V`, `GND`, `VBAT` **antes** del boost) + divisor a un pin **ADC1** (GPIO 32–39), **distinto** de `SENSOR_PIN` (GPIO 4). ADC2 no se usa: con Wi‑Fi activo la lectura falla. Umbrales por química en el **tap**, no en el 5 V: LiFePO4 1S ≈ 3.0–3.4 V; Li-ion 1S ≈ 3.3–3.6 V de corte. Macro `BATTERY_ADC_PIN` en `secrets.h.example`, undefined por defecto.
 
-No se mezclan las dos historias en la BOM de Lugui.
+No se mezclan las dos historias en la BOM de taller.
 
 #### 2.6 Servicio de la placa
 
@@ -409,9 +409,9 @@ flowchart TD
 - Default tanque de proceso: vaina existente + DS18B20 que quepa en esa vaina (cable ~1 m) + prensa PG7. Sin pasamuros nuevo.
 - Solo si no hay vaina y el líquido no es alimento: cápsula inox + pasamuros 1/4" NPT.
 
-**Firmware entrega** (no está en el pedido de Lugui): platina **v1** 4× M2.5 (rectángulo congelado) con DevKit **o** FireBeetle ESP32-E / WROOM, GPIO 4, pull-up 4.7 kΩ, `secrets.h` (`INTERVAL_S` 30 o 3600), hembra JST-XH a `VIN`/`GND`.
+**Firmware entrega** (no está en el pedido de taller): platina **v1** 4× M2.5 (rectángulo congelado) con DevKit **o** FireBeetle ESP32-E / WROOM, GPIO 4, pull-up 4.7 kΩ, `secrets.h` (`INTERVAL_S` 30 o 3600), hembra JST-XH a `VIN`/`GND`.
 
-Lugui atornilla la platina v1, pasa el pigtail por PG9, cierra, prueba de manguera **seca** (jabón suave), entrega. El operador en P2 monta, elige mural **XOR** pack, confirma POST 200.
+El asistente de campo atornilla la platina v1, pasa el pigtail por PG9, cierra, prueba de manguera **seca** (jabón suave), entrega. El operador en P2 monta, elige mural **XOR** pack, confirma POST 200.
 
 ### 3. El problema RF: gateway / hop, no “repetidor Wi‑Fi”
 
@@ -509,7 +509,7 @@ Cuando el instrumento de tanque ya sea industrial (PT100 con transmisor, nivel, 
 - Lazo 12–24 V **aislado**, shunt 250 Ω → 1–5 V, ADC (ADS1115 preferible al ADC del ESP32).
 - El ESP32 sigue fuera del tanque.
 - JSON: la clave que corresponda (`temperature`, `level_pct`, `ph`), no un envelope nuevo.
-- Alimentación del lazo **no** sale del pack 5 V (son 24 V). Lugui reservaría un prensa PG9 extra y una fuente 24 V DIN si algún día se pide. No forma parte de la primera BOM. En tanque de alimento el transmisor industrial va a la vaina de proceso, no una cápsula genérica al producto.
+- Alimentación del lazo **no** sale del pack 5 V (son 24 V). el taller reservaría un prensa PG9 extra y una fuente 24 V DIN si algún día se pide. No forma parte de la primera BOM. En tanque de alimento el transmisor industrial va a la vaina de proceso, no una cápsula genérica al producto.
 
 ### 4. Contrato de ingestión agnóstico de origen
 
@@ -736,7 +736,7 @@ Estados (status field):
 | Estado | Qué entra |
 |---|---|
 | **Backlog** | Ideas sin compromiso |
-| **Doing** | Lo que un PR o Lugui está tocando |
+| **Doing** | Lo que un PR o el montaje de campo está tocando |
 | **Done** | Cerrado |
 
 Área = **label** del issue, no columna: `hardware`, `firmware`, `gateway`, `platform`, `hermes`.
@@ -969,7 +969,7 @@ Estimación de almacenamiento y latencia: **orden de magnitud, no medido** (no s
 | Token de device en la URL HTTP (queda en logs de proxy **y** en Serial del firmware hoy) | Media | PoC en LAN; TLS en el reverse proxy. `diagnose.sh` recorta a 8 chars. Firmware: dejar de imprimir la URL completa (PR 4). |
 | `secrets/devices.json` o `secrets.h` commiteado | Alta | `.gitignore` + check en Actions + rotación |
 | Inyección ESP-NOW de temperaturas falsas | Media (radio local) | Token no viaja por ESP-NOW; HMAC en fase 2 si el sitio lo pide |
-| Jaula de Faraday “resuelta” con un repeater y datos que nunca llegan | Operativa / alta | Este diseño; prompt 05; contrato de Lugui: electrónica fuera |
+| Jaula de Faraday “resuelta” con un repeater y datos que nunca llegan | Operativa / alta | Este diseño; prompt 05; contrato de taller: electrónica fuera |
 | Incendio / hinchazón de LiPo en caja lavable | Alta (física) | LiFePO4 o power bank rígido en caja B; nada de bolsas sueltas; carga en seco |
 | Publicar 5432 y chocar / filtrar Postgres | Alta en esta máquina | Compose **sin** ports en postgres; no cambiarlo. Contraseña `postgres` solo es tolerable porque el puerto no existe en el host. |
 | Usuario de un customer ve el sitio del vecino | Alta (producto) | Device siempre asignado con `POST /api/customer/{id}/device/{id}` (`ensure_device`). El Gateway API con auto-provision se aplaza precisamente por esto. |
@@ -1066,7 +1066,7 @@ Click-ops de aislamiento (P0, si no hay `--create-customer-user`): UI → Custom
 9. **Batería primaria.** **Resuelta: sí** para nodos sin toma (no 1A). PR 5b solo Iq bajo.
 10. **Área del cubo y del embudo.** *(abierta)* Hace falta para `rain_mm = h_mm * (A_cubo / A_embudo)`. Medir y etiquetar.
 11. **Huso / NTP para las 00:00 locales.** *(abierta)* El ESP32 necesita NTP + offset (p.ej. `America/Bogota`).
-12. **Voltaje de la electroválvula** que Lugui consiga. *(abierta)* 12 V = fuente extra; 5–6 V = BOM más simple.
+12. **Voltaje de la electroválvula** que se consiga. *(abierta)* 12 V = fuente extra; 5–6 V = BOM más simple.
 13. **Puerto existente en el tanque para el domo.** *(abierta)* Preferir boca de hombre / tri-clamp / CIP libre. No taladrar a ciegas.
 14. **Horarios exactos de las dos ventanas de ordeño (2 h + 2 h).** *(abierta)* Store-and-forward 15 min solo ahí.
 
@@ -1082,7 +1082,7 @@ Click-ops de aislamiento (P0, si no hay `--create-customer-user`): UI → Custom
 
 3. **Temperatura de tanque → vaina (A). Nivel de tanque → no contacto + domo que escurre CIP.** Razón: CIP ácido/álcali + desinfectante. Nada mecánico en el producto. Default ensayo: JSN-SR04T en el techo; radar 80 GHz después. ToF barato y hidrostático en leche: no.
 
-4. **Contrato Lugui partido.** 1A = **una** caja + toma + jabón suave. Ambiente/hop = dos cajas / XOR pack. 1B = clase CIP (domo), no la caja de jardín. Platina v1 congelada. DevKit no promete semanas.
+4. **Contrato el asistente de campo partido.** 1A = **una** caja + toma + jabón suave. Ambiente/hop = dos cajas / XOR pack. 1B = clase CIP (domo), no la caja de jardín. Platina v1 congelada. DevKit no promete semanas.
 
 12. **Pluviómetro primero (1A).** Razón: valor inmediato (pastos), toma, sin Faraday, sin CIP. ToF VL53L1X (cubo chico; JSN tiene 20 cm ciegos). Válvula + MOSFET. BME280. Viento aplazado.
 
@@ -1135,7 +1135,7 @@ Cada PR es revisable y mergeable solo. **Primero el pluviómetro (PR 0).** Hop y
 - **Depende de:** nada (o PR 2 en paralelo para flags)
 - **Cambio:** muestreo 15–60 min; `rain_mm` / `level_mm`; a las 00:00 local drenar, confirmar ~0, POST, `drain_ok`. MOSFET + flyback. Device `pluviometro-01`. Attributes `source=esp32`, `hop=wifi`, `sensor=pluviometro`. Viento no.
 
-### PR 1 — Hoja Lugui + “no es un repetidor”
+### PR 1 — Hoja de taller + “no es un repetidor”
 
 - **Título:** `docs: hoja recinto (1A una caja; CIP tanque; hop ≠ repeater)`
 - **Archivos:** `docs/ENCIERRO.md`, `docs/HOP.md`, `docs/ARQUITECTURA.md`, `docs/SENSORES.md`

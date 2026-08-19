@@ -2,6 +2,17 @@
 
 **Estado: puente a ThingsBoard CE, listo para el primer ESP32.**
 
+Este repositorio **no vive dentro de `predictor`**. Ábrelo aparte:
+
+- GitHub: <https://github.com/harveybc/data-logger>
+- En este computador: `/home/harveybc/Documents/GitHub/data-logger`
+
+Hojas útiles (enlaces absolutos):
+[pluviómetro](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) ·
+[lista de compras](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) ·
+[firmware](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) ·
+[diseño](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md)
+
 Este repositorio **no es un servidor IoT**. Es el kit que deja armada
 [ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3 — compose,
 tokens, firmware de temperatura y prompts para un agente — para que
@@ -106,7 +117,7 @@ por sensor.
 | `docker-compose.yml` | ThingsBoard + su base. La base no se publica en el puerto 5432 del host |
 | `scripts/` | Instalar, crear el customer demo, registrar sensor, mandar datos de prueba |
 | `firmware/` | Sketches: pluviómetro, DHT/DS18B20, nivel de tanque, hop ESP-NOW |
-| `docs/` | Arquitectura, ingestión, recintos, hop, pluviómetro, diseño |
+| `docs/` | Arquitectura, ingestión, recintos, hop, pluviómetro, [compras](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md), diseño |
 | `prompts/` | Textos listos para un agente |
 | `hermes/` | Solo el contrato: más adelante el correo entra por el mismo HTTP |
 | `secrets/` | Tokens (no se suben a git) |

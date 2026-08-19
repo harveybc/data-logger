@@ -1,7 +1,13 @@
 # Firmware ESP32
 
-HTTP primero. Contrato: `docs/INGEST.md`. Recintos: `docs/ENCIERRO.md`.
-Hop: `docs/HOP.md`. Pluviómetro: `docs/PLUVIOMETRO.md`.
+Repo: <https://github.com/harveybc/data-logger>  
+Carpeta local: `/home/harveybc/Documents/GitHub/data-logger`
+
+HTTP primero.
+[Ingestión](https://github.com/harveybc/data-logger/blob/master/docs/INGEST.md) ·
+[pluviómetro](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) ·
+[compras](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) ·
+[hop](https://github.com/harveybc/data-logger/blob/master/docs/HOP.md)
 
 | Carpeta | Qué | Cuándo |
 |---|---|---|

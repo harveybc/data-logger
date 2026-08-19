@@ -1,6 +1,12 @@
 # Recintos — hoja de taller
 
-Detalle y BOM: `docs/DISENO.md`. Pluviómetro: `docs/PLUVIOMETRO.md`.
+Primero el **prototipo de mesa**. El asistente de campo (huecos,
+empaques, mangueras, conexiones a intemperie) entra cuando `rain_mm`
+ya se ve en ThingsBoard.
+
+Detalle: [DISENO.md](https://github.com/harveybc/data-logger/blob/master/docs/DISENO.md).
+Pluviómetro: [PLUVIOMETRO.md](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md).
+Compras: [BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md).
 
 ## 1A pluviómetro (primero) — una caja + toma
 
