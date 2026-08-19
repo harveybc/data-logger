@@ -5,9 +5,12 @@ comprobar que el ESP32 habla con ThingsBoard.
 
 | Carpeta | Sensor | Protocolo | Cuándo usarlo |
 |---|---|---|---|
-| `esp32_dht22_http/` | DHT22 (temp + humedad) | HTTP POST | Primera prueba |
-| `esp32_ds18b20_http/` | DS18B20 (solo temp, más preciso y mojable) | HTTP POST | Establo, tanque, sombra |
+| `esp32_pluviometro_http/` | ToF + válvula (+ BME280) | HTTP POST | **Primero en campo** (lluvia diaria) |
+| `esp32_dht22_http/` | DHT22 (temp + humedad) | HTTP POST | Mesa / ambiente |
+| `esp32_ds18b20_http/` | DS18B20 (solo temp) | HTTP POST | Vaina / sombra |
 | `esp32_dht22_mqtt/` | DHT22 | MQTT 1883 | Cuando quieras menos overhead |
+
+Pluviómetro (caja, pines, calibración): [`docs/PLUVIOMETRO.md`](../docs/PLUVIOMETRO.md).
 
 ## Qué necesitas en el computador
 

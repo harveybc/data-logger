@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Registra un sensor nuevo en la finca y imprime el token para el ESP32.
+"""Registra un dispositivo en ThingsBoard e imprime el token para el ESP32.
 
   python3 scripts/add_sensor.py \
-      --name pozo-temp-01 \
-      --lote pozo \
-      --sensor DS18B20 \
-      --customer "Finca Demo"
+      --name pluviometro-01 \
+      --lote meteo \
+      --sensor pluviometro
 """
 from __future__ import annotations
 
@@ -17,10 +16,14 @@ from tb_client import ROOT, ThingsBoard, load_env, post_attributes, tb_url
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Crea un dispositivo de temperatura en ThingsBoard.")
-    parser.add_argument("--name", required=True, help="Nombre único, ej. establo-sur-temp-01")
+    parser = argparse.ArgumentParser(description="Crea un dispositivo en ThingsBoard.")
+    parser.add_argument("--name", required=True, help="Nombre único, ej. pluviometro-01")
     parser.add_argument("--lote", default="sin-lote")
-    parser.add_argument("--sensor", default="DHT22", choices=("DHT22", "DHT11", "DS18B20", "otro"))
+    parser.add_argument(
+        "--sensor",
+        default="DHT22",
+        choices=("DHT22", "DHT11", "DS18B20", "pluviometro", "tank_level", "otro"),
+    )
     parser.add_argument("--customer", default="Finca Demo")
     parser.add_argument("--label", default="")
     args = parser.parse_args()
@@ -31,8 +34,13 @@ def main() -> int:
     tb.login(env["TB_TENANT_EMAIL"], env["TB_TENANT_PASSWORD"])
 
     customer = tb.ensure_customer(args.customer)
-    label = args.label or f"Temperatura {args.lote}"
-    device = tb.ensure_device(args.name, "sensor_temperatura", label, customer["id"]["id"])
+    type_by_sensor = {
+        "pluviometro": "sensor_clima",
+        "tank_level": "sensor_nivel",
+    }
+    device_type = type_by_sensor.get(args.sensor, "sensor_temperatura")
+    label = args.label or f"{args.sensor} {args.lote}"
+    device = tb.ensure_device(args.name, device_type, label, customer["id"]["id"])
     token = tb.device_token(device["id"]["id"])
     post_attributes(
         base,
