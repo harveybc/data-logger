@@ -15,9 +15,10 @@ Código: <https://github.com/harveybc/data-logger>
 | Guía | Enlace |
 |---|---|
 | Pedido de hardware (4 juegos) | [docs/BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) |
+| Plan de la aplicación | [docs/PLAN.md](https://github.com/harveybc/data-logger/blob/master/docs/PLAN.md) |
+| Interfaz (Producción / Clima / Calidad) | abajo, `python3 -m app.main` |
 | Pluviómetro | [docs/PLUVIOMETRO.md](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) |
 | Firmware | [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) |
-| Cómo se registran los datos | [docs/INGEST.md](https://github.com/harveybc/data-logger/blob/master/docs/INGEST.md) |
 
 ## Úsalo con un agente
 
@@ -39,6 +40,24 @@ Más tareas (añadir un ESP32, otro sitio, diagnosticar) están en
 1. Una página en `http://IP-DEL-SERVIDOR:8080`.
 2. Dos sensores de prueba mandando temperatura desde el computador.
 3. Tus ESP32, cuando los flashees, en la misma lista.
+
+## Interfaz web (plugin)
+
+Misma idea de siempre: un JSON global, cada plugin con su bloque, un
+**pipeline** que los carga. Hoy el pipeline arranca el plugin
+`adminlte` (menú: Producción, Clima, Calidad).
+
+```bash
+pip install -r requirements.txt
+PYTHONPATH=. python3 -m app.main --load_config examples/config/leche_default.json
+```
+
+Abre **http://127.0.0.1:5000**. Clima muestra presión, T/HR y última
+lluvia (si el ESP32 ya publica). Producción y calidad tienen huecos
+marcados (correo de acopio, pesaje, laboratorio).
+
+El software es libre; hospedar y soportar sitios puede ser un servicio
+de pago. Ver [docs/SERVICIO.md](https://github.com/harveybc/data-logger/blob/master/docs/SERVICIO.md).
 
 ## Requisitos
 
@@ -99,6 +118,8 @@ Detalle: [docs/TENANTS.md](https://github.com/harveybc/data-logger/blob/master/d
 | Carpeta | Para qué |
 |---|---|
 | `docker-compose.yml` | ThingsBoard y su base (la base no se publica en el 5432 del host) |
+| `app/`, `pipeline_plugins/`, `web_plugins/` | Entrada, pipeline y UI AdminLTE |
+| `examples/config/` | JSON global + bloques por plugin |
 | `scripts/` | Instalar, registrar dispositivos, mandar datos de prueba |
 | `firmware/` | Sketches Arduino (cubeta, DHT/DS18B20, tanque, hop) |
 | `docs/` | Arquitectura, compras, recintos, ingestión |

@@ -9,3 +9,4 @@ __pycache__/
 .idea/
 .vscode/
 .DS_Store
+config_out.json

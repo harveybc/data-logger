@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Producción{% endblock %}
+{% block heading %}Producción{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Acopio diario</h3></div>
+      <div class="card-body">
+        <p>La producción diaria llega con un día de retraso desde el correo o
+        planilla de la planta. Eso lo hará un origen aparte (p. ej. Hermes)
+        escribiendo al mismo ThingsBoard.</p>
+        <span class="badge badge-secondary">Pendiente</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Tanque de frío</h3></div>
+      <div class="card-body">
+        {% if tank.level_mm %}
+        <p>Nivel: <strong>{{ tank.level_mm.value }}</strong> mm</p>
+        {% if tank.temperature %}<p>Temp: {{ tank.temperature.value }} °C</p>{% endif %}
+        {% else %}
+        <p class="text-muted">Sin dispositivo de tanque configurado, o aún sin telemetría.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Último pesaje semanal</h3></div>
+  <div class="card-body">
+    <p>Tabla del último reporte de pesaje. Factible; no está implementada.</p>
+    <table class="table table-sm"><thead><tr><th>Fecha</th><th>Lote</th><th>kg</th></tr></thead>
+    <tbody><tr><td colspan="3" class="text-muted">Sin filas todavía.</td></tr></tbody></table>
+  </div>
+</div>
+{% endblock %}

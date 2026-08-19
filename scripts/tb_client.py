@@ -166,6 +166,33 @@ class ThingsBoard:
             )
         return user
 
+    def latest_timeseries(self, device_id: str, keys: list[str]) -> dict:
+        q = urllib.parse.quote(",".join(keys))
+        return self.get(
+            f"/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries?keys={q}"
+        ) or {}
+
+    def timeseries(
+        self,
+        device_id: str,
+        keys: list[str],
+        start_ts: int,
+        end_ts: int,
+        limit: int = 200,
+    ) -> dict:
+        q = urllib.parse.urlencode(
+            {
+                "keys": ",".join(keys),
+                "startTs": start_ts,
+                "endTs": end_ts,
+                "limit": limit,
+                "agg": "NONE",
+            }
+        )
+        return self.get(
+            f"/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries?{q}"
+        ) or {}
+
     def device_token(self, device_id: str) -> str:
         creds = self.get(f"/api/device/{device_id}/credentials")
         token = creds.get("credentialsId")

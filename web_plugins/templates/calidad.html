@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Calidad{% endblock %}
+{% block heading %}Calidad{% endblock %}
+{% block content %}
+<div class="row">
+  {% for a in alerts %}
+  <div class="col-md-4">
+    <div class="alert {% if a.ok %}alert-success{% else %}alert-danger{% endif %}">
+      <strong>{{ a.label }}</strong><br>{{ a.text }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Últimos valores</h3></div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-striped">
+      <thead><tr><th>Variable</th><th>Valor</th><th>ts</th></tr></thead>
+      <tbody>
+      {% for r in rows %}
+        <tr><td>{{ r.key }}</td><td>{{ r.value or "—" }}</td><td>{{ r.ts or "—" }}</td></tr>
+      {% else %}
+        <tr><td colspan="3" class="text-muted">Sin series de calidad todavía. Se configuran en JSON (<code>calidad_keys</code>) y llegan como telemetría ThingsBoard (laboratorio o carga manual).</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Series</h3></div>
+  <div class="card-body"><canvas id="qchart" height="90"></canvas></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const hist = {{ hist | tojson }};
+const datasets = Object.keys(hist).map((k, i) => ({
+  label: k,
+  data: (hist[k] || []).map(p => ({ x: p.ts, y: Number(p.value) })),
+  fill: false
+}));
+if (document.getElementById("qchart") && datasets.length) {
+  new Chart(document.getElementById("qchart"), {
+    type: "line",
+    data: {
+      labels: (hist[Object.keys(hist)[0]] || []).map(p => new Date(p.ts).toLocaleDateString()),
+      datasets: Object.keys(hist).map(k => ({
+        label: k,
+        data: (hist[k] || []).map(p => Number(p.value)),
+        fill: false
+      }))
+    },
+    options: { responsive: true }
+  });
+}
+</script>
+{% endblock %}

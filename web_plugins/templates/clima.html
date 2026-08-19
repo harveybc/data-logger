@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Clima{% endblock %}
+{% block heading %}Clima{% endblock %}
+{% block content %}
+<div class="row">
+  {% set cards = [
+    ("Lluvia hoy", latest.rain_mm.value if latest.rain_mm else "—", "mm"),
+    ("Temperatura", latest.temperature.value if latest.temperature else "—", "°C"),
+    ("Humedad", latest.humidity.value if latest.humidity else "—", "%"),
+    ("Presión", latest.pressure.value if latest.pressure else "—", "hPa")
+  ] %}
+  {% for title, val, unit in cards %}
+  <div class="col-6 col-md-3">
+    <div class="info-box"><span class="info-box-icon bg-info"><i class="fas fa-tint"></i></span>
+      <div class="info-box-content"><span class="info-box-text">{{ title }}</span>
+        <span class="info-box-number">{{ val }} <small>{{ unit }}</small></span></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="alert alert-info">{{ hint }}</div>
+<p class="text-muted">La presión (BME280) es la señal barata de tendencia.
+El viento (anemómetro) queda para una versión con más presupuesto: más
+piezas móviles y más caro de mantener.</p>
+{% if latest.rain_mm %}
+<p>Última lluvia registrada:
+  <strong>{{ latest.rain_mm.value }} mm</strong>
+  {% if latest.rain_mm.ts %}
+  — {{ latest.rain_mm.ts }}
+  {% endif %}
+</p>
+{% endif %}
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Presión (48 h)</h3></div>
+  <div class="card-body"><canvas id="pchart" height="80"></canvas></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const pts = {{ hist.get("pressure", []) | tojson }};
+const labels = pts.map(p => new Date(p.ts).toLocaleString());
+const data = pts.map(p => Number(p.value));
+if (document.getElementById("pchart") && data.length) {
+  new Chart(document.getElementById("pchart"), {
+    type: "line",
+    data: { labels, datasets: [{ label: "hPa", data, fill: false }] },
+    options: { plugins: { legend: { display: false } }, scales: { x: { display: false } } }
+  });
+}
+</script>
+{% endblock %}

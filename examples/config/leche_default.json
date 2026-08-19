@@ -1,0 +1,28 @@
+{
+  "pipeline_plugin": "default",
+  "web_plugin": "adminlte",
+  "tb_url": "http://127.0.0.1:8080",
+  "tb_username": "tenant@thingsboard.org",
+  "tb_password": "tenant",
+  "web_host": "127.0.0.1",
+  "web_port": 5000,
+  "save_config": "config_out.json",
+  "site_name": "Sitio demo",
+  "plugins": {
+    "pipeline": {},
+    "web": {
+      "device_rain": "lluvia-01",
+      "device_clima": "lluvia-01",
+      "device_tanque": "",
+      "calidad_keys": ["bacterias", "celulas_somaticas", "grasa", "proteina"],
+      "calidad_alerts": [
+        {
+          "key": "bacterias",
+          "label": "Bacterias",
+          "higher_is_worse": true,
+          "min_delta": 0
+        }
+      ]
+    }
+  }
+}

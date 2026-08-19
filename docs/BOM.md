@@ -17,7 +17,9 @@ Misma lista para todos. Destino:
 | 3 | Beta | Segundo sitio (p. ej. otro predio o el del veterinario) |
 | 4 | Recambio | Si se daña en prueba o montaje |
 
-**No pidas kit de viento** (anemómetro / veleta). La cubeta sola basta.
+**No pidas kit de viento** (anemómetro / veleta). En campo, la
+tendencia de lluvia barata es la **presión** del BME280 (ya va ×4).
+El viento queda como extra caro, de más mantenimiento.
 
 | Pieza | Cant. | Pedir | Enlace | ≈ c/u |
 |---|---|---|---|---|

@@ -3,11 +3,13 @@
 ## Decisión
 
 La plataforma **es ThingsBoard Community Edition**.
-`data-logger` es el **puente**: no reimplementa un backend IoT. Empaqueta:
+`data-logger` es el **puente** más un **pipeline de plugins** (JSON
+global, `plugin_params`, un pipeline que orquesta). Empaqueta:
 
 - el compose oficial (ThingsBoard 4.3.1.3 + PostgreSQL 18)
 - scripts para crear customers, sensores y tokens
 - firmware ESP32 (pluviómetro, temp, nivel de tanque, hop ESP-NOW)
+- plugin web AdminLTE (Producción / Clima / Calidad)
 - prompts para que un agente haga el despliegue
 
 El Flask + AdminLTE que ocupaba este repo está retirado (`docs/LEGACY.md`).

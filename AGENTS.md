@@ -4,18 +4,19 @@ Guidance for AI coding agents working in this repository. See [agents.md](https:
 
 ## Project overview
 
-`data-logger` is a **bridge / deployment kit**, not an application you
-compile. It wraps ThingsBoard Community Edition 4.3.1.3 (official Docker
+`data-logger` is a **bridge / deployment kit** plus a small plugin
+pipeline (JSON config, pipeline orchestrator, AdminLTE web plugin).
+It wraps ThingsBoard Community Edition 4.3.1.3 (official Docker
 image `thingsboard/tb-node:4.3.1.3` + `postgres:18`) with scripts, ESP32
-temperature firmware, and copy-paste prompts so a non-technical farm
-cooperative can stand up device telemetry without writing a backend.
+temperature firmware, and copy-paste prompts so a non-technical
+operator can stand up device telemetry without writing a backend.
 
 It does **not** parse email or PDFs (that is Hermes, later, injecting
-into the same HTTP telemetry API). It does **not** implement login,
-tenants or dashboards — ThingsBoard already does. The pre-2026 Flask +
-AdminLTE app that used to occupy this repository is retired
-(`docs/LEGACY.md`); do not restore it. It is not a trading system
-and it does not train models.
+into the same HTTP telemetry API). Login and tenants stay in
+ThingsBoard. The new `web_plugins.adminlte` is a *domain* UI
+(Producción / Clima / Calidad) on top of TB, not a rewrite of the
+retired Flask AAA (`docs/LEGACY.md`). Do not restore that AAA. It is
+not a trading system and it does not train models.
 
 Verified against the official install guide:
 <https://thingsboard.io/docs/user-guide/install/docker/>
@@ -147,6 +148,8 @@ up a second analytics stack unless the user asked for it.
 | `scripts/send_demo_telemetry.py` | Laptop virtual sensor (no hardware) |
 | `scripts/diagnose.sh` | Ports, UI, tokens, one test POST |
 | `scripts/tb_client.py` | Tiny REST helper (stdlib) |
+| `app/`, `pipeline_plugins/`, `web_plugins/` | Config merge, pipeline, AdminLTE UI |
+| `examples/config/` | JSON globals + per-plugin blocks |
 | `firmware/` | Arduino: pluviometer, DHT/DS18B20, tank level, ESP-NOW hop/gateway |
 | `docs/` | Architecture, ingest, enclosure, hop, pluviometer, design — Spanish |
 | `hermes/` | Contract only: later email/PDF injects the same HTTP API |

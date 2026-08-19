@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block heading %}Inicio{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <a href="/produccion" class="small-box bg-info"><div class="inner"><h3>Producción</h3><p>Acopio, tanque, pesaje</p></div></a>
+  </div>
+  <div class="col-md-4">
+    <a href="/clima" class="small-box bg-success"><div class="inner"><h3>Clima</h3><p>Presión, lluvia, T/HR</p></div></a>
+  </div>
+  <div class="col-md-4">
+    <a href="/calidad" class="small-box bg-warning"><div class="inner"><h3>Calidad</h3><p>Series y alertas</p></div></a>
+  </div>
+</div>
+<p class="text-muted">Software libre. El hospedaje y el soporte, si los hay, son un servicio aparte.</p>
+{% endblock %}
