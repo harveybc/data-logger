@@ -1,5 +1,10 @@
 # Pluviómetro 1A — prototipo de mesa primero
 
+**Pedido recomendado:** cubeta basculante comercial (se vacía sola).
+No hace falta ToF ni electroválvula. Ver
+[BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md)
+y el sketch `firmware/esp32_tipping_bucket_http/`.
+
 Repo: <https://github.com/harveybc/data-logger>  
 En este computador: `/home/harveybc/Documents/GitHub/data-logger`  
 Compras: [BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md)  

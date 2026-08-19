@@ -16,13 +16,43 @@ conexiones eléctricas para que resista el ambiente. No elige sensores.
 
 ## Orden
 
-1. Mesa: ESP32 + sensor + válvula + MOSFET + un cubo. Sin caja IP66.
-2. Si `rain_mm` y `drain_ok` salen en ThingsBoard, recién ahí se pide
-   el montaje de intemperie.
+1. **Pedido Amazon (recomendado):** pluviómetro comercial de **cubeta
+   basculante** (pulse/reed). El ESP32 que ya tienes cuenta vuelcos y
+   manda `rain_mm` a ThingsBoard. No hace falta cubo, ToF ni válvula.
+2. Mesa: ESP32 + el instrumento + 2 hilos. Sketch
+   `firmware/esp32_tipping_bucket_http/`.
+3. Montaje de intemperie (asistente de campo) cuando `rain_mm` se vea
+   en la UI.
+
+El cubo+válvula queda como plan B si ya tienes esas piezas y no quieres
+esperar un envío.
 
 ---
 
-## Pluviómetro (toma de corriente → lo más barato)
+## Pluviómetro comercial (lo que sí conviene pedir en Amazon)
+
+Ninguna estación “con app” (BALDR, Netatmo, Ambient de consumo) habla
+ThingsBoard. Lo que sí existe y **guarda los datos como diseñamos**
+(`rain_mm` en TB, acumulado del día, reset a medianoche) es un
+**instrumento meteorológico de cubeta** + nuestro ESP32.
+
+| Qué pedir | Por qué | Enlace | ≈ |
+|---|---|---|---|
+| **Cubeta basculante con salida de pulso** (reed). 1 vuelco ≈ 0.2 mm o 0.279 mm. Se vacía sola. | Estándar de pastos / meteo. 2 hilos a GPIO + GND. | [Amazon: tipping bucket rain gauge Arduino](https://www.amazon.com/s?k=tipping+bucket+rain+gauge+arduino) · [DFRobot SEN0575](https://www.dfrobot.com/product-2689.html) (~US$30, I2C/UART) | US$20–40 el sensor solo |
+| **SparkFun Weather Meter Kit** (SEN-08942) | Misma cubeta + anemómetro y veleta (viento lo querías después). | [Amazon B084DBXMPX](https://www.amazon.com/dp/B084DBXMPX) · [SparkFun](https://www.sparkfun.com/weather-meter-kit.html) | US$80–100 el kit |
+| **Davis 6466 / 6463 Rain Collector** | El de estaciones profesionales. Reed 0.2 mm. | [Amazon: Davis rain collector](https://www.amazon.com/s?k=Davis+6466+rain+collector) | US$80–150 |
+| Hydreon **RG-15** (óptico, sin partes móviles) | Menos atascos; ±10 %; UART o emula cubeta. Reviews mixtos vs Davis en mm. | [ficha oficial](https://rainsensors.com/products/rg-15/) ~US$99 | Solo si odias limpiar hojas |
+
+**No pidas** para este uso: pluviómetros “smart” solo-app, Ecowitt WH40
+*sin* plan de adaptador (el gateway Ecowitt puede subir a un HTTP
+propio, **no** al Device API de ThingsBoard sin un script extra).
+
+Firmware: `esp32_tipping_bucket_http`. En `secrets.h`:
+`TIP_PIN 27`, `MM_PER_TIP 0.2` (o `0.2794` si es SparkFun: 0.011").
+
+---
+
+## Plan B — cubo + válvula (si no compras cubeta)
 
 El cubo está enchufado: no pagues sensor de µA. Prioridad: barato,
 fácil de conseguir en Colombia, que el firmware ya soporta.

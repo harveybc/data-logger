@@ -11,7 +11,8 @@ HTTP primero.
 
 | Carpeta | Qué | Cuándo |
 |---|---|---|
-| `esp32_pluviometro_http/` | ToF + válvula + BME280 | **Primero en campo** |
+| `esp32_tipping_bucket_http/` | Cubeta comercial (reed/pulso) | **Pedir esto en Amazon** |
+| `esp32_pluviometro_http/` | ToF + válvula + BME280 | Plan B si ya tienes cubo/válvula |
 | `esp32_dht22_http/` | DHT22 HTTP | Mesa / ambiente |
 | `esp32_ds18b20_http/` | DS18B20 HTTP | Vaina / sombra |
 | `esp32_tank_level_http/` | JSN-SR04T + buffer NVS | Nivel de tanque (domo CIP) |
