@@ -1,28 +1,11 @@
-# byte-compiled / optimized / DLL files
+.env
+secrets/*.json
+secrets/*.txt
+firmware/**/secrets.h
 __pycache__/
-*.py[cod]
-
-# tests and coverage
-*.pytest_cache
-.coverage
-
-# database & logs
-*.db
-#*.sqlite3
+*.pyc
+.tb-initialized
 *.log
-
-# venv
-env
-venv
-
-# other
+.idea/
+.vscode/
 .DS_Store
-
-# sphinx docs 
-_build
-_static
-_templates
-
-# javascript
-package-lock.json
-.vscode/symbols.json
