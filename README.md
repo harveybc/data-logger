@@ -16,6 +16,7 @@ Código: <https://github.com/harveybc/data-logger>
 |---|---|
 | Pedido de hardware (4 juegos) | [docs/BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) |
 | Plan de la aplicación | [docs/PLAN.md](https://github.com/harveybc/data-logger/blob/master/docs/PLAN.md) |
+| Cómo crear los agentes | [docs/AGENTES.md](https://github.com/harveybc/data-logger/blob/master/docs/AGENTES.md) |
 | Interfaz (Producción / Clima / Calidad) | abajo, `python3 -m app.main` |
 | Pluviómetro | [docs/PLUVIOMETRO.md](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) |
 | Firmware | [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) |
