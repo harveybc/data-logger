@@ -47,8 +47,8 @@ Prompts de copiar y pegar: `prompts/10`–`16`.
 | Alma 24/7 del grupo | `prompts/15_alma_pastoreo.md` |
 | Un mensaje de rotación hoy, a mano | `prompts/16_agente_rotacion_manual.md` |
 
-El parser de pastoreo **sí** está. El bot de Telegram **no**: no hay
-token en el repo (a propósito). BotFather + `.env` cuando toque.
+Parsers y puentes **están**. Lo que falta es **tuyos**: buzón IMAP,
+token Telegram, Excel, foto de pesaje. Lista: [docs/ACCIONES.md](ACCIONES.md).
 
 ## Entregas
 
@@ -66,7 +66,10 @@ token en el repo (a propósito). BotFather + `.env` cuando toque.
 | **R1** | Roles admin / veterinario / operario + varios sitios | Hecho (`?rol=`, `docs/ROLES.md`) |
 | **G1** | Pastoreo: polígonos, movimientos, fertilización, mapa | Hecho (CSV + parseo; Excel y bot Telegram pendientes) |
 | **G2** | Cómo crear cada agente (H1–H3, P1–P5, S1) | Hecho: `docs/AGENTES.md` + `prompts/10`–`16` |
-| **G3** | Puente Telegram (`app/telegram_pastoreo.py`) | No hecho; receta en `prompts/14` |
+| **G3** | Puente Telegram (`python3 -m app.telegram_pastoreo`) | Hecho; falta tu token en `.env` |
+| **H0** | IMAP acopio: desde última fecha, varios mails, borrar solo si OK | Hecho (`--imap`); falta el buzón nuevo |
+| **H4** | Excel potreros (`--potreros-xlsx`) | Hecho; falta el archivo |
+| **H5** | OCR pesaje lunes/martes | Hecho (`--ocr-pesaje`); falta tesseract + foto |
 | **L1** | Texto corto de “sin garantía / AS-IS” vs contrato del servicio | `docs/SERVICIO.md` |
 
 ## No hacer

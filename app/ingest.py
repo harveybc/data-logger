@@ -13,9 +13,11 @@ from app.store import Store
 from ingest_plugins import (
     email_recoleccion,
     mensaje_pastoreo,
+    ocr_pesaje,
     pesaje_semanal,
     planilla_calidad,
     potreros_csv,
+    potreros_xlsx,
 )
 
 
@@ -26,10 +28,25 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--planilla", help="PDF de liquidación / calidad")
     p.add_argument("--pesaje", help="CSV fecha,placa,litros_am,litros_pm")
     p.add_argument("--potreros", help="CSV sitio,numero,nombre,geojson")
+    p.add_argument("--potreros-xlsx", help="Excel de potreros")
+    p.add_argument("--ocr-pesaje", help="Foto de la planilla AM/PM (tesseract)")
+    p.add_argument("--ocr-fecha", help="Fecha ISO si la foto no la trae")
     p.add_argument("--mensaje", help="Texto de cambio de potrero o fertilización")
     p.add_argument("--sitio", default="Sitio demo", help="Sitio para --mensaje")
+    p.add_argument("--imap", action="store_true", help="Bajar acopio por IMAP (.env)")
+    p.add_argument("--imap-keep", action="store_true")
+    p.add_argument("--dry-run", action="store_true")
     args = p.parse_args(argv)
-    if not (args.email or args.planilla or args.pesaje or args.potreros or args.mensaje):
+    if not (
+        args.email
+        or args.planilla
+        or args.pesaje
+        or args.potreros
+        or args.potreros_xlsx
+        or args.ocr_pesaje
+        or args.mensaje
+        or args.imap
+    ):
         p.print_help()
         return 2
     store = Store(args.db)
@@ -61,6 +78,24 @@ def main(argv: list[str] | None = None) -> int:
             store.upsert_potrero(sid, row["numero"], row["nombre"], row["geojson"])
             n += 1
         print(f"potreros {n}")
+    if args.potreros_xlsx:
+        n = 0
+        for row in potreros_xlsx.parse(args.potreros_xlsx):
+            sid = store.ensure_sitio(row["sitio"])
+            store.upsert_potrero(sid, row["numero"], row["nombre"], row["geojson"])
+            n += 1
+        print(f"potreros xlsx {n}")
+    if args.ocr_pesaje:
+        rows = ocr_pesaje.parse(args.ocr_pesaje, fecha_default=args.ocr_fecha)
+        for row in rows:
+            store.upsert_pesaje(row)
+        print(f"ocr pesaje {len(rows)} filas")
+        if not rows:
+            print("OCR no sacó filas. Revisa la foto o pasa --ocr-fecha YYYY-MM-DD.")
+    if args.imap:
+        from app.imap_acopio import fetch
+
+        return fetch(store, delete_ok=not args.imap_keep, dry=args.dry_run)
     if args.mensaje:
         parsed = mensaje_pastoreo.parse(args.mensaje)
         sid = store.ensure_sitio(args.sitio)

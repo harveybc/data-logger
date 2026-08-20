@@ -92,7 +92,8 @@ Aún **no hay código de bot** en este repo. El contrato es:
 2. Grupo de trabajo: añadir el bot, anotar `TELEGRAM_CHAT_ID`.
    Bot dedicado: el operario habla al bot en privado; mismo token,
    otro chat_id.
-3. El proceso (cuando se escriba `app/telegram_pastoreo.py`) debe:
+3. El proceso ya está: `PYTHONPATH=. python3 -m app.telegram_pastoreo`.
+Debe:
    - leer solo mensajes de texto de ese chat;
    - llamar `ingest_plugins.mensaje_pastoreo.parse`;
    - si `needs_clarification` o potrero desconocido: **responder en el
@@ -133,8 +134,8 @@ Ya está: `prompts/01` desplegar, `02` sensor, `04` diagnosticar,
 
 ## Qué no está listo (y no se finge)
 
-- Bot de Telegram corriendo.
-- Lectura automática de Gmail.
+- Tu **buzón nuevo** y el reenvío de Gmail (el IMAP ya está programado).
+- Token de BotFather en `.env` (el puente Telegram ya está programado).
+- El archivo Excel de potreros (el lector `.xlsx` ya está).
 - OAuth Google / Mercado Pago.
-- Excel crudo (.xlsx) sin pasar por CSV.
 - Pronóstico oficial del tiempo.

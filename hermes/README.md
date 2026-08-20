@@ -1,20 +1,19 @@
-# Hermes — todavía no vive aquí
+# Hermes y este repo
 
-Hermes es el servicio que **lee** correo, PDFs y planillas y **escribe**
-el resultado en ThingsBoard como si fuera un sensor más.
-
-Este repositorio no lo implementa. El contrato, para cuando exista, es
-el mismo HTTP que usa el ESP32:
+Hermes (OpenCode / Telegram / WhatsApp) **no se reescribe aquí**.
+Trae el texto (correo, PDF, mensaje del grupo) y llama a data-logger:
 
 ```bash
-# Attribute (fijo): source=hermes  —  lo pone add_sensor.py --source hermes
-# Telemetría (por documento): no reutilices la clave "source" para el tipo de archivo.
-curl -X POST "http://THINGSBOARD:8080/api/v1/$TOKEN/telemetry" \
-  -H 'Content-Type: application/json' \
-  -d '{"doc_type":"acopio_leche","litros":120,"precio":1800}'
+PYTHONPATH=. python3 -m app.ingest --email /tmp/acopio.txt
+PYTHONPATH=. python3 -m app.ingest --planilla /tmp/liq.pdf
+PYTHONPATH=. python3 -m app.ingest --imap          # buzón .env
+PYTHONPATH=. python3 -m app.telegram_pastoreo      # grupo de potreros
 ```
 
-Un Device por tipo de documento (o por sitio + tipo) basta.
-ThingsBoard no distingue un DHT22 de un correo de planta.
+Acopio y calidad van a SQLite (`data/app.db`), no a ThingsBoard.
+Los litros también se pueden POSTEar a TB si un dashboard de TB los
+quiere; no es obligatorio.
 
-Hasta que Hermes exista, no parsees correo dentro de este repo.
+WhatsApp: el mismo `--mensaje` / parser de pastoreo. El puente nativo
+de este repo es Telegram (`app/telegram_pastoreo.py`). WhatsApp lo
+sigue cubriendo Hermes si ya está conectado allí.

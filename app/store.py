@@ -78,6 +78,14 @@ CREATE TABLE IF NOT EXISTS fertilizacion (
   bultos REAL,
   mensaje TEXT
 );
+CREATE TABLE IF NOT EXISTS ingest_log (
+  id INTEGER PRIMARY KEY,
+  message_id TEXT NOT NULL UNIQUE,
+  kind TEXT,
+  fecha TEXT,
+  status TEXT,
+  detail TEXT
+);
 """
 
 
@@ -146,6 +154,28 @@ class Store:
                  litros_am=excluded.litros_am, litros_pm=excluded.litros_pm
             """,
             row,
+        )
+        self.conn.commit()
+
+    def last_recoleccion_fecha(self) -> str | None:
+        r = self.conn.execute("SELECT MAX(fecha) AS d FROM recoleccion").fetchone()
+        return r["d"] if r and r["d"] else None
+
+    def already_ingested(self, message_id: str) -> bool:
+        r = self.conn.execute(
+            "SELECT 1 FROM ingest_log WHERE message_id=? AND status='ok'",
+            (message_id,),
+        ).fetchone()
+        return r is not None
+
+    def log_ingest(self, message_id: str, kind: str, fecha: str | None, status: str, detail: str = "") -> None:
+        self.conn.execute(
+            """INSERT INTO ingest_log (message_id, kind, fecha, status, detail)
+               VALUES (?, ?, ?, ?, ?)
+               ON CONFLICT(message_id) DO UPDATE SET
+                 status=excluded.status, detail=excluded.detail, fecha=excluded.fecha
+            """,
+            (message_id, kind, fecha, status, detail[:500]),
         )
         self.conn.commit()
 

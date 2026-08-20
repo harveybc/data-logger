@@ -59,10 +59,14 @@ Roles de prueba: `?rol=admin`, `veterinario` (sin accounting ni usuarios),
 Producción y calidad leen una SQLite local alimentada por documentos:
 
 ```bash
+PYTHONPATH=. python3 -m app.ingest --imap          # buzón .env; borra solo si quedó en la BD
 PYTHONPATH=. python3 -m app.ingest --email examples/fixtures/recoleccion_email.txt
 PYTHONPATH=. python3 -m app.ingest --pesaje examples/fixtures/pesaje_semanal.csv
 PYTHONPATH=. python3 -m app.ingest --planilla /ruta/liquidacion.pdf
+PYTHONPATH=. python3 -m app.telegram_pastoreo      # grupo de potreros
 ```
+
+Tus pasos (Gmail nuevo, BotFather, Excel): [docs/ACCIONES.md](https://github.com/harveybc/data-logger/blob/master/docs/ACCIONES.md).
 
 No hay ETL de sensores. Detalle: [docs/DATOS.md](https://github.com/harveybc/data-logger/blob/master/docs/DATOS.md).
 
