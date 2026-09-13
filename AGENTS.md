@@ -4,19 +4,21 @@ Guidance for AI coding agents working in this repository. See [agents.md](https:
 
 ## Project overview
 
-`data-logger` is a **bridge / deployment kit** plus a small plugin
-pipeline (JSON config, pipeline orchestrator, AdminLTE web plugin).
-It wraps ThingsBoard Community Edition 4.3.1.3 (official Docker
-image `thingsboard/tb-node:4.3.1.3` + `postgres:18`) with scripts, ESP32
-temperature firmware, and copy-paste prompts so a non-technical
-operator can stand up device telemetry without writing a backend.
+`data-logger` is a **plugin telemetry platform** (JSON config, pipeline
+orchestrator, web plugins) plus a ThingsBoard CE 4.3.1.3 bridge
+(`thingsboard/tb-node:4.3.1.3` + `postgres:18`), ESP32 firmware, and
+copy-paste prompts. It is **not** a farm-only product. Sites are
+tenants: kitchen, aquariums, rooms, greenhouses, terrace, living room,
+pet beds, equipment rooms, or a dairy. The first *bundled* plugin is
+the farm UI (Producción / Clima / Calidad / Pastoreo) on ThingsBoard.
 
 It does **not** parse email or PDFs (that is Hermes, later, injecting
 into the same HTTP telemetry API). Login and tenants stay in
-ThingsBoard. The new `web_plugins.adminlte` is a *domain* UI
-(Producción / Clima / Calidad) on top of TB, not a rewrite of the
-retired Flask AAA (`docs/LEGACY.md`). Do not restore that AAA. It is
-not a trading system and it does not train models.
+ThingsBoard. `web_plugins.adminlte` is a *domain* plugin, not the
+whole product and not a rewrite of the retired Flask AAA
+(`docs/LEGACY.md`). Do not restore that AAA. Do not rename the repo
+to a farm-only label. It is not a trading system and it does not
+train models.
 
 Verified against the official install guide:
 <https://thingsboard.io/docs/user-guide/install/docker/>

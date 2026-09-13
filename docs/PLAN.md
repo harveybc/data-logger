@@ -4,8 +4,10 @@ Software y diseños de hardware: **abiertos** (MIT). El cobro, si lo hay,
 es por **hospedar y soportar**, no por una licencia por sensor.
 
 ThingsBoard CE sigue siendo el almacén. Este repo es el puente, el
-firmware y (ahora) un **pipeline de plugins** + una **interfaz web**
-de ejemplo.
+firmware y un **pipeline de plugins**. La UI de finca (Producción /
+Clima / Calidad / Pastoreo) es el **plugin inicial**, no el techo:
+el mismo núcleo cubre otros sitios (interior, acuarios, invernaderos,
+habitaciones, equipo).
 
 ## Señal de clima: presión, no viento
 

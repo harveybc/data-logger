@@ -1,14 +1,16 @@
 # data-logger
 
-Kit para ver sensores en el celular o el computador **sin programar un
-servidor**. Por debajo corre
-[ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3: la
-plataforma guarda series, usuarios y alarmas. Este repositorio solo la
-deja armada y trae el firmware para ESP32.
+Telemetría por **plugins** (JSON + pipeline, como el resto de repos).
+No es un producto “solo finca”. El mismo núcleo sirve para cualquier
+sitio con ESP32: cocina, acuarios, habitaciones, invernaderos, terraza,
+sala, camas de gatos, cuartos de equipo. Un sitio no ve los
+dispositivos de otro.
 
-Sirve para telemetría chica que se puede repetir en varios sitios
-(lluvia, temperatura, nivel de tanque, y más adelante otros orígenes).
-Un sitio no ve los dispositivos de otro.
+El **primer plugin** es la UI de finca (Producción / Clima / Calidad /
+Pastoreo) contra
+[ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3, que
+guarda series, usuarios y alarmas. Este repositorio arma TB, el
+firmware y esa interfaz; otros dominios son plugins nuevos, no un fork.
 
 Código: <https://github.com/harveybc/data-logger>
 
