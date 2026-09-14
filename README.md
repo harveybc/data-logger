@@ -1,163 +1,137 @@
 # data-logger
 
-Núcleo: recolectar datos de **sensores y otras fuentes gratuitas**
-(ThingsBoard CE) y montar **interfaces web por plugin** (AdminLTE u
-otra) para verlos o usarlos. JSON + pipeline, como predictor / data-gov.
+Collect sensor (and other) time series into
+[ThingsBoard Community Edition](https://thingsboard.io/) and serve them
+through **plugins**: JSON config, a pipeline, ESP32 firmware, and optional
+web UIs (AdminLTE). Same layout as the rest of this house (`predictor`,
+`data-gov`).
 
-**No es un producto agro.** El predio lechero es el **primer plugin de
-dominio** y Harvey es el **alpha tester indoor**. El mismo core sirve
-para casa, acuarios, invernaderos, cuartos de equipo, etc. Un sitio
-(tenant) no ve los dispositivos de otro.
+Code: <https://github.com/harveybc/data-logger>
 
-ThingsBoard Community Edition 4.3.1.3 guarda series, usuarios y alarmas.
-Este repo: compose, firmware ESP32, plugins de ingest y UIs. Otro
-dominio = otro plugin, no un fork.
-
-Plugin agro (leche / clima / potreros): [docs/plugins/agro.md](docs/plugins/agro.md).
-
-Código: <https://github.com/harveybc/data-logger>
-
-| Guía | Enlace |
+| Guide | Link |
 |---|---|
-| Pedido de hardware (4 juegos) | [docs/BOM.md](https://github.com/harveybc/data-logger/blob/master/docs/BOM.md) |
-| Plan de la aplicación | [docs/PLAN.md](https://github.com/harveybc/data-logger/blob/master/docs/PLAN.md) |
-| Cómo crear los agentes | [docs/AGENTES.md](https://github.com/harveybc/data-logger/blob/master/docs/AGENTES.md) |
-| Interfaz (Producción / Clima / Calidad) | abajo, `python3 -m app.main` |
-| Pluviómetro | [docs/PLUVIOMETRO.md](https://github.com/harveybc/data-logger/blob/master/docs/PLUVIOMETRO.md) |
-| Firmware | [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md) |
+| Hardware list | [docs/BOM.md](docs/BOM.md) |
+| Architecture | [docs/PLAN.md](docs/PLAN.md) |
+| Agent prompts | [docs/AGENTES.md](docs/AGENTES.md) |
+| Rain gauge | [docs/PLUVIOMETRO.md](docs/PLUVIOMETRO.md) |
+| Firmware | [firmware/README.md](firmware/README.md) |
+| Example dashboard plugin | [docs/plugins/agro/README.md](docs/plugins/agro/README.md) |
 
-## Úsalo con un agente
+## Use it with an agent
 
-Si tienes un asistente de código con terminal (Claude, Cursor, Codex,
-Copilot, Grok, …), abre **este** repositorio y pega:
+Open **this** repository in Claude, Cursor, Codex, Copilot, Grok, … and paste:
 
-> Lee `AGENTS.md` y sigue el **Agent quickstart**: comprueba Docker,
-> no detengas contenedores ajenos, corre `bash scripts/install.sh`,
-> luego `python3 scripts/bootstrap_finca.py` (ese nombre es histórico:
-> crea un *sitio demo*, no implica que el producto sea una finca) y
-> `python3 scripts/send_demo_telemetry.py --once`. Dime la URL de
-> ThingsBoard, usuario y clave, dónde quedaron los tokens, y una cosa
-> que deba probar primero en la UI. Si el trabajo es el plugin agro
-> (correo de acopio), lee `docs/plugins/agro.md` y `docs/ACCIONES.md`.
+> Read `AGENTS.md` and follow the **Agent quickstart**: check Docker, do
+> not stop containers you did not start, run `bash scripts/install.sh`,
+> then `python3 scripts/bootstrap_finca.py` and
+> `python3 scripts/send_demo_telemetry.py --once`. Tell me the ThingsBoard
+> URL, user and password, where the device tokens are, and one thing I
+> should try first in the UI.
 
-Más tareas (añadir un ESP32, otro sitio, diagnosticar) están en
-[`prompts/`](https://github.com/harveybc/data-logger/tree/master/prompts).
+More tasks (add an ESP32, another site, diagnose) live in [`prompts/`](prompts/).
 
-## Qué vas a ver
+## What you get
 
-1. Una página en `http://IP-DEL-SERVIDOR:8080`.
-2. Dos sensores de prueba mandando temperatura desde el computador.
-3. Tus ESP32, cuando los flashees, en la misma lista.
+1. ThingsBoard at `http://IP-OF-THIS-HOST:8080`.
+2. Two demo temperature devices from this computer.
+3. Real ESP32s, once flashed, in the same device list.
 
-## Interfaz web (plugin)
+## Requirements
 
-Misma idea de siempre: un JSON global, cada plugin con su bloque, un
-**pipeline** que los carga. El ejemplo `leche_default.json` arranca el
-plugin `adminlte` de **dominio agro** (Producción, Clima, Calidad,
-Pastoreo). Otro JSON puede cargar otra UI sobre el mismo core.
+- A machine or VPS with **Docker** and **Docker Compose v2**.
+- 2 CPU / 4 GB to try it; ~8 GB for a small production box.
+- Python 3 (scripts do not `pip install` for you).
+- ESP32 and **2.4 GHz** Wi-Fi.
+
+## Install (no agent)
+
+```bash
+git clone https://github.com/harveybc/data-logger.git
+cd data-logger
+cp .env.example .env          # change ports only if 8080 or 1883 are taken
+bash scripts/install.sh       # first time: several minutes
+python3 scripts/bootstrap_finca.py
+python3 scripts/send_demo_telemetry.py --once
+```
+
+Open **http://127.0.0.1:8080**
+
+| Who | Email | Password |
+|---|---|---|
+| Tenant admin | tenant@thingsboard.org | tenant |
+| Super-admin (rarely) | sysadmin@thingsboard.org | sysadmin |
+
+*Entities → Devices →* pick a device → *Latest telemetry*.
+
+Change those passwords before exposing 8080. HTTPS in front is Caddy or
+nginx, not a ThingsBoard setting.
+
+## Plugins
+
+A run is a flat JSON file. The pipeline loads the plugins named in it.
+Sensor series stay in ThingsBoard. Extra ingest (email, CSV, PDF) is
+also plugins; see `ingest_plugins/` and `app.ingest`.
 
 ```bash
 pip install -r requirements.txt
 PYTHONPATH=. python3 -m app.main --load_config examples/config/leche_default.json
 ```
 
-Abre **http://127.0.0.1:5000**. Menú: Producción, Clima, Calidad, Pastoreo.
-Roles de prueba: `?rol=admin`, `veterinario` (sin accounting ni usuarios),
-`operario` (solo lectura, sin calidad). Varios sitios por usuario, sin GPS.
-Producción y calidad leen una SQLite local alimentada por documentos:
+That example config starts the bundled AdminLTE dashboard on
+**http://127.0.0.1:5000**. How that dashboard is built (and how to copy
+it) is in [docs/plugins/agro/README.md](docs/plugins/agro/README.md).
+
+Sensor ETL is not in this Flask app. ThingsBoard detail: [docs/DATOS.md](docs/DATOS.md).
+
+The software is MIT; hosting and support can be a paid service.
+[docs/SERVICIO.md](docs/SERVICIO.md).
+
+## A real ESP32
 
 ```bash
-PYTHONPATH=. python3 -m app.ingest --imap          # buzón .env; borra solo si quedó en la BD
-PYTHONPATH=. python3 -m app.ingest --email examples/fixtures/recoleccion_email.txt
-PYTHONPATH=. python3 -m app.ingest --pesaje examples/fixtures/pesaje_semanal.csv
-PYTHONPATH=. python3 -m app.ingest --planilla /ruta/liquidacion.pdf
-PYTHONPATH=. python3 -m app.telegram_pastoreo      # grupo de potreros
-```
-
-Tus pasos (Gmail nuevo, BotFather, Excel): [docs/ACCIONES.md](https://github.com/harveybc/data-logger/blob/master/docs/ACCIONES.md).
-
-No hay ETL de sensores. Detalle: [docs/DATOS.md](https://github.com/harveybc/data-logger/blob/master/docs/DATOS.md).
-
-El software es libre; hospedar y soportar sitios puede ser un servicio
-de pago. Ver [docs/SERVICIO.md](https://github.com/harveybc/data-logger/blob/master/docs/SERVICIO.md).
-
-## Requisitos
-
-- Computador o VPS con **Docker** y **Docker Compose v2**.
-- 2 CPU / 4 GB de holgura para probar. En producción chica, 8 GB.
-- Python 3 (ya viene en Linux y macOS). Los scripts no instalan paquetes.
-- Hardware: ESP32 y Wi‑Fi **2.4 GHz**. El primer instrumento de campo
-  es un pluviómetro de cubeta (ver compras).
-
-## A mano, sin agente
-
-```bash
-git clone https://github.com/harveybc/data-logger.git
-cd data-logger
-cp .env.example .env          # cambia puertos solo si 8080 o 1883 están ocupados
-bash scripts/install.sh       # primera vez: varios minutos
-python3 scripts/bootstrap_finca.py
-python3 scripts/send_demo_telemetry.py --once
-```
-
-Abre **http://127.0.0.1:8080**
-
-| Quién | Correo | Clave |
-|---|---|---|
-| Administrador | tenant@thingsboard.org | tenant |
-| Super-admin (casi no se usa) | sysadmin@thingsboard.org | sysadmin |
-
-*Entities → Devices →* elige un dispositivo → *Latest telemetry*.
-
-Cambia esas claves antes de abrir el 8080 a una red. HTTPS (acceso
-fuera de la LAN) es un Caddy o nginx delante, no un cambio de
-ThingsBoard.
-
-## Un ESP32 de verdad
-
-```bash
-python3 scripts/add_sensor.py --name lluvia-01 --lote meteo --sensor pluviometro
+python3 scripts/add_sensor.py --name rain-01 --lote meteo --sensor pluviometro
 cp firmware/secrets.h.example firmware/esp32_tipping_bucket_http/secrets.h
-# Wi-Fi, TB_HOST = IP LAN de este PC, TB_TOKEN = el que imprimió add_sensor
+# Wi-Fi, TB_HOST = LAN IP of this PC, TB_TOKEN = printed by add_sensor
 ```
 
-Guía: [firmware/README.md](https://github.com/harveybc/data-logger/blob/master/firmware/README.md).
-`TB_HOST` **nunca** es `localhost`: el ESP32 no es este computador.
+[firmware/README.md](firmware/README.md). `TB_HOST` is **never**
+`localhost`: the ESP32 is not this computer.
 
-## Varios sitios
+## Sites (ThingsBoard tenants)
 
 ```
-quien opera la plataforma  →  Tenant
-cada cliente / sitio       →  Customer
-cada usuario final         →  solo ve los dispositivos de su sitio
-cada sensor                →  Device
+platform operator  →  Tenant
+each customer      →  Customer
+end user           →  only that customer's devices
+each sensor        →  Device
 ```
 
-Detalle: [docs/TENANTS.md](https://github.com/harveybc/data-logger/blob/master/docs/TENANTS.md).
+[docs/TENANTS.md](docs/TENANTS.md).
 
-## Carpetas
+## Layout
 
-| Carpeta | Para qué |
+| Path | Role |
 |---|---|
-| `docker-compose.yml` | ThingsBoard y su base (la base no se publica en el 5432 del host) |
-| `app/`, `pipeline_plugins/`, `web_plugins/` | Entrada, pipeline y UI AdminLTE |
-| `examples/config/` | JSON global + bloques por plugin |
-| `scripts/` | Instalar, registrar dispositivos, mandar datos de prueba |
-| `firmware/` | Sketches Arduino (cubeta, DHT/DS18B20, tanque, hop) |
-| `docs/` | Arquitectura, compras, recintos, ingestión |
-| `prompts/` | Textos para pegarle a un agente |
-| `secrets/` | Tokens (no se suben a git) |
+| `docker-compose.yml` | ThingsBoard + its DB (Postgres is not published on host 5432) |
+| `app/`, `pipeline_plugins/`, `web_plugins/` | Entry, pipeline, web plugins |
+| `ingest_plugins/` | Document ingest |
+| `examples/config/` | JSON configs |
+| `scripts/` | Install, register devices, demo telemetry |
+| `firmware/` | Arduino sketches |
+| `docs/` | Architecture, BOM, ingest |
+| `prompts/` | Paste-blocks for coding agents |
+| `secrets/` | Tokens (not in git) |
 
-## Parar
+## Stop
 
 ```bash
-docker compose stop          # apaga, conserva datos
-docker compose down          # apaga, conserva el volumen
-docker compose down -v       # BORRA todos los datos
+docker compose stop          # keep data
+docker compose down          # keep the volume
+docker compose down -v       # WIPES all data
 ```
 
-## ThingsBoard (oficial)
+## ThingsBoard (upstream)
 
-- [Instalar con Docker](https://thingsboard.io/docs/user-guide/install/docker/)
-- [HTTP de dispositivos](https://thingsboard.io/docs/reference/http-api/)
-- [MQTT de dispositivos](https://thingsboard.io/docs/reference/mqtt-api/)
+- [Docker install](https://thingsboard.io/docs/user-guide/install/docker/)
+- [HTTP device API](https://thingsboard.io/docs/reference/http-api/)
+- [MQTT device API](https://thingsboard.io/docs/reference/mqtt-api/)

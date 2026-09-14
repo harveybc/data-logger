@@ -11,7 +11,7 @@ agente con este repositorio abierto.
 | [04_diagnosticar.md](04_diagnosticar.md) | El sensor no aparece o no manda datos |
 | [05_tanque_o_salto.md](05_tanque_o_salto.md) | Tanque / sombra RF — nunca un repetidor Wi‑Fi |
 | [10_agente_acopio.md](10_agente_acopio.md) | Plugin agro: correo de recolección → SQLite |
-| [docs/plugins/agro.md](../docs/plugins/agro.md) | Dominio agro (buzón, plot, WhatsApp **después**) |
+| [docs/plugins/agro/README.md](../docs/plugins/agro/README.md) | Agro dashboard plugin (mailbox, plot, WhatsApp later) |
 | [11_agente_calidad.md](11_agente_calidad.md) | PDF de liquidación |
 | [12_agente_pesaje.md](12_agente_pesaje.md) | CSV AM/PM por vaca |
 | [13_agente_potreros.md](13_agente_potreros.md) | Excel/CSV de polígonos |

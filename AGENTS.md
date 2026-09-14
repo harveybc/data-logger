@@ -4,24 +4,16 @@ Guidance for AI coding agents working in this repository. See [agents.md](https:
 
 ## Project overview
 
-`data-logger` is a **plugin telemetry platform**: JSON config, pipeline
-orchestrator, ThingsBoard CE 4.3.1.3 (`thingsboard/tb-node:4.3.1.3` +
-`postgres:18`), ESP32 firmware, ingest plugins, and copy-paste prompts.
-It is **not** a farm product. Harvey's dairy is the **first domain
-plugin** and the indoor alpha site. Other sites (house rooms, aquariums,
-greenhouses, equipment) are more tenants/plugins on the same core.
+`data-logger` is a plugin telemetry platform: JSON config, pipeline,
+ThingsBoard CE 4.3.1.3 (`thingsboard/tb-node:4.3.1.3` + `postgres:18`),
+ESP32 firmware, ingest plugins, and web plugins. Sensor series live in
+ThingsBoard. Document ingest (email, PDF, CSV) writes SQLite via
+`app.ingest`. Hermes may call those plugins later; it is not a second
+store. Do not restore the retired Flask AAA (`docs/LEGACY.md`). It is
+not a trading system and it does not train models.
 
-ThingsBoard holds sensor time series. Document ingest (milk email, PDFs)
-writes SQLite via `app.ingest` / `ingest_plugins/` — that is *this*
-repo, not a future Hermes rewrite. Hermes may later *call* those
-plugins; it must not become a second store. Login/tenants for sensors
-stay in ThingsBoard. `web_plugins.adminlte` is the agro dashboard, not
-the whole product. Do not restore the retired Flask AAA
-(`docs/LEGACY.md`). Do not rename the repo to a farm-only label.
-It is not a trading system and it does not train models.
-
-Agro plugin (acopio email first; WhatsApp later, silent, one group):
-`docs/plugins/agro.md`.
+Example dashboard plugin (production / climate / quality / grazing):
+`docs/plugins/agro/README.md`.
 
 Verified against the official install guide:
 <https://thingsboard.io/docs/user-guide/install/docker/>
