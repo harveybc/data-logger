@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Producción{% endblock %}
 {% block heading %}Producción{% endblock %}
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
 {% block content %}
 <div class="row">
   <div class="col-md-6">
@@ -10,8 +13,7 @@
         {% if rec %}
         <p>Fecha: <strong>{{ rec.fecha }}</strong></p>
         <p>Litros: <strong>{{ rec.litros }}</strong></p>
-        <p>Medida tanque: {{ rec.medida_tanque }}</p>
-        <p class="text-muted small">Ruta {{ rec.ruta }} · compartimiento {{ rec.compartimiento }}</p>
+        <p class="text-muted small">Ruta y calidad: solo en esta web, no en el chat de trabajo.</p>
         {% else %}
         <p>Aún no hay correo cargado. El acopio llega ~1 día tarde.</p>
         <pre class="small mb-0">PYTHONPATH=. python3 -m app.ingest --email examples/fixtures/recoleccion_email.txt</pre>
@@ -31,6 +33,27 @@
         {% endif %}
       </div>
     </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header"><h3 class="card-title">Histórico de acopio (L / día)</h3></div>
+  <div class="card-body">
+    {% if rec_hist %}
+    <canvas id="acopioChart" height="90"></canvas>
+    <script>
+      const hist = {{ rec_hist | tojson }};
+      new Chart(document.getElementById('acopioChart'), {
+        type: 'line',
+        data: {
+          labels: hist.map(r => r.fecha),
+          datasets: [{ label: 'Litros', data: hist.map(r => r.litros), borderColor: '#007bff', fill: false, tension: 0.1 }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    </script>
+    {% else %}
+    <p class="text-muted mb-0">Cuando IMAP deje filas en SQLite, aquí sale la curva.</p>
+    {% endif %}
   </div>
 </div>
 <div class="card">

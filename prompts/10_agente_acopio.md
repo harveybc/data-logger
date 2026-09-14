@@ -6,7 +6,8 @@ nada. No subas datos personales a git.
 ---
 
 En el repo `data-logger` (https://github.com/harveybc/data-logger) tengo
-el texto de un correo de recolección de leche. Lee
+el texto de un correo de recolección de leche (plugin **agro**, no el
+core de data-logger). Lee `docs/plugins/agro.md`. Lee
 `docs/DATOS.md`, `docs/AGENTES.md` (H1) e `ingest_plugins/email_recoleccion.py`.
 
 1. Guarda el cuerpo en un archivo **fuera de git** (p. ej. `/tmp/acopio.txt`).

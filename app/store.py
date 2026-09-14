@@ -183,6 +183,14 @@ class Store:
         r = self.conn.execute("SELECT * FROM recoleccion ORDER BY fecha DESC LIMIT 1").fetchone()
         return dict(r) if r else None
 
+    def list_recoleccion(self, limit: int = 180) -> list[dict]:
+        rows = self.conn.execute(
+            """SELECT fecha, litros, medida_tanque, ruta, compartimiento
+               FROM recoleccion ORDER BY fecha ASC LIMIT ?""",
+            (limit,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
     def last_calidad(self) -> dict | None:
         r = self.conn.execute("SELECT * FROM calidad ORDER BY periodo_hasta DESC LIMIT 1").fetchone()
         return dict(r) if r else None

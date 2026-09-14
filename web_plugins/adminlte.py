@@ -211,11 +211,13 @@ class Plugin:
                 ["level_mm", "temperature"],
             )
             rec = plugin.store().last_recoleccion()
+            rec_hist = plugin.store().list_recoleccion()
             pesaje = plugin.store().pesaje_ultimo_dia()
             return render_template(
                 "produccion.html",
                 tank=tank,
                 rec=rec,
+                rec_hist=rec_hist,
                 pesaje=pesaje,
             )
 

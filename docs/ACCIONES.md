@@ -43,8 +43,11 @@ Cron (cada 6 h, por si un envío se retrasa):
 4. `PASTOREO_SITIO=` el nombre del predio (el de `--potreros`).
 5. `PYTHONPATH=. python3 -m app.telegram_pastoreo`
 
-WhatsApp: si Hermes ya lee ese chat, que ejecute el mismo
-`--mensaje`. Aquí no hay API oficial de WhatsApp.
+WhatsApp: **no ahora**. Cuando toque: un grupo existente, allowlist de
+**un** `chat_id`, el agente **no envía** nada (un intento anterior
+escribió en todos los grupos: eso está prohibido). El chat de
+trabajadores, si algún día avisa litros, será “ayer: N L” y nada más.
+Calidad, ruta, tanque, UFC: solo web.
 
 ## 3. Excel de potreros
 

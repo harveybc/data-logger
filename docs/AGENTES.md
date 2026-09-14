@@ -13,7 +13,7 @@ Prompts listos para copiar: `prompts/10` … `prompts/16`.
 
 | ID | Agente | Qué mira | Qué escribe | Estado del código |
 |---|---|---|---|---|
-| **H1** | Acopio diario | Correo de la planta (llega ~1 día tarde) | `python3 -m app.ingest --email ARCHIVO` | Parser hecho |
+| **H1** | Acopio diario (plugin agro) | Correo de la planta (~1 día tarde) | `--email` / `--imap` | Parser+IMAP hechos; falta buzón real |
 | **H2** | Calidad / liquidación | PDF de la quincena | `--planilla PDF` | Parser hecho |
 | **H3** | Producción por vaca | CSV o foto transcrita | `--pesaje CSV` | Parser hecho |
 | **P1** | Carga de potreros | Excel → CSV | `--potreros CSV` | CSV hecho; Excel cuando esté |

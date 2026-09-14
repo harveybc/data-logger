@@ -4,21 +4,24 @@ Guidance for AI coding agents working in this repository. See [agents.md](https:
 
 ## Project overview
 
-`data-logger` is a **plugin telemetry platform** (JSON config, pipeline
-orchestrator, web plugins) plus a ThingsBoard CE 4.3.1.3 bridge
-(`thingsboard/tb-node:4.3.1.3` + `postgres:18`), ESP32 firmware, and
-copy-paste prompts. It is **not** a farm-only product. Sites are
-tenants: kitchen, aquariums, rooms, greenhouses, terrace, living room,
-pet beds, equipment rooms, or a dairy. The first *bundled* plugin is
-the farm UI (Producción / Clima / Calidad / Pastoreo) on ThingsBoard.
+`data-logger` is a **plugin telemetry platform**: JSON config, pipeline
+orchestrator, ThingsBoard CE 4.3.1.3 (`thingsboard/tb-node:4.3.1.3` +
+`postgres:18`), ESP32 firmware, ingest plugins, and copy-paste prompts.
+It is **not** a farm product. Harvey's dairy is the **first domain
+plugin** and the indoor alpha site. Other sites (house rooms, aquariums,
+greenhouses, equipment) are more tenants/plugins on the same core.
 
-It does **not** parse email or PDFs (that is Hermes, later, injecting
-into the same HTTP telemetry API). Login and tenants stay in
-ThingsBoard. `web_plugins.adminlte` is a *domain* plugin, not the
-whole product and not a rewrite of the retired Flask AAA
-(`docs/LEGACY.md`). Do not restore that AAA. Do not rename the repo
-to a farm-only label. It is not a trading system and it does not
-train models.
+ThingsBoard holds sensor time series. Document ingest (milk email, PDFs)
+writes SQLite via `app.ingest` / `ingest_plugins/` — that is *this*
+repo, not a future Hermes rewrite. Hermes may later *call* those
+plugins; it must not become a second store. Login/tenants for sensors
+stay in ThingsBoard. `web_plugins.adminlte` is the agro dashboard, not
+the whole product. Do not restore the retired Flask AAA
+(`docs/LEGACY.md`). Do not rename the repo to a farm-only label.
+It is not a trading system and it does not train models.
+
+Agro plugin (acopio email first; WhatsApp later, silent, one group):
+`docs/plugins/agro.md`.
 
 Verified against the official install guide:
 <https://thingsboard.io/docs/user-guide/install/docker/>

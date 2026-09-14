@@ -3,11 +3,12 @@
 Software y diseños de hardware: **abiertos** (MIT). El cobro, si lo hay,
 es por **hospedar y soportar**, no por una licencia por sensor.
 
-ThingsBoard CE sigue siendo el almacén. Este repo es el puente, el
-firmware y un **pipeline de plugins**. La UI de finca (Producción /
-Clima / Calidad / Pastoreo) es el **plugin inicial**, no el techo:
-el mismo núcleo cubre otros sitios (interior, acuarios, invernaderos,
-habitaciones, equipo).
+ThingsBoard CE sigue siendo el almacén de **sensores**. Este repo es el
+puente, el firmware y un **pipeline de plugins**. El dashboard agro
+(Producción / Clima / Calidad / Pastoreo) es el **primer plugin de
+dominio**, no el producto. Harvey es alpha tester indoor. El mismo
+núcleo cubre casa, acuarios, invernaderos, equipo. Documentos (correo
+de acopio) van a SQLite vía `ingest_plugins`, no a un segundo TB.
 
 ## Señal de clima: presión, no viento
 

@@ -1,16 +1,19 @@
 # data-logger
 
-Telemetría por **plugins** (JSON + pipeline, como el resto de repos).
-No es un producto “solo finca”. El mismo núcleo sirve para cualquier
-sitio con ESP32: cocina, acuarios, habitaciones, invernaderos, terraza,
-sala, camas de gatos, cuartos de equipo. Un sitio no ve los
-dispositivos de otro.
+Núcleo: recolectar datos de **sensores y otras fuentes gratuitas**
+(ThingsBoard CE) y montar **interfaces web por plugin** (AdminLTE u
+otra) para verlos o usarlos. JSON + pipeline, como predictor / data-gov.
 
-El **primer plugin** es la UI de finca (Producción / Clima / Calidad /
-Pastoreo) contra
-[ThingsBoard Community Edition](https://thingsboard.io/) 4.3.1.3, que
-guarda series, usuarios y alarmas. Este repositorio arma TB, el
-firmware y esa interfaz; otros dominios son plugins nuevos, no un fork.
+**No es un producto agro.** El predio lechero es el **primer plugin de
+dominio** y Harvey es el **alpha tester indoor**. El mismo core sirve
+para casa, acuarios, invernaderos, cuartos de equipo, etc. Un sitio
+(tenant) no ve los dispositivos de otro.
+
+ThingsBoard Community Edition 4.3.1.3 guarda series, usuarios y alarmas.
+Este repo: compose, firmware ESP32, plugins de ingest y UIs. Otro
+dominio = otro plugin, no un fork.
+
+Plugin agro (leche / clima / potreros): [docs/plugins/agro.md](docs/plugins/agro.md).
 
 Código: <https://github.com/harveybc/data-logger>
 
@@ -30,10 +33,12 @@ Copilot, Grok, …), abre **este** repositorio y pega:
 
 > Lee `AGENTS.md` y sigue el **Agent quickstart**: comprueba Docker,
 > no detengas contenedores ajenos, corre `bash scripts/install.sh`,
-> luego `python3 scripts/bootstrap_finca.py` y
+> luego `python3 scripts/bootstrap_finca.py` (ese nombre es histórico:
+> crea un *sitio demo*, no implica que el producto sea una finca) y
 > `python3 scripts/send_demo_telemetry.py --once`. Dime la URL de
 > ThingsBoard, usuario y clave, dónde quedaron los tokens, y una cosa
-> que deba probar primero en la UI.
+> que deba probar primero en la UI. Si el trabajo es el plugin agro
+> (correo de acopio), lee `docs/plugins/agro.md` y `docs/ACCIONES.md`.
 
 Más tareas (añadir un ESP32, otro sitio, diagnosticar) están en
 [`prompts/`](https://github.com/harveybc/data-logger/tree/master/prompts).
@@ -47,8 +52,9 @@ Más tareas (añadir un ESP32, otro sitio, diagnosticar) están en
 ## Interfaz web (plugin)
 
 Misma idea de siempre: un JSON global, cada plugin con su bloque, un
-**pipeline** que los carga. Hoy el pipeline arranca el plugin
-`adminlte` (menú: Producción, Clima, Calidad).
+**pipeline** que los carga. El ejemplo `leche_default.json` arranca el
+plugin `adminlte` de **dominio agro** (Producción, Clima, Calidad,
+Pastoreo). Otro JSON puede cargar otra UI sobre el mismo core.
 
 ```bash
 pip install -r requirements.txt
