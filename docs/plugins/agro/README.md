@@ -53,27 +53,34 @@ Workers never see quality/UFC/route in chat.
 
 ## Mailbox
 
-**New Gmail, pickup only.** Not Proton, not the personal inbox.
+**Dedicated mailbox for pickup** (e.g. `data-logger@…`). Not the personal
+inbox. Forward from the account that receives Colácteos / plant mail
+(filter on `Recolección de leche`).
 
-Plant mail already lands in Gmail. Gmail→Gmail filter + IMAP + app
-password is the path that works.
+On Google Workspace / Gmail for that mailbox:
 
-1. Create the account (e.g. `acopio.datalogger.…@gmail.com`).
-2. 2FA + [app password](https://myaccount.google.com/apppasswords).
-3. Settings → Forwarding and POP/IMAP → enable IMAP.
-4. On the **personal** Gmail: filter subject `Recolección de leche` →
-   forward to the new box (Google asks to confirm once).
-5. Never give the agent the personal password.
+1. Confirm the forwarded messages appear in the **new** inbox (web UI).
+2. Settings → Forwarding and POP/IMAP → **Enable IMAP** (POP alone is
+   not enough; this code uses IMAP).
+3. **2-Step Verification** on, then an
+   [App password](https://myaccount.google.com/apppasswords) for Mail.
+   The normal login password is **rejected** by IMAP/POP scripts.
+4. Put `IMAP_USER` / `IMAP_PASSWORD` (app password) in `.env` (gitignored).
 
 ```bash
 cp -n .env.example .env
-# IMAP_USER=…  IMAP_PASSWORD=xxxx xxxx xxxx xxxx
+# IMAP_HOST=imap.gmail.com
+# IMAP_USER=data-logger@…
+# IMAP_PASSWORD=xxxx xxxx xxxx xxxx   # 16-char app password
 PYTHONPATH=. python3 -m app.ingest --imap --dry-run
 ```
 
 Dry-run lists. Without it, writes `data/app.db` and deletes the message
 **only on the new mailbox** after a successful upsert. Failed parse:
 mail stays.
+
+**Status (ops):** forwarding of pickup mail is confirmed working. IMAP
+login still needs a working **app password** before `--imap` succeeds.
 
 ```
 0 */6 * * * cd /path/data-logger && PYTHONPATH=. python3 -m app.ingest --imap >> data/imap.log 2>&1
